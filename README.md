@@ -51,5 +51,17 @@ Transit|Мобильное (iOS, Android)|есть|есть|Бесплатно (
 
 ![BPMN - диаграмма](/images/charts/BPMN.svg)
 
+## Описание типа приложения и выбранного технологического стека
+
+Тип приложения - Web SPA
+
+Технологический стек:
+
+- Frontend __TypeScript__ + __React__
+
+- Backend __C#__ +  __ASP.NET Core__
+
+- База данных __PostgreSQL__
+
 
 
