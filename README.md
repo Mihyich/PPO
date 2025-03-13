@@ -57,11 +57,29 @@ Transit|Мобильное (iOS, Android)|есть|есть|Бесплатно (
 
 Технологический стек:
 
-- Frontend __TypeScript__ + __React__
+- Frontend __TypeScript__/__React__/__Axios__
 
-- Backend __C#__ +  __ASP.NET Core__
+- Backend __C#__/__.NET SDK__(_ASP.NET Core_)
 
 - База данных __PostgreSQL__
+
+## Верхнеуровневое разбиение на компоненты
+
+![Components - диаграмма](/images/charts/component.svg)
+
+## UML диаграммы классов
+
+### UML диаграмма компонента доступа к данным
+
+![UML_DataAccess - диаграмма](/images/charts/UML_DataAccess.svg)
+
+### UML диаграмма компонента бизнес логики
+
+![UML_BusinessLogic - диаграмма](/images/charts/UML_BusinessLogic.svg)
+
+### Диаграмма сущностей БД
+
+![Entities - диаграмма](/images/charts/Entities.svg)
 
 
 
