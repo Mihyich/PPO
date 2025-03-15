@@ -69,11 +69,11 @@ Transit|Мобильное (iOS, Android)|есть|есть|Бесплатно (
 
 ## UML диаграммы классов
 
-### UML диаграмма компонента доступа к данным
+<!-- ### UML диаграмма компонента доступа к данным -->
 
-![UML_DataAccess - диаграмма](/images/charts/UML_DataAccess.svg)
+<!-- ![UML_DataAccess - диаграмма](/images/charts/UML_DataAccess.svg) -->
 
-### UML диаграмма компонента бизнес логики
+### UML диаграмма компонента бизнес логики | UML диаграмма компонента доступа к данным
 
 ![UML_BusinessLogic - диаграмма](/images/charts/UML_BusinessLogic.svg)
 
