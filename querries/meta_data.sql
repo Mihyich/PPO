@@ -1,3 +1,4 @@
+-- Просмотр пользовательских ENUM
 SELECT 
     n.nspname AS "Schema",
     p.typname AS "Type Name",
@@ -13,3 +14,7 @@ WHERE
     p.typtype = 'e' -- 'e' для ENUM
 ORDER BY 
     "Schema", "Type Name";
+
+
+-- Просмотр ролей
+SELECT * FROM pg_user;
