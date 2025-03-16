@@ -1,11 +1,9 @@
 CREATE TABLE IF NOT EXISTS Client (
 	ID SERIAL PRIMARY KEY,
-	mail VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS Duty (
-	ID SERIAL PRIMARY KEY,
-	mail VARCHAR(255)
+	client_login VARCHAR(255),
+	client_password VARCHAR(255),
+	mail VARCHAR(255),
+	role_type "roletype"
 );
 
 CREATE TABLE IF NOT EXISTS Chart (
@@ -32,7 +30,7 @@ CREATE TABLE IF NOT EXISTS Station (
 	access_type "accesstype",
 	open_time TIMESTAMP,
 	close_time TIMESTAMP,
-	FOREIGN KEY (dutyID) REFERENCES Duty (ID)
+	FOREIGN KEY (dutyID) REFERENCES Client (ID)
 );
 
 CREATE TABLE IF NOT EXISTS Transition (
@@ -42,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Transition (
 	access_type "accesstype",
 	open_time TIMESTAMP,
 	close_time TIMESTAMP,
-	FOREIGN KEY (dutyID) REFERENCES Duty (ID)
+	FOREIGN KEY (dutyID) REFERENCES Client (ID)
 );
 
 CREATE TABLE IF NOT EXISTS BranchStation (
