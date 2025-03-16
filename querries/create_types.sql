@@ -16,5 +16,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+SELECT recreate_enum_type('roletype', ARRAY['UNSIGNED', 'SIGNED', 'DUTY']);
 SELECT recreate_enum_type('accesstype', ARRAY['ACCESSIBLE', 'INACCESSIBLE']);
 SELECT recreate_enum_type('chaintype', ARRAY['Station', 'Transfer']);
