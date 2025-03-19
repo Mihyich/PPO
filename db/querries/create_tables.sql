@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS Station (
 	title VARCHAR(255),
 	occupancy INT, -- [0, 10]
 	access_type "accesstype",
-	open_time TIMESTAMP,
-	close_time TIMESTAMP,
+	open_time TIME,
+	close_time TIME,
 	FOREIGN KEY (dutyID) REFERENCES Client (ID)
 );
 
@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS Transition (
 	dutyID INT,
 	occupancy INT, -- [0, 10]
 	access_type "accesstype",
-	open_time TIMESTAMP,
-	close_time TIMESTAMP,
+	open_time TIME,
+	close_time TIME,
 	FOREIGN KEY (dutyID) REFERENCES Client (ID)
 );
 
