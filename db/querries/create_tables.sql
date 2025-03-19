@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS StationStation (
 	ID SERIAL PRIMARY KEY,
 	fromID INT,
 	toID INT,
-	duration INT, -- в секундах
+	duration TIME,
 	FOREIGN KEY (fromID) REFERENCES Station (ID),
 	FOREIGN KEY (toID) REFERENCES Station (ID)
 );
