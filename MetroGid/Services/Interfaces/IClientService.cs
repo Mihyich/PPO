@@ -1,3 +1,5 @@
+using MetroGid.Services.Models;
+
 namespace MetroGid.Services.Interfaces
 {
     public enum ClientServiceResult
@@ -21,5 +23,7 @@ namespace MetroGid.Services.Interfaces
         ClientServiceResult Sing_out(string login, string password);
         // Удаление пользователя из БД
         ClientServiceResult Log_out(string login, string password);
+        // Получить роль пользователя
+        ClientRole GetRole(string login, string password);
     }
 }
