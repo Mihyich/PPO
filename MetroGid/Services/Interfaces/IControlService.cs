@@ -4,7 +4,7 @@ namespace MetroGid.Services.Interfaces
 {
     public enum ControlServiceResult
     {
-        SUCCESS,
+        SUCCESS = 0,
         INVALID_ROLE,
         INVALID_ID,
         INVALID_TITLE,
