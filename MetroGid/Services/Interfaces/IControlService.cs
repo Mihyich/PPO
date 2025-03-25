@@ -12,8 +12,7 @@ namespace MetroGid.Services.Interfaces
         INVALID_SVG_INST,
         INVALID_COLOR,
         INVALID_ACCESS_TYPE,
-        INVALID_CONVERT_TO_TIMEONLY,
-
+        INVALID_CONVERT_TO_TIMEONLY
     }
 
     public interface IControlService
