@@ -1,9 +1,9 @@
 namespace MetroGid.Services.Models
 {
-    public class Railway
+    public class Railway(TimeOnly duration)
     {
-        public Station? Src {get; set;}
-        public Station? Dst {get; set;}
-        public TimeOnly Duration {get; set;} = new TimeOnly(0, 3, 0);
+        public Station? Prev {get; set;}
+        public Station? Next {get; set;}
+        public TimeOnly Duration { get; set; } = duration;
     }
 }
