@@ -11,5 +11,8 @@ namespace MetroGid.Services.Models
         public Railway? Prev {get; set;}
         public Railway? Next {get; set;}
         public Branch? Branch {get; set;}
+
+        public bool HasPrev() { return Prev != null; }
+        public bool HasNext() { return Next != null; }
     }
 }
