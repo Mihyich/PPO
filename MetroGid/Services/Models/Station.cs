@@ -8,8 +8,8 @@ namespace MetroGid.Services.Models
         public TimeOnly OpenTime { get; set; } = opentime;
         public TimeOnly CloseTime { get; set; } = closetime;
         public List<Transition> Transitions {get; set;} = [];
-        public Railway? Railway1 {get; set;}
-        public Railway? Railway2 {get; set;}
+        public Railway? Prev {get; set;}
+        public Railway? Next {get; set;}
         public Branch? Branch {get; set;}
     }
 }
