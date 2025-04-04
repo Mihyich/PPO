@@ -1,14 +1,11 @@
-using System.Runtime.CompilerServices;
 using MetroGid.Services.Models;
 
 namespace MetroGid.Services.Utilities
 {
     public class BuilderChart : BuilderBase<Chart>
     {
-        private List<Station> Stations = [];
-        private List<Railway> Railways = [];
-        private List<Transition> Transitions = [];
         private List<Branch> Branches = [];
+        private Chart? Chart;
 
         public void BuildBranch(string title, int color, AccessType type)
         {
@@ -28,7 +25,6 @@ namespace MetroGid.Services.Utilities
                 Station station = new(title, occupancy, type, opentime, closetime);
                 branch.Stations.Add(station);
                 station.Branch = branch;
-                Stations.Add(station);
             }
         }
 
@@ -66,8 +62,6 @@ namespace MetroGid.Services.Utilities
                     dst.Next = railway;
                     src.Prev = railway;
                 }
-
-                Railways.Add(railway);
             }
         }
 
@@ -97,13 +91,20 @@ namespace MetroGid.Services.Utilities
 
                 station_src.Transitions.Add(transition);
                 station_dst.Transitions.Add(transition);
-                Transitions.Add(transition);
             }
         }
 
-        public override Chart GetResult()
+        public void BuildChart(string title, string city, string svg_inst)
         {
+            Chart = new(title, city, svg_inst)
+            {
+                Branches = this.Branches
+            };
+        }
 
+        public override Chart? GetResult()
+        {
+            return Chart;
         }
     }
 }
