@@ -4,7 +4,6 @@ namespace MetroGid.Services.Utilities
 {
     public abstract class BuilderChartBase : BuilderBase<Chart>
     {
-        protected List<Branch> Branches = [];
 
         public abstract void BuildBranch(string title, int color, AccessType type);
 

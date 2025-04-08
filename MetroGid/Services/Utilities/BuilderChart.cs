@@ -2,18 +2,17 @@ using MetroGid.Services.Models;
 
 namespace MetroGid.Services.Utilities
 {
-    public class BuilderChart : BuilderBase<Chart>
+    public class BuilderChart : BuilderChartBase
     {
-        private List<Branch> Branches = [];
-        private Chart? Chart;
+        protected List<Branch> Branches = [];
 
-        public void BuildBranch(string title, int color, AccessType type)
+        public override void BuildBranch(string title, int color, AccessType type)
         {
             Branch branch = new(title, color, type);
             Branches.Add(branch);
         }
 
-        public void BuildStation(
+        public override void BuildStation(
             string branch_title,
             string title, int occupancy, AccessType type, TimeOnly opentime, TimeOnly closetime
         )
@@ -28,7 +27,7 @@ namespace MetroGid.Services.Utilities
             }
         }
 
-        public void BuildRailway(
+        public override void BuildRailway(
             string branch_title, string station_title_src, string station_title_dst,
             TimeOnly duration
         )
@@ -65,7 +64,7 @@ namespace MetroGid.Services.Utilities
             }
         }
 
-        public void BuildTransition(
+        public override void BuildTransition(
             string branch_title_src, string station_title_src, string branch_title_dst, string station_title_dst,
             int occupancy, AccessType type, TimeOnly duration, TimeOnly opentime, TimeOnly closetime
         )
@@ -80,7 +79,7 @@ namespace MetroGid.Services.Utilities
                 (branch_src = Branches.FirstOrDefault(b => b.Title == branch_title_src)) != null &&
                 (branch_dst = Branches.FirstOrDefault(b => b.Title == branch_title_dst)) != null &&
                 (station_src = branch_src.Stations.FirstOrDefault(s => s.Title == station_title_src)) != null &&
-                (station_dst = branch_src.Stations.FirstOrDefault(s => s.Title == station_title_dst)) != null
+                (station_dst = branch_dst.Stations.FirstOrDefault(s => s.Title == station_title_dst)) != null
             )
             {
                 Transition transition = new(occupancy, type, duration, opentime, closetime)
@@ -94,7 +93,7 @@ namespace MetroGid.Services.Utilities
             }
         }
 
-        public void BuildChart(string title, string city, string svg_inst)
+        public override void BuildChart(string title, string city, string svg_inst)
         {
             Chart = new(title, city, svg_inst)
             {
