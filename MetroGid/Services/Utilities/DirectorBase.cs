@@ -1,9 +1,7 @@
 namespace MetroGid.Services.Utilities
 {
-    public abstract class DirectorBase<T>(BuilderBase<T> Builder)
+    public abstract class DirectorBase<T>()
     {
-        protected BuilderBase<T> Builder = Builder;
-
-        public abstract T Construct();
+        public abstract T? Construct();
     }
 }
