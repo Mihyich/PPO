@@ -84,8 +84,8 @@ namespace MetroGid.Services.Utilities
             {
                 Transition transition = new(occupancy, type, duration, opentime, closetime)
                 {
-                    Station1 = station_src,
-                    Station2 = station_dst
+                    From = station_src,
+                    To = station_dst
                 };
 
                 station_src.Transitions.Add(transition);
