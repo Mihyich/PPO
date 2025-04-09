@@ -12,7 +12,18 @@ namespace MetroGid.Services.Models
         public Railway? Next {get; set;}
         public Branch? Branch {get; set;}
 
-        public bool HasPrev() { return Prev != null; }
-        public bool HasNext() { return Next != null; }
+        public bool HasPrev() => Prev != null;
+        public bool HasNext() => Next != null;
+
+        public override int GetHashCode() =>
+            Title == null || Branch == null || Branch.Title == null ?
+            0 :
+            HashCode.Combine(Title, Branch.Title);
+
+        public override bool Equals(object? obj) =>
+            !(obj is null || GetType() != obj.GetType() ||
+            Branch == null || ((Station)obj).Branch == null) && 
+            Title == ((Station)obj).Title &&
+            Branch.Title == ((Station)obj).Branch?.Title;
     }
 }
