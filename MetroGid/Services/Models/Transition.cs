@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+
 namespace MetroGid.Services.Models
 {
     public class Transition(int occupancy, AccessType type, TimeOnly duration, TimeOnly opentime, TimeOnly closetime)
@@ -7,7 +9,15 @@ namespace MetroGid.Services.Models
         public TimeOnly Duration { get; set; } = duration;
         public TimeOnly OpenTime { get; set; } = opentime;
         public TimeOnly CloseTime { get; set; } = closetime;
-        public Station? Station1 {get; set;}
-        public Station? Station2 {get; set;}
+        public Station? From {get; set;}
+        public Station? To {get; set;}
+
+        public bool InConnect(Station station) => 
+            From != null && To != null &&
+            (station == From || station == To);
+
+        public Station? ToFrom(Station cur) =>
+            cur.Equals(From) ? To : 
+            (cur.Equals(To) ? From : null);
     }
 }
