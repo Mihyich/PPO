@@ -1,3 +1,5 @@
+using MetroGid.Services.Utilities;
+
 namespace MetroGid.Services.Models
 {
     public abstract record GraphConnection;
@@ -10,7 +12,36 @@ namespace MetroGid.Services.Models
 
     public class Route
     {
-        public List<RouteItem> Path = [];
+        private readonly List<RouteItem> Path = [];
+        private TimeSpan Duration = TimeSpan.Zero;
+
+        private void UpdateDuration()
+        {
+            TimeSpan NewDuration = TimeSpan.Zero;
+
+            if (Path.Count >= 3 || IsValid())
+            {
+                for (int i = 2; i < Path.Count; i += 2)
+                {
+                    Station src = ((RouteStationItem)Path[i - 2]).Station;
+                    GraphConnection connection = ((RouteConnectionItem)Path[i - 1]).Connection;
+                    Station dst = ((RouteStationItem)Path[i - 0]).Station;
+
+                    if (connection is RailwayConnection railcon)
+                    {
+                        Railway railway = railcon.Railway;
+                        NewDuration += TimeMeas.Measure(src, railway);
+                    }
+                    else if (connection is TransitionConnection trancon)
+                    {
+                        Transition transition = trancon.Transition;
+                        NewDuration += TimeMeas.Measure(src, transition, dst);
+                    }
+                }
+            }
+
+            Duration = NewDuration;
+        }
 
         public void Add(Station station) => Path.Add(new RouteStationItem(station));
         public void Add(GraphConnection connection) => Path.Add(new RouteConnectionItem(connection));
@@ -43,16 +74,19 @@ namespace MetroGid.Services.Models
 
         public bool IsValid()
         {
+            bool shouldBeStation;
+            bool isStation = false;
+
             for (int i = 0; i < Path.Count; ++i)
             {
-                bool shouldBeStation = i % 2 == 0;
-                bool isStation = Path[i] is RouteStationItem;
+                shouldBeStation = i % 2 == 0;
+                isStation = Path[i] is RouteStationItem;
                 
                 if (shouldBeStation != isStation)
                     return false;
             }
 
-            return true;
+            return isStation;
         }
 
         public void Output()
