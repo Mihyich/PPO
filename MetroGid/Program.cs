@@ -7,14 +7,15 @@ class Program
     {
         Console.WriteLine("Hello, World!");
         BuilderChart builder = new();
-        DirectorChartJson director = new(builder, "/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Minsk/init.json");
+        // DirectorChartJson director = new(builder, "/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Minsk/init.json");
+        DirectorChartJson director = new(builder, "/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Sankt-Peterburg/init.json");
         Chart? chart = director.Construct();
 
         if (chart != null)
         {
             chart.Searcher = new StrategySearchRouteBFS();
-            Station? stationA = chart.GetStation("Московская линия", "Московская");
-            Station? stationB = chart.GetStation("Зеленолужская линия", "Площадь Франтишка Богушевича");
+            Station? stationA = chart.GetStation("Невско-Василеостровская", "Василеостровская");
+            Station? stationB = chart.GetStation("Фрунзенско-Приморская", "Бухарестская");
 
             if (stationA != null && stationB != null)
             {
