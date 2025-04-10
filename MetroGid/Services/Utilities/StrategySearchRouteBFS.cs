@@ -29,7 +29,7 @@ namespace MetroGid.Services.Utilities
                 }
             }
 
-            return new Route();
+            return null;
         }
 
         private static void SearchRailwayNeighbors(Station curStation, Route curRoute, Queue<Route> queue, HashSet<Station> visited)
