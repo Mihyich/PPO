@@ -1,6 +1,6 @@
 namespace MetroGid.Services.Models
 {
-    public enum ClientRole
+    public enum RoleType
     {
         UNSIGNED, // Незарегистрированный пользователь
         SIGNED,   // Зарегистрированный пользователь
