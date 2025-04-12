@@ -958,7 +958,7 @@
         {
             "occupancy": 5,
             "accesstype": "ACCESSIBLE",
-            "duration": "03:00",
+            "duration": "00:03:00",
             "opentime": "05:30",
             "closetime": "01:30",
             "branchsrc": "Правобережная",
@@ -969,7 +969,7 @@
         {
             "occupancy": 5,
             "accesstype": "ACCESSIBLE",
-            "duration": "03:00",
+            "duration": "00:03:00",
             "opentime": "05:30",
             "closetime": "01:30",
             "branchsrc": "Правобережная",
@@ -980,7 +980,7 @@
         {
             "occupancy": 5,
             "accesstype": "ACCESSIBLE",
-            "duration": "03:00",
+            "duration": "00:03:00",
             "opentime": "05:30",
             "closetime": "01:30",
             "branchsrc": "Кировско-Выборгская",
@@ -991,7 +991,7 @@
         {
             "occupancy": 5,
             "accesstype": "ACCESSIBLE",
-            "duration": "03:00",
+            "duration": "00:03:00",
             "opentime": "05:30",
             "closetime": "01:30",
             "branchsrc": "Фрунзенско-Приморская",
