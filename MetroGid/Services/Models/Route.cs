@@ -12,14 +12,14 @@ namespace MetroGid.Services.Models
 
     public class Route
     {
-        private readonly List<RouteItem> Path = [];
-        private TimeSpan Duration = TimeSpan.Zero;
+        public readonly List<RouteItem> Path = [];
+        public TimeSpan Duration = TimeSpan.Zero;
 
-        private void UpdateDuration()
+        public void UpdateDuration()
         {
             TimeSpan NewDuration = TimeSpan.Zero;
 
-            if (Path.Count >= 3 || IsValid())
+            if (Path.Count >= 3 && IsValid())
             {
                 for (int i = 2; i < Path.Count; i += 2)
                 {
@@ -43,10 +43,23 @@ namespace MetroGid.Services.Models
             Duration = NewDuration;
         }
 
+        public void Add(RouteItem item) => Path.Add(item);
         public void Add(Station station) => Path.Add(new RouteStationItem(station));
         public void Add(GraphConnection connection) => Path.Add(new RouteConnectionItem(connection));
         public void Add(Railway railway) => Add(new RailwayConnection(railway));
         public void Add(Transition transition) => Add(new TransitionConnection(transition));
+
+        public void PopBack()
+        {
+            if (Path.Count > 0) 
+                Path.RemoveAt(Path.Count - 1);
+        }
+
+        public void Merge(Route other)
+        {
+            foreach (var item in other.Path)
+                Path.Add(item);
+        }
 
         public Station? GetLastStation()
         {
@@ -68,6 +81,8 @@ namespace MetroGid.Services.Models
                 else if (item is RouteConnectionItem { Connection: var connection })
                     Route.Add(connection);
             }
+
+            Route.Duration = Duration;
 
             return Route;
         }
