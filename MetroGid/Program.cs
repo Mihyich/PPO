@@ -5,7 +5,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
         BuilderChart builder = new();
         // DirectorChartJson director = new(builder, "/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Minsk/init.json");
         DirectorChartJson director = new(builder, "/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Sankt-Peterburg/init.json");
@@ -13,7 +12,8 @@ class Program
 
         if (chart != null)
         {
-            chart.Searcher = new StrategySearchRouteBFS();
+            // chart.Searcher = new StrategySearchRouteBFS();
+            chart.Searcher = new StrategySearchRouteDijkstra();
             Station? stationA = chart.GetStation("Невско-Василеостровская", "Василеостровская");
             Station? stationB = chart.GetStation("Фрунзенско-Приморская", "Бухарестская");
 
