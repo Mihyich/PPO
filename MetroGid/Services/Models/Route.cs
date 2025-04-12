@@ -55,11 +55,7 @@ namespace MetroGid.Services.Models
                 Path.RemoveAt(Path.Count - 1);
         }
 
-        public void Merge(Route other)
-        {
-            foreach (var item in other.Path)
-                Path.Add(item);
-        }
+        public void Merge(Route other) => Path.AddRange(other.Path);
 
         public Station? GetLastStation()
         {
@@ -104,18 +100,45 @@ namespace MetroGid.Services.Models
             return isStation;
         }
 
+        public int GetStationCount() => IsValid() ? Path.Count / 2 + Path.Count % 2 : 0;
+
+        public int GetTransitionCount()
+        {
+            int cnt = 0;
+
+            if (IsValid())
+                foreach (var item in Path)
+                    if (item is RouteConnectionItem { Connection: var connection } &&
+                        connection is TransitionConnection {Transition: var transition})
+                            ++cnt;
+
+            return cnt;
+        }
+
         public void Output()
         {
+            if (!IsValid())
+                return;
+
+            int StationCnt = GetStationCount();
+            int TransitionCnt = GetTransitionCount();
+
+            Console.WriteLine($"Количество станций:   {StationCnt}");
+            Console.WriteLine($"Количество пересадок: {TransitionCnt}");
+            Console.WriteLine($"Время в пути: {Duration}");
+
             foreach (var item in Path)
             {
                 if (item is RouteStationItem { Station: var station })
-                    Console.WriteLine($"Станция: {station.Title}");
+                {
+                    Console.WriteLine($"|---Станция: {station.Title}");
+                }
                 else if (item is RouteConnectionItem { Connection: var connection })
                 {
                     if (connection is RailwayConnection {Railway: var railway})
-                        Console.WriteLine($"Переезд: {railway.Duration}");
+                        Console.WriteLine($"|===Переезд: {railway.Duration}");
                     else if (connection is TransitionConnection {Transition: var transition})
-                        Console.WriteLine($"Переход: {transition.Duration}");
+                        Console.WriteLine($"|>>>Переход: {transition.Duration}");
                 }
             }
         }
