@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS Transition (
 	ID SERIAL PRIMARY KEY,
 	dutyID INT,
 	occupancy INT, -- [0, 10]
+	duration TIME,
 	access_type "accesstype",
 	open_time TIME,
 	close_time TIME,
