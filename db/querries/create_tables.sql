@@ -1,3 +1,5 @@
+-- Информативные таблицы
+
 CREATE TABLE IF NOT EXISTS Client (
 	ID SERIAL PRIMARY KEY,
 	client_login VARCHAR(255),
@@ -15,11 +17,9 @@ CREATE TABLE IF NOT EXISTS Chart (
 
 CREATE TABLE IF NOT EXISTS Branch (
 	ID SERIAL PRIMARY KEY,
-	chartID INT,
 	title VARCHAR(255),
 	color INT, -- HEX число [0, 16777215]
-	access_type "accesstype",
-	FOREIGN KEY (chartID) REFERENCES Chart (ID)
+	access_type "accesstype"
 );
 
 CREATE TABLE IF NOT EXISTS Station (
@@ -37,11 +37,39 @@ CREATE TABLE IF NOT EXISTS Transition (
 	ID SERIAL PRIMARY KEY,
 	dutyID INT,
 	occupancy INT, -- [0, 10]
-	duration TIME,
 	access_type "accesstype",
+	duration TIME,
 	open_time TIME,
 	close_time TIME,
 	FOREIGN KEY (dutyID) REFERENCES Client (ID)
+);
+
+CREATE TABLE IF NOT EXISTS Way (
+	ID SERIAL PRIMARY KEY,
+	clientID INT,
+	chartID INT,
+	title VARCHAR(255),
+	init_date TIMESTAMP,
+	FOREIGN KEY (clientID) REFERENCES Client (ID),
+	FOREIGN KEY (chartID) REFERENCES Chart (ID)
+);
+
+CREATE TABLE IF NOT EXISTS WayItem (
+	ID SERIAL PRIMARY KEY,
+	wayID INT,
+	chain_type "chaintype",
+	step_nomer INT,
+	FOREIGN KEY (wayID) REFERENCES Way (ID)
+);
+
+-- Связующие таблицы
+
+CREATE TABLE IF NOT EXISTS ChartBranch (
+	ID SERIAL PRIMARY KEY,
+	chartID INT,
+	branchID INT,
+	FOREIGN KEY (chartID) REFERENCES Chart (ID),
+	FOREIGN KEY (branchID) REFERENCES Branch (ID)
 );
 
 CREATE TABLE IF NOT EXISTS BranchStation (
@@ -52,7 +80,7 @@ CREATE TABLE IF NOT EXISTS BranchStation (
 	FOREIGN KEY (stationID) REFERENCES Station (ID)
 );
 
-CREATE TABLE IF NOT EXISTS StationStation (
+CREATE TABLE IF NOT EXISTS Railway (
 	ID SERIAL PRIMARY KEY,
 	fromID INT,
 	toID INT,
@@ -69,21 +97,26 @@ CREATE TABLE IF NOT EXISTS StationTransition (
 	FOREIGN KEY (transitionID) REFERENCES Transition (ID)
 );
 
-CREATE TABLE IF NOT EXISTS Trajectory (
+CREATE TABLE IF NOT EXISTS WayItemStation (
 	ID SERIAL PRIMARY KEY,
-	clientID INT,
-	chartID INT,
-	title VARCHAR(255),
-	init_date TIMESTAMP,
-	FOREIGN KEY (clientID) REFERENCES Client (ID),
-	FOREIGN KEY (chartID) REFERENCES Chart (ID)
+	stationID INT,
+	wayitemID INT,
+	FOREIGN KEY (stationID) REFERENCES Station (ID),
+	FOREIGN KEY (wayitemID) REFERENCES WayItem (ID)
 );
 
-CREATE TABLE IF NOT EXISTS TrajectoryLead (
+CREATE TABLE IF NOT EXISTS WayItemRailway (
 	ID SERIAL PRIMARY KEY,
-	TrajectoryID INT,
-	TrajectoryChainID INT,
-	chain_type "chaintype",
-	step_nomer INT,
-	FOREIGN KEY (TrajectoryID) REFERENCES Trajectory (ID)
+	railwayID INT,
+	wayitemID INT,
+	FOREIGN KEY (railwayID) REFERENCES Railway (ID),
+	FOREIGN KEY (wayitemID) REFERENCES WayItem (ID)
+);
+
+CREATE TABLE IF NOT EXISTS WayItemTransition (
+	ID SERIAL PRIMARY KEY,
+	transitionID INT,
+	wayitemID INT,
+	FOREIGN KEY (transitionID) REFERENCES Transition (ID),
+	FOREIGN KEY (wayitemID) REFERENCES WayItem (ID)
 );
