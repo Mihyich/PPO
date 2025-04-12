@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS Way (
 CREATE TABLE IF NOT EXISTS WayItem (
 	ID SERIAL PRIMARY KEY,
 	wayID INT,
-	chain_type "chaintype",
+	chain_type "wayitemtype",
 	step_nomer INT,
 	FOREIGN KEY (wayID) REFERENCES Way (ID)
 );
