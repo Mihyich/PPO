@@ -12,6 +12,7 @@ namespace MetroGid.Services.Models
 
     public class Route
     {
+        public string Title = string.Empty;
         public readonly List<RouteItem> Path = [];
         public TimeSpan Duration = TimeSpan.Zero;
 
@@ -123,6 +124,7 @@ namespace MetroGid.Services.Models
             int StationCnt = GetStationCount();
             int TransitionCnt = GetTransitionCount();
 
+            Console.WriteLine($"Название: {Title}");
             Console.WriteLine($"Количество станций:   {StationCnt}");
             Console.WriteLine($"Количество пересадок: {TransitionCnt}");
             Console.WriteLine($"Время в пути: {Duration}");
