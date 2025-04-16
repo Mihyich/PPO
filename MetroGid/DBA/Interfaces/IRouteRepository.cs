@@ -1,4 +1,4 @@
-using MetroGid.Services.Models;
+using MetroGid.Core.Models;
 
 namespace MetroGid.DBA.Interfaces
 {
@@ -17,6 +17,6 @@ namespace MetroGid.DBA.Interfaces
 
         Task DeleteAsync(int id);
 
-        Task<bool> IsTitleUniqueAsync(string title, int clientId);
+        Task<bool> IsTitleExistsAsync(string title, int clientId);
     }
 }
