@@ -1,29 +1,16 @@
-using MetroGid.Services.Models;
-
 namespace MetroGid.Services.Interfaces
-{
-    public enum ClientServiceResult
-    {
-        SUCCESS = 0,
-        ILLEGAL_LOGIN, // не выполнены правила задания логина
-        ILLEGAL_PASSWORD, // не выполнены правила задания пароля
-        ILLEGAL_MAIL, // не выполнены правила задания почты
-        LOGIN_BUSY, // пользователь с таким логином уже существует
-        MAIL_BUSY, // пользователь с такой почтой уже существует
-        INVALID_SING_DATA // неверный логин и/или пароль
-    }
-    
+{   
     public interface IClientService
     {
         // Создание пользователя в БД
-        ClientServiceResult Auth(string login, string password, string mail);
-        // Вход
-        ClientServiceResult Sing_in(string login, string password);
-        // Выход
-        ClientServiceResult Sing_out(string login, string password);
+        Task<int> Reg(string login, string password, string mail);
         // Удаление пользователя из БД
-        ClientServiceResult Log_out(string login, string password);
+        Task UnReg(string login, string password, string mail);
+        // Вход
+        Task<int> SingIn(string login, string password, string mail);
+        // Выход
+        Task SingOut(string login, string password, string mail);
         // Получить роль пользователя
-        ClientRole GetRole(string login, string password);
+        Task<string> GetRole(string login, string password, string mail);
     }
 }
