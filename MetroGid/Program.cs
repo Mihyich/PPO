@@ -1,5 +1,5 @@
-﻿using MetroGid.Services.Models;
-using MetroGid.Services.Utilities;
+﻿using MetroGid.Core.Models;
+using MetroGid.Core.Utilities;
 
 class Program
 {
