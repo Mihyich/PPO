@@ -8,13 +8,13 @@ namespace MetroGid.DBA.Interfaces
 
         Task<int> GetIdAsync(Client client);
         Task<Client?> GetByIdAsync(int id);
-        Task<Client?> GetByCredentialsAsync(string login, string password);
+        Task<Client?> GetByCredentialsAsync(string login, string password, string mail);
 
         Task UpdateAsync(int id, Client client);
 
         Task DeleteAsync(int id);
 
-        Task<bool> IsLoginUniqueAsync(string login);
-        Task<bool> IsMailUniqueAsync(string mail);
+        Task<bool> IsLoginExistsAsync(string login);
+        Task<bool> IsMailExistsAsync(string mail);
     }
 }
