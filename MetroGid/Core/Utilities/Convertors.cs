@@ -1,5 +1,6 @@
 using MetroGid.Controllers.DTO;
 using MetroGid.Core.Models;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace MetroGid.Core.Utilities
 {
@@ -45,7 +46,7 @@ namespace MetroGid.Core.Utilities
         }
     }
 
-    public static class CntRoleTypeDTO
+    public static class CntRoleType
     {
         public static RoleTypeDTO Convert(RoleType type) =>
             type switch
@@ -55,9 +56,18 @@ namespace MetroGid.Core.Utilities
                 RoleType.DUTY => RoleTypeDTO.DUTY,
                 _ => RoleTypeDTO.UNSIGNED
             };
+
+        public static RoleType Convert(RoleTypeDTO type) =>
+            type switch
+            {
+                RoleTypeDTO.UNSIGNED => RoleType.UNSIGNED,
+                RoleTypeDTO.SIGNED => RoleType.SIGNED,
+                RoleTypeDTO.DUTY => RoleType.DUTY,
+                _ => RoleType.UNSIGNED
+            };
     }
 
-    public static class CntAccessTypeDTO
+    public static class CntAccessType
     {
         public static AccessTypeDTO Convert(AccessType type) =>
             type switch
@@ -66,24 +76,42 @@ namespace MetroGid.Core.Utilities
                 AccessType.INACCESSIBLE => AccessTypeDTO.INACCESSIBLE,
                 _ => AccessTypeDTO.INACCESSIBLE
             };
+
+        public static AccessType Convert(AccessTypeDTO type) =>
+            type switch
+            {
+                AccessTypeDTO.ACCESSIBLE => AccessType.ACCESSIBLE,
+                AccessTypeDTO.INACCESSIBLE => AccessType.INACCESSIBLE,
+                _ => AccessType.INACCESSIBLE
+            };
     }
 
-    public static class CntChartDTO
+    public static class CntChart
     {
         public static ChartDTO Convert(Chart chart) =>
             new(chart.City, chart.Title, chart.SvgInst);
+
+        public static Chart Convert(ChartDTO chart) =>
+            new(chart.Title, chart.City, chart.SvgInst);
     }
 
-    public static class CntBranchDTO
+    public static class CntBranch
     {
         public static BranchDTO Convert(Branch branch) =>
-            new (branch.Title, branch.Color, CntAccessTypeDTO.Convert(branch.Type));
+            new(branch.Title, branch.Color, CntAccessType.Convert(branch.Type));
+
+        public static Branch Convert(BranchDTO branch) =>
+            new(branch.Title, branch.Color, CntAccessType.Convert(branch.Type));
     }
 
-    public static class CntStationDTO
+    public static class CntStation
     {
         public static StationDTO Convert(Station station) =>
-            new (station.Title, station.Occupancy, CntAccessTypeDTO.Convert(station.Type),
+            new(station.Title, station.Occupancy, CntAccessType.Convert(station.Type),
+                station.OpenTime, station.CloseTime);
+
+        public static Station Convert(StationDTO station) =>
+            new(station.Title, station.Occupancy, CntAccessType.Convert(station.Type),
                 station.OpenTime, station.CloseTime);
     }
 }
