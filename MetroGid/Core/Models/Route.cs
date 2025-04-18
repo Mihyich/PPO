@@ -2,19 +2,20 @@ using MetroGid.Core.Utilities;
 
 namespace MetroGid.Core.Models
 {
-    public abstract record GraphConnection;
-    public record RailwayConnection(Railway Railway) : GraphConnection;
-    public record TransitionConnection(Transition Transition) : GraphConnection;
+    public abstract record StationConnection;
+    public record RailwayConnection(Railway Railway) : StationConnection;
+    public record TransitionConnection(Transition Transition) : StationConnection;
 
     public abstract record RouteItem;
     public record RouteStationItem(Station Station) : RouteItem;
-    public record RouteConnectionItem(GraphConnection Connection) : RouteItem;
+    public record RouteConnectionItem(StationConnection Connection) : RouteItem;
 
     public class Route
     {
         public string Title = string.Empty;
         public readonly List<RouteItem> Path = [];
         public TimeSpan Duration = TimeSpan.Zero;
+        public Chart? Chart;
 
         public void UpdateDuration()
         {
@@ -25,7 +26,7 @@ namespace MetroGid.Core.Models
                 for (int i = 2; i < Path.Count; i += 2)
                 {
                     Station src = ((RouteStationItem)Path[i - 2]).Station;
-                    GraphConnection connection = ((RouteConnectionItem)Path[i - 1]).Connection;
+                    StationConnection connection = ((RouteConnectionItem)Path[i - 1]).Connection;
                     Station dst = ((RouteStationItem)Path[i - 0]).Station;
 
                     if (connection is RailwayConnection railcon)
@@ -46,7 +47,7 @@ namespace MetroGid.Core.Models
 
         public void Add(RouteItem item) => Path.Add(item);
         public void Add(Station station) => Path.Add(new RouteStationItem(station));
-        public void Add(GraphConnection connection) => Path.Add(new RouteConnectionItem(connection));
+        public void Add(StationConnection connection) => Path.Add(new RouteConnectionItem(connection));
         public void Add(Railway railway) => Add(new RailwayConnection(railway));
         public void Add(Transition transition) => Add(new TransitionConnection(transition));
 
