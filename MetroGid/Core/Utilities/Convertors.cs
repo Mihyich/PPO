@@ -1,6 +1,5 @@
 using MetroGid.Controllers.DTO;
 using MetroGid.Core.Models;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace MetroGid.Core.Utilities
 {
@@ -113,5 +112,54 @@ namespace MetroGid.Core.Utilities
         public static Station Convert(StationDTO station) =>
             new(station.Title, station.Occupancy, CntAccessType.Convert(station.Type),
                 station.OpenTime, station.CloseTime);
+    }
+
+    public static class CntRailway
+    {
+        public static RailwayDTO Convert(Railway railway) =>
+            new(railway.Prev?.Title ?? string.Empty,
+                railway.Next?.Title ?? string.Empty,
+                railway.Duration);
+    }
+
+    public static class CntTransition
+    {
+        public static TransitionDTO Convert(Transition transition) =>
+            new(transition.Occupancy, CntAccessType.Convert(transition.Type),
+                transition.Duration, transition.OpenTime, transition.CloseTime,
+                transition.From?.Title ?? string.Empty,
+                transition.From?.Branch?.Title ?? string.Empty,
+                transition.To?.Title ?? string.Empty,
+                transition.To?.Branch?.Title ?? string.Empty);
+    }
+
+    public static class CntRoute
+    {
+        public static RouteDTO Convert(Route route)
+        {
+            List<RouteItemDTO> CntPath = [];
+
+            foreach (var item in route.Path)
+            {
+                if (item is RouteStationItem {Station: var station})
+                    CntPath.Add(new RouteStationItemDTO(CntStation.Convert(station)));
+                else if (item is RouteConnectionItem {Connection: var connection})
+                {
+                    if (connection is RailwayConnection {Railway: var railway})
+                        CntPath.Add(new RouteConnectionItemDTO(new RailwayConnectionDTO(CntRailway.Convert(railway))));
+                    else if (connection is TransitionConnection {Transition: var transition})
+                        CntPath.Add(new RouteConnectionItemDTO(new TransitionConnectionDTO(CntTransition.Convert(transition))));
+                }
+            }
+
+            return new()
+            {
+                Title = route.Title,
+                City = route.Chart?.City ?? string.Empty,
+                ChartTitle = route.Chart?.Title ?? string.Empty,
+                Path = CntPath,
+                Duration = route.Duration
+            };
+        }
     }
 }
