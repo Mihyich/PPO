@@ -84,7 +84,7 @@ namespace MetroGid.Core.Services
         public async Task<RoleTypeDTO> GetRole(string login, string password, string mail)
         {
             Client? client = await ClientRepo.GetByCredentialsAsync(login, password, mail);
-            return client != null ? CntRoleTypeDTO.Convert(client.Role) : RoleTypeDTO.UNSIGNED;
+            return client != null ? CntRoleType.Convert(client.Role) : RoleTypeDTO.UNSIGNED;
         }
     }
 }
