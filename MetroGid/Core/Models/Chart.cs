@@ -22,6 +22,14 @@ namespace MetroGid.Core.Models
             return station;
         }
 
-        public Route? Search(Station src, Station dst) => Searcher?.Search(Branches, src, dst) ?? null;
+        public Route? Search(Station src, Station dst)
+        {
+            Route? route = Searcher?.Search(Branches, src, dst) ?? null;
+            
+            if (route != null)
+                route.Chart = this;
+
+            return route;
+        }
     }
 }
