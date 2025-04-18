@@ -11,8 +11,10 @@ namespace MetroGid.Controllers.DTO
     public class RouteDTO
     {
         public string Title { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string ChartTitle { get; set; } = string.Empty;
+        
         public List<RouteItemDTO> Path = [];
         public TimeSpan Duration { get; set; } = TimeSpan.Zero;
-        public ChartDTO? chart;
     }
 }
