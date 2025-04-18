@@ -1,9 +1,9 @@
+using MetroGid.Controllers.DTO;
 using MetroGid.Controllers.Interfaces;
 using MetroGid.Core.Exceptions;
 using MetroGid.Core.Models;
 using MetroGid.Core.Utilities;
-using MetroGid.DBA.Interfaces;
-using MetroGid.Services.Utilities;
+using MetroGid.DBA.Interfaces; 
 
 namespace MetroGid.Core.Services
 {
@@ -81,10 +81,10 @@ namespace MetroGid.Core.Services
                 );
         }
 
-        public async Task<string> GetRole(string login, string password, string mail)
+        public async Task<RoleTypeDTO> GetRole(string login, string password, string mail)
         {
             Client? client = await ClientRepo.GetByCredentialsAsync(login, password, mail);
-            return client != null ? client.Role.ToString() : RoleType.UNSIGNED.ToString();
+            return client != null ? CntRoleTypeDTO.Convert(client.Role) : RoleTypeDTO.UNSIGNED;
         }
     }
 }
