@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace MetroGid.Services.Utilities
+namespace MetroGid.Core.Utilities
 {
     public static class Mail
     {
