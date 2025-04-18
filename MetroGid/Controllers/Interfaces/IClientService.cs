@@ -1,3 +1,5 @@
+using MetroGid.Controllers.DTO;
+
 namespace MetroGid.Controllers.Interfaces
 {
     public interface IClientService
@@ -11,6 +13,6 @@ namespace MetroGid.Controllers.Interfaces
         // Выход
         Task SingOut(string login, string password, string mail);
         // Получить роль пользователя
-        Task<Client> GetRole(string login, string password, string mail);
+        Task<RoleTypeDTO> GetRole(string login, string password, string mail);
     }
 }
