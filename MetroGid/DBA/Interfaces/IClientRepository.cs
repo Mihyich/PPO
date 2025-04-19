@@ -7,8 +7,9 @@ namespace MetroGid.DBA.Interfaces
         Task<int> AddAsync(Client client);
 
         Task<int> GetIdAsync(Client client);
-        Task<Client?> GetByIdAsync(int id);
-        Task<Client?> GetByCredentialsAsync(string login, string password, string mail);
+        Task<int> GetIdByCredentialsAsync(string login, string password, string mail);
+        Task<Client> GetByIdAsync(int id);
+        Task<Client> GetByCredentialsAsync(string login, string password, string mail);
 
         Task UpdateAsync(int id, Client client);
 
