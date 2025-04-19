@@ -1,5 +1,6 @@
 using MetroGid.Controllers.DTO;
 using MetroGid.Core.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace MetroGid.Core.Utilities
 {
@@ -160,6 +161,11 @@ namespace MetroGid.Core.Utilities
                 Path = CntPath,
                 Duration = route.Duration
             };
+        }
+
+        public static Route Convert(RouteDTO route)
+        {
+            return new();
         }
     }
 }
