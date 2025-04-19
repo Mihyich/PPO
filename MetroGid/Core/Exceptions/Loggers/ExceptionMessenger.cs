@@ -1,0 +1,33 @@
+using MetroGid.Core.Exceptions.Concrete;
+using MetroGid.Core.Exceptions.Interfaces;
+
+namespace MetroGid.Core.Exceptions.Loggers
+{
+    public class ExceptionMessenger : IExceptionVisitor
+    {
+        public void Visit(LoginValidationException ex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(PasswordValidationException ex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(MailValidationException ex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(ItemAlreadyInUseException ex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(NotFoundException ex)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
