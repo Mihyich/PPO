@@ -1,6 +1,6 @@
 using MetroGid.Controllers.DTO;
 using MetroGid.Controllers.Interfaces;
-using MetroGid.Core.Exceptions;
+using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Models;
 using MetroGid.Core.Utilities;
 using MetroGid.DBA.Interfaces;
@@ -11,127 +11,53 @@ namespace MetroGid.Core.Services
     {
         private readonly IChartRepository ChartRepo = chartRepo;
 
-        public async Task<ChartDTO> GetChart(int chartId)
-        {
-            Chart chart = await ChartRepo.GetChartByIdAsync(chartId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.ChartIdMisMatch,
-                    $"Не найдена схема с айди {chartId}"
-                );
+        public async Task<ChartDTO> GetChart(int chartId) =>
+            CntChart.Convert(await ChartRepo.GetChartByIdAsync(chartId));
 
-            return CntChart.Convert(chart);
-        }
-
-        public async Task<int> GetChartId(string city, string title)
-        {
-            int id = await ChartRepo.GetChartIdAsync(city, title);
-
-            if (id < 0)
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.ChartCityTitleMisMatch,
-                    $"Не найдена схема в городе '{city}' с названием '{title}'"
-                );
-
-            return id;
-        }
+        public async Task<int> GetChartId(string city, string title) =>
+            await ChartRepo.GetChartIdAsync(city, title);
 
         public async Task<List<ValueTuple<string, string>>> GetChartsCitiesTitles() =>
-            await ChartRepo.GetAllChartCityTitleAsync() ?? [];
+            await ChartRepo.GetAllChartCityTitleAsync();
 
+        public async Task<BranchDTO> GetBranch(int branchId) =>
+            CntBranch.Convert(await ChartRepo.GetBranchByIdAsync(branchId));
 
-        public async Task<BranchDTO> GetBranch(int branchId)
-        {
-            Branch branch = await ChartRepo.GetBranchByIdAsync(branchId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.BranchIdMisMatch,
-                    $"Не найдена ветка с йади {branchId}"
-                );
-
-            return CntBranch.Convert(branch);
-        }
-
-        public async Task<int> GetChartBranchId(string title, int chartId)
-        {
-            int id = await ChartRepo.GetBranchIdAsync(title, chartId);
-
-            if (id < 0)
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.BranchTitleChartIdMisMatch,
-                    $"Не найдена ветка '{title}' в схема с айди {chartId}"
-                );
-
-            return id;
-        }
+        public async Task<int> GetChartBranchId(string title, int chartId) =>
+            await ChartRepo.GetBranchIdAsync(title, chartId);
 
         public async Task<List<string>> GetChartBranchTitles(int chartId) =>
-            await ChartRepo.GetAllChartBranchTitleAsync(chartId) ?? [];
+            await ChartRepo.GetAllChartBranchTitleAsync(chartId);
 
-        
-        public async Task<StationDTO> GetStation(int stationId)
-        {
-            Station station = await ChartRepo.GetStationByIdAsync(stationId) ?? 
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.StationIdMisMatch,
-                    $"Не найдена станция с айди {stationId}"
-                );
+        public async Task<StationDTO> GetStation(int stationId) =>
+            CntStation.Convert(await ChartRepo.GetStationByIdAsync(stationId));
 
-            return CntStation.Convert(station);
-        }
-
-        public async Task<int> GetBranchStationId(string title, int branchId)
-        {
-            int id = await ChartRepo.GetStationIdAsync(title, branchId);
-
-            if (id < 0)
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.StationTitleBranchIdMisMatch,
-                    $"Не найдена станция '{title}' на ветка с айди {branchId}"
-                );
-
-            return id;
-        }
+        public async Task<int> GetBranchStationId(string title, int branchId) =>
+            await ChartRepo.GetStationIdAsync(title, branchId);
 
         public async Task<List<string>> GetBranchStationTitles(int branchId) =>
-            await ChartRepo.GetAllBranchStationTitleAsync(branchId) ?? [];
+            await ChartRepo.GetAllBranchStationTitleAsync(branchId);
 
 
         // Изменение атрибутов таблицы Chart
         public async Task UpdateChartTitle(string title, int chartId)
         {
-            Chart chart = await ChartRepo.GetChartByIdAsync(chartId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.ChartIdMisMatch,
-                    $"Не найдена схема с айди {chartId}"
-                );
-
+            Chart chart = await ChartRepo.GetChartByIdAsync(chartId);
             chart.Title = title;
-
             await ChartRepo.UpdateChartByIdAsync(chartId, chart);
         }
 
         public async Task UpdateChartCity(string city, int chartId)
         {
-            Chart chart = await ChartRepo.GetChartByIdAsync(chartId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.ChartIdMisMatch,
-                    $"Не найдена схема с айди {chartId}"
-                );
-
+            Chart chart = await ChartRepo.GetChartByIdAsync(chartId);
             chart.City = city;
-
             await ChartRepo.UpdateChartByIdAsync(chartId, chart);
         }
 
         public async Task UpdateChartSvg_inst(string svgInst, int chartId)
         {
-            Chart chart = await ChartRepo.GetChartByIdAsync(chartId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.ChartIdMisMatch,
-                    $"Не найдена схема с айди {chartId}"
-                );
-
+            Chart chart = await ChartRepo.GetChartByIdAsync(chartId);
             chart.SvgInst = svgInst;
-
             await ChartRepo.UpdateChartByIdAsync(chartId, chart);
         }
 
@@ -139,40 +65,22 @@ namespace MetroGid.Core.Services
         // Изменение атрибутов таблицы Branch
         public async Task UpdateBranchTitle(string title, int branchId)
         {
-            Branch branch = await ChartRepo.GetBranchByIdAsync(branchId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.BranchIdMisMatch,
-                    $"Не найдена ветка с айди {branchId}"
-                );
-
+            Branch branch = await ChartRepo.GetBranchByIdAsync(branchId);
             branch.Title = title;
-
             await ChartRepo.UpdateBranchByIdAsync(branchId, branch);
         }
 
         public async Task UpdateBranchColor(int color, int branchId)
         {
-            Branch branch = await ChartRepo.GetBranchByIdAsync(branchId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.BranchIdMisMatch,
-                    $"Не найдена ветка с айди {branchId}"
-                );
-
+            Branch branch = await ChartRepo.GetBranchByIdAsync(branchId);
             branch.Color = color;
-
             await ChartRepo.UpdateBranchByIdAsync(branchId, branch);
         }
 
         public async Task UpdateBranchAccessType(AccessTypeDTO type, int branchId)
         {
-            Branch branch = await ChartRepo.GetBranchByIdAsync(branchId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.BranchIdMisMatch,
-                    $"Не найдена ветка с айди {branchId}"
-                );
-
+            Branch branch = await ChartRepo.GetBranchByIdAsync(branchId);
             branch.Type = CntAccessType.Convert(type);
-
             await ChartRepo.UpdateBranchByIdAsync(branchId, branch);
         }
 
@@ -180,66 +88,36 @@ namespace MetroGid.Core.Services
         // Изменение атрибутов таблицы Station
         public async Task UpdateStationTitle(string title, int stationId)
         {
-            Station station = await ChartRepo.GetStationByIdAsync(stationId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.StationIdMisMatch,
-                    $"Не найдена станция с айди {stationId}"
-                );
-
+            Station station = await ChartRepo.GetStationByIdAsync(stationId);
             station.Title = title;
-
             await ChartRepo.UpdateStationByIdAsync(stationId, station);
         }
 
         public async Task UpdateStationOccupancy(int occupancy, int stationId)
         {
-            Station station = await ChartRepo.GetStationByIdAsync(stationId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.StationIdMisMatch,
-                    $"Не найдена станция с айди {stationId}"
-                );
-
+            Station station = await ChartRepo.GetStationByIdAsync(stationId);
             station.Occupancy = occupancy;
-
             await ChartRepo.UpdateStationByIdAsync(stationId, station);
         }
 
         public async Task UpdateStationAccessType(AccessTypeDTO type, int stationId)
         {
-            Station station = await ChartRepo.GetStationByIdAsync(stationId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.StationIdMisMatch,
-                    $"Не найдена станция с айди {stationId}"
-                );
-
+            Station station = await ChartRepo.GetStationByIdAsync(stationId);
             station.Type = CntAccessType.Convert(type);
-
             await ChartRepo.UpdateStationByIdAsync(stationId, station);
         }
 
         public async Task UpdateStationOpenTime(string time, int stationId)
         {
-            Station station = await ChartRepo.GetStationByIdAsync(stationId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.StationIdMisMatch,
-                    $"Не найдена станция с айди {stationId}"
-                );
-
+            Station station = await ChartRepo.GetStationByIdAsync(stationId);
             station.OpenTime = TimeConverter.FromString(time);
-
             await ChartRepo.UpdateStationByIdAsync(stationId, station);
         }
 
         public async Task UpdateStationCloseTime(string time, int stationId)
         {
-            Station station = await ChartRepo.GetStationByIdAsync(stationId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.StationIdMisMatch,
-                    $"Не найдена станция с айди {stationId}"
-                );
-
+            Station station = await ChartRepo.GetStationByIdAsync(stationId);
             station.CloseTime = TimeConverter.FromString(time);
-
             await ChartRepo.UpdateStationByIdAsync(stationId, station);
         }
 
@@ -247,66 +125,36 @@ namespace MetroGid.Core.Services
         // Изменение атрибутов таблицы Transition
         public async Task UpdateTransitionOccupancy(int occupancy, int transitionId)
         {
-            Transition transition = await ChartRepo.GetTransitionByIdAsync(transitionId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.TransitionIdMisMatch,
-                    $"Не найден переход с айди {transitionId}"
-                );
-
+            Transition transition = await ChartRepo.GetTransitionByIdAsync(transitionId);
             transition.Occupancy = occupancy;
-
             await ChartRepo.UpdateTransitionByIdAsync(transitionId, transition);
         }
 
         public async Task UpdateTransitionAccessType(AccessTypeDTO type, int transitionId)
         {
-            Transition transition = await ChartRepo.GetTransitionByIdAsync(transitionId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.TransitionIdMisMatch,
-                    $"Не найден переход с айди {transitionId}"
-                );
-
+            Transition transition = await ChartRepo.GetTransitionByIdAsync(transitionId);
             transition.Type = CntAccessType.Convert(type);
-
             await ChartRepo.UpdateTransitionByIdAsync(transitionId, transition);
         }
 
         public async Task UpdateTransitionDuration(string time, int transitionId)
         {
-            Transition transition = await ChartRepo.GetTransitionByIdAsync(transitionId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.TransitionIdMisMatch,
-                    $"Не найден переход с айди {transitionId}"
-                );
-
+            Transition transition = await ChartRepo.GetTransitionByIdAsync(transitionId);
             transition.Duration = TimeConverter.FromString(time);
-
             await ChartRepo.UpdateTransitionByIdAsync(transitionId, transition);
         }
 
         public async Task UpdateTransitionOpenTime(string time, int transitionId)
         {
-            Transition transition = await ChartRepo.GetTransitionByIdAsync(transitionId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.TransitionIdMisMatch,
-                    $"Не найден переход с айди {transitionId}"
-                );
-
+            Transition transition = await ChartRepo.GetTransitionByIdAsync(transitionId);
             transition.OpenTime = TimeConverter.FromString(time);
-
             await ChartRepo.UpdateTransitionByIdAsync(transitionId, transition);
         }
 
         public async Task UpdateTransitionCloseTime(string time, int transitionId)
         {
-            Transition transition = await ChartRepo.GetTransitionByIdAsync(transitionId) ??
-                throw new NotFoundException(
-                    NotFoundException.ErrorType.TransitionIdMisMatch,
-                    $"Не найден переход с айди {transitionId}"
-                );
-
+            Transition transition = await ChartRepo.GetTransitionByIdAsync(transitionId);
             transition.CloseTime = TimeConverter.FromString(time);
-
             await ChartRepo.UpdateTransitionByIdAsync(transitionId, transition);
         }
     }
