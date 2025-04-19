@@ -11,7 +11,7 @@ namespace MetroGid.Core.Services
         private readonly IChartRepository ChartRepo = chartRepo;
 
         public async Task<ChartDTO> GetChart(int chartId) =>
-            CntChart.Convert(await ChartRepo.GetChartByIdAsync(chartId));
+            CntChart.Convert(await ChartRepo.GetChartWeakByIdAsync(chartId));
 
         public async Task<int> GetChartId(string city, string title) =>
             await ChartRepo.GetChartIdAsync(city, title);
@@ -20,7 +20,7 @@ namespace MetroGid.Core.Services
             await ChartRepo.GetAllChartCityTitleAsync();
 
         public async Task<BranchDTO> GetBranch(int branchId) =>
-            CntBranch.Convert(await ChartRepo.GetBranchByIdAsync(branchId));
+            CntBranch.Convert(await ChartRepo.GetBranchWeakByIdAsync(branchId));
 
         public async Task<int> GetChartBranchId(string title, int chartId) =>
             await ChartRepo.GetBranchIdAsync(title, chartId);
@@ -29,7 +29,7 @@ namespace MetroGid.Core.Services
             await ChartRepo.GetAllChartBranchTitleAsync(chartId);
 
         public async Task<StationDTO> GetStation(int stationId) =>
-            CntStation.Convert(await ChartRepo.GetStationByIdAsync(stationId));
+            CntStation.Convert(await ChartRepo.GetStationWeakByIdAsync(stationId));
 
         public async Task<int> GetBranchStationId(string title, int branchId) =>
             await ChartRepo.GetStationIdAsync(title, branchId);
@@ -41,21 +41,21 @@ namespace MetroGid.Core.Services
         // Изменение атрибутов таблицы Chart
         public async Task UpdateChartTitle(string title, int chartId)
         {
-            Chart chart = await ChartRepo.GetChartByIdAsync(chartId);
+            Chart chart = await ChartRepo.GetChartWeakByIdAsync(chartId);
             chart.Title = title;
             await ChartRepo.UpdateChartByIdAsync(chartId, chart);
         }
 
         public async Task UpdateChartCity(string city, int chartId)
         {
-            Chart chart = await ChartRepo.GetChartByIdAsync(chartId);
+            Chart chart = await ChartRepo.GetChartWeakByIdAsync(chartId);
             chart.City = city;
             await ChartRepo.UpdateChartByIdAsync(chartId, chart);
         }
 
         public async Task UpdateChartSvg_inst(string svgInst, int chartId)
         {
-            Chart chart = await ChartRepo.GetChartByIdAsync(chartId);
+            Chart chart = await ChartRepo.GetChartWeakByIdAsync(chartId);
             chart.SvgInst = svgInst;
             await ChartRepo.UpdateChartByIdAsync(chartId, chart);
         }
@@ -64,21 +64,21 @@ namespace MetroGid.Core.Services
         // Изменение атрибутов таблицы Branch
         public async Task UpdateBranchTitle(string title, int branchId)
         {
-            Branch branch = await ChartRepo.GetBranchByIdAsync(branchId);
+            Branch branch = await ChartRepo.GetBranchWeakByIdAsync(branchId);
             branch.Title = title;
             await ChartRepo.UpdateBranchByIdAsync(branchId, branch);
         }
 
         public async Task UpdateBranchColor(int color, int branchId)
         {
-            Branch branch = await ChartRepo.GetBranchByIdAsync(branchId);
+            Branch branch = await ChartRepo.GetBranchWeakByIdAsync(branchId);
             branch.Color = color;
             await ChartRepo.UpdateBranchByIdAsync(branchId, branch);
         }
 
         public async Task UpdateBranchAccessType(AccessTypeDTO type, int branchId)
         {
-            Branch branch = await ChartRepo.GetBranchByIdAsync(branchId);
+            Branch branch = await ChartRepo.GetBranchWeakByIdAsync(branchId);
             branch.Type = CntAccessType.Convert(type);
             await ChartRepo.UpdateBranchByIdAsync(branchId, branch);
         }
@@ -87,35 +87,35 @@ namespace MetroGid.Core.Services
         // Изменение атрибутов таблицы Station
         public async Task UpdateStationTitle(string title, int stationId)
         {
-            Station station = await ChartRepo.GetStationByIdAsync(stationId);
+            Station station = await ChartRepo.GetStationWeakByIdAsync(stationId);
             station.Title = title;
             await ChartRepo.UpdateStationByIdAsync(stationId, station);
         }
 
         public async Task UpdateStationOccupancy(int occupancy, int stationId)
         {
-            Station station = await ChartRepo.GetStationByIdAsync(stationId);
+            Station station = await ChartRepo.GetStationWeakByIdAsync(stationId);
             station.Occupancy = occupancy;
             await ChartRepo.UpdateStationByIdAsync(stationId, station);
         }
 
         public async Task UpdateStationAccessType(AccessTypeDTO type, int stationId)
         {
-            Station station = await ChartRepo.GetStationByIdAsync(stationId);
+            Station station = await ChartRepo.GetStationWeakByIdAsync(stationId);
             station.Type = CntAccessType.Convert(type);
             await ChartRepo.UpdateStationByIdAsync(stationId, station);
         }
 
         public async Task UpdateStationOpenTime(string time, int stationId)
         {
-            Station station = await ChartRepo.GetStationByIdAsync(stationId);
+            Station station = await ChartRepo.GetStationWeakByIdAsync(stationId);
             station.OpenTime = TimeConverter.FromString(time);
             await ChartRepo.UpdateStationByIdAsync(stationId, station);
         }
 
         public async Task UpdateStationCloseTime(string time, int stationId)
         {
-            Station station = await ChartRepo.GetStationByIdAsync(stationId);
+            Station station = await ChartRepo.GetStationWeakByIdAsync(stationId);
             station.CloseTime = TimeConverter.FromString(time);
             await ChartRepo.UpdateStationByIdAsync(stationId, station);
         }
