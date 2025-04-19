@@ -6,9 +6,10 @@ namespace MetroGid.DBA.Interfaces
     {
         Task<int> AddAsync(Chart chart);
 
-        Task<Chart> GetChartByIdAsync(int chartId);
-        Task<Branch> GetBranchByIdAsync(int branchId);
-        Task<Station> GetStationByIdAsync(int stationId);
+        Task<string> GetChartJsonByIdAsync(int chartId);
+        Task<Chart> GetChartWeakByIdAsync(int chartId);
+        Task<Branch> GetBranchWeakByIdAsync(int branchId);
+        Task<Station> GetStationWeakByIdAsync(int stationId);
         Task<Railway> GetRailwayByIdAsync(int railwayId);
         Task<Transition> GetTransitionByIdAsync(int transitionId);
 
