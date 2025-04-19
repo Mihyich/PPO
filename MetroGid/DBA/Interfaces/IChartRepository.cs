@@ -20,7 +20,7 @@ namespace MetroGid.DBA.Interfaces
         Task<List<int>> GetAllChartBranchIdAsync(int chartId);
         Task<List<int>> GetAllBranchStationIdAsync(int branchId);
 
-        Task<List<ValueTuple<string, string>>?> GetAllChartCityTitleAsync(); // <City, Title>
+        Task<List<ValueTuple<string, string>>> GetAllChartCityTitleAsync(); // <City, Title>
         Task<List<string>> GetAllChartBranchTitleAsync(int chartId);
         Task<List<string>> GetAllBranchStationTitleAsync(int branchId);
 
