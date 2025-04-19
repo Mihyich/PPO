@@ -7,7 +7,7 @@ class Program
     {
         BuilderChart builder = new();
         // DirectorChartJson director = new(builder, "/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Minsk/init.json");
-        DirectorChartJson director = new(builder, "/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Sankt-Peterburg/init.json");
+        DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Sankt-Peterburg/init.json"));
         Chart? chart = director.Construct();
 
         if (chart != null)
