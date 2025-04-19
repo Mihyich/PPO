@@ -3,9 +3,9 @@ using MetroGid.Core.Models;
 
 namespace MetroGid.Core.Utilities
 {
-    public class DirectorChartJson(BuilderChartBase builder, string file_path) : DirectorChartBase(builder)
+    public class DirectorChartJson(BuilderChartBase builder, string jsonContent) : DirectorChartBase(builder)
     {
-        private string FilePath = file_path;
+        private readonly string JsonContent = jsonContent;
         private readonly JsonSerializerOptions options = new()
         {
             PropertyNameCaseInsensitive = true // camelCase
@@ -13,7 +13,7 @@ namespace MetroGid.Core.Utilities
 
         public override Chart? Construct()
         {
-            ChartJsonDto chartDto = Deserialize(ReadJson());
+            ChartJsonDto chartDto = Deserialize(JsonContent);
 
             foreach (var branch in chartDto.Branches)
             {
@@ -52,16 +52,6 @@ namespace MetroGid.Core.Utilities
             Builder.BuildChart(chartDto.Title, chartDto.City, "");
 
             return Builder.GetResult();
-        }
-
-        private string ReadJson()
-        {
-            if (!File.Exists(FilePath))
-            {
-                throw new FileNotFoundException($"JSON файл не найден: {FilePath}");
-            }
-
-            return File.ReadAllText(FilePath);
         }
 
         private ChartJsonDto Deserialize(string jsonContent)
