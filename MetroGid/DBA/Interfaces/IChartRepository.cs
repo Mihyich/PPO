@@ -10,7 +10,7 @@ namespace MetroGid.DBA.Interfaces
         Task<Branch> GetBranchByIdAsync(int branchId);
         Task<Station> GetStationByIdAsync(int stationId);
         Task<Railway> GetRailwayByIdAsync(int railwayId);
-        Task<Transition?> GetTransitionByIdAsync(int transitionId);
+        Task<Transition> GetTransitionByIdAsync(int transitionId);
 
         Task<int> GetChartIdAsync(string city, string title);
         Task<int> GetBranchIdAsync(string title, int chartId);
