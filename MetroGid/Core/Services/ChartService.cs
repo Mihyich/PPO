@@ -1,6 +1,5 @@
 using MetroGid.Controllers.DTO;
 using MetroGid.Controllers.Interfaces;
-using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Models;
 using MetroGid.Core.Utilities;
 using MetroGid.DBA.Interfaces;
