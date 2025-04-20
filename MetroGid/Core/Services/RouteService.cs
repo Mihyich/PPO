@@ -17,13 +17,14 @@ namespace MetroGid.Core.Services
             string branchDstTitle, string stationDstTitle)
         {
             BuilderChart builder = new();
+
             DirectorChartJson director = new(
                 builder,
                 await ChartRepo.GetChartJsonByIdAsync(
                     await ChartRepo.GetChartIdAsync(city, chartTitle))
             );
 
-            Chart? chart = director.Construct();
+            Chart chart = director.Construct();
             chart.Searcher = new StrategySearchRouteDijkstra();
             Station? src = chart?.GetStation(branchSrcTitle, stationSrcTitle);
             Station? dst = chart?.GetStation(branchDstTitle, stationDstTitle);
