@@ -8,7 +8,7 @@ namespace MetroGid.Core.Exceptions.Classification
         IncorrectJsonFormat,
         NullResult,
         NullArgument,
-        NotFound,
-        AccessDenied,
+        UnexpectedBehavior,
+        NotFound
     }
 }
