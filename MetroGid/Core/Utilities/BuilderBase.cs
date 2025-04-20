@@ -4,6 +4,6 @@ namespace MetroGid.Core.Utilities
     {
         protected T? Chart;
 
-        public abstract T? GetResult();
+        public abstract T GetResult();
     }
 }
