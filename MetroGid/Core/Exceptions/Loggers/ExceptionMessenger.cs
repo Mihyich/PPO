@@ -25,6 +25,21 @@ namespace MetroGid.Core.Exceptions.Loggers
             throw new NotImplementedException();
         }
 
+        public void Visit(JsonDeserializeException ex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(JsonValidationException ex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(BuilderValidationException ex)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Visit(NotFoundException ex)
         {
             throw new NotImplementedException();
