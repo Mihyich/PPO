@@ -1,6 +1,10 @@
+using MetroGid.Core.Utilities.Validators.Interfaces;
+
 namespace MetroGid.Core.Models
 {
-    public class Station(string title, int occupancy, AccessType type, TimeOnly opentime, TimeOnly closetime)
+    public class Station(
+        string title, int occupancy, AccessType type,
+        TimeOnly opentime, TimeOnly closetime) : IDomainValidatorAccepter
     {
         public string Title { get; set; } = title;
         public int Occupancy { get; set; } = occupancy;
@@ -25,5 +29,7 @@ namespace MetroGid.Core.Models
             Branch == null || ((Station)obj).Branch == null) &&
             Title == ((Station)obj).Title &&
             Branch.Title == ((Station)obj).Branch?.Title;
+
+        public void Validate(IDomainValidatorVisitor visitor) => visitor.Visit(this);
     }
 }

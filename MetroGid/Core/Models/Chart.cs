@@ -1,8 +1,9 @@
 using MetroGid.Core.Utilities;
+using MetroGid.Core.Utilities.Validators.Interfaces;
 
 namespace MetroGid.Core.Models
 {
-    public class Chart(string title, string city, string svg_inst)
+    public class Chart(string title, string city, string svg_inst) : IDomainValidatorAccepter
     {
         public string Title { get; set; } = title;
         public string City { get; set; } = city;
@@ -31,5 +32,7 @@ namespace MetroGid.Core.Models
 
             return route;
         }
+
+        public void Validate(IDomainValidatorVisitor visitor) => visitor.Visit(this);
     }
 }
