@@ -4,6 +4,10 @@ namespace MetroGid.Core.Exceptions.Classification
     {
         ValidationFailed,
         ItemAlreadyInUse,
+        FailedJsonDeserializing,
+        IncorrectJsonFormat,
+        NullResult,
+        NullArgument,
         NotFound,
         AccessDenied,
     }
