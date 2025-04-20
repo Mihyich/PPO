@@ -5,12 +5,22 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <NoWarn>1591</NoWarn> <!-- Отключение предупреждений из-за отсутсвия документации для публичных методов -->
   </PropertyGroup>
 
-  <!-- В релизе строки могут схлопываться -->
-  <PropertyGroup>
-    <DebugType>embedded</DebugType>
+  <!-- Debug конфигурация -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <!-- Release конфигурация -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>true</Optimize>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
