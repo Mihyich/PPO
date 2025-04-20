@@ -1,3 +1,5 @@
+using MetroGid.Core.Exceptions.Classification;
+using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Models;
 
 namespace MetroGid.Core.Utilities
@@ -101,9 +103,11 @@ namespace MetroGid.Core.Utilities
             };
         }
 
-        public override Chart? GetResult()
-        {
-            return Chart;
-        }
+        public override Chart GetResult() =>
+            Chart ??
+                throw new BuilderValidationException(
+                    "BuilderChart не создал конечный продукт (null)",
+                    ExceptionType.Error,
+                    ExceptionReason.NullResult);
     }
 }
