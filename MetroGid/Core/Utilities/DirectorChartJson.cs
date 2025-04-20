@@ -1,4 +1,6 @@
 using System.Text.Json;
+using MetroGid.Core.Exceptions.Classification;
+using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Models;
 
 namespace MetroGid.Core.Utilities
@@ -11,7 +13,7 @@ namespace MetroGid.Core.Utilities
             PropertyNameCaseInsensitive = true // camelCase
         };
 
-        public override Chart? Construct()
+        public override Chart Construct()
         {
             ChartJsonDto chartDto = Deserialize(JsonContent);
 
@@ -56,19 +58,37 @@ namespace MetroGid.Core.Utilities
 
         private ChartJsonDto Deserialize(string jsonContent)
         {
-            ChartJsonDto? chartDto;
+            ChartJsonDto chartDto;
+
             try
             {
-                chartDto = JsonSerializer.Deserialize<ChartJsonDto>(jsonContent, options);
+                chartDto = JsonSerializer.Deserialize<ChartJsonDto>(jsonContent, options) ??
+                    throw new JsonValidationException(
+                        "Результат десериализации null",
+                        ExceptionType.Error,
+                        ExceptionReason.NullResult);
             }
             catch (JsonException ex)
             {
-                throw new InvalidOperationException("Ошибка при парсинге JSON", ex);
+                throw new JsonDeserializeException(
+                    $"Ошибка формата JSON: {ex.Message}",
+                    ExceptionType.Error,
+                    ExceptionReason.FailedJsonDeserializing
+                );
             }
-
-            if (chartDto == null)
+            catch (ArgumentNullException)
             {
-                throw new InvalidOperationException("Не удалось десериализовать JSON");
+                throw new JsonValidationException(
+                    "Отсутствуют данные для десериализации (null)",
+                    ExceptionType.Error,
+                    ExceptionReason.NullArgument);
+            }
+            catch (NotSupportedException)
+            {
+                throw new JsonValidationException(
+                    "Неподдерживаемый формат данных в JSON",
+                    ExceptionType.Error,
+                    ExceptionReason.IncorrectJsonFormat);
             }
 
             return chartDto;
