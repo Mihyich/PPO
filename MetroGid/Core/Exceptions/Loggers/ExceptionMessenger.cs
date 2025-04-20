@@ -40,6 +40,11 @@ namespace MetroGid.Core.Exceptions.Loggers
             throw new NotImplementedException();
         }
 
+        public void Visit(BuilderProccessException ex)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Visit(NotFoundException ex)
         {
             throw new NotImplementedException();
