@@ -1,9 +1,12 @@
 using MetroGid.Core.Models;
+using MetroGid.Core.Utilities.Validators.Handlers;
 
 namespace MetroGid.Core.Utilities
 {
     public abstract class BuilderChartBase : BuilderBase<Chart>
     {
+        protected ThrowableDomainAttribsValidator DomainAttribsValidator = new();
+        protected ThrowableDomainReferentialityValidator DomainReferentialityValidator = new();
 
         public abstract void BuildBranch(string title, int color, AccessType type);
 

@@ -11,6 +11,7 @@ namespace MetroGid.Core.Utilities
         public override void BuildBranch(string title, int color, AccessType type)
         {
             Branch branch = new(title, color, type);
+            branch.Validate(DomainAttribsValidator);
             Branches.Add(branch);
         }
 
@@ -24,8 +25,17 @@ namespace MetroGid.Core.Utilities
             if ((branch = Branches.FirstOrDefault(b => b.Title == branch_title)) != null)
             {
                 Station station = new(title, occupancy, type, opentime, closetime);
+                station.Validate(DomainAttribsValidator);
                 branch.Stations.Add(station);
                 station.Branch = branch;
+            }
+            else
+            {
+                throw new BuilderProccessException(
+                    $"Создание станции невозможно, поскольку в списке созданных веток не найдена ветка: '{branch_title}'",
+                    ExceptionType.Error,
+                    ExceptionReason.NotFound
+                );
             }
         }
 
@@ -38,31 +48,69 @@ namespace MetroGid.Core.Utilities
             Station? src;
             Station? dst;
 
-            if (
-                station_title_src != station_title_dst &&
-                (branch = Branches.FirstOrDefault(b => b.Title == branch_title)) != null &&
-                (src = branch.Stations.FirstOrDefault(s => s.Title == station_title_src)) != null &&
-                (dst = branch.Stations.FirstOrDefault(s => s.Title == station_title_dst)) != null
-            )
+            if (station_title_src == station_title_dst)
             {
-                Railway railway = new(duration);
+                throw new BuilderValidationException(
+                    $"Попытка создания переезда между одними и теми же станциями - '{station_title_src}'",
+                    ExceptionType.Warning,
+                    ExceptionReason.ValidationFailed
+                );
+            }
 
-                if (!src.HasNext() && !dst.HasPrev())
-                {
-                    railway.Prev = src;
-                    railway.Next = dst;
+            if ((branch = Branches.FirstOrDefault(b => b.Title == branch_title)) == null)
+            {
+                throw new BuilderProccessException(
+                    $"Создание переезда невозможно, поскольку в списке созданных веток не найдена ветка: '{branch_title}'",
+                    ExceptionType.Error,
+                    ExceptionReason.NotFound
+                );
+            }
 
-                    src.Next = railway;
-                    dst.Prev = railway;
-                }
-                else if (!dst.HasNext() && !src.HasPrev())
-                {
-                    railway.Prev = dst;
-                    railway.Next = src;
+            if ((src = branch.Stations.FirstOrDefault(s => s.Title == station_title_src)) == null)
+            {
+                throw new BuilderProccessException(
+                    $"Создание переезда невозможно, поскольку в списке созданных станций ветки '{branch_title}' не найдена станция: '{station_title_src}'",
+                    ExceptionType.Error,
+                    ExceptionReason.NotFound
+                );
+            }
 
-                    dst.Next = railway;
-                    src.Prev = railway;
-                }
+            if ((dst = branch.Stations.FirstOrDefault(s => s.Title == station_title_dst)) == null)
+            {
+                throw new BuilderProccessException(
+                    $"Создание переезда невозможно, поскольку в списке созданных станций ветки '{branch_title}' не найдена станция: '{station_title_dst}'",
+                    ExceptionType.Error,
+                    ExceptionReason.NotFound
+                );
+            }
+
+            
+            Railway railway = new(duration);
+            railway.Validate(DomainAttribsValidator);
+
+            if (!src.HasNext() && !dst.HasPrev())
+            {
+                railway.Prev = src;
+                railway.Next = dst;
+
+                src.Next = railway;
+                dst.Prev = railway;
+            }
+            else if (!dst.HasNext() && !src.HasPrev())
+            {
+                railway.Prev = dst;
+                railway.Next = src;
+
+                dst.Next = railway;
+                src.Prev = railway;
+            }
+            else
+            {
+                throw new BuilderProccessException(
+                    "Достигнут предположительно недостижимый фрагмент кода! Иди чини алгоритм",
+                    ExceptionType.Critical,
+                    ExceptionReason.UnexpectedBehavior
+                );
             }
         }
 
@@ -76,23 +124,61 @@ namespace MetroGid.Core.Utilities
             Station? station_src;
             Station? station_dst;
 
-            if (
-                branch_title_src != branch_title_dst &&
-                (branch_src = Branches.FirstOrDefault(b => b.Title == branch_title_src)) != null &&
-                (branch_dst = Branches.FirstOrDefault(b => b.Title == branch_title_dst)) != null &&
-                (station_src = branch_src.Stations.FirstOrDefault(s => s.Title == station_title_src)) != null &&
-                (station_dst = branch_dst.Stations.FirstOrDefault(s => s.Title == station_title_dst)) != null
-            )
+            if (branch_title_src == branch_title_dst)
             {
-                Transition transition = new(occupancy, type, duration, opentime, closetime)
-                {
-                    From = station_src,
-                    To = station_dst
-                };
-
-                station_src.Transitions.Add(transition);
-                station_dst.Transitions.Add(transition);
+                throw new BuilderValidationException(
+                    $"Попытка создания перехода между одними и теми же ветками - '{branch_title_src}'",
+                    ExceptionType.Warning,
+                    ExceptionReason.ValidationFailed
+                );
             }
+
+            if ((branch_src = Branches.FirstOrDefault(b => b.Title == branch_title_src)) == null)
+            {
+                throw new BuilderProccessException(
+                    $"Создание перехода невозможно, поскольку в списке созданных веток не найдена ветка: '{branch_title_src}'",
+                    ExceptionType.Error,
+                    ExceptionReason.NotFound
+                );
+            }
+
+            if ((branch_dst = Branches.FirstOrDefault(b => b.Title == branch_title_dst)) == null)
+            {
+                throw new BuilderProccessException(
+                    $"Создание перехода невозможно, поскольку в списке созданных веток не найдена ветка: '{branch_title_dst}'",
+                    ExceptionType.Error,
+                    ExceptionReason.NotFound
+                );
+            }
+
+            if ((station_src = branch_src.Stations.FirstOrDefault(s => s.Title == station_title_src)) == null)
+            {
+                throw new BuilderProccessException(
+                    $"Создание перехода невозможно, поскольку в списке созданных станций ветки '{branch_title_src}' не найдена станция: '{station_title_src}'",
+                    ExceptionType.Error,
+                    ExceptionReason.NotFound
+                );
+            }
+
+            if ((station_dst = branch_dst.Stations.FirstOrDefault(s => s.Title == station_title_dst)) == null)
+            {
+                throw new BuilderProccessException(
+                    $"Создание перехода невозможно, поскольку в списке созданных станций ветки '{branch_title_dst}' не найдена станция: '{station_title_dst}'",
+                    ExceptionType.Error,
+                    ExceptionReason.NotFound
+                );
+            }
+
+            Transition transition = new(occupancy, type, duration, opentime, closetime)
+            {
+                From = station_src,
+                To = station_dst
+            };
+
+            transition.Validate(DomainAttribsValidator);
+
+            station_src.Transitions.Add(transition);
+            station_dst.Transitions.Add(transition);
         }
 
         public override void BuildChart(string title, string city, string svg_inst)
@@ -101,6 +187,9 @@ namespace MetroGid.Core.Utilities
             {
                 Branches = Branches
             };
+
+            Chart.Validate(DomainAttribsValidator);
+            Chart.Validate(DomainReferentialityValidator);
         }
 
         public override Chart GetResult() =>
