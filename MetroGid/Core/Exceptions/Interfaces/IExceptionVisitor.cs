@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.Marshalling;
 using MetroGid.Core.Exceptions.Concrete;
 
 namespace MetroGid.Core.Exceptions.Interfaces
