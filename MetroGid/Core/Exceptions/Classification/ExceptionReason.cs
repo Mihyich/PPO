@@ -8,6 +8,10 @@ namespace MetroGid.Core.Exceptions.Classification
         IncorrectJsonFormat,
         NullResult,
         NullArgument,
+        EmptyString,
+        StringLenghtOutOfRange,
+        ValueOutOfRange,
+        NotLogicValue,
         UnexpectedBehavior,
         NotFound
     }
