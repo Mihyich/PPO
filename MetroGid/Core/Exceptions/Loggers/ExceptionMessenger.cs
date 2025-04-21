@@ -45,6 +45,11 @@ namespace MetroGid.Core.Exceptions.Loggers
             throw new NotImplementedException();
         }
 
+        public void Visit(DomainValidationException ex)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Visit(NotFoundException ex)
         {
             throw new NotImplementedException();

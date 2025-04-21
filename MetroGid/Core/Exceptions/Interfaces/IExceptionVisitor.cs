@@ -12,6 +12,7 @@ namespace MetroGid.Core.Exceptions.Interfaces
         void Visit(JsonValidationException ex);
         void Visit(BuilderValidationException ex);
         void Visit(BuilderProccessException ex);
+        void Visit(DomainValidationException ex);
         void Visit(NotFoundException ex);
     }
 }
