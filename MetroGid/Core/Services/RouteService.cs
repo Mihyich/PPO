@@ -16,20 +16,22 @@ namespace MetroGid.Core.Services
             string branchSrcTitle, string stationSrcTitle,
             string branchDstTitle, string stationDstTitle)
         {
-            BuilderChart builder = new();
+            // BuilderChart builder = new();
 
-            DirectorChartJson director = new(
-                builder,
-                await ChartRepo.GetChartJsonByIdAsync(
-                    await ChartRepo.GetChartIdAsync(city, chartTitle))
-            );
+            // DirectorChartJson director = new(
+            //     builder,
+            //     await ChartRepo.GetChartJsonByIdAsync(
+            //         await ChartRepo.GetChartIdAsync(city, chartTitle))
+            // );
 
-            Chart chart = director.Construct();
-            chart.Searcher = new StrategySearchRouteDijkstra();
-            Station? src = chart?.GetStation(branchSrcTitle, stationSrcTitle);
-            Station? dst = chart?.GetStation(branchDstTitle, stationDstTitle);
+            // Chart chart = director.Construct();
+            // chart.Searcher = new StrategySearchRouteDijkstra();
+            // Station? src = chart?.GetStation(branchSrcTitle, stationSrcTitle);
+            // Station? dst = chart?.GetStation(branchDstTitle, stationDstTitle);
 
-            return CntRoute.Convert(chart?.Search(src, dst));
+            // return CntRoute.Convert(chart?.Search(src, dst));
+
+            return default;
         }
 
         public Task SaveRoute(int clientId, RouteDTO route, int chartId) =>
