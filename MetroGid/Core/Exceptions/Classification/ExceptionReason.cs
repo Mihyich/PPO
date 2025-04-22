@@ -6,6 +6,7 @@ namespace MetroGid.Core.Exceptions.Classification
         ItemAlreadyInUse,
         FailedJsonDeserializing,
         IncorrectJsonFormat,
+        IncorrectLink,
         NullResult,
         NullArgument,
         EmptyString,
