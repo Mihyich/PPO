@@ -1,19 +1,24 @@
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
-using MetroGid.Core.Exceptions.Handlers;
+using MetroGid.Core.Exceptions.Interfaces;
+using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Models;
 using MetroGid.Core.Utilities.Validators.Interfaces;
 using MetroGid.Core.Utilities.Validators.Predicators;
 
 namespace MetroGid.Core.Utilities.Validators.Handlers
 {
-    public class ThrowableDomainAttribsValidator : IDomainValidatorVisitor
+    public class ThrowableDomainAttribsValidator(
+        SuperHandlerException handler,
+        IExceptionVisitor? logger = null
+    ) : IDomainValidatorVisitor
     {
-        private readonly WarningHandlerException handler = new();
+        private readonly SuperHandlerException Handler = handler;
+        private readonly IExceptionVisitor? Logger = logger;
 
         public void Visit(Chart chart)
         {
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = TitleP.IsEmpty(chart.Title);
@@ -28,10 +33,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = TitleP.IsOutOfRange(chart.Title);
@@ -46,10 +51,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = TitleP.IsEmpty(chart.City);
@@ -64,10 +69,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = TitleP.IsOutOfRange(chart.City);
@@ -82,7 +87,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
             // Что делать с svgInst???
@@ -90,7 +95,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
         
         public void Visit(Branch branch)
         {
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = TitleP.IsEmpty(branch.Title);
@@ -105,10 +110,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = TitleP.IsOutOfRange(branch.Title);
@@ -123,10 +128,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = ColorP.IsOutOfRange(branch.Color);
@@ -141,10 +146,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = AccessTypeP.IsOutOfRange((int)branch.Type);
@@ -159,13 +164,13 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
         }
 
         public void Visit(Station station)
         {
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = TitleP.IsEmpty(station.Title);
@@ -180,10 +185,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = TitleP.IsOutOfRange(station.Title);
@@ -198,10 +203,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = OccupancyP.IsOutOfRange(station.Occupancy);
@@ -216,10 +221,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = AccessTypeP.IsOutOfRange((int)station.Type);
@@ -234,10 +239,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = station.OpenTime == station.CloseTime;
@@ -252,7 +257,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
         }
 
@@ -263,7 +268,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
 
         public void Visit(Transition transition)
         {
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = OccupancyP.IsOutOfRange(transition.Occupancy);
@@ -278,10 +283,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = AccessTypeP.IsOutOfRange((int)transition.Type);
@@ -296,10 +301,10 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
 
-            handler.Snap(
+            Handler.Snap(
                 () =>
                 {
                     bool thrown = transition.OpenTime == transition.CloseTime;
@@ -314,7 +319,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     }
 
                     return thrown;
-                }
+                }, Logger
             );
         }
     }
