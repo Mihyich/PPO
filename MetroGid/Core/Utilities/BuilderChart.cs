@@ -1,10 +1,14 @@
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Models;
+using MetroGid.Core.Utilities.Validators.Interfaces;
 
 namespace MetroGid.Core.Utilities
 {
-    public class BuilderChart : BuilderChartBase
+    public class BuilderChart(
+        IDomainValidatorVisitor domainAttribsValidator,
+        IDomainValidatorVisitor domainReferentialityValidator
+    ) : BuilderChartBase(domainAttribsValidator, domainReferentialityValidator)
     {
         protected List<Branch> Branches = [];
 
@@ -107,7 +111,7 @@ namespace MetroGid.Core.Utilities
             else
             {
                 throw new BuilderProccessException(
-                    "Достигнут предположительно недостижимый фрагмент кода! Иди чини алгоритм",
+                    "Достигнут предположительно недостижимый фрагмент кода! Иди чини алгоритм!!!",
                     ExceptionType.Critical,
                     ExceptionReason.UnexpectedBehavior
                 );
