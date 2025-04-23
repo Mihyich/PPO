@@ -1,7 +1,7 @@
 using MetroGid.Core.Models;
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
-namespace MetroGid.Core.Utilities
+namespace MetroGid.Core.Utilities.Builders
 {
     public abstract class BuilderChartBase(
         IDomainValidatorVisitor domainAttribsValidator,

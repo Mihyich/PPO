@@ -1,4 +1,4 @@
-namespace MetroGid.Core.Utilities
+namespace MetroGid.Core.Utilities.Builders
 {
     public abstract class BuilderBase<T>
     {

@@ -1,4 +1,5 @@
 using MetroGid.Core.Models;
+using MetroGid.Core.Utilities.Builders;
 
 namespace MetroGid.Core.Utilities
 {

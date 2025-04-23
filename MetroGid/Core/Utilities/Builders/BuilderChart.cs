@@ -3,7 +3,7 @@ using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Models;
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
-namespace MetroGid.Core.Utilities
+namespace MetroGid.Core.Utilities.Builders
 {
     public class BuilderChart(
         IDomainValidatorVisitor domainAttribsValidator,
@@ -88,7 +88,7 @@ namespace MetroGid.Core.Utilities
                 );
             }
 
-            
+
             Railway railway = new(duration);
             railway.Validate(DomainAttribsValidator);
 
