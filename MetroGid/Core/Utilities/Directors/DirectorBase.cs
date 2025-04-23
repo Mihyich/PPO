@@ -1,4 +1,4 @@
-namespace MetroGid.Core.Utilities
+namespace MetroGid.Core.Utilities.Directors
 {
     public abstract class DirectorBase<T>()
     {

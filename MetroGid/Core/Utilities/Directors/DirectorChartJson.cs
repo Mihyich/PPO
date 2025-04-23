@@ -4,7 +4,7 @@ using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Models;
 using MetroGid.Core.Utilities.Builders;
 
-namespace MetroGid.Core.Utilities
+namespace MetroGid.Core.Utilities.Directors
 {
     public class DirectorChartJson(BuilderChartBase builder, string jsonContent) : DirectorChartBase(builder)
     {
