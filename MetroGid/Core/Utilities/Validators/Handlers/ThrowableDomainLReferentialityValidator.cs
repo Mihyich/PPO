@@ -20,12 +20,12 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
             Handler.Snap(
                 () =>
                 {
-                    bool thrown = chart.Branches.Capacity == 0;
+                    bool thrown = chart.Branches.Count == 0;
 
                     if (thrown)
                     {
                         throw new DomainValidationException(
-                            $"Схема '{chart.Title}' в городе '{chart.City}' не имеет ни одной ветви",
+                            $"Схема '{chart.Title}' в городе '{chart.City}' не имеет ни одной ветки",
                             ExceptionType.Warning,
                             ExceptionReason.NotFound
                         );
@@ -39,9 +39,8 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                 () =>
                 {
                     bool thrown = false;
-                    Chart? chartHead;
 
-                    if (chart.Branches.Capacity > 0 && (chartHead = chart.Branches[0].Chart) != null)
+                    if (chart.Branches.Count > 0)
                     {
                         foreach (Branch branch in chart.Branches)
                         {
@@ -56,7 +55,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                                 );
                             }
 
-                            if (branch.Chart != chartHead)
+                            if (branch.Chart != chart)
                             {
                                 thrown = true;
 
@@ -72,6 +71,9 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     return thrown;
                 }, Logger
             );
+
+            foreach (Branch branch in chart.Branches)
+                branch.Validate(this);
         }
 
         public void Visit(Branch branch)
@@ -79,7 +81,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
             Handler.Snap(
                 () =>
                 {
-                    bool thrown = branch.Stations.Capacity == 0;
+                    bool thrown = branch.Stations.Count == 0;
 
                     if (thrown)
                     {
@@ -98,9 +100,8 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                 () =>
                 {
                     bool thrown = false;
-                    Branch? branchHead;
 
-                    if (branch.Stations.Capacity > 0 && (branchHead = branch.Stations[0].Branch) != null)
+                    if (branch.Stations.Count > 0)
                     {
                         foreach (Station station in branch.Stations)
                         {
@@ -115,7 +116,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                                 );
                             }
 
-                            if (station.Branch != branchHead)
+                            if (station.Branch != branch)
                             {
                                 thrown = true;
 
@@ -131,21 +132,104 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     return thrown;
                 }, Logger
             );
+
+            foreach(Station station in branch.Stations)
+                station.Validate(this);
         }
 
         public void Visit(Station station)
         {
-            throw new NotImplementedException();
+            Handler.Snap(
+                () =>
+                {
+                    bool thrown = false;
+
+                    Branch? prevBranchHead = station.Prev?.Prev?.Branch ?? null;
+                    Branch? curBranchHead = station.Branch ?? null;
+                    Branch? nextBranchHead = station.Next?.Next?.Branch ?? null;
+                    
+                    if (thrown = curBranchHead == null)
+                        throw new DomainValidationException(
+                            $"Станция {station.Title} не связана с родной веткой",
+                            ExceptionType.Error,
+                            ExceptionReason.NullArgument
+                        );
+
+                    if (thrown = prevBranchHead != null && prevBranchHead != curBranchHead)
+                        throw new DomainValidationException(
+                            $"Станция {station.Title} ведет на станцию {station?.Prev?.Prev?.Title ?? "Неизвестно"} связанной с не родной веткой",
+                            ExceptionType.Error,
+                            ExceptionReason.IncorrectLink
+                        );
+
+                    if (thrown = nextBranchHead != null && nextBranchHead != curBranchHead)
+                        throw new DomainValidationException(
+                            $"Станция {station.Title} ведет на станцию {station?.Next?.Next?.Title ?? "Неизвестно"} связанной с не родной веткой",
+                            ExceptionType.Error,
+                            ExceptionReason.IncorrectLink
+                        );
+
+                    return thrown;
+                }, Logger
+            );
+
+            station.Prev?.Validate(this);
+            station.Next?.Validate(this);
+
+            foreach (Transition transition in station.Transitions)
+                transition.Validate(this);
         }
 
         public void Visit(Railway railway)
         {
-            throw new NotImplementedException();
+            Handler.Snap(
+                () =>
+                {
+                    bool thrown = false;
+
+                    if (thrown = railway.Prev == null)
+                        throw new DomainValidationException(
+                            "Переезд не имеет Prev ссылки",
+                            ExceptionType.Error,
+                            ExceptionReason.NullArgument
+                        );
+
+                    if (thrown = railway.Next == null)
+                        throw new DomainValidationException(
+                            "Переезд не имеет Next ссылки",
+                            ExceptionType.Error,
+                            ExceptionReason.NullArgument
+                        );
+
+                    return thrown;
+                }, Logger
+            );
         }
 
         public void Visit(Transition transition)
         {
-            throw new NotImplementedException();
+            Handler.Snap(
+                () =>
+                {
+                    bool thrown = false;
+
+                    if (thrown = transition.From == null)
+                        throw new DomainValidationException(
+                            "Переход не имеет From ссылки",
+                            ExceptionType.Error,
+                            ExceptionReason.NullArgument
+                        );
+
+                    if (thrown = transition.To == null)
+                        throw new DomainValidationException(
+                            "Переход не имеет To ссылки",
+                            ExceptionType.Error,
+                            ExceptionReason.NullArgument
+                        );
+
+                    return thrown;
+                }, Logger
+            );
         }
     }
 }
