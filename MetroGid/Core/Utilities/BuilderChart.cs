@@ -192,6 +192,9 @@ namespace MetroGid.Core.Utilities
                 Branches = Branches
             };
 
+            foreach (Branch branch in Chart.Branches)
+                branch.Chart = Chart;
+
             Chart.Validate(DomainAttribsValidator);
             Chart.Validate(DomainReferentialityValidator);
         }
