@@ -1,6 +1,6 @@
 using MetroGid.Core.Models;
 
-namespace MetroGid.Core.Utilities
+namespace MetroGid.Core.Utilities.Strategies
 {
     public class StrategySearchRouteBFS : StrategySearchRouteBase
     {

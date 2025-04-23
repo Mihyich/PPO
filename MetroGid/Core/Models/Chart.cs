@@ -1,4 +1,4 @@
-using MetroGid.Core.Utilities;
+using MetroGid.Core.Utilities.Strategies;
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
 namespace MetroGid.Core.Models
