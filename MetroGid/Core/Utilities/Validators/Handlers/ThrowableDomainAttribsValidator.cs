@@ -263,7 +263,21 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
 
         public void Visit(Railway railway)
         {
-            // Вроде пока нечего проверять, но пусть будет...
+            Handler.Snap(
+                () =>
+                {
+                    bool thrown = railway.Duration > TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(30));
+
+                    if (thrown)
+                        throw new DomainValidationException(
+                            $"Среднее время переезда слишком велико: <{railway.Duration}>",
+                            ExceptionType.Warning,
+                            ExceptionReason.NotLogicValue
+                        );
+
+                    return thrown;
+                }, Logger
+            );
         }
 
         public void Visit(Transition transition)
