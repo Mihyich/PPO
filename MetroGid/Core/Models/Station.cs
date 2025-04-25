@@ -19,6 +19,12 @@ namespace MetroGid.Core.Models
         public bool HasPrev() => Prev != null;
         public bool HasNext() => Next != null;
 
+        public bool IsAccessible() => Type == AccessType.ACCESSIBLE;
+        public bool IsOpenAt(TimeOnly curTime) =>
+            OpenTime < CloseTime ?
+            OpenTime <= curTime && curTime <= CloseTime :
+            CloseTime >= curTime || curTime >= OpenTime;
+
         public override int GetHashCode() =>
             Title == null || Branch == null || Branch.Title == null ?
             0 :
