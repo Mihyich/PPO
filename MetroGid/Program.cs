@@ -21,18 +21,23 @@ class Program
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler, logger);
 
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
-        DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Sankt-Peterburg/init.json"));
+        // DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Sankt-Peterburg/init.json"));
+        DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Moscow/init.json"));
         Chart chart = director.Construct();
 
         // chart.Searcher = new StrategySearchRouteBFS();
         chart.Searcher = new StrategySearchRouteDijkstra();
-        Station? stationA = chart.GetStation("Невско-Василеостровская", "Василеостровская");
-        Station? stationB = chart.GetStation("Фрунзенско-Приморская", "Бухарестская");
+        Station? stationA = chart.GetStation("Арбатско-Покровская линия", "Щёлковская");
+        Station? stationB = chart.GetStation("Солнцевская линия", "Аэропорт Внуково");
 
         if (stationA != null && stationB != null)
         {
             Route? route = chart.Search(stationA, stationB);
             route?.Output();
+        }
+        else
+        {
+            Console.WriteLine($"Не все целевые станции были найдены");
         }
     }
 }
