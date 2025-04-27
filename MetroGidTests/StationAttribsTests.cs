@@ -9,7 +9,7 @@ using MetroGid.Core.Utilities;
 using MetroGid.Core.Utilities.Validators.Handlers;
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
-public class StationTests
+public class StationAttribsTests
 {
     [Theory]
 
