@@ -238,3 +238,9 @@ if [ "$transitionTotalCount" -gt 0 ]; then
     line=$(($(wc -l < "$ResFile") - 1))
     sed -i "${line}s/.*/\t\t}/" "$ResFile"
 fi
+
+printf "[\033[1;36mИнфо\033[0m] \033[1;32mУспех\033[0m\n"
+printf "[\033[1;36mИнфо\033[0m] Общее количество веток:     %d\n" "$branchTotalCount"
+printf "[\033[1;36mИнфо\033[0m] Общее количество станций:   %d\n" "$stationTotalCount"
+printf "[\033[1;36mИнфо\033[0m] Общее количество переездов: %d\n" "$railwayTotalCount"
+printf "[\033[1;36mИнфо\033[0m] Общее количество переходов: %d\n" "$transitionTotalCount"
