@@ -23,9 +23,9 @@ namespace MetroGid.Core.Models
             return station;
         }
 
-        public Route? Search(Station src, Station dst)
+        public Route? Search(Station src, Station dst, TimeOnly timeStart)
         {
-            Route? route = Searcher?.Search(Branches, src, dst) ?? null;
+            Route? route = Searcher?.Search(Branches, src, dst, timeStart) ?? null;
             
             if (route != null)
                 route.Chart = this;
