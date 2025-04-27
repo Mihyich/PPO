@@ -22,14 +22,18 @@ class Program
 
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
         // DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Sankt-Peterburg/init.json"));
-        DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/cities/Moscow/chart.json"));
+        DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/cities/Sankt-Peterburg/chart.json"));
         Chart chart = director.Construct();
 
         chart.Searcher = new StrategySearchRouteBFS();
         // chart.Searcher = new StrategySearchRouteDijkstra();
-        Station? stationA = chart.GetStation("Арбатско-Покровская линия", "Щёлковская");
-        Station? stationB = chart.GetStation("Солнцевская линия", "Аэропорт Внуково");
-        TimeOnly timeStart = new TimeOnly(18, 30);
+        // Station? stationA = chart.GetStation("Арбатско-Покровская линия", "Щёлковская");
+        // Station? stationB = chart.GetStation("Солнцевская линия", "Аэропорт Внуково");
+        // Station? stationA = chart.GetStation("Линия 1", "Больница");
+        // Station? stationB = chart.GetStation("Линия 1", "Акынджилар");
+        Station? stationA = chart.GetStation("Кировско-Выборгская", "Проспект Ветеранов");
+        Station? stationB = chart.GetStation("Правобережная", "Улица Дыбенко");
+        TimeOnly timeStart = new(18, 30);
 
         if (stationA != null && stationB != null)
         {
