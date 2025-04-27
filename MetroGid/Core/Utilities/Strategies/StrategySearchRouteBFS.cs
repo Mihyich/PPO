@@ -21,7 +21,10 @@ namespace MetroGid.Core.Utilities.Strategies
                 if (lastStation != null)
                 {
                     if (lastStation == dst)
+                    {
+                        curRoute.UpdateDuration();
                         return curRoute;
+                    }
 
                     SearchRailwayNeighbors(lastStation, curRoute, queue, visited);
 
