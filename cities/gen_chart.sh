@@ -34,7 +34,12 @@ TransionsDir="$MainDir/transitions"
 TitleFile="$MainDir/title"
 ResFile="$MainDir/../chart.json"
 
-if [ ! -f $TitleFile ]; then
+branchTotalCount=0
+stationTotalCount=0
+railwayTotalCount=0
+transitionTotalCount=0
+
+if [ ! -f "$TitleFile" ]; then
     printf "Файл %s не существует\n" "$TitleFile"
     exit 1
 fi
@@ -46,7 +51,7 @@ printf "{\n\t\"title\": \"%s\",\n\t\"city\": \"%s\",\n\t\"branches\": [\n" "$Cha
 
 printf "\033[0mАнализ \033[1;36mBranches\033[0m по пути \"%s\":\n" "$StationsDir"
 
-if [ ! -d $StationsDir ]; then
+if [ ! -d "$StationsDir" ]; then
     printf "Директория \"%s\" не существует\n" "$StationsDir"
 fi
 
@@ -94,6 +99,8 @@ for file in $(ls -1 "$StationsDir" | sort -V); do
             else
                 printf "\t\t\t\t}\n" >> "$ResFile"
             fi
+
+            stationTotalCount=$((stationTotalCount + 1))
         done < "$file"
 
         printf "\t\t\t],\n\t\t\t\"railways\": [\n" >> "$ResFile"
@@ -128,6 +135,8 @@ for file in $(ls -1 "$StationsDir" | sort -V); do
             else
                 printf "\t\t\t\t}\n" >> "$ResFile"
             fi
+
+            railwayTotalCount=$((railwayTotalCount + 1))
         done < "$file"
 
         if [ "$branchLooped" -eq 1 ]; then
@@ -138,10 +147,13 @@ for file in $(ls -1 "$StationsDir" | sort -V); do
             printf "\t\t\t\t\t\"to\": \"%s\",\n" "$firstStationTitle" >> "$ResFile"
             printf "\t\t\t\t\t\"duration\": \"%s\"\n" "$branchStamp" >> "$ResFile"
             printf "\t\t\t\t}\n" >> "$ResFile"
+
+            railwayTotalCount=$((railwayTotalCount + 1))
         fi
 
         printf "\t\t\t]\n" >> "$ResFile"
 
+        branchTotalCount=$((branchTotalCount + 1))
     fi
 
     if [ "$fileCount" -gt 1 ]; then
@@ -153,12 +165,11 @@ for file in $(ls -1 "$StationsDir" | sort -V); do
     fileCount=$((fileCount - 1))
 done
 
-printf "\r"
 printf "\t],\n\t\"transitions\": [\n" >> "$ResFile"
 
 printf "\033[0mАнализ \033[1;36mTransitions\033[0m по пути \"%s\":\n" "$TransionsDir"
 
-if [ ! -d $TransionsDir ]; then
+if [ ! -d "$TransionsDir" ]; then
     printf "Директория %s не существует\n" "$TransionsDir"
 fi
 
@@ -215,13 +226,15 @@ for file in $(ls -1 "$TransionsDir" | sort -V); do
             printf "\t\t\t\"stationdst\": \"%s\"\n" "$dstStationTitle" >> "$ResFile"
             printf "\t\t},\n" >> "$ResFile"
 
+            transitionTotalCount=$((transitionTotalCount + 1))
         done < "$curfile"
     fi
 done
 
 printf "\t]\n}" >> "$ResFile"
 
-
 # Убрать ненужную запятую
-line=$(($(wc -l < "$ResFile") - 1))
-sed -i "${line}s/.*/\t\t}/" "$ResFile"
+if [ "$transitionTotalCount" -gt 0 ]; then
+    line=$(($(wc -l < "$ResFile") - 1))
+    sed -i "${line}s/.*/\t\t}/" "$ResFile"
+fi
