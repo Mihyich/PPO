@@ -24,11 +24,11 @@ public class ChartAttribsTests
     ]
     public void AttribsValidatorTest(string title, string city, string svg_inst, string exMessege, ExceptionType exType, ExceptionReason exReason)
     {
-        Chart station = new(title, city, svg_inst);
+        Chart chart = new(title, city, svg_inst);
 
         SuperHandlerException handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        var ex = Assert.Throws<DomainValidationException>(() => { station.Validate(domainAttribsValidator); });
+        var ex = Assert.Throws<DomainValidationException>(() => { chart.Validate(domainAttribsValidator); });
 
         Assert.Equal(exMessege, ex.Message);
         Assert.Equal(exType, ex.ExcType);
