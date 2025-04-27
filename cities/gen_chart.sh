@@ -10,16 +10,16 @@ stdTransitionAccessType="ACCESSIBLE"
 stdTransitionOpenTime="05:30"
 stdTransitionCloseTime="01:30"
 
-MainDir="pre_init"
+MainDir="data"
 
 # Разбор параметров
-while getopts ":w:h" opt; do
+while getopts ":c:h" opt; do
     case $opt in
-        w)
+        c)
             MainDir="$OPTARG$MainDir"
         ;;
         h) 
-            echo "Использование: $0 [-w рабочая директория] [-h]"
+            echo "Использование: $0 [-c рабочая директория, город] [-h]"
             exit 0
         ;;
         \?) 
@@ -32,7 +32,7 @@ done
 StationsDir="$MainDir/stations"
 TransionsDir="$MainDir/transitions"
 TitleFile="$MainDir/title"
-ResFile="$MainDir/../init.json"
+ResFile="$MainDir/../chart.json"
 
 if [ ! -f $TitleFile ]; then
     printf "Файл %s не существует\n" "$TitleFile"
