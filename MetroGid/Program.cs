@@ -22,11 +22,11 @@ class Program
 
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
         // DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Sankt-Peterburg/init.json"));
-        DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Moscow/init.json"));
+        DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/cities/Moscow/chart.json"));
         Chart chart = director.Construct();
 
-        // chart.Searcher = new StrategySearchRouteBFS();
-        chart.Searcher = new StrategySearchRouteDijkstra();
+        chart.Searcher = new StrategySearchRouteBFS();
+        // chart.Searcher = new StrategySearchRouteDijkstra();
         Station? stationA = chart.GetStation("Арбатско-Покровская линия", "Щёлковская");
         Station? stationB = chart.GetStation("Солнцевская линия", "Аэропорт Внуково");
 
