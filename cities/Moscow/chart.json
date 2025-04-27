@@ -6105,6 +6105,17 @@
 		{
 			"occupancy": 5,
 			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия",
+			"stationsrc": "Кунцевская",
+			"branchdst": "МЦД-1",
+			"stationdst": "Кунцевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
 			"duration": "00:03:00",
 			"opentime": "05:30",
 			"closetime": "01:30",
@@ -6122,6 +6133,17 @@
 			"branchsrc": "Филёвская линия-2",
 			"stationsrc": "Москва-Сити",
 			"branchdst": "МЦД-4",
+			"stationdst": "Москва-Сити"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:07:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия-2",
+			"stationsrc": "Москва-Сити",
+			"branchdst": "Московское центральное кольцо",
 			"stationdst": "Москва-Сити"
 		},
 		{
@@ -6387,6 +6409,17 @@
 			"stationsrc": "Калужская",
 			"branchdst": "Большая кольцевая линия",
 			"stationdst": "Воронцовская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калужско-Рижская линия",
+			"stationsrc": "Новоясеневская",
+			"branchdst": "Бутовская линия",
+			"stationdst": "Битцевский парк"
 		},
 		{
 			"occupancy": 5,
@@ -6974,6 +7007,17 @@
 		{
 			"occupancy": 5,
 			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Печатники",
+			"branchdst": "МЦД-2",
+			"stationdst": "Печатники"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
 			"duration": "00:06:00",
 			"opentime": "05:30",
 			"closetime": "01:30",
@@ -7150,6 +7194,17 @@
 		{
 			"occupancy": 5,
 			"accesstype": "ACCESSIBLE",
+			"duration": "00:13:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Авиамоторная",
+			"branchdst": "МЦД-3",
+			"stationdst": "Авиамоторная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
 			"duration": "00:05:00",
 			"opentime": "05:30",
 			"closetime": "01:30",
@@ -7249,6 +7304,17 @@
 		{
 			"occupancy": 5,
 			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московское центральное кольцо",
+			"stationsrc": "Андроновка",
+			"branchdst": "МЦД-3",
+			"stationdst": "Андроновка"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
 			"duration": "00:06:00",
 			"opentime": "05:30",
 			"closetime": "01:30",
@@ -7260,6 +7326,17 @@
 		{
 			"occupancy": 5,
 			"accesstype": "ACCESSIBLE",
+			"duration": "00:07:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Некрасовская линия",
+			"stationsrc": "Косино",
+			"branchdst": "МЦД-3",
+			"stationdst": "Косино"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
 			"duration": "00:05:00",
 			"opentime": "05:30",
 			"closetime": "01:30",
@@ -7267,6 +7344,17 @@
 			"stationsrc": "Савёловская",
 			"branchdst": "МЦД-4",
 			"stationdst": "Савёловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:01:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-1",
+			"stationsrc": "Белорусская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Белорусская"
 		},
 		{
 			"occupancy": 5,
@@ -7377,6 +7465,39 @@
 			"stationsrc": "Ленинградский вокзал",
 			"branchdst": "МЦД-4",
 			"stationdst": "Площадь трёх вокзалов"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-3-2",
+			"stationsrc": "Ленинградский вокзал",
+			"branchdst": "МЦД-3-3",
+			"stationdst": "Казанский вокзал"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-3-3",
+			"stationsrc": "Казанский вокзал",
+			"branchdst": "МЦД-4",
+			"stationdst": "Площадь трёх вокзалов"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-4",
+			"stationsrc": "Солнечная",
+			"branchdst": "МЦД-4А",
+			"stationdst": "Солнечная"
 		}
 	]
 }
