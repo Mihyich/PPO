@@ -11,6 +11,24 @@ stdTransitionOpenTime="05:30"
 stdTransitionCloseTime="01:30"
 
 MainDir="pre_init"
+
+# Разбор параметров
+while getopts ":w:h" opt; do
+    case $opt in
+        w)
+            MainDir="$OPTARG$MainDir"
+        ;;
+        h) 
+            echo "Использование: $0 [-w рабочая директория] [-h]"
+            exit 0
+        ;;
+        \?) 
+            echo "Неверный параметр: -$OPTARG" >&2
+            exit 1
+        ;;
+    esac
+done
+
 StationsDir="$MainDir/stations"
 TransionsDir="$MainDir/transitions"
 TitleFile="$MainDir/title"
@@ -79,7 +97,7 @@ for file in $(ls -1 "$StationsDir" | sort -V); do
 
         printf "\t\t\t],\n\t\t\t\"railways\": [\n" >> "$ResFile"
 
-        printf "\033[0m[\033[3;35mПарсинг\033[0m] \033[1;32mRailways\033[0m из файла: %s\n" "$filename"
+        printf "\033[0m[\033[3;35mПарсинг\033[0m] \033[1;32mRailways\033[0m из файла: \"%s\"\n" "$filename"
 
         railway_count=$((station_count - 1))
         prevStationTitle=$(sed -n '5p' "$file")
