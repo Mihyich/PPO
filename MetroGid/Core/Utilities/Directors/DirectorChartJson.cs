@@ -27,7 +27,7 @@ namespace MetroGid.Core.Utilities.Directors
                 foreach (var station in branch.Stations)
                 {
                     Builder.BuildStation(
-                        branch.Title, station.Title, station.Occupancy, AccessTypeConverter.FromString(station.AccesType),
+                        branch.Title, station.Title, station.Occupancy, AccessTypeConverter.FromString(station.AccessType),
                         TimeConverter.FromString(station.OpenTime), TimeConverter.FromString(station.CloseTime)
                     );
                 }
@@ -108,7 +108,7 @@ namespace MetroGid.Core.Utilities.Directors
         {
             public string Title { get; set; } = string.Empty;
             public int Occupancy { get; set; }
-            public string AccesType { get; set; } = string.Empty;
+            public string AccessType { get; set; } = string.Empty;
             public string OpenTime { get; set; } = string.Empty;
             public string CloseTime { get; set; } = string.Empty;
         }
