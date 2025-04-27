@@ -29,10 +29,11 @@ class Program
         // chart.Searcher = new StrategySearchRouteDijkstra();
         Station? stationA = chart.GetStation("Арбатско-Покровская линия", "Щёлковская");
         Station? stationB = chart.GetStation("Солнцевская линия", "Аэропорт Внуково");
+        TimeOnly timeStart = new TimeOnly(18, 30);
 
         if (stationA != null && stationB != null)
         {
-            Route? route = chart.Search(stationA, stationB);
+            Route? route = chart.Search(stationA, stationB, timeStart);
             route?.Output();
         }
         else
