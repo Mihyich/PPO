@@ -72,6 +72,7 @@ for file in $(ls -1 "$StationsDir" | sort -V); do
 
         printf "\t\t\t\"title\": \"%s\",\n\t\t\t\"color\": \"%s\",\n\t\t\t\"accesstype\": \"ACCESSIBLE\",\n\t\t\t\"stations\": [\n" "$branchTitle" "$branchColor" >> "$ResFile"
 
+        [ -n "$(tail -c1 "$file")" ] && echo >> "$file"
         counter=0
         while IFS= read -r stationTitle || [ -n "$stationTitle" ]; do
             # Пропустить первые 4 строки
@@ -175,8 +176,10 @@ for file in $(ls -1 "$TransionsDir" | sort -V); do
 
         srcBranchTitle=$(sed -n '1p' "$StationsDir/$file")
 
-        while IFS=';' read -r srcStationTitle dstStationFileTile dstStationTitle Interval || [ -n "$Connection" ]; do
-            # printf "%s %s %s %s\n" "$srcStationTitle" "$dstStationFileTile" "$dstStationTitle" "$Interval"
+        [ -n "$(tail -c1 "$curfile")" ] && echo >> "$curfile"
+
+        while IFS=';' read -r srcStationTitle dstStationFileTile dstStationTitle Interval; do
+            printf "%s %s %s %s\n" "$srcStationTitle" "$dstStationFileTile" "$dstStationTitle" "$Interval"
 
             if printf "%s\n%s" "$filename" "$dstStationFileTile" | sort -V | head -1 | grep -qx "$dstStationFileTile"; then
                 printf "[\033[1;31mОшибка\033[0m] задан маршрут из ветки \"%s\" в ветку \"%s\", где \"%s\" > \"%s\" по естественной сортировке\n" "$filename" "$dstStationFileTile" "$filename" "$dstStationFileTile"
