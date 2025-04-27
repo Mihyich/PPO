@@ -1,4 +1,4 @@
-namespace MetroGidTests;
+namespace MetroGidTests.DomainAttribsTests;
 
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
