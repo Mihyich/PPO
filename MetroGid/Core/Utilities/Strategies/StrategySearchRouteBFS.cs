@@ -1,10 +1,12 @@
+using System.ComponentModel;
 using MetroGid.Core.Models;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MetroGid.Core.Utilities.Strategies
 {
     public class StrategySearchRouteBFS : StrategySearchRouteBase
     {
-        public override Route? Search(List<Branch> branches, Station src, Station dst)
+        public override Route? Search(List<Branch> branches, Station src, Station dst, TimeOnly timeStart)
         {
             Queue<Route> queue = new();
             HashSet<Station> visited = [];
@@ -18,17 +20,15 @@ namespace MetroGid.Core.Utilities.Strategies
                 Route curRoute = queue.Dequeue();
                 Station? lastStation = curRoute.GetLastStation();
 
+                curRoute.UpdateDuration();
+
                 if (lastStation != null)
                 {
                     if (lastStation == dst)
-                    {
-                        curRoute.UpdateDuration();
                         return curRoute;
-                    }
 
                     SearchRailwayNeighbors(lastStation, curRoute, queue, visited);
-
-                    SearchTransitionNeighbors(lastStation, curRoute, queue, visited);
+                    SearchTransitionNeighbors(lastStation, curRoute, queue, visited, timeStart);
                 }
             }
 
@@ -55,13 +55,15 @@ namespace MetroGid.Core.Utilities.Strategies
             }
         }
 
-        private static void SearchTransitionNeighbors(Station curStation, Route curRoute, Queue<Route> queue, HashSet<Station> visited)
+        private static void SearchTransitionNeighbors(Station curStation, Route curRoute, Queue<Route> queue, HashSet<Station> visited, TimeOnly timeStart)
         {
+            TimeOnly curTime = TimeOnly.FromTimeSpan(TimeSpan.FromTicks(curRoute.Duration.Ticks) + TimeSpan.FromTicks(timeStart.Ticks));
+            Station? stationNeighbor;
+
             foreach (var transitionNeighbor in curStation.Transitions)
-            {
-                Station? stationNeighbor = transitionNeighbor.ToFrom(curStation);
-                UpdateProcess(curRoute, transitionNeighbor, stationNeighbor, queue, visited);
-            }
+                if (transitionNeighbor.IsAccessible() && transitionNeighbor.IsOpenAt(curTime) && (stationNeighbor = transitionNeighbor.ToFrom(curStation)) != null)
+                    UpdateProcess(curRoute, transitionNeighbor, stationNeighbor, queue, visited,
+                        TimeOnly.FromTimeSpan(TimeSpan.FromTicks(curTime.Ticks) + TimeMeas.Measure(curStation, transitionNeighbor, stationNeighbor)));
         }
 
         private static void UpdateProcess(Route curRoute, Railway railwayNeigbor, Station? stationNeighbor, Queue<Route> queue, HashSet<Station> visited)
@@ -76,9 +78,9 @@ namespace MetroGid.Core.Utilities.Strategies
             }
         }
 
-        private static void UpdateProcess(Route curRoute, Transition transitionNeigbor, Station? stationNeighbor, Queue<Route> queue, HashSet<Station> visited)
+        private static void UpdateProcess(Route curRoute, Transition transitionNeigbor, Station? stationNeighbor, Queue<Route> queue, HashSet<Station> visited, TimeOnly curTime)
         {
-            if (stationNeighbor != null && !visited.Contains(stationNeighbor))
+            if (stationNeighbor != null && stationNeighbor.IsAccessible() && stationNeighbor.IsOpenAt(curTime) && !visited.Contains(stationNeighbor))
             {
                 Route newRoute = curRoute.Clone();
                 newRoute.Add(transitionNeigbor);
