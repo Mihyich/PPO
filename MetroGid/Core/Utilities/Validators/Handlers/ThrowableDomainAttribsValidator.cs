@@ -270,7 +270,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
 
                     if (thrown)
                         throw new DomainValidationException(
-                            $"Среднее время переезда слишком велико: <{railway.Duration}>",
+                            $"Среднее время переезда слишком велико: {railway.Duration}",
                             ExceptionType.Warning,
                             ExceptionReason.NotLogicValue
                         );
