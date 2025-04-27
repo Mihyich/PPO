@@ -179,7 +179,7 @@ for file in $(ls -1 "$TransionsDir" | sort -V); do
         [ -n "$(tail -c1 "$curfile")" ] && echo >> "$curfile"
 
         while IFS=';' read -r srcStationTitle dstStationFileTile dstStationTitle Interval; do
-            printf "%s %s %s %s\n" "$srcStationTitle" "$dstStationFileTile" "$dstStationTitle" "$Interval"
+            # printf "%s %s %s %s\n" "$srcStationTitle" "$dstStationFileTile" "$dstStationTitle" "$Interval"
 
             if printf "%s\n%s" "$filename" "$dstStationFileTile" | sort -V | head -1 | grep -qx "$dstStationFileTile"; then
                 printf "[\033[1;31mОшибка\033[0m] задан маршрут из ветки \"%s\" в ветку \"%s\", где \"%s\" > \"%s\" по естественной сортировке\n" "$filename" "$dstStationFileTile" "$filename" "$dstStationFileTile"
