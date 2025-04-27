@@ -4,13 +4,10 @@ namespace MetroGid.Core.Models
 {
     public class Station(
         string title, int occupancy, AccessType type,
-        TimeOnly opentime, TimeOnly closetime) : IDomainValidatorAccepter
+        TimeOnly opentime, TimeOnly closetime) : TemporaryAvailability(type, opentime, closetime), IDomainValidatorAccepter
     {
         public string Title { get; set; } = title;
         public int Occupancy { get; set; } = occupancy;
-        public AccessType Type { get; set; } = type;
-        public TimeOnly OpenTime { get; set; } = opentime;
-        public TimeOnly CloseTime { get; set; } = closetime;
         public List<Transition> Transitions { get; set; } = [];
         public Railway? Prev { get; set; }
         public Railway? Next { get; set; }
@@ -19,11 +16,6 @@ namespace MetroGid.Core.Models
         public bool HasPrev() => Prev != null;
         public bool HasNext() => Next != null;
 
-        public bool IsAccessible() => Type == AccessType.ACCESSIBLE;
-        public bool IsOpenAt(TimeOnly curTime) =>
-            OpenTime < CloseTime ?
-            OpenTime <= curTime && curTime <= CloseTime :
-            CloseTime >= curTime || curTime >= OpenTime;
 
         public override int GetHashCode() =>
             Title == null || Branch == null || Branch.Title == null ?
