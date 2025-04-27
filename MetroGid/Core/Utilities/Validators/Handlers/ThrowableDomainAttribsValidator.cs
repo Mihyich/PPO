@@ -321,6 +321,22 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
             Handler.Snap(
                 () =>
                 {
+                    bool thrown = transition.Duration > TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(60));
+
+                    if (thrown)
+                        throw new DomainValidationException(
+                            $"Среднее время перехода слишком велико: {transition.Duration}",
+                            ExceptionType.Warning,
+                            ExceptionReason.NotLogicValue
+                        );
+
+                    return thrown;
+                }, Logger
+            );
+
+            Handler.Snap(
+                () =>
+                {
                     bool thrown = transition.OpenTime == transition.CloseTime;
 
                     if (thrown)
