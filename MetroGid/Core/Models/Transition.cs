@@ -14,6 +14,15 @@ namespace MetroGid.Core.Models
         public Station? From { get; set; }
         public Station? To { get; set; }
 
+
+        // Потом нужно будет вынести в абстрактный класс эти два предиката...
+        public bool IsAccessible() => Type == AccessType.ACCESSIBLE;
+        public bool IsOpenAt(TimeOnly curTime) =>
+            OpenTime < CloseTime ?
+            OpenTime <= curTime && curTime <= CloseTime :
+            CloseTime >= curTime || curTime >= OpenTime;
+
+
         public bool InConnect(Station station) =>
             From != null && To != null &&
             (station == From || station == To);
