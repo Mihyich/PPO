@@ -12,6 +12,7 @@ namespace MetroGid.Core.Exceptions.Classification
         EmptyString,
         StringLenghtOutOfRange,
         ValueOutOfRange,
+        ValueDuplicate,
         NotLogicValue,
         UnexpectedBehavior,
         NotFound
