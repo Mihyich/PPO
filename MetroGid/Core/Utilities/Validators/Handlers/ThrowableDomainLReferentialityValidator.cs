@@ -198,7 +198,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     
                     if (thrown = curBranchHead == null)
                         throw new DomainValidationException(
-                            $"Станция '{station.Title}' не связана с родной веткой",
+                            $"Станция '{station.Title}' ветки '{curBranchHead?.Title ?? "Неизвестно"}' схемы '{curBranchHead?.Chart?.Title ?? "Неизвестно"}' в городе '{curBranchHead?.Chart?.City ?? "Неизвестно"}' не связана с родной веткой",
                             ExceptionType.Error,
                             ExceptionReason.NullArgument
                         );
@@ -207,14 +207,14 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     {
                         if (thrown = prevBranchHead == null)
                             throw new DomainValidationException(
-                                $"Станция '{station.Title}' ведет на станцию '{prevStation.Title}' не связанной с родной веткой",
+                                $"Станция '{station.Title}' ветки '{curBranchHead?.Title ?? "Неизвестно"}' схемы '{curBranchHead?.Chart?.Title ?? "Неизвестно"}' в городе '{curBranchHead?.Chart?.City ?? "Неизвестно"}' ведет на станцию '{prevStation.Title}' не связанной с родной веткой",
                                 ExceptionType.Error,
                                 ExceptionReason.NullArgument
                             );
 
                         if (thrown = prevBranchHead != curBranchHead)
                             throw new DomainValidationException(
-                                $"Станция '{station.Title}' ведет на станцию '{prevStation.Title}' связанной с другой веткой",
+                                $"Станция '{station.Title}' ветки '{curBranchHead?.Title ?? "Неизвестно"}' схемы '{curBranchHead?.Chart?.Title ?? "Неизвестно"}' в городе '{curBranchHead?.Chart?.City ?? "Неизвестно"}' ведет на станцию '{prevStation.Title}' связанной с другой веткой",
                                 ExceptionType.Error,
                                 ExceptionReason.IncorrectLink
                             );
@@ -224,14 +224,14 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     {
                         if (thrown = nextBranchHead == null)
                             throw new DomainValidationException(
-                                $"Станция '{station.Title}' ведет на станцию '{nextStation.Title ?? "Неизвестно"}' не связанной с родной веткой",
+                                $"Станция '{station.Title}' ветки '{curBranchHead?.Title ?? "Неизвестно"}' схемы '{curBranchHead?.Chart?.Title ?? "Неизвестно"}' в городе '{curBranchHead?.Chart?.City ?? "Неизвестно"}' ведет на станцию '{nextStation.Title ?? "Неизвестно"}' не связанной с родной веткой",
                                 ExceptionType.Error,
                                 ExceptionReason.NullArgument
                             );
 
                         if (thrown = nextBranchHead != curBranchHead)
                             throw new DomainValidationException(
-                                $"Станция '{station.Title}' ведет на станцию '{nextStation.Title ?? "Неизвестно"}' связанной с другой веткой",
+                                $"Станция '{station.Title}' ветки '{curBranchHead?.Title ?? "Неизвестно"}' схемы '{curBranchHead?.Chart?.Title ?? "Неизвестно"}' в городе '{curBranchHead?.Chart?.City ?? "Неизвестно"}' ведет на станцию '{nextStation.Title ?? "Неизвестно"}' связанной с другой веткой",
                                 ExceptionType.Error,
                                 ExceptionReason.IncorrectLink
                             );
