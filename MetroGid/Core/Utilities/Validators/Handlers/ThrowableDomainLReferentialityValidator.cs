@@ -4,8 +4,6 @@ using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utilities.Validators.Interfaces;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MetroGid.Core.Utilities.Validators.Handlers
 {
