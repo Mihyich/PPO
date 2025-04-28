@@ -10,7 +10,6 @@ using MetroGid.Core.Utilities.Builders;
 using MetroGid.Core.Utilities.Directors;
 using MetroGid.Core.Utilities.Validators.Handlers;
 using MetroGid.Core.Utilities.Validators.Interfaces;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 public class RailwayReferentialityTests
 {
