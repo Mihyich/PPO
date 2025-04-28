@@ -30,7 +30,7 @@ public class StationReferentialityTests
 
         var ex = Assert.Throws<DomainValidationException>(() => { station.Validate(domainReferentialityValidator); });
 
-        Assert.Equal($"Станция '{station.Title}' не связана с родной веткой", ex.Message);
+        Assert.Equal($"Станция '{station.Title}' ветки 'Неизвестно' схемы 'Неизвестно' в городе 'Неизвестно' не связана с родной веткой", ex.Message);
         Assert.Equal(ExceptionType.Error, ex.ExcType);
         Assert.Equal(ExceptionReason.NullArgument, ex.ExcReason);
     }
@@ -53,7 +53,7 @@ public class StationReferentialityTests
 
         var ex = Assert.Throws<DomainValidationException>(() => { station.Validate(domainReferentialityValidator); });
 
-        Assert.Equal($"Станция '{station.Title}' ведет на станцию '{prevStation.Title}' не связанной с родной веткой", ex.Message);
+        Assert.Equal($"Станция '{station.Title}' ветки '{branch.Title}' схемы '{chart.Title}' в городе '{chart.City}' ведет на станцию '{prevStation.Title}' не связанной с родной веткой", ex.Message);
         Assert.Equal(ExceptionType.Error, ex.ExcType);
         Assert.Equal(ExceptionReason.NullArgument, ex.ExcReason);
     }
@@ -76,7 +76,7 @@ public class StationReferentialityTests
 
         var ex = Assert.Throws<DomainValidationException>(() => { station.Validate(domainReferentialityValidator); });
 
-        Assert.Equal($"Станция '{station.Title}' ведет на станцию '{prevStation.Title}' связанной с другой веткой", ex.Message);
+        Assert.Equal($"Станция '{station.Title}' ветки '{branch.Title}' схемы '{chart.Title}' в городе '{chart.City}' ведет на станцию '{prevStation.Title}' связанной с другой веткой", ex.Message);
         Assert.Equal(ExceptionType.Error, ex.ExcType);
         Assert.Equal(ExceptionReason.IncorrectLink, ex.ExcReason);
     }
@@ -99,7 +99,7 @@ public class StationReferentialityTests
 
         var ex = Assert.Throws<DomainValidationException>(() => { station.Validate(domainReferentialityValidator); });
 
-        Assert.Equal($"Станция '{station.Title}' ведет на станцию '{nextStation.Title}' не связанной с родной веткой", ex.Message);
+        Assert.Equal($"Станция '{station.Title}' ветки '{branch.Title}' схемы '{chart.Title}' в городе '{chart.City}' ведет на станцию '{nextStation.Title}' не связанной с родной веткой", ex.Message);
         Assert.Equal(ExceptionType.Error, ex.ExcType);
         Assert.Equal(ExceptionReason.NullArgument, ex.ExcReason);
     }
@@ -122,7 +122,7 @@ public class StationReferentialityTests
 
         var ex = Assert.Throws<DomainValidationException>(() => { station.Validate(domainReferentialityValidator); });
 
-        Assert.Equal($"Станция '{station.Title}' ведет на станцию '{nextStation.Title}' связанной с другой веткой", ex.Message);
+        Assert.Equal($"Станция '{station.Title}' ветки '{branch.Title}' схемы '{chart.Title}' в городе '{chart.City}' ведет на станцию '{nextStation.Title}' связанной с другой веткой", ex.Message);
         Assert.Equal(ExceptionType.Error, ex.ExcType);
         Assert.Equal(ExceptionReason.IncorrectLink, ex.ExcReason);
     }
