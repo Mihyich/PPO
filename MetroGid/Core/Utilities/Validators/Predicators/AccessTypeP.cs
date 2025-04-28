@@ -1,4 +1,4 @@
-using MetroGid.Core.Models;
+using MetroGid.Core.Models.Types;
 
 namespace MetroGid.Core.Utilities.Validators.Predicators
 {

@@ -2,7 +2,7 @@ using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Super;
-using MetroGid.Core.Models;
+using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
 namespace MetroGid.Core.Utilities.Validators.Handlers

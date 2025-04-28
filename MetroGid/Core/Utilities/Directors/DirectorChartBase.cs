@@ -1,4 +1,4 @@
-using MetroGid.Core.Models;
+using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utilities.Builders;
 
 namespace MetroGid.Core.Utilities.Directors

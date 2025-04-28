@@ -1,6 +1,7 @@
 using MetroGid.Controllers.DTO;
 using MetroGid.Core.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using MetroGid.Core.Models.Concrete;
+using MetroGid.Core.Models.Types;
 
 namespace MetroGid.Core.Utilities
 {

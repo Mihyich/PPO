@@ -1,6 +1,7 @@
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
-using MetroGid.Core.Models;
+using MetroGid.Core.Models.Concrete;
+using MetroGid.Core.Models.Types;
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
 namespace MetroGid.Core.Utilities.Builders

@@ -1,4 +1,5 @@
 using MetroGid.Core.Models;
+using MetroGid.Core.Models.Concrete;
 
 /*
 Алгоритм Дейкстры: https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%94%D0%B5%D0%B9%D0%BA%D1%81%D1%82%D1%80%D1%8B
@@ -31,13 +32,12 @@ namespace MetroGid.Core.Utilities.Strategies
 {
     public class StrategySearchRouteDijkstra : StrategySearchRouteBase
     {
-        public override Route? Search(List<Branch> branches, Station src, Station dst)
+        public override Route? Search(List<Branch> branches, Station src, Station dst, TimeOnly timeStart)
         {
             Dictionary<Station, List<Route>> Adj = GenAdj(branches); // Аналог матрицы смежностей
             Dictionary<Station, Route> dist = GenDist(branches); // Поиск маршрутов к каждому из узлов графа
             HashSet<Station> visited = []; // Посещенные станции
             PriorityQueue<Route, TimeSpan> pq = new(); // Приоритетная очередь по времени маршрутов
-            TimeOnly timeStart = TimeOnly.FromTimeSpan(TimeSpan.FromHours(20));
             Station? lstation;
 
             // Создание отправной точки
