@@ -1,3 +1,5 @@
+using MetroGid.Core.Models.Types;
+
 namespace MetroGid.Core.Models.Concrete
 {
     public class Client(string login, string password, string mail)

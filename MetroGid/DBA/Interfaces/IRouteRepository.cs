@@ -1,4 +1,4 @@
-using MetroGid.Core.Models;
+using MetroGid.Core.Models.Concrete;
 
 namespace MetroGid.DBA.Interfaces
 {

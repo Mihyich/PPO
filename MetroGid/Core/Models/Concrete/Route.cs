@@ -1,7 +1,6 @@
-using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utilities;
 
-namespace MetroGid.Core.Models
+namespace MetroGid.Core.Models.Concrete
 {
     public abstract record StationConnection;
     public record RailwayConnection(Railway Railway) : StationConnection;
