@@ -48,7 +48,7 @@ public class TransitionReferentialityTests
         DirectorChartJson director = new(builder, FileReader.ReadAll(filePath));
         Chart chart = director.Construct();
         Branch branch = chart.Branches[chart.Branches.Count / 2];
-        Station station = chart?.GetStation("Таганско-Краснопресенская линия", "Кузнецкий Мост") ?? throw new Exception();
+        Station station = chart?.GetStation("Таганско-Краснопресненская линия", "Кузнецкий Мост") ?? throw new Exception();
         Transition transition = station.Transitions.Count > 0 ? station.Transitions[0] : throw new Exception();
         transition.To = null;
 
