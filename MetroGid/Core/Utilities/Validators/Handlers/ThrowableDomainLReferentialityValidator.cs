@@ -257,14 +257,14 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
 
                     if (thrown = railway.Prev == null)
                         throw new DomainValidationException(
-                            "Переезд не имеет Prev ссылки",
+                            $"Переезд (Prev) со станции '{railway?.Next?.Title ?? "Неизвестно"}' ветки '{railway?.Next?.Branch?.Title ?? "Неизвестно"}' схемы '{railway?.Next?.Branch?.Chart?.Title ?? "Неизвестно"}' в городе '{railway?.Next?.Branch?.Chart?.City ?? "Неизвестно"}' не имеет Prev ссылки",
                             ExceptionType.Error,
                             ExceptionReason.NullArgument
                         );
 
                     if (thrown = railway.Next == null)
                         throw new DomainValidationException(
-                            "Переезд не имеет Next ссылки",
+                            $"Переезд (Next) со станции '{railway?.Prev?.Title ?? "Неизвестно"}' ветки '{railway?.Prev?.Branch?.Title ?? "Неизвестно"}' схемы '{railway?.Prev?.Branch?.Chart?.Title ?? "Неизвестно"}' в городе '{railway?.Prev?.Branch?.Chart?.City ?? "Неизвестно"}' не имеет Next ссылки",
                             ExceptionType.Error,
                             ExceptionReason.NullArgument
                         );
