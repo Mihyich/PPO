@@ -283,14 +283,14 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
 
                     if (thrown = transition.From == null)
                         throw new DomainValidationException(
-                            "Переход не имеет From ссылки",
+                            $"Переход ветки '{transition?.To?.Title ?? "Неизвестно"}' схемы '{transition?.To?.Branch?.Chart?.Title ?? "Неизвестно"}' в городе '{transition?.To?.Branch?.Chart?.City ?? "Неизвестно"}' не имеет From ссылки",
                             ExceptionType.Error,
                             ExceptionReason.NullArgument
                         );
 
                     if (thrown = transition.To == null)
                         throw new DomainValidationException(
-                            "Переход не имеет To ссылки",
+                            $"Переход ветки '{transition?.From?.Title ?? "Неизвестно"}' схемы '{transition?.From?.Branch?.Chart?.Title ?? "Неизвестно"}' в городе '{transition?.From?.Branch?.Chart?.City ?? "Неизвестно"}' не имеет To ссылки",
                             ExceptionType.Error,
                             ExceptionReason.NullArgument
                         );
