@@ -46,7 +46,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
 
                             if (thrown)
                                 throw new DomainValidationException(
-                                    $"Схема {chart.Title} имеет ветки с одинаковыми наименованиями: {chart.Branches[i].Title}",
+                                    $"Схема '{chart.Title}' в городе '{chart.City}' имеет ветки с одинаковыми наименованиями: '{chart.Branches[i].Title}'",
                                     ExceptionType.Error,
                                     ExceptionReason.ValueDuplicate
                                 );
@@ -129,7 +129,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
 
                             if (thrown)
                                 throw new DomainValidationException(
-                                    $"Ветка схемы {branch.Chart?.Title ?? "Неизвестно"} имеет станции с одинаковыми наименованиями: {branch.Stations[i].Title}",
+                                    $"Ветка схемы '{branch.Chart?.Title ?? "Неизвестно"}' имеет станции с одинаковыми наименованиями: '{branch.Stations[i].Title}'",
                                     ExceptionType.Error,
                                     ExceptionReason.ValueDuplicate
                                 );
@@ -194,21 +194,21 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     
                     if (thrown = curBranchHead == null)
                         throw new DomainValidationException(
-                            $"Станция {station.Title} не связана с родной веткой",
+                            $"Станция '{station.Title}' не связана с родной веткой",
                             ExceptionType.Error,
                             ExceptionReason.NullArgument
                         );
 
                     if (thrown = prevBranchHead != null && prevBranchHead != curBranchHead)
                         throw new DomainValidationException(
-                            $"Станция {station.Title} ведет на станцию {station?.Prev?.Prev?.Title ?? "Неизвестно"} связанной с не родной веткой",
+                            $"Станция '{station.Title}' ведет на станцию '{station?.Prev?.Prev?.Title ?? "Неизвестно"}' связанной с не родной веткой",
                             ExceptionType.Error,
                             ExceptionReason.IncorrectLink
                         );
 
                     if (thrown = nextBranchHead != null && nextBranchHead != curBranchHead)
                         throw new DomainValidationException(
-                            $"Станция {station.Title} ведет на станцию {station?.Next?.Next?.Title ?? "Неизвестно"} связанной с не родной веткой",
+                            $"Станция '{station.Title}' ведет на станцию '{station?.Next?.Next?.Title ?? "Неизвестно"}' связанной с не родной веткой",
                             ExceptionType.Error,
                             ExceptionReason.IncorrectLink
                         );
