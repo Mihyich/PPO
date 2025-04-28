@@ -1,4 +1,4 @@
-namespace MetroGid.Core.Models
+namespace MetroGid.Core.Models.Types
 {
     public enum AccessType
     {

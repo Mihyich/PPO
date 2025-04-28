@@ -1,7 +1,7 @@
 using MetroGid.Core.Utilities.Strategies;
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
-namespace MetroGid.Core.Models
+namespace MetroGid.Core.Models.Concrete
 {
     public class Chart(string title, string city, string svg_inst) : IDomainValidatorAccepter
     {
@@ -26,7 +26,7 @@ namespace MetroGid.Core.Models
         public Route? Search(Station src, Station dst, TimeOnly timeStart)
         {
             Route? route = Searcher?.Search(Branches, src, dst, timeStart) ?? null;
-            
+
             if (route != null)
                 route.Chart = this;
 

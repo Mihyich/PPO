@@ -1,3 +1,4 @@
+using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utilities;
 
 namespace MetroGid.Core.Models

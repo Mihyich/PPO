@@ -1,6 +1,6 @@
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
-namespace MetroGid.Core.Models
+namespace MetroGid.Core.Models.Concrete
 {
     public class Railway(TimeOnly duration) : IDomainValidatorAccepter
     {

@@ -1,14 +1,18 @@
+using MetroGid.Core.Models.Interfaces;
+using MetroGid.Core.Models.Types;
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
-namespace MetroGid.Core.Models
+namespace MetroGid.Core.Models.Concrete
 {
-    public class Branch(string title, int color, AccessType type) : IDomainValidatorAccepter
+    public class Branch(string title, int color, AccessType type) : IAccessAvailability, IDomainValidatorAccepter
     {
         public string Title { get; set; } = title;
         public int Color { get; set; } = color;
         public AccessType Type { get; set; } = type;
         public List<Station> Stations { get; set; } = [];
         public Chart? Chart { get; set; }
+
+        public bool IsAccessible() => Type == AccessType.ACCESSIBLE;
 
         public void Validate(IDomainValidatorVisitor visitor) => visitor.Visit(this);
     }
