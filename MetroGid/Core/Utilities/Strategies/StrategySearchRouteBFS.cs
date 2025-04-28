@@ -10,6 +10,9 @@ namespace MetroGid.Core.Utilities.Strategies
             HashSet<Station> visited = [];
             Route initialRoute = new();
 
+            if ((!src.Branch?.IsAccessible() ?? false) || !src.IsAccessible() || !src.IsOpenAt(timeStart))
+                return null;
+
             initialRoute.Add(src);
             queue.Enqueue(initialRoute);
 
@@ -78,7 +81,7 @@ namespace MetroGid.Core.Utilities.Strategies
 
         private static void UpdateProcess(Route curRoute, Transition transitionNeigbor, Station? stationNeighbor, Queue<Route> queue, HashSet<Station> visited, TimeOnly curTime)
         {
-            if (stationNeighbor != null && stationNeighbor.IsAccessible() && stationNeighbor.IsOpenAt(curTime) && !visited.Contains(stationNeighbor))
+            if (stationNeighbor != null && stationNeighbor.IsAccessible() && stationNeighbor.IsOpenAt(curTime) && (stationNeighbor?.Branch?.IsAccessible() ?? false) && !visited.Contains(stationNeighbor))
             {
                 Route newRoute = curRoute.Clone();
                 newRoute.Add(transitionNeigbor);
