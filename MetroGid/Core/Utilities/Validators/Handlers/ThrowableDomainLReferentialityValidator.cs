@@ -4,6 +4,8 @@ using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utilities.Validators.Interfaces;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MetroGid.Core.Utilities.Validators.Handlers
 {
@@ -34,6 +36,28 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     return thrown;
                 }, Logger
             );
+
+            for (int i = 0; i < chart.Branches.Count - 1; ++i)
+            {
+                for (int j = i + 1; j < chart.Branches.Count; ++j)
+                {
+                    Handler.Snap(
+                        () =>
+                        {
+                            bool thrown = chart.Branches[i].Title == chart.Branches[j].Title;
+
+                            if (thrown)
+                                throw new DomainValidationException(
+                                    $"Схема {chart.Title} имеет ветки с одинаковыми наименованиями: {chart.Branches[i].Title}",
+                                    ExceptionType.Error,
+                                    ExceptionReason.ValueDuplicate
+                                );
+
+                            return thrown;
+                        }, Logger
+                    );
+                }
+            }
 
             Handler.Snap(
                 () =>
@@ -95,6 +119,28 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     return thrown;
                 }, Logger
             );
+
+            for (int i = 0; i < branch.Stations.Count - 1; ++i)
+            {
+                for (int j = i + 1; j < branch.Stations.Count; ++j)
+                {
+                    Handler.Snap(
+                        () =>
+                        {
+                            bool thrown = branch.Stations[i].Title == branch.Stations[j].Title;
+
+                            if (thrown)
+                                throw new DomainValidationException(
+                                    $"Ветка схемы {branch.Chart?.Title ?? "Неизвестно"} имеет станции с одинаковыми наименованиями: {branch.Stations[i].Title}",
+                                    ExceptionType.Error,
+                                    ExceptionReason.ValueDuplicate
+                                );
+
+                            return thrown;
+                        }, Logger
+                    );
+                }
+            }
 
             Handler.Snap(
                 () =>
