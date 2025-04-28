@@ -108,7 +108,7 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     if (thrown)
                     {
                         throw new DomainValidationException(
-                            $"Ветка '{branch.Title}' схемы '{branch.Chart?.City ?? "Неизвестно"}' в городе '{branch.Chart?.City ?? "Неизвестно"}' не имеет ни одной станции",
+                            $"Ветка '{branch.Title}' схемы '{branch.Chart?.Title ?? "Неизвестно"}' в городе '{branch.Chart?.City ?? "Неизвестно"}' не имеет ни одной станции",
                             ExceptionType.Warning,
                             ExceptionReason.NotFound
                         );
