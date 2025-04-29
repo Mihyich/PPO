@@ -26,11 +26,13 @@ namespace MetroGid.Core.Models.Concrete
             0 :
             HashCode.Combine(Title, Branch.Title);
 
-        public override bool Equals(object? obj) =>
-            !(obj is null || GetType() != obj.GetType() ||
-            Branch == null || ((Station)obj).Branch == null) &&
-            Title == ((Station)obj).Title &&
-            Branch.Title == ((Station)obj).Branch?.Title;
+        // public override bool Equals(object? obj) =>
+        //     obj is Station other &&
+        //     Title == other.Title &&
+        //     Occupancy == other.Occupancy &&
+        //     Type == other.Type &&
+        //     OpenTime == other.OpenTime &&
+        //     CloseTime == other.CloseTime;
 
         public bool IsAccessible() => Type == AccessType.ACCESSIBLE;
 
