@@ -299,5 +299,123 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                 }, Logger
             );
         }
+
+        public void Visit(Route route)
+        {
+            Handler.Snap(
+                () =>
+                {
+                    bool thrown = route.Chart == null;
+
+                    if (thrown)
+                        throw new DomainValidationException(
+                            $"Маршрут '{route.Title}' схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' не связан с родной схемой",
+                            ExceptionType.Error,
+                            ExceptionReason.NullArgument
+                        );
+
+                    return thrown;
+                }, Logger
+            );
+
+            foreach (var item in route.Path)
+            {
+                if (item is RouteStationItem { Station: var station })
+                {
+                    // station.Validate(this);
+
+                    Handler.Snap(
+                        () =>
+                        {
+                            bool thrown = route.Chart != station.Branch?.Chart;
+
+                            if (thrown)
+                                throw new DomainValidationException(
+                                    $"Маршрут '{route.Title}' схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' содержит станцию '{station.Title}' ветки '{station.Branch?.Title ?? "Неизвестно"}' с отличающейся ссылкой на схему",
+                                    ExceptionType.Error,
+                                    ExceptionReason.IncorrectLink
+                                );
+
+                            return thrown;
+                        }, Logger
+                    );
+                }
+                else if (item is RouteConnectionItem { Connection: var connection })
+                {
+                    if (connection is RailwayConnection { Railway: var railway })
+                    {
+                        // railway.Validate(this);
+
+                        Handler.Snap(
+                            () =>
+                            {
+                                bool thrown = route.Chart != railway.Prev?.Branch?.Chart;
+
+                                if (thrown)
+                                    throw new DomainValidationException(
+                                        $"Маршрут '{route.Title}' схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' содержит переезд, ведущий со станции '{railway.Next?.Title ?? "Неизвестно"}' на станцию '{railway.Prev?.Title ?? "Неизвестно"}' ветки '{railway.Prev?.Branch?.Title ?? "Неизвестно"}' с отличающейся ссылкой на схему",
+                                        ExceptionType.Error,
+                                        ExceptionReason.IncorrectLink
+                                    );
+
+                                return thrown;
+                            }, Logger
+                        );
+
+                        Handler.Snap(
+                            () =>
+                            {
+                                bool thrown = route.Chart != railway.Next?.Branch?.Chart;
+
+                                if (thrown)
+                                    throw new DomainValidationException(
+                                        $"Маршрут '{route.Title}' схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' содержит переезд, ведущий со станции '{railway.Prev?.Title ?? "Неизвестно"}' на станцию '{railway.Next?.Title ?? "Неизвестно"}' ветки '{railway.Next?.Branch?.Title ?? "Неизвестно"}' с отличающейся ссылкой на схему",
+                                        ExceptionType.Error,
+                                        ExceptionReason.IncorrectLink
+                                    );
+
+                                return thrown;
+                            }, Logger
+                        );
+                    }
+                    else if (connection is TransitionConnection { Transition: var transition })
+                    {
+                        // transition.Validate(this);
+
+                        Handler.Snap(
+                            () =>
+                            {
+                                bool thrown = route.Chart != transition.From?.Branch?.Chart;
+
+                                if (thrown)
+                                    throw new DomainValidationException(
+                                        $"Маршрут '{route.Title}' схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' содержит переход, ведущий со станции '{transition.To?.Title ?? "Неизвестно"}' ветки '{transition.To?.Branch?.Title ?? "Неизвестно"}' на станцию '{transition.From?.Title ?? "Неизвестно"}' ветки '{transition.From?.Branch?.Title ?? "Неизвестно"}' с отличающейся ссылкой на схему",
+                                        ExceptionType.Error,
+                                        ExceptionReason.IncorrectLink
+                                    );
+
+                                return thrown;
+                            }, Logger
+                        );
+
+                        Handler.Snap(
+                            () =>
+                            {
+                                bool thrown = route.Chart != transition.To?.Branch?.Chart;
+
+                                if (thrown)
+                                    throw new DomainValidationException(
+                                        $"Маршрут '{route.Title}' схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' содержит переход, ведущий со станции '{transition.From?.Title ?? "Неизвестно"}' ветки '{transition.From?.Branch?.Title ?? "Неизвестно"}' на станцию '{transition.To?.Title ?? "Неизвестно"}' ветки '{transition.To?.Branch?.Title ?? "Неизвестно"}' с отличающейся ссылкой на схему",
+                                        ExceptionType.Error,
+                                        ExceptionReason.IncorrectLink
+                                    );
+
+                                return thrown;
+                            }, Logger
+                        );
+                    }
+                }
+            }
+        }
     }
 }
