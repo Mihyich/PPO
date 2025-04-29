@@ -38,6 +38,8 @@ class Program
         if (stationA != null && stationB != null)
         {
             Route? route = chart.Search(stationA, stationB, timeStart);
+            route?.Validate(domainAttribsValidator);
+            route?.Validate(domainReferentialityValidator);
             route?.Output();
         }
         else
