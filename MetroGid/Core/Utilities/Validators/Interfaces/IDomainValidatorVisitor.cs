@@ -9,5 +9,6 @@ namespace MetroGid.Core.Utilities.Validators.Interfaces
         void Visit(Station station);
         void Visit(Railway railway);
         void Visit(Transition transition);
+        void Visit(Route route);
     }
 }

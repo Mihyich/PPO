@@ -1,4 +1,5 @@
 using MetroGid.Core.Utilities;
+using MetroGid.Core.Utilities.Validators.Interfaces;
 
 namespace MetroGid.Core.Models.Concrete
 {
@@ -10,7 +11,7 @@ namespace MetroGid.Core.Models.Concrete
     public record RouteStationItem(Station Station) : RouteItem;
     public record RouteConnectionItem(StationConnection Connection) : RouteItem;
 
-    public class Route
+    public class Route : IDomainValidatorAccepter
     {
         public string Title = string.Empty;
         public readonly List<RouteItem> Path = [];
@@ -102,6 +103,33 @@ namespace MetroGid.Core.Models.Concrete
             return isStation;
         }
 
+        public bool IsReferenceEquals(Route? route)
+        {
+            if (route == null)
+                return false;
+
+            if (ReferenceEquals(this, route))
+                return true;
+
+            if (!ReferenceEquals(Chart, route.Chart))
+                return false;
+
+            if (Duration != route.Duration)
+                return false;
+
+            if (Path.Count != route.Path.Count)
+                return false;
+
+            if (Title != route.Title)
+                return false;
+
+            for (int i = 0; i < Path.Count; ++i)
+                if (ReferenceEquals(Path[i], route.Path[i]))
+                    return false;
+
+            return true;
+        }
+
         public int GetStationCount() => IsValid() ? Path.Count / 2 + Path.Count % 2 : 0;
 
         public int GetTransitionCount()
@@ -145,5 +173,7 @@ namespace MetroGid.Core.Models.Concrete
                 }
             }
         }
+
+        public void Validate(IDomainValidatorVisitor visitor) => visitor.Visit(this);
     }
 }
