@@ -28,7 +28,10 @@ namespace MetroGid.Core.Models.Concrete
             Route? route = Searcher?.Search(Branches, src, dst, timeStart) ?? null;
 
             if (route != null)
+            {
                 route.Chart = this;
+                route.Title = "Новый маршрут";
+            }
 
             return route;
         }
