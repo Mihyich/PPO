@@ -269,11 +269,13 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     bool thrown = railway.Duration > TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(30));
 
                     if (thrown)
+                    {
                         throw new DomainValidationException(
                             $"Среднее время переезда слишком велико: {railway.Duration}",
                             ExceptionType.Warning,
                             ExceptionReason.NotLogicValue
                         );
+                    }
 
                     return thrown;
                 }, Logger
@@ -324,11 +326,13 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                     bool thrown = transition.Duration > TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(60));
 
                     if (thrown)
+                    {
                         throw new DomainValidationException(
                             $"Среднее время перехода слишком велико: {transition.Duration}",
                             ExceptionType.Warning,
                             ExceptionReason.NotLogicValue
                         );
+                    }
 
                     return thrown;
                 }, Logger
@@ -344,6 +348,126 @@ namespace MetroGid.Core.Utilities.Validators.Handlers
                         throw new DomainValidationException(
                             $"Время открытия и закрытия перехода совпадают: {transition.OpenTime}",
                             ExceptionType.Warning,
+                            ExceptionReason.NotLogicValue
+                        );
+                    }
+
+                    return thrown;
+                }, Logger
+            );
+        }
+
+        public void Visit(Route route)
+        {
+            Handler.Snap(
+                () =>
+                {
+                    bool thrown = TitleP.IsEmpty(route.Title);
+
+                    if (thrown)
+                    {
+                        throw new DomainValidationException(
+                            $"Наименование маршрута схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' пустое",
+                            ExceptionType.Warning,
+                            ExceptionReason.EmptyString
+                        );
+                    }
+
+                    return thrown;
+                }, Logger
+            );
+
+            Handler.Snap(
+                () =>
+                {
+                    bool thrown = TitleP.IsOutOfRange(route.Title);
+
+                    if (thrown)
+                    {
+                        throw new DomainValidationException(
+                            $"Наименование маршрута схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' превышает допустимый предел длины: {route.Title.Length} > {TitleP.MaxLength}",
+                            ExceptionType.Warning,
+                            ExceptionReason.StringLenghtOutOfRange
+                        );
+                    }
+
+                    return thrown;
+                }, Logger
+            );
+
+            Handler.Snap(
+                () =>
+                {
+                    bool thrown = route.Path.Count > 1 && route.Duration == TimeSpan.Zero;
+
+                    if (thrown)
+                    {
+                        throw new DomainValidationException(
+                            $"Маршрут '{route.Title}' схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' затрачивает на не пустой путь нисколько времени",
+                            ExceptionType.Warning,
+                            ExceptionReason.NotLogicValue
+                        );
+                    }
+
+                    return thrown;
+                }, Logger
+            );
+
+            Handler.Snap(
+                () =>
+                {
+                    bool thrown = route.Path.Count == 0;
+
+                    if (thrown)
+                    {
+                        throw new DomainValidationException(
+                            $"Маршрут '{route.Title}' схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' пустой",
+                            ExceptionType.Warning,
+                            ExceptionReason.NullResult
+                        );
+                    }
+
+                    return thrown;
+                }, Logger
+            );
+
+            bool shouldBeStation;
+            bool isStation = false;
+
+            for (int i = 0; i < route.Path.Count; ++i)
+            {
+                shouldBeStation = i % 2 == 0;
+                isStation = route.Path[i] is RouteStationItem;
+
+                Handler.Snap(
+                    () =>
+                    {
+                        bool thrown = shouldBeStation != isStation;
+
+                        if (thrown)
+                        {
+                            throw new DomainValidationException(
+                                $"Маршрут '{route.Title}' схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' имеет элемент с номером {i + 1}, не являющийся станцией",
+                                ExceptionType.Error,
+                                ExceptionReason.NotLogicValue
+                            );
+                        }
+
+                        return thrown;
+                    }, Logger
+                );
+            }
+
+            Handler.Snap(
+                () =>
+                {
+                    bool thrown = !isStation;
+
+                    if (thrown)
+                    {
+                        throw new DomainValidationException(
+                            $"Маршрут '{route.Title}' схемы '{route.Chart?.Title ?? "Неизвестно"}' в городе '{route.Chart?.City ?? "Неизвестно"}' не заканчивается на станции",
+                            ExceptionType.Error,
                             ExceptionReason.NotLogicValue
                         );
                     }
