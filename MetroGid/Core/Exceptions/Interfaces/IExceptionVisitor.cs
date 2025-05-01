@@ -14,5 +14,6 @@ namespace MetroGid.Core.Exceptions.Interfaces
         void Visit(BuilderProccessException ex);
         void Visit(DomainValidationException ex);
         void Visit(NotFoundException ex);
+        void Visit(ServiceRouteException ex);
     }
 }

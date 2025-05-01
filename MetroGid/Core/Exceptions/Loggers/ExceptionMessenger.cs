@@ -54,5 +54,10 @@ namespace MetroGid.Core.Exceptions.Loggers
         {
             throw new NotImplementedException();
         }
+
+        public void Visit(ServiceRouteException ex)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
