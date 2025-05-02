@@ -18,4 +18,21 @@ public class TransitionDTO(
 
     public string ToStationTitle { get; set; } = to_station_title;
     public string ToBranchTitle { get; set; } = to_branch_title;
+
+
+    public override bool Equals(object? obj) =>
+        obj is TransitionDTO other &&
+        Occupancy == other.Occupancy &&
+        Type == other.Type &&
+        Duration == other.Duration &&
+        OpenTime == other.OpenTime &&
+        CloseTime == other.CloseTime &&
+        FromStationTitle == other.FromStationTitle &&
+        FromBranchTitle == other.FromBranchTitle &&
+        ToStationTitle == other.ToStationTitle &&
+        ToBranchTitle == other.ToBranchTitle;
+
+
+    public override int GetHashCode() =>
+        HashCode.Combine(Occupancy, Type, Duration, OpenTime, CloseTime, FromStationTitle + FromBranchTitle + ToStationTitle + ToBranchTitle);
 }
