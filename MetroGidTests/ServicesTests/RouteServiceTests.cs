@@ -1,4 +1,6 @@
 using MetroGid.Controllers.DTO;
+using MetroGid.Core.Exceptions.Classification;
+using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Handlers;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Services;
@@ -74,6 +76,39 @@ public class RouteServiceTests
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
         Assert.True(route.Equals(expectedRoute));
+    }
+
+    [Fact]
+    public async void InaccessibleBranchSearchingAdanaTest()
+    {
+        SuperHandlerException handler = new PassThroughHandlerException();
+
+        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
+        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
+        
+        Mock<IChartRepository> mockChartRepo = new();
+        Mock<IRouteRepository> mockRouteRepo = new();
+
+        string city = "Адана";
+        string chartTitle = "Схема метро";
+        string branchSrcTitle = "Линия 1";
+        string stationSrcTitle = "Больница";
+        string branchDstTitle = "Линия 1";
+        string stationDstTitle = "Акынджилар";
+        TimeOnly startTime = new(18, 0);
+
+        string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
+        string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "InaccessibleBranch.json");
+
+        mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+
+        ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+
+        mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
+        Assert.Equal($"Маршрут не удалось найти в схеме '{chartTitle}' в городе '{city}' от станции '{stationSrcTitle}' ветки '{branchSrcTitle}' до станции '{stationDstTitle}' ветки '{branchDstTitle}'", ex.Message);
+        Assert.Equal(ExceptionType.Quiet, ex.ExcType);
+        Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
     }
 
     [Fact]
