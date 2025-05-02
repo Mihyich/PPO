@@ -68,11 +68,8 @@ public static class DomainDtoConverter
             }
         }
 
-        return new()
+        return new(route.Title, route.Chart?.City ?? string.Empty, route.Chart?.Title ?? string.Empty)
         {
-            Title = route.Title,
-            City = route.Chart?.City ?? string.Empty,
-            ChartTitle = route.Chart?.Title ?? string.Empty,
             Path = CntPath,
             Duration = route.Duration
         };
