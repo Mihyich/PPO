@@ -124,7 +124,7 @@ public class Route : IDomainValidatorAccepter
             return false;
 
         for (int i = 0; i < Path.Count; ++i)
-            if (ReferenceEquals(Path[i], route.Path[i]))
+            if (!ReferenceEquals(Path[i], route.Path[i]))
                 return false;
 
         return true;
