@@ -27,7 +27,7 @@ public class RouteDTO(string title, string city, string chartTitle)
             Path.Count == other.Path.Count)
         {
             for (int i = 0; i < Path.Count; ++i)
-                if (Path[i] != other.Path[i])
+                if (!Path[i].Equals(other.Path[i]))
                     return false;
 
             return true;
