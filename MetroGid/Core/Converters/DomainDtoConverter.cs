@@ -36,7 +36,8 @@ public static class DomainDtoConverter
             station.OpenTime, station.CloseTime);
 
     public static RailwayDTO Convert(Railway railway) =>
-        new(railway.Prev?.Title ?? string.Empty,
+        new(railway.Prev?.Branch?.Title ?? railway.Next?.Branch?.Title ?? string.Empty,
+            railway.Prev?.Title ?? string.Empty,
             railway.Next?.Title ?? string.Empty,
             railway.Duration);
 
