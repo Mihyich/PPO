@@ -5,8 +5,6 @@ using MetroGid.Core.Exceptions.Handlers;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Services;
 using MetroGid.Core.Utilities;
-using MetroGid.Core.Utilities.Validators.Handlers;
-using MetroGid.Core.Utilities.Validators.Interfaces;
 using MetroGid.DBA.Interfaces;
 using Moq;
 
@@ -18,9 +16,6 @@ public class RouteServiceTests
     public async void UsualSearchingAdanaTest()
     {
         SuperHandlerException handler = new PassThroughHandlerException();
-
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -83,9 +78,6 @@ public class RouteServiceTests
     {
         SuperHandlerException handler = new PassThroughHandlerException();
 
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
-        
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
 
@@ -115,9 +107,6 @@ public class RouteServiceTests
     public async void InaccessibleFirstStationSearchingAdanaTest()
     {
         SuperHandlerException handler = new PassThroughHandlerException();
-
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -148,9 +137,6 @@ public class RouteServiceTests
     public async void InaccessibleLastStationSearchingAdanaTest()
     {
         SuperHandlerException handler = new PassThroughHandlerException();
-
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -181,9 +167,6 @@ public class RouteServiceTests
     public async void InaccessibleOnWayStationAdanaTest()
     {
         SuperHandlerException handler = new PassThroughHandlerException();
-
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -245,9 +228,6 @@ public class RouteServiceTests
     public async void UsualSearchingMoscowTest()
     {
         SuperHandlerException handler = new PassThroughHandlerException();
-
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -347,9 +327,6 @@ public class RouteServiceTests
     public async void InaccessibleOnWayStationSearchingMoscowTest()
     {
         SuperHandlerException handler = new PassThroughHandlerException();
-
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -449,9 +426,6 @@ public class RouteServiceTests
     public async void InaccessibleFirstStationSearchingMoscowTest()
     {
         SuperHandlerException handler = new PassThroughHandlerException();
-
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -482,9 +456,6 @@ public class RouteServiceTests
     public async void InaccessibleLastStationSearchingMoscowTest()
     {
         SuperHandlerException handler = new PassThroughHandlerException();
-
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -515,9 +486,6 @@ public class RouteServiceTests
     public async void NotFoundSrcStationSearchingMoscowTest()
     {
         SuperHandlerException handler = new PassThroughHandlerException();
-
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -548,9 +516,6 @@ public class RouteServiceTests
     public async void NotFoundDstStationSearchingMoscowTest()
     {
         SuperHandlerException handler = new PassThroughHandlerException();
-
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
