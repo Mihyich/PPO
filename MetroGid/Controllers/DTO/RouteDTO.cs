@@ -8,11 +8,11 @@ public abstract record RouteItemDTO;
 public record RouteStationItemDTO(StationDTO Station) : RouteItemDTO;
 public record RouteConnectionItemDTO(StationConnectionDTO Connection) : RouteItemDTO;
 
-public class RouteDTO
+public class RouteDTO(string title, string city, string chartTitle)
 {
-    public string Title { get; set; } = string.Empty;
-    public string City { get; set; } = string.Empty;
-    public string ChartTitle { get; set; } = string.Empty;
+    public string Title { get; set; } = title;
+    public string City { get; set; } = city;
+    public string ChartTitle { get; set; } = chartTitle;
 
     public List<RouteItemDTO> Path = [];
     public TimeSpan Duration { get; set; } = TimeSpan.Zero;
