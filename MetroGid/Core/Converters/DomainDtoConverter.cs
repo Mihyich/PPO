@@ -32,7 +32,8 @@ public static class DomainDtoConverter
         new(branch.Title, branch.Color, Convert(branch.Type));
 
     public static StationDTO Convert(Station station) =>
-        new(station.Title, station.Occupancy, Convert(station.Type),
+        new(station.Title, station.Branch?.Title ?? string.Empty,
+            station.Occupancy, Convert(station.Type),
             station.OpenTime, station.CloseTime);
 
     public static RailwayDTO Convert(Railway railway) =>
