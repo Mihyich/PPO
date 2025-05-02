@@ -10,7 +10,7 @@ public class StrategySearchRouteBFS : StrategySearchRouteBase
         HashSet<Station> visited = [];
         Route initialRoute = new();
 
-        if ((!src.Branch?.IsAccessible() ?? false) || !src.IsAccessible() || !src.IsOpenAt(timeStart))
+        if ((!src.Branch?.IsAccessible() ?? true) || !src.IsAccessible() || !src.IsOpenAt(timeStart))
             return new();
 
         initialRoute.Add(src);
