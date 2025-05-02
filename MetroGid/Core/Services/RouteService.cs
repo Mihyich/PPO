@@ -17,14 +17,14 @@ namespace MetroGid.Core.Services;
 
 public class RouteService(
     IChartRepository chartRepo, IRouteRepository routeRepo,
-    SuperHandlerException handler, IExceptionVisitor logger
+    SuperHandlerException handler, IExceptionVisitor? logger = null
 ) : IRouteService
 {
     private readonly IChartRepository ChartRepo = chartRepo;
     private readonly IRouteRepository RouteRepo = routeRepo;
 
     private readonly SuperHandlerException Handler = handler;
-    private readonly IExceptionVisitor Logger = logger;
+    private readonly IExceptionVisitor? Logger = logger;
 
     private readonly ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler, logger);
     private readonly ThrowableDomainReferentialityValidator DomainReferentialityValidator = new(handler, logger);
