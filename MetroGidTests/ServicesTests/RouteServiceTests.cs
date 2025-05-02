@@ -510,4 +510,70 @@ public class RouteServiceTests
         Assert.Equal(ExceptionType.Quiet, ex.ExcType);
         Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
     }
+
+    [Fact]
+    public async void NotFoundSrcStationSearchingMoscowTest()
+    {
+        SuperHandlerException handler = new PassThroughHandlerException();
+
+        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
+        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
+        
+        Mock<IChartRepository> mockChartRepo = new();
+        Mock<IRouteRepository> mockRouteRepo = new();
+
+        string city = "Москва";
+        string chartTitle = "Московский метрополитен";
+        string branchSrcTitle = "МЦД-113";
+        string stationSrcTitle = "Нахабино";
+        string branchDstTitle = "Замоскворецкая линия";
+        string stationDstTitle = "Автозаводская";
+        TimeOnly startTime = new(18, 0);
+
+        string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
+        string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
+
+        mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+
+        ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+
+        mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
+        Assert.Equal($"В схеме '{chartTitle}' в городе '{city}' не найдена станция '{stationSrcTitle}' ветки '{branchSrcTitle}'", ex.Message);
+        Assert.Equal(ExceptionType.Error, ex.ExcType);
+        Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
+    }
+
+    [Fact]
+    public async void NotFoundDstStationSearchingMoscowTest()
+    {
+        SuperHandlerException handler = new PassThroughHandlerException();
+
+        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
+        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
+        
+        Mock<IChartRepository> mockChartRepo = new();
+        Mock<IRouteRepository> mockRouteRepo = new();
+
+        string city = "Москва";
+        string chartTitle = "Московский метрополитен";
+        string branchSrcTitle = "МЦД-2";
+        string stationSrcTitle = "Нахабино";
+        string branchDstTitle = "линия";
+        string stationDstTitle = "Автозаводская";
+        TimeOnly startTime = new(18, 0);
+
+        string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
+        string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
+
+        mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+
+        ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+
+        mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
+        Assert.Equal($"В схеме '{chartTitle}' в городе '{city}' не найдена станция '{stationDstTitle}' ветки '{branchDstTitle}'", ex.Message);
+        Assert.Equal(ExceptionType.Error, ex.ExcType);
+        Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
+    }
 }
