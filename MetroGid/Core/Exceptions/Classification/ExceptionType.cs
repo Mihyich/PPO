@@ -1,10 +1,9 @@
-namespace MetroGid.Core.Exceptions.Classification
+namespace MetroGid.Core.Exceptions.Classification;
+
+public enum ExceptionType
 {
-    public enum ExceptionType
-    {
-        Quiet,
-        Warning,
-        Error,
-        Critical
-    }
+    Quiet,
+    Warning,
+    Error,
+    Critical
 }

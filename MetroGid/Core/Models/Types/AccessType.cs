@@ -1,8 +1,7 @@
-namespace MetroGid.Core.Models.Types
+namespace MetroGid.Core.Models.Types;
+
+public enum AccessType
 {
-    public enum AccessType
-    {
-        ACCESSIBLE,
-        INACCESSIBLE
-    }
+    ACCESSIBLE,
+    INACCESSIBLE
 }

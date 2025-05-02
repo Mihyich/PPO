@@ -27,129 +27,128 @@ pq - приоритетная оцередь. Используется для к
 требуется знать не только начальную и конечную станции, но и время отправки - timeStart.
 */
 
-namespace MetroGid.Core.Utilities.Strategies
+namespace MetroGid.Core.Utilities.Strategies;
+
+public class StrategySearchRouteDijkstra : StrategySearchRouteBase
 {
-    public class StrategySearchRouteDijkstra : StrategySearchRouteBase
+    public override Route Search(List<Branch> branches, Station src, Station dst, TimeOnly timeStart)
     {
-        public override Route? Search(List<Branch> branches, Station src, Station dst, TimeOnly timeStart)
+        Dictionary<Station, List<Route>> Adj = GenAdj(branches); // Аналог матрицы смежностей
+        Dictionary<Station, Route> dist = GenDist(branches); // Поиск маршрутов к каждому из узлов графа
+        HashSet<Station> visited = []; // Посещенные станции
+        PriorityQueue<Route, TimeSpan> pq = new(); // Приоритетная очередь по времени маршрутов
+        Station? lstation;
+
+        // Создание отправной точки
+        Route route = new();
+        route.Add(src);
+        route.UpdateDuration();
+
+        // По умолчанию минимальный способ добраться до src это route.
+        dist[src] = route;
+
+        // Обновить очередь
+        pq.Enqueue(route, route.Duration);
+
+        // Основной цикл
+        while (pq.Count > 0)
         {
-            Dictionary<Station, List<Route>> Adj = GenAdj(branches); // Аналог матрицы смежностей
-            Dictionary<Station, Route> dist = GenDist(branches); // Поиск маршрутов к каждому из узлов графа
-            HashSet<Station> visited = []; // Посещенные станции
-            PriorityQueue<Route, TimeSpan> pq = new(); // Приоритетная очередь по времени маршрутов
-            Station? lstation;
+            route = pq.Dequeue();
+            lstation = route.GetLastStation();
 
-            // Создание отправной точки
-            Route route = new();
-            route.Add(src);
-            route.UpdateDuration();
+            if (lstation == null || route.Duration > dist[lstation].Duration)
+                continue;
 
-            // По умолчанию минимальный способ добраться до src это route.
-            dist[src] = route;
-
-            // Обновить очередь
-            pq.Enqueue(route, route.Duration);
-
-            // Основной цикл
-            while (pq.Count > 0)
+            foreach (Route r in Adj[lstation])
             {
-                route = pq.Dequeue();
-                lstation = route.GetLastStation();
+                Station? neighbor = r.GetLastStation();
+                TimeSpan newTime = dist[lstation].Duration + r.Duration;
+                Route newRoute;
 
-                if (lstation == null || route.Duration > dist[lstation].Duration)
-                    continue;
-
-                foreach (Route r in Adj[lstation])
+                if (neighbor != null &&
+                    dist[neighbor].Duration > newTime &&
+                    // neighbor.IsOpenAt(timeStart + )
+                    !visited.Contains(neighbor))
                 {
-                    Station? neighbor = r.GetLastStation();
-                    TimeSpan newTime = dist[lstation].Duration + r.Duration;
-                    Route newRoute;
+                    newRoute = route.Clone();
+                    newRoute.PopBack();
+                    newRoute.Merge(r);
+                    newRoute.UpdateDuration();
 
-                    if (neighbor != null &&
-                        dist[neighbor].Duration > newTime &&
-                        // neighbor.IsOpenAt(timeStart + )
-                        !visited.Contains(neighbor))
-                    {
-                        newRoute = route.Clone();
-                        newRoute.PopBack();
-                        newRoute.Merge(r);
-                        newRoute.UpdateDuration();
-
-                        dist[neighbor] = newRoute;
-                        pq.Enqueue(newRoute, newRoute.Duration);
-                    }
+                    dist[neighbor] = newRoute;
+                    pq.Enqueue(newRoute, newRoute.Duration);
                 }
-
-                visited.Add(lstation);
             }
 
-            return dist[dst];
+            visited.Add(lstation);
         }
 
-        private static Dictionary<Station, List<Route>> GenAdj(List<Branch> branches)
+        return dist[dst];
+    }
+
+    private static Dictionary<Station, List<Route>> GenAdj(List<Branch> branches)
+    {
+        Dictionary<Station, List<Route>> Adj = [];
+
+        foreach (var branch in branches)
         {
-            Dictionary<Station, List<Route>> Adj = [];
-
-            foreach (var branch in branches)
+            foreach (var station in branch.Stations)
             {
-                foreach (var station in branch.Stations)
+                Route route;
+                List<Route> routes = [];
+
+                Station? neighbor;
+                Railway? railPrev = station.Prev;
+                Railway? railNext = station.Next;
+
+                if (railPrev != null && (neighbor = railPrev.Prev) != null)
                 {
-                    Route route;
-                    List<Route> routes = [];
+                    route = new();
+                    route.Add(station);
+                    route.Add(railPrev);
+                    route.Add(neighbor);
+                    route.UpdateDuration();
+                    routes.Add(route);
+                }
 
-                    Station? neighbor;
-                    Railway? railPrev = station.Prev;
-                    Railway? railNext = station.Next;
+                if (railNext != null && (neighbor = railNext.Next) != null)
+                {
+                    route = new();
+                    route.Add(station);
+                    route.Add(railNext);
+                    route.Add(neighbor);
+                    route.UpdateDuration();
+                    routes.Add(route);
+                }
 
-                    if (railPrev != null && (neighbor = railPrev.Prev) != null)
+                foreach (var transition in station.Transitions)
+                {
+                    if ((neighbor = transition.ToFrom(station)) != null)
                     {
                         route = new();
                         route.Add(station);
-                        route.Add(railPrev);
+                        route.Add(transition);
                         route.Add(neighbor);
                         route.UpdateDuration();
                         routes.Add(route);
                     }
-
-                    if (railNext != null && (neighbor = railNext.Next) != null)
-                    {
-                        route = new();
-                        route.Add(station);
-                        route.Add(railNext);
-                        route.Add(neighbor);
-                        route.UpdateDuration();
-                        routes.Add(route);
-                    }
-
-                    foreach (var transition in station.Transitions)
-                    {
-                        if ((neighbor = transition.ToFrom(station)) != null)
-                        {
-                            route = new();
-                            route.Add(station);
-                            route.Add(transition);
-                            route.Add(neighbor);
-                            route.UpdateDuration();
-                            routes.Add(route);
-                        }
-                    }
-
-                    Adj[station] = routes;
                 }
+
+                Adj[station] = routes;
             }
-
-            return Adj;
         }
 
-        private static Dictionary<Station, Route> GenDist(List<Branch> branches)
-        {
-            Dictionary<Station, Route> dist = [];
+        return Adj;
+    }
 
-            foreach (var branch in branches)
-                foreach (var station in branch.Stations)
-                    dist[station] = new Route() { Duration = TimeSpan.MaxValue };
+    private static Dictionary<Station, Route> GenDist(List<Branch> branches)
+    {
+        Dictionary<Station, Route> dist = [];
 
-            return dist;
-        }
+        foreach (var branch in branches)
+            foreach (var station in branch.Stations)
+                dist[station] = new Route() { Duration = TimeSpan.MaxValue };
+
+        return dist;
     }
 }

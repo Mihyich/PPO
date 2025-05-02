@@ -1,7 +1,6 @@
-namespace MetroGid.Core.Exceptions.Interfaces
+namespace MetroGid.Core.Exceptions.Interfaces;
+
+public interface IExceptionAccepter
 {
-    public interface IExceptionAccepter
-    {
-        void Accept(IExceptionVisitor visitor);
-    }
+    void Accept(IExceptionVisitor visitor);
 }

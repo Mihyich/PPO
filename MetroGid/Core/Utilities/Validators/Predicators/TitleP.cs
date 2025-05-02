@@ -1,9 +1,8 @@
-namespace MetroGid.Core.Utilities.Validators.Predicators
+namespace MetroGid.Core.Utilities.Validators.Predicators;
+
+public static class TitleP
 {
-    public static class TitleP
-    {
-        public static readonly int MaxLength = 255;
-        public static bool IsEmpty(string title) => title.Length == 0;
-        public static bool IsOutOfRange(string title) => title.Length > 255;
-    }
+    public static readonly int MaxLength = 255;
+    public static bool IsEmpty(string title) => title.Length == 0;
+    public static bool IsOutOfRange(string title) => title.Length > 255;
 }

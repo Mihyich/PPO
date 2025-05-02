@@ -1,7 +1,6 @@
-namespace MetroGid.Core.Utilities.Directors
+namespace MetroGid.Core.Utilities.Directors;
+
+public abstract class DirectorBase<T>()
 {
-    public abstract class DirectorBase<T>()
-    {
-        public abstract T Construct();
-    }
+    public abstract T Construct();
 }

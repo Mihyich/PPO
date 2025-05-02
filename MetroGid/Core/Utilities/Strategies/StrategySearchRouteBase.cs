@@ -1,9 +1,8 @@
 using MetroGid.Core.Models.Concrete;
 
-namespace MetroGid.Core.Utilities.Strategies
+namespace MetroGid.Core.Utilities.Strategies;
+
+public abstract class StrategySearchRouteBase
 {
-    public abstract class StrategySearchRouteBase
-    {
-        public abstract Route? Search(List<Branch> branches, Station src, Station dst, TimeOnly timeStart);
-    }
+    public abstract Route Search(List<Branch> branches, Station src, Station dst, TimeOnly timeStart);
 }

@@ -1,9 +1,8 @@
-namespace MetroGid.Controllers.DTO
+namespace MetroGid.Controllers.DTO;
+
+public enum RoleTypeDTO
 {
-    public enum RoleTypeDTO
-    {
-        UNSIGNED = 0,
-        SIGNED,
-        DUTY
-    }
+    UNSIGNED = 0,
+    SIGNED,
+    DUTY
 }

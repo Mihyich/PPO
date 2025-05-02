@@ -1,21 +1,20 @@
 using MetroGid.Core.Models.Concrete;
 
-namespace MetroGid.DBA.Interfaces
+namespace MetroGid.DBA.Interfaces;
+
+public interface IClientRepository
 {
-    public interface IClientRepository
-    {
-        Task<int> AddAsync(Client client);
+    Task<int> AddAsync(Client client);
 
-        Task<int> GetIdAsync(Client client);
-        Task<int> GetIdByCredentialsAsync(string login, string password, string mail);
-        Task<Client> GetByIdAsync(int id);
-        Task<Client> GetByCredentialsAsync(string login, string password, string mail);
+    Task<int> GetIdAsync(Client client);
+    Task<int> GetIdByCredentialsAsync(string login, string password, string mail);
+    Task<Client> GetByIdAsync(int id);
+    Task<Client> GetByCredentialsAsync(string login, string password, string mail);
 
-        Task UpdateAsync(int id, Client client);
+    Task UpdateAsync(int id, Client client);
 
-        Task DeleteAsync(int id);
+    Task DeleteAsync(int id);
 
-        Task<bool> IsLoginExistsAsync(string login);
-        Task<bool> IsMailExistsAsync(string mail);
-    }
+    Task<bool> IsLoginExistsAsync(string login);
+    Task<bool> IsMailExistsAsync(string mail);
 }

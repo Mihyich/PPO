@@ -1,7 +1,6 @@
-namespace MetroGid.Core.Utilities.Validators.Interfaces
+namespace MetroGid.Core.Utilities.Validators.Interfaces;
+
+public interface IDomainValidatorAccepter
 {
-    public interface IDomainValidatorAccepter
-    {
-        void Validate(IDomainValidatorVisitor visitor);
-    }
+    void Validate(IDomainValidatorVisitor visitor);
 }

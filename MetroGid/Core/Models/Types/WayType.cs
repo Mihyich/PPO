@@ -1,9 +1,8 @@
-namespace MetroGid.Core.Models.Types
+namespace MetroGid.Core.Models.Types;
+
+public enum WayType
 {
-    public enum WayType
-    {
-        STATION = 0,
-        RAILWAY,
-        TRANSITION
-    }
+    STATION = 0,
+    RAILWAY,
+    TRANSITION
 }

@@ -1,8 +1,7 @@
-namespace MetroGid.Controllers.DTO
+namespace MetroGid.Controllers.DTO;
+
+public enum AccessTypeDTO
 {
-    public enum AccessTypeDTO
-    {
-        ACCESSIBLE = 0,
-        INACCESSIBLE
-    }
+    ACCESSIBLE = 0,
+    INACCESSIBLE
 }

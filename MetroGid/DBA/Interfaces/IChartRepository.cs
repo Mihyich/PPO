@@ -1,45 +1,46 @@
 using MetroGid.Core.Models.Concrete;
 
-namespace MetroGid.DBA.Interfaces
+namespace MetroGid.DBA.Interfaces;
+
+public interface IChartRepository
 {
-    public interface IChartRepository
-    {
-        Task<int> AddAsync(Chart chart);
+    Task<int> AddAsync(Chart chart);
 
-        Task<string> GetChartJsonByIdAsync(int chartId);
-        Task<Chart> GetChartWeakByIdAsync(int chartId);
-        Task<Branch> GetBranchWeakByIdAsync(int branchId);
-        Task<Station> GetStationWeakByIdAsync(int stationId);
-        Task<Railway> GetRailwayByIdAsync(int railwayId);
-        Task<Transition> GetTransitionByIdAsync(int transitionId);
+    Task<string> GetChartJsonByIdAsync(int chartId);
+    Task<Chart> GetChartWeakByIdAsync(int chartId);
+    Task<Branch> GetBranchWeakByIdAsync(int branchId);
+    Task<Station> GetStationWeakByIdAsync(int stationId);
+    Task<Railway> GetRailwayByIdAsync(int railwayId);
+    Task<Transition> GetTransitionByIdAsync(int transitionId);
 
-        Task<int> GetChartIdAsync(string city, string title);
-        Task<int> GetBranchIdAsync(string title, int chartId);
-        Task<int> GetStationIdAsync(string title, int branchId);
+    Task<int> GetChartIdAsync(string city, string title);
+    Task<int> GetBranchIdAsync(string title, int chartId);
+    Task<int> GetStationIdAsync(string title, int branchId);
 
-        Task<List<int>> GetAllChartIdAsync();
-        Task<List<int>> GetAllChartBranchIdAsync(int chartId);
-        Task<List<int>> GetAllBranchStationIdAsync(int branchId);
+    Task<string> GetChartJsonAsync(string city, string title);
 
-        Task<List<ValueTuple<string, string>>> GetAllChartCityTitleAsync(); // <City, Title>
-        Task<List<string>> GetAllChartBranchTitleAsync(int chartId);
-        Task<List<string>> GetAllBranchStationTitleAsync(int branchId);
+    Task<List<int>> GetAllChartIdAsync();
+    Task<List<int>> GetAllChartBranchIdAsync(int chartId);
+    Task<List<int>> GetAllBranchStationIdAsync(int branchId);
 
-        Task<List<int>> GetNeighborStationRailwayAsync(int stationId);
-        Task<List<int>> GetNeighborStationTransitionAsync(int stationId);
+    Task<List<ValueTuple<string, string>>> GetAllChartCityTitleAsync(); // <City, Title>
+    Task<List<string>> GetAllChartBranchTitleAsync(int chartId);
+    Task<List<string>> GetAllBranchStationTitleAsync(int branchId);
 
-        Task<List<int>> GetFromToStationIdByRailwayIdAsync(int railwayId);
-        Task<List<int>> GetFromToStationIdByTransitionIdAsync(int transitionId);
+    Task<List<int>> GetNeighborStationRailwayAsync(int stationId);
+    Task<List<int>> GetNeighborStationTransitionAsync(int stationId);
 
-        Task UpdateChartByIdAsync(int chartId, Chart chart);
-        Task UpdateBranchByIdAsync(int branchId, Branch branch);
-        Task UpdateStationByIdAsync(int stationId, Station station);
-        Task UpdateRailwayByIdAsync(int railwayId, Railway railway);
-        Task UpdateTransitionByIdAsync(int stationId, Transition transition);
+    Task<List<int>> GetFromToStationIdByRailwayIdAsync(int railwayId);
+    Task<List<int>> GetFromToStationIdByTransitionIdAsync(int transitionId);
 
-        Task DeleteChartByIdAsync(int id);
+    Task UpdateChartByIdAsync(int chartId, Chart chart);
+    Task UpdateBranchByIdAsync(int branchId, Branch branch);
+    Task UpdateStationByIdAsync(int stationId, Station station);
+    Task UpdateRailwayByIdAsync(int railwayId, Railway railway);
+    Task UpdateTransitionByIdAsync(int stationId, Transition transition);
 
-        Task<bool> IsCityTitleUniqueAsync(string city, string title);
-        Task<bool> IsBranchTitleUniqueInChartAsync(string title, int chartId);
-    }
+    Task DeleteChartByIdAsync(int id);
+
+    Task<bool> IsCityTitleUniqueAsync(string city, string title);
+    Task<bool> IsBranchTitleUniqueInChartAsync(string title, int chartId);
 }

@@ -1,10 +1,9 @@
 using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utilities.Builders;
 
-namespace MetroGid.Core.Utilities.Directors
+namespace MetroGid.Core.Utilities.Directors;
+
+public abstract class DirectorChartBase(BuilderChartBase builder) : DirectorBase<Chart>
 {
-    public abstract class DirectorChartBase(BuilderChartBase builder) : DirectorBase<Chart>
-    {
-        protected BuilderChartBase Builder = builder;
-    }
+    protected BuilderChartBase Builder = builder;
 }

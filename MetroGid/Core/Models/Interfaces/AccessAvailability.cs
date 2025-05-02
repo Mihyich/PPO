@@ -1,7 +1,6 @@
-namespace MetroGid.Core.Models.Interfaces
+namespace MetroGid.Core.Models.Interfaces;
+
+public interface IAccessAvailability
 {
-    public interface IAccessAvailability
-    {
-        public bool IsAccessible();
-    }
+    public bool IsAccessible();
 }

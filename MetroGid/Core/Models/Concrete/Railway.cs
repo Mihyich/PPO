@@ -1,13 +1,12 @@
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
-namespace MetroGid.Core.Models.Concrete
-{
-    public class Railway(TimeOnly duration) : IDomainValidatorAccepter
-    {
-        public Station? Prev { get; set; }
-        public Station? Next { get; set; }
-        public TimeOnly Duration { get; set; } = duration;
+namespace MetroGid.Core.Models.Concrete;
 
-        public void Validate(IDomainValidatorVisitor visitor) => visitor.Visit(this);
-    }
+public class Railway(TimeOnly duration) : IDomainValidatorAccepter
+{
+    public Station? Prev { get; set; }
+    public Station? Next { get; set; }
+    public TimeOnly Duration { get; set; } = duration;
+
+    public void Validate(IDomainValidatorVisitor visitor) => visitor.Visit(this);
 }

@@ -1,15 +1,14 @@
-namespace MetroGid.Core.Utilities
-{
-    public static class FileReader
-    {
-        public static string ReadAll(string filePath)
-        {
-            if (!File.Exists(filePath))
-            {
-                throw new FileNotFoundException($"JSON файл не найден: {filePath}");
-            }
+namespace MetroGid.Core.Utilities;
 
-            return File.ReadAllText(filePath);
+public static class FileReader
+{
+    public static string ReadAll(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            throw new FileNotFoundException($"JSON файл не найден: {filePath}");
         }
+
+        return File.ReadAllText(filePath);
     }
 }

@@ -1,9 +1,8 @@
-namespace MetroGid.Core.Models.Types
+namespace MetroGid.Core.Models.Types;
+
+public enum RoleType
 {
-    public enum RoleType
-    {
-        UNSIGNED, // Незарегистрированный пользователь
-        SIGNED,   // Зарегистрированный пользователь
-        DUTY      // Дежурный
-    }
+    UNSIGNED, // Незарегистрированный пользователь
+    SIGNED,   // Зарегистрированный пользователь
+    DUTY      // Дежурный
 }

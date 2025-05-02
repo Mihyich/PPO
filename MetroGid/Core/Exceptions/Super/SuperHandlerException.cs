@@ -1,27 +1,43 @@
 using MetroGid.Core.Exceptions.Interfaces;
 
-namespace MetroGid.Core.Exceptions.Super
+namespace MetroGid.Core.Exceptions.Super;
+
+public abstract class SuperHandlerException
 {
-    public abstract class SuperHandlerException
+    public T? Snap<T>(Func<T> func, IExceptionVisitor? logger = null)
     {
-        public T? Snap<T>(Func<T> func, IExceptionVisitor? logger = null)
+        try
         {
-            try
-            {
-                return func();
-            }
-            catch (SuperException ex) when (ShouldHandle(ex))
-            {
-                if (logger != null)
-                    ex.Accept(logger);
-
-
-                return HandleException<T>(ex);
-            }
+            return func();
         }
+        catch (SuperException ex) when (ShouldHandle(ex))
+        {
+            if (logger != null)
+                ex.Accept(logger);
 
-        protected abstract bool ShouldHandle(SuperException ex);
 
-        protected abstract T? HandleException<T>(SuperException ex);
+            return HandleException<T>(ex);
+        }
     }
+
+    public void Snap(Action action, IExceptionVisitor? logger = null)
+    {
+        try
+        {
+            action();
+        }
+        catch (SuperException ex) when (ShouldHandle(ex))
+        {
+            if (logger != null)
+                ex.Accept(logger);
+
+            HandleException(ex);
+        }
+    }
+
+    protected abstract bool ShouldHandle(SuperException ex);
+
+    protected abstract T? HandleException<T>(SuperException ex);
+
+    protected abstract void HandleException(SuperException ex);
 }
