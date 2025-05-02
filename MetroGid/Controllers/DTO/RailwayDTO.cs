@@ -22,5 +22,5 @@ public class RailwayDTO(
 
 
     public override int GetHashCode() =>
-        HashCode.Combine(BranchTitle, PrevStationTitle, NextStationTile, Duration.Ticks.ToString());
+        HashCode.Combine(BranchTitle, PrevStationTitle, NextStationTile, Duration);
 }

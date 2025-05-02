@@ -37,5 +37,5 @@ public class RouteDTO
     }
 
     public override int GetHashCode() =>
-        HashCode.Combine(Title, City, ChartTitle, Path.Count.ToString(), Duration.Ticks.ToString());
+        HashCode.Combine(Title, City, ChartTitle, Path, Duration);
 }
