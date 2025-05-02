@@ -16,4 +16,26 @@ public class RouteDTO
 
     public List<RouteItemDTO> Path = [];
     public TimeSpan Duration { get; set; } = TimeSpan.Zero;
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is RouteDTO other &&
+            Title == other.Title &&
+            City == other.City &&
+            ChartTitle == other.ChartTitle &&
+            Duration == other.Duration &&
+            Path.Count == other.Path.Count)
+        {
+            for (int i = 0; i < Path.Count; ++i)
+                if (Path[i] != other.Path[i])
+                    return false;
+
+            return true;
+        }
+        
+        return false;
+    }
+
+    public override int GetHashCode() =>
+        HashCode.Combine(Title, City, ChartTitle, Path.Count.ToString(), Duration.Ticks.ToString());
 }
