@@ -1,0 +1,168 @@
+{
+	"title": "Схема метро",
+	"city": "Адана",
+	"branches": [
+		{
+			"title": "Линия 1",
+			"color": "#FF8800",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Больница",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Анатолийский лицей",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Хузуреви",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Бульвар Мави",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Юрт",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ешильюрт",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Фатих",
+					"occupancy": 5,
+					"accesstype": "INACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Вилайет",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Истикляль",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Коджавезир",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Хюрриет",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Джумхуриет",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Акынджилар",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Больница",
+					"to": "Анатолийский лицей",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Анатолийский лицей",
+					"to": "Хузуреви",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Хузуреви",
+					"to": "Бульвар Мави",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Бульвар Мави",
+					"to": "Юрт",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Юрт",
+					"to": "Ешильюрт",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Ешильюрт",
+					"to": "Фатих",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Фатих",
+					"to": "Вилайет",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Вилайет",
+					"to": "Истикляль",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Истикляль",
+					"to": "Коджавезир",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Коджавезир",
+					"to": "Хюрриет",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Хюрриет",
+					"to": "Джумхуриет",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Джумхуриет",
+					"to": "Акынджилар",
+					"duration": "00:10:00"
+				}
+			]
+		}
+	],
+	"transitions": [
+	]
+}
