@@ -1,58 +1,31 @@
 using MetroGid.Controllers.DTO;
 using MetroGid.Controllers.Interfaces;
 using MetroGid.Core.Converters;
-using MetroGid.Core.Exceptions.Classification;
-using MetroGid.Core.Exceptions.Concrete;
+using MetroGid.Core.Exceptions.Interfaces;
+using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Models.Concrete;
-using MetroGid.Core.Utilities;
+using MetroGid.Core.Utilities.Validators.Handlers;
 using MetroGid.DBA.Interfaces;
 
 namespace MetroGid.Core.Services;
 
-public class ClientService(IClientRepository clientRepo) : IClientService
+public class ClientService(
+    IClientRepository clientRepo,
+    SuperHandlerException handler, IExceptionVisitor? logger = null
+) : IClientService
 {
     private readonly IClientRepository ClientRepo = clientRepo;
 
+    private readonly SuperHandlerException Handler = handler;
+    private readonly IExceptionVisitor? Logger = logger;
+
+    private readonly ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler, logger);
+
     public async Task<int> Reg(string login, string password, string mail)
     {
-        if (!Login.IsCorrect(login))
-            throw new LoginValidationException(
-                "Логин должен содержать 4 - 255 символов",
-                ExceptionType.Quiet,
-                ExceptionReason.ValidationFailed
-            );
-
-        if (!Password.IsCorrect(password))
-            throw new PasswordValidationException(
-                "Пароль должен содержать 4 - 255 символов",
-                ExceptionType.Quiet,
-                ExceptionReason.ValidationFailed
-            );
-
-        if (!Mail.IsCorrect(mail))
-            throw new MailValidationException(
-                "Не удалось успешно валидировать почту",
-                ExceptionType.Quiet,
-                ExceptionReason.ValidationFailed
-            );
-
-        if (await ClientRepo.IsLoginExistsAsync(login))
-            throw new ItemAlreadyInUseException(
-                $"Логин '{login}' уже занят",
-                ExceptionType.Quiet,
-                ExceptionReason.ItemAlreadyInUse
-            );
-
-        if (await ClientRepo.IsMailExistsAsync(mail))
-            throw new ItemAlreadyInUseException(
-                $"Почта '{mail}' уже занята",
-                ExceptionType.Quiet,
-                ExceptionReason.ItemAlreadyInUse
-            );
-
         Client client = new(login, password, mail);
-        int id = await ClientRepo.AddAsync(client);
-        return id;
+        client.Validate(DomainAttribsValidator);
+        return await ClientRepo.AddAsync(client);
     }
 
     public async Task UnReg(string login, string password, string mail) =>
