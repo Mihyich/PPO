@@ -6,7 +6,10 @@ public static class MailP
 {
     public static bool IsValid(string m)
     {
-        string pattern = "[.\\-_a-z0-9]+@([a-z0-9][\\-a-z0-9]+\\.)+[a-z]{2,6}";
+        string pattern =
+            @"^[a-z0-9!#$%&'*+\-/=?^_`{|}~]+(\.[a-z0-9!#$%&'*+\-/=?^_`{|}~]+)*" +
+            @"@" +
+            @"([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$";
         Match isMatch = Regex.Match(m, pattern, RegexOptions.IgnoreCase);
         return isMatch.Success;
     }
