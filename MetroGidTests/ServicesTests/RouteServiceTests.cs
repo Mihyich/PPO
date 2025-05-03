@@ -225,6 +225,36 @@ public class RouteServiceTests
     }
 
     [Fact]
+    public async void NotFoundDstStationSearchingAdanaTest()
+    {
+        SuperHandlerException handler = new PassThroughHandlerException();
+        
+        Mock<IChartRepository> mockChartRepo = new();
+        Mock<IRouteRepository> mockRouteRepo = new();
+
+        string city = "Адана";
+        string chartTitle = "Схема метро";
+        string branchSrcTitle = "МЦД-2";
+        string stationSrcTitle = "Нахабино";
+        string branchDstTitle = "линия";
+        string stationDstTitle = "Автозаводская";
+        TimeOnly startTime = new(18, 0);
+
+        string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
+        string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "chart.json");
+
+        mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+
+        ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+
+        mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
+        Assert.Equal($"В схеме '{chartTitle}' в городе '{city}' не найдена станция '{stationSrcTitle}' ветки '{branchSrcTitle}'", ex.Message);
+        Assert.Equal(ExceptionType.Error, ex.ExcType);
+        Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
+    }
+
+    [Fact]
     public async void UsualSearchingMoscowTest()
     {
         SuperHandlerException handler = new PassThroughHandlerException();
