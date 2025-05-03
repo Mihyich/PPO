@@ -15,6 +15,8 @@ public class ThrowableDomainReferentialityValidator(
     private readonly SuperHandlerException Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
+    public void Visit(Client client) {}
+
     public void Visit(Chart chart)
     {
         Handler.Snap(
