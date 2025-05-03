@@ -53,11 +53,11 @@ public class ThrowableDomainAttribsValidator(
         Handler.Snap(
             () =>
             {
-                bool thrown = MailP.IsValid(client.Mail);
+                bool thrown = !MailP.IsValid(client.Mail);
 
                 if (thrown)
                     throw new DomainValidationException(
-                        $"Почта клиета '{client.Login}' не валидна",
+                        $"Почта клиета '{client.Mail}' не валидна",
                         ExceptionType.Warning,
                         ExceptionReason.ValidationFailed
                     );
