@@ -16,6 +16,57 @@ public class ThrowableDomainAttribsValidator(
     private readonly SuperHandlerException Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
+    public void Visit(Client client)
+    {
+        Handler.Snap(
+            () =>
+            {
+                bool thrown = LoginP.IsOutOfRange(client.Login);
+
+                if (thrown)
+                    throw new DomainValidationException(
+                        $"Логин клиента с почтой '{client.Mail}' имеет недопустимую длину: {client.Login.Length} не принадлежит [{LoginP.MinLength}, {LoginP.MaxLength}]",
+                        ExceptionType.Warning,
+                        ExceptionReason.StringLenghtOutOfRange
+                    );
+
+                return thrown;
+            }, Logger
+        );
+
+        Handler.Snap(
+            () =>
+            {
+                bool thrown = PasswordP.IsOutOfRange(client.Password);
+
+                if (thrown)
+                    throw new DomainValidationException(
+                        $"Пароль клиента '{client.Login}' с почтой '{client.Mail}' имеет недопустимую длину: {client.Password.Length} не принадлежит [{PasswordP.MinLength}, {PasswordP.MaxLength}]",
+                        ExceptionType.Warning,
+                        ExceptionReason.StringLenghtOutOfRange
+                    );
+
+                return thrown;
+            }, Logger
+        );
+
+        Handler.Snap(
+            () =>
+            {
+                bool thrown = MailP.IsValid(client.Mail);
+
+                if (thrown)
+                    throw new DomainValidationException(
+                        $"Почта клиета '{client.Login}' не валидна",
+                        ExceptionType.Warning,
+                        ExceptionReason.ValidationFailed
+                    );
+
+                return thrown;
+            }, Logger
+        );
+    }
+
     public void Visit(Chart chart)
     {
         Handler.Snap(

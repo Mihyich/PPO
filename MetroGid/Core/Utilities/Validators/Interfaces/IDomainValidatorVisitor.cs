@@ -4,6 +4,7 @@ namespace MetroGid.Core.Utilities.Validators.Interfaces;
 
 public interface IDomainValidatorVisitor
 {
+    void Visit(Client client);
     void Visit(Chart chart);
     void Visit(Branch branch);
     void Visit(Station station);
