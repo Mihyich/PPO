@@ -40,14 +40,14 @@ public class ClientServiceTests
         ExceptionType exType = ExceptionType.Quiet;
         ExceptionReason exReason = ExceptionReason.ItemAlreadyInUse;
 
-        ServiceRouteException expectedEx = new(exMessege, exType, exReason);
+        DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperHandlerException handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await clientService.Reg(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.Reg(login, password, mail); });
 
         mockClientRepo.Verify(x => x.AddAsync(It.IsAny<Client>()), Times.Once);
         Assert.Equal(exMessege, ex.Message);
@@ -66,14 +66,14 @@ public class ClientServiceTests
         ExceptionType exType = ExceptionType.Quiet;
         ExceptionReason exReason = ExceptionReason.ItemAlreadyInUse;
 
-        ServiceRouteException expectedEx = new(exMessege, exType, exReason);
+        DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperHandlerException handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await clientService.Reg(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.Reg(login, password, mail); });
 
         mockClientRepo.Verify(x => x.AddAsync(It.IsAny<Client>()), Times.Once);
         Assert.Equal(exMessege, ex.Message);
@@ -92,14 +92,14 @@ public class ClientServiceTests
         ExceptionType exType = ExceptionType.Error;
         ExceptionReason exReason = ExceptionReason.NotFound;
 
-        ServiceRouteException expectedEx = new(exMessege, exType, exReason);
+        DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperHandlerException handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.GetIdByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await clientService.UnReg(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.UnReg(login, password, mail); });
 
         mockClientRepo.Verify(x => x.GetIdByCredentialsAsync(login, password, mail), Times.Once);
         Assert.Equal(exMessege, ex.Message);
@@ -118,14 +118,14 @@ public class ClientServiceTests
         ExceptionType exType = ExceptionType.Error;
         ExceptionReason exReason = ExceptionReason.NotFound;
 
-        ServiceRouteException expectedEx = new(exMessege, exType, exReason);
+        DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperHandlerException handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.GetByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await clientService.SingIn(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.SingIn(login, password, mail); });
 
         mockClientRepo.Verify(x => x.GetByCredentialsAsync(login, password, mail), Times.Once);
         Assert.Equal(exMessege, ex.Message);
@@ -144,14 +144,14 @@ public class ClientServiceTests
         ExceptionType exType = ExceptionType.Error;
         ExceptionReason exReason = ExceptionReason.NotFound;
 
-        ServiceRouteException expectedEx = new(exMessege, exType, exReason);
+        DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperHandlerException handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.GetByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await clientService.SingOut(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.SingOut(login, password, mail); });
 
         mockClientRepo.Verify(x => x.GetByCredentialsAsync(login, password, mail), Times.Once);
         Assert.Equal(exMessege, ex.Message);
@@ -170,14 +170,14 @@ public class ClientServiceTests
         ExceptionType exType = ExceptionType.Error;
         ExceptionReason exReason = ExceptionReason.NotFound;
 
-        ServiceRouteException expectedEx = new(exMessege, exType, exReason);
+        DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperHandlerException handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.GetByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await clientService.GetRole(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.GetRole(login, password, mail); });
 
         mockClientRepo.Verify(x => x.GetByCredentialsAsync(login, password, mail), Times.Once);
         Assert.Equal(exMessege, ex.Message);
