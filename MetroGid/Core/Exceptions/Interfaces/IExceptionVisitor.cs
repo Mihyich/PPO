@@ -10,4 +10,5 @@ public interface IExceptionVisitor
     void Visit(BuilderProccessException ex);
     void Visit(DomainValidationException ex);
     void Visit(ServiceRouteException ex);
+    void Visit(DataBaseException ex);
 }

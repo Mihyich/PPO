@@ -34,4 +34,9 @@ public class ExceptionMessenger : IExceptionVisitor
     {
         throw new NotImplementedException();
     }
+
+    public void Visit(DataBaseException ex)
+    {
+        throw new NotImplementedException();
+    }
 }
