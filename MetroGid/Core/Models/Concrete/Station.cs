@@ -28,14 +28,6 @@ public class Station(
         0 :
         HashCode.Combine(Title, Branch.Title);
 
-    // public override bool Equals(object? obj) =>
-    //     obj is Station other &&
-    //     Title == other.Title &&
-    //     Occupancy == other.Occupancy &&
-    //     Type == other.Type &&
-    //     OpenTime == other.OpenTime &&
-    //     CloseTime == other.CloseTime;
-
     public bool IsAccessible() => Type == AccessType.ACCESSIBLE;
 
     public void Validate(IDomainValidatorVisitor visitor) => visitor.Visit(this);
