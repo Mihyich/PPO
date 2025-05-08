@@ -69,10 +69,9 @@ public static class DomainDtoConverter
             }
         }
 
-        return new(route.Title, route.Chart?.City ?? string.Empty, route.Chart?.Title ?? string.Empty)
+        return new(route.Title, route.Chart?.City ?? string.Empty, route.Chart?.Title ?? string.Empty, route.Duration)
         {
-            Path = CntPath,
-            Duration = route.Duration
+            Path = CntPath
         };
     }
 }
