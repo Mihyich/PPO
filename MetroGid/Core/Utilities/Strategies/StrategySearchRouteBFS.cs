@@ -91,19 +91,4 @@ public class StrategySearchRouteBFS : StrategySearchRouteBase
             visited.Add(stationNeighbor);
         }
     }
-
-    // private void UpdateProcess<TConnection>(
-    //     Route curRoute, TConnection connection,
-    //     Station? stationNeighbor, Queue<Route> queue, HashSet<Station> visited
-    // ) where TConnection : GraphConnection
-    // {
-    //     if (stationNeighbor == null || visited.Contains(stationNeighbor)) 
-    //         return;
-
-    //     Route newRoute = curRoute.Clone();
-    //     newRoute.Add(connection);
-    //     newRoute.Add(stationNeighbor);
-    //     queue.Enqueue(newRoute);
-    //     visited.Add(stationNeighbor);
-    // }
 }

@@ -324,8 +324,6 @@ public class ThrowableDomainReferentialityValidator(
         {
             if (item is RouteStationItem { Station: var station })
             {
-                // station.Validate(this);
-
                 Handler.Snap(
                     () =>
                     {
@@ -346,8 +344,6 @@ public class ThrowableDomainReferentialityValidator(
             {
                 if (connection is RailwayConnection { Railway: var railway })
                 {
-                    // railway.Validate(this);
-
                     Handler.Snap(
                         () =>
                         {
@@ -382,8 +378,6 @@ public class ThrowableDomainReferentialityValidator(
                 }
                 else if (connection is TransitionConnection { Transition: var transition })
                 {
-                    // transition.Validate(this);
-
                     Handler.Snap(
                         () =>
                         {
