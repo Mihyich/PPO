@@ -16,8 +16,6 @@ public interface IChartService
     Task<int> GetBranchStationId(string title, int branchId);
     Task<List<string>> GetBranchStationTitles(int branchId);
 
-    // Task<int> GetRailwayId(int stationSrcId, int stationDstId);
-
     // Изменение атрибутов таблицы Chart
     Task UpdateChartTitle(string title, int chartId);
     Task UpdateChartCity(string city, int chartId);
