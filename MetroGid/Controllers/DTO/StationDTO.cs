@@ -6,12 +6,12 @@ public class StationDTO(
     TimeOnly open_time, TimeOnly close_time
 )
 {
-    public string Title { get; set; } = title;
-    public string BranchTitle { get; set; } = branchTitle;
-    public int Occupancy { get; set; } = occupancy;
-    public AccessTypeDTO Type { get; set; } = type;
-    public TimeOnly OpenTime { get; set; } = open_time;
-    public TimeOnly CloseTime { get; set; } = close_time;
+    public string Title { get; } = title;
+    public string BranchTitle { get; } = branchTitle;
+    public int Occupancy { get; } = occupancy;
+    public AccessTypeDTO Type { get; } = type;
+    public TimeOnly OpenTime { get; } = open_time;
+    public TimeOnly CloseTime { get; } = close_time;
 
 
     public override bool Equals(object? obj) =>

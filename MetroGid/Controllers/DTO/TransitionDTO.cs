@@ -7,17 +7,17 @@ public class TransitionDTO(
     string to_station_title, string to_branch_title
 )
 {
-    public int Occupancy { get; set; } = occupancy;
-    public AccessTypeDTO Type { get; set; } = type;
-    public TimeOnly Duration { get; set; } = duration;
-    public TimeOnly OpenTime { get; set; } = open_time;
-    public TimeOnly CloseTime { get; set; } = close_time;
+    public int Occupancy { get; } = occupancy;
+    public AccessTypeDTO Type { get; } = type;
+    public TimeOnly Duration { get; } = duration;
+    public TimeOnly OpenTime { get; } = open_time;
+    public TimeOnly CloseTime { get; } = close_time;
 
-    public string FromStationTitle { get; set; } = from_station_title;
-    public string FromBranchTitle { get; set; } = from_branch_title;
+    public string FromStationTitle { get; } = from_station_title;
+    public string FromBranchTitle { get; } = from_branch_title;
 
-    public string ToStationTitle { get; set; } = to_station_title;
-    public string ToBranchTitle { get; set; } = to_branch_title;
+    public string ToStationTitle { get; } = to_station_title;
+    public string ToBranchTitle { get; } = to_branch_title;
 
 
     public override bool Equals(object? obj) =>

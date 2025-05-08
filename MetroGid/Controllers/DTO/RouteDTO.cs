@@ -8,14 +8,14 @@ public abstract record RouteItemDTO;
 public record RouteStationItemDTO(StationDTO Station) : RouteItemDTO;
 public record RouteConnectionItemDTO(StationConnectionDTO Connection) : RouteItemDTO;
 
-public class RouteDTO(string title, string city, string chartTitle)
+public class RouteDTO(string title, string city, string chartTitle, TimeSpan duration)
 {
-    public string Title { get; set; } = title;
-    public string City { get; set; } = city;
-    public string ChartTitle { get; set; } = chartTitle;
+    public string Title { get; } = title;
+    public string City { get; } = city;
+    public string ChartTitle { get; } = chartTitle;
 
     public List<RouteItemDTO> Path = [];
-    public TimeSpan Duration { get; set; } = TimeSpan.Zero;
+    public TimeSpan Duration { get; } = duration;
 
     public override bool Equals(object? obj)
     {

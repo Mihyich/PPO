@@ -7,9 +7,9 @@ public class RailwayDTO(
     TimeOnly duration
 )
 {
-    public string BranchTitle { get; set; } = branchTitle;
-    public string PrevStationTitle { get; set; } = prev_station_title;
-    public string NextStationTile { get; set; } = next_station_title;
+    public string BranchTitle { get; } = branchTitle;
+    public string PrevStationTitle { get; } = prev_station_title;
+    public string NextStationTile { get; } = next_station_title;
     public TimeOnly Duration = duration;
 
 
