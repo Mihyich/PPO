@@ -23,8 +23,6 @@ public static class DtoDomainConverter
             _ => RoleType.UNSIGNED
         };
 
-    // public static WayType Convert(WayTypeDTO type);
-
     public static Chart Convert(ChartDTO chart) =>
         new(chart.Title, chart.City, chart.SvgInst);
 
@@ -42,7 +40,8 @@ public static class DtoDomainConverter
         new(transition.Occupancy, Convert(transition.Type), transition.Duration,
             transition.OpenTime, transition.CloseTime);
 
-    // public static Client Convert(ClientDTO client);
+    public static Client Convert(ClientDTO client) =>
+        new(client.Login, client.Password, client.Mail, Convert(client.Role));
 
     public static Route Convert(RouteDTO route)
     {
