@@ -36,7 +36,7 @@ public class RouteServiceTests
 
         RouteDTO route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
-        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle)
+        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle, TimeSpan.FromMinutes(2 * 60 + 6))
         {
             Path =
             [
@@ -65,8 +65,7 @@ public class RouteServiceTests
                 new RouteStationItemDTO(new StationDTO("Джумхуриет", "Линия 1", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Линия 1", "Джумхуриет", "Акынджилар", new TimeOnly(0, 10)))),
                 new RouteStationItemDTO(new StationDTO("Акынджилар", "Линия 1", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30)))
-            ],
-            Duration = TimeSpan.FromMinutes(2 * 60 + 6)
+            ]
         };
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
@@ -187,7 +186,7 @@ public class RouteServiceTests
 
         RouteDTO route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
-        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle)
+        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle, TimeSpan.FromMinutes(2 * 60 + 6))
         {
             Path =
             [
@@ -216,8 +215,7 @@ public class RouteServiceTests
                 new RouteStationItemDTO(new StationDTO("Джумхуриет", "Линия 1", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Линия 1", "Джумхуриет", "Акынджилар", new TimeOnly(0, 10)))),
                 new RouteStationItemDTO(new StationDTO("Акынджилар", "Линия 1", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30)))
-            ],
-            Duration = TimeSpan.FromMinutes(2 * 60 + 6)
+            ]
         };
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
@@ -278,7 +276,7 @@ public class RouteServiceTests
 
         RouteDTO route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
-        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle)
+        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle, TimeSpan.FromHours(3) + TimeSpan.FromMinutes(49) + TimeSpan.FromSeconds(10))
         {
             Path =
             [
@@ -345,8 +343,7 @@ public class RouteServiceTests
                 new RouteStationItemDTO(new StationDTO("Красногвардейская", "Замоскворецкая линия", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Замоскворецкая линия", "Красногвардейская", "Алма-Атинская", new TimeOnly(0, 5)))),
                 new RouteStationItemDTO(new StationDTO("Алма-Атинская", "Замоскворецкая линия", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
-            ],
-            Duration = TimeSpan.FromHours(3) + TimeSpan.FromMinutes(49) + TimeSpan.FromSeconds(10)
+            ]
         };
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
@@ -377,7 +374,7 @@ public class RouteServiceTests
 
         RouteDTO route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
-        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle)
+        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle, TimeSpan.FromHours(3) + TimeSpan.FromMinutes(49) + TimeSpan.FromSeconds(10))
         {
             Path =
             [
@@ -444,8 +441,7 @@ public class RouteServiceTests
                 new RouteStationItemDTO(new StationDTO("Красногвардейская", "Замоскворецкая линия", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Замоскворецкая линия", "Красногвардейская", "Алма-Атинская", new TimeOnly(0, 5)))),
                 new RouteStationItemDTO(new StationDTO("Алма-Атинская", "Замоскворецкая линия", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
-            ],
-            Duration = TimeSpan.FromHours(3) + TimeSpan.FromMinutes(49) + TimeSpan.FromSeconds(10)
+            ]
         };
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
