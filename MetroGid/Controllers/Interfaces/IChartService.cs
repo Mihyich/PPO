@@ -16,27 +16,9 @@ public interface IChartService
     Task<int> GetBranchStationId(string title, int branchId);
     Task<List<string>> GetBranchStationTitles(int branchId);
 
-    // Изменение атрибутов таблицы Chart
-    Task UpdateChartTitle(string title, int chartId);
-    Task UpdateChartCity(string city, int chartId);
-    Task UpdateChartSvg_inst(string svgInst, int chartId);
-
-    // Изменение атрибутов таблицы Branch
-    Task UpdateBranchTitle(string title, int branchId);
-    Task UpdateBranchColor(int color, int branchId);
-    Task UpdateBranchAccessType(AccessTypeDTO type, int branchId);
-
-    // Изменение атрибутов таблицы Station
-    Task UpdateStationTitle(string title, int stationId);
-    Task UpdateStationOccupancy(int occupancy, int stationId);
-    Task UpdateStationAccessType(AccessTypeDTO type, int stationId);
-    Task UpdateStationOpenTime(string time, int stationId); // Время ожидается конвертируемым в TimeOnly
-    Task UpdateStationCloseTime(string time, int stationId); // Время ожидается конвертируемым в TimeOnly
-
-    // Изменение атрибутов таблицы Transition
-    Task UpdateTransitionOccupancy(int occupancy, int transitionId);
-    Task UpdateTransitionAccessType(AccessTypeDTO type, int transitionId);
-    Task UpdateTransitionDuration(string time, int transitionId);
-    Task UpdateTransitionOpenTime(string time, int transitionId); // Время ожидается конвертируемым в TimeOnly
-    Task UpdateTransitionCloseTime(string time, int transitionId); // Время ожидается конвертируемым в TimeOnly
+    // Изменение атрибутов таблиц
+    Task UpdateChart(int chartId, ChartDTO chart);
+    Task UpdateBranch(int branchId, BranchDTO branch);
+    Task UpdateStation(int stationId, StationDTO station);
+    Task UpdateTransition(int transitionId, TransitionDTO transition);
 }
