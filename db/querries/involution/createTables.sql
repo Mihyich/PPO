@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS way (
 CREATE TABLE IF NOT EXISTS way_item (
 	id				SERIAL PRIMARY KEY,
 	way_id			INT,
-	nexus			nexus_type,
+	nexus			nexus_type, -- Тип звена маршрута [станция | переход | переезд]
 	step_nomer		INT,
 
 	FOREIGN KEY (way_id) REFERENCES way (id)
