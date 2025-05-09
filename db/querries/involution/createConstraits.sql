@@ -23,7 +23,8 @@ ALTER TABLE station
 	ALTER COLUMN occupancy SET DEFAULT 5,
 	ALTER COLUMN access SET DEFAULT 'ACCESSIBLE',
 	ALTER COLUMN open_time SET NOT NULL,
-	ALTER COLUMN close_time SET NOT NULL;
+	ALTER COLUMN close_time SET NOT NULL,
+	ADD CONSTRAINT ck_station_different_open_close_time CHECK (open_time <> close_time);
 
 
 ALTER TABLE transition
@@ -31,7 +32,8 @@ ALTER TABLE transition
 	ALTER COLUMN access SET DEFAULT 'ACCESSIBLE',
 	ALTER COLUMN duration SET NOT NULL,
 	ALTER COLUMN open_time SET NOT NULL,
-	ALTER COLUMN close_time SET NOT NULL;
+	ALTER COLUMN close_time SET NOT NULL,
+	ADD CONSTRAINT ck_transition_different_open_close_time CHECK (open_time <> close_time);
 
 
 ALTER TABLE way
