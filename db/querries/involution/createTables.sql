@@ -54,8 +54,7 @@ CREATE TABLE IF NOT EXISTS way (
 	init_date		TIMESTAMP,
 
 	FOREIGN KEY (client_id) REFERENCES client (id),
-	FOREIGN KEY (chart_id) REFERENCES chart (id),
-	UNIQUE (client_id, title)
+	FOREIGN KEY (chart_id) REFERENCES chart (id)
 );
 
 CREATE TABLE IF NOT EXISTS way_item (
@@ -64,8 +63,7 @@ CREATE TABLE IF NOT EXISTS way_item (
 	nexus			nexus_type,
 	step_nomer		INT,
 
-	FOREIGN KEY (way_id) REFERENCES way (id),
-	UNIQUE (way_id, step_nomer)
+	FOREIGN KEY (way_id) REFERENCES way (id)
 );
 
 -- Связующие таблицы
@@ -76,8 +74,7 @@ CREATE TABLE IF NOT EXISTS chart_branch (
 	branch_id		INT,
 
 	FOREIGN KEY (chart_id) REFERENCES chart (id),
-	FOREIGN KEY (branch_id) REFERENCES branch (id),
-	UNIQUE (chart_id, branch_id)
+	FOREIGN KEY (branch_id) REFERENCES branch (id)
 );
 
 CREATE TABLE IF NOT EXISTS branch_station (
@@ -86,8 +83,7 @@ CREATE TABLE IF NOT EXISTS branch_station (
 	station_id		INT,
 
 	FOREIGN KEY (branch_id) REFERENCES branch (id),
-	FOREIGN KEY (station_id) REFERENCES station (id),
-	UNIQUE (branch_id, station_id)
+	FOREIGN KEY (station_id) REFERENCES station (id)
 );
 
 CREATE TABLE IF NOT EXISTS railway (
@@ -97,9 +93,7 @@ CREATE TABLE IF NOT EXISTS railway (
 	duration		TIME,
 
 	FOREIGN KEY (from_id) REFERENCES station (id),
-	FOREIGN KEY (to_id) REFERENCES station (id),
-	UNIQUE (from_id, to_id),
-	CHECK (from_id <> to_id)
+	FOREIGN KEY (to_id) REFERENCES station (id)
 );
 
 CREATE TABLE IF NOT EXISTS station_transition (
@@ -113,33 +107,27 @@ CREATE TABLE IF NOT EXISTS station_transition (
 
 CREATE TABLE IF NOT EXISTS way_item_station (
 	id				SERIAL PRIMARY KEY,
+	way_item_id		INT,
 	station_id		INT,
-	wayitem_id		INT,
 
 	FOREIGN KEY (station_id) REFERENCES station (id),
-	FOREIGN KEY (wayitem_id) REFERENCES way_item (id),
-	UNIQUE (station_id, wayitem_id),
-	UNIQUE (wayitem_id)
+	FOREIGN KEY (way_item_id) REFERENCES way_item (id)
 );
 
 CREATE TABLE IF NOT EXISTS way_item_railway (
 	id				SERIAL PRIMARY KEY,
+	way_item_id		INT,
 	railway_id		INT,
-	wayitem_id		INT,
 
 	FOREIGN KEY (railway_id) REFERENCES railway (id),
-	FOREIGN KEY (wayitem_id) REFERENCES way_item (id),
-	UNIQUE (railway_id, wayitem_id),
-	UNIQUE (wayitem_id)
+	FOREIGN KEY (way_item_id) REFERENCES way_item (id)
 );
 
 CREATE TABLE IF NOT EXISTS way_item_transition (
 	id				SERIAL PRIMARY KEY,
+	way_item_id		INT,
 	transition_id	INT,
-	wayitem_id		INT,
 	
 	FOREIGN KEY (transition_id) REFERENCES transition (id),
-	FOREIGN KEY (wayitem_id) REFERENCES way_item (id),
-	UNIQUE (transition_id, wayitem_id),
-	UNIQUE (wayitem_id)
+	FOREIGN KEY (way_item_id) REFERENCES way_item (id)
 );
