@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS client (
 	client_login VARCHAR(255),
 	client_password VARCHAR(255),
 	mail VARCHAR(255),
-	role_type VARCHAR(8) NOT NULL CHECK (role_type IN ('UNSIGNED', 'SIGNED', 'DUTY'))
+	privilege role_type NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS chart (
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS branch (
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(255),
 	color INT NOT NULL CHECK (color >= 0 AND color <= 16777215),
-	access_type VARCHAR(12) NOT NULL CHECK (access_type IN ('ACCESSIBLE', 'INACCESSIBLE'))
+	access access_type NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS station (
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS station (
 	duty_id INT,
 	title VARCHAR(255),
 	occupancy INT NOT NULL CHECK (occupancy >= 0 AND occupancy <= 10),
-	access_type VARCHAR(12) NOT NULL CHECK (access_type IN ('ACCESSIBLE', 'INACCESSIBLE')),
+	access access_type NOT NULL,
 	open_time TIME,
 	close_time TIME,
 	FOREIGN KEY (duty_id) REFERENCES client (id)
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS transition (
 	id SERIAL PRIMARY KEY,
 	duty_id INT,
 	occupancy INT NOT NULL CHECK (occupancy >= 0 AND occupancy <= 10),
-	access_type VARCHAR(12) NOT NULL CHECK (access_type IN ('ACCESSIBLE', 'INACCESSIBLE')),
+	access access_type NOT NULL,
 	duration TIME,
 	open_time TIME,
 	close_time TIME,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS way (
 CREATE TABLE IF NOT EXISTS way_item (
 	id SERIAL PRIMARY KEY,
 	way_id INT NOT NULL,
-	way_type VARCHAR(10) NOT NULL CHECK (way_type IN ('STATION', 'TRANSITION', 'RAILWAY')),
+	nexus nexus_type NOT NULL,
 	step_nomer INT,
 	FOREIGN KEY (way_id) REFERENCES way (id),
 	UNIQUE (way_id, step_nomer)
