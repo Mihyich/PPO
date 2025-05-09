@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS chart (
 	id SERIAL PRIMARY KEY,
 	city VARCHAR(255),
 	title VARCHAR(255),
-	svg_content TEXT
+	svg_content XML NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS branch (
