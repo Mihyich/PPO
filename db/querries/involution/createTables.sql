@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS station (
 	id SERIAL PRIMARY KEY,
 	duty_id INT,
 	title VARCHAR(255),
-	occupancy INT NOT NULL CHECK (occupancy >= 0 AND occupancy <= 10),
+	occupancy occupancy_level NOT NULL,
 	access access_type NOT NULL,
 	open_time TIME,
 	close_time TIME,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS station (
 CREATE TABLE IF NOT EXISTS transition (
 	id SERIAL PRIMARY KEY,
 	duty_id INT,
-	occupancy INT NOT NULL CHECK (occupancy >= 0 AND occupancy <= 10),
+	occupancy occupancy_level NOT NULL,
 	access access_type NOT NULL,
 	duration TIME,
 	open_time TIME,
