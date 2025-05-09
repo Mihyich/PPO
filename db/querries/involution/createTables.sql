@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS chart (
 CREATE TABLE IF NOT EXISTS branch (
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(255),
-	color INT NOT NULL CHECK (color >= 0 AND color <= 16777215),
+	color decimal_hexcolor NOT NULL,
 	access access_type NOT NULL
 );
 
