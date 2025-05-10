@@ -1,3 +1,4 @@
+-- Проверка корректного добавления связи Схема--Ветка
 CREATE OR REPLACE FUNCTION ck_chart_branch_unique_ref() RETURNS TRIGGER
 AS $$
 BEGIN
@@ -18,6 +19,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+-- Проверка корректного добавления связи Ветка--Станция
 CREATE OR REPLACE FUNCTION ck_branch_station_unique_ref() RETURNS TRIGGER
 AS $$
 BEGIN
@@ -38,6 +40,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+-- Проверка дублирования переездов между станциями
 CREATE OR REPLACE FUNCTION ck_railway_unique_station_ref() RETURNS TRIGGER
 AS $$
 BEGIN
@@ -58,6 +61,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+-- Проверка связывания станций переездом в рамках одной ветки
 CREATE OR REPLACE FUNCTION ck_railway_same_branch_of_stations_ref() RETURNS TRIGGER
 AS $$
 DECLARE
