@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION check_branch_unique_chart_ref() RETURNS TRIGGER
+CREATE OR REPLACE FUNCTION ck_branch_unique_chart_ref() RETURNS TRIGGER
 AS $$
 BEGIN
     IF EXISTS (
@@ -10,9 +10,9 @@ BEGIN
             from_id = NEW.to_id AND to_id = NEW.from_id
     ) THEN
         RAISE EXCEPTION
-            'Дублирование переезда между станциями. (%, %) уже соединены переездом.', NEW.to_id, NEW.from_id;
+            'Дублирование переезда между станциями. Станции (%, %) уже соединены переездом: (%, %).',
+            NEW.from_id, NEW.to_id, from_id, to_id;
     END IF;
-
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
