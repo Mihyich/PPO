@@ -10,7 +10,7 @@ BEGIN
             chart_id <> NEW.chart_id AND branch_id = NEW.branch_id
     ) THEN
         RAISE EXCEPTION
-            'Попытка связать ветку (%), уже связанную со схемой (%), со схемой (%)',
+            'Попытка связать ветку (%), уже связанную со схемой (%), со схемой (%).',
             branch_id, chart_id, NEW.chart_id;
     END IF;
     RETURN NEW;
@@ -30,7 +30,7 @@ BEGIN
             branch_id <> NEW.branch_id AND station_id = NEW.station_id
     ) THEN
         RAISE EXCEPTION
-            'Попытка связать станцию (%), уже связанную с веткой (%), с веткой (%)',
+            'Попытка связать станцию (%), уже связанную с веткой (%), с веткой (%).',
             station_id, branch_id, NEW.branch_id;
     END IF;
     RETURN NEW;
