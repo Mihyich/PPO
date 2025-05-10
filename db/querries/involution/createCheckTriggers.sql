@@ -200,3 +200,35 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+
+-- Создание триггеров
+
+CREATE OR REPLACE TRIGGER trg_ck_chart_branch_unique_ref
+	BEFORE INSERT OR UPDATE ON chart_branch
+	FOR EACH ROW
+	EXECUTE FUNCTION ck_chart_branch_unique_ref();
+
+
+CREATE OR REPLACE TRIGGER trg_ck_branch_station_unique_ref
+	BEFORE INSERT OR UPDATE ON chart_branch
+	FOR EACH ROW
+	EXECUTE FUNCTION ck_branch_station_unique_ref();
+
+
+CREATE OR REPLACE TRIGGER trg_ck_railway_unique_station_ref
+	BEFORE INSERT OR UPDATE OF from_id, to_id ON railway
+	FOR EACH ROW
+	EXECUTE FUNCTION ck_railway_unique_station_ref();
+
+
+CREATE OR REPLACE TRIGGER trg_ck_railway_same_branch_of_stations_ref
+	BEFORE INSERT OR UPDATE OF from_id, to_id ON railway
+	FOR EACH ROW
+	EXECUTE FUNCTION ck_railway_same_branch_of_stations_ref();
+
+
+CREATE OR REPLACE TRIGGER trg_ck_station_transition_different_branch_of_stations_ref
+	BEFORE INSERT OR UPDATE ON station_transition
+	FOR EACH ROW
+	EXECUTE FUNCTION ck_station_transition_different_branch_of_stations_ref();
