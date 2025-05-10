@@ -56,3 +56,44 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION ck_railway_same_branch_of_stations_ref() RETURNS TRIGGER
+AS $$
+DECLARE
+    branch1_id INT;
+    branch2_id INT;
+BEGIN
+    SELECT
+        branch_id INTO branch1_id
+    FROM
+        branch_station AS bs
+    WHERE
+        NEW.from_id = bs.station_id
+    LIMIT 1; -- Необязательно, но пусть будет
+
+    SELECT
+        branch_id INTO branch2_id
+    FROM
+        branch_station AS bs
+    WHERE
+        NEW.to_id = bs.station_id
+    LIMIT 1; -- Необязательно, но пусть будет
+
+    IF branch1_id IS NULL THEN
+        RAISE EXCEPTION
+            'Станция % не привязана ни к одной ветке',
+            NEW.from_id;
+    ELSIF branch2_id IS NULL THEN
+        RAISE EXCEPTION
+            'Станция % не привязана ни к одной ветке',
+            NEW.to_id;
+    ELSIF branch1_id <> branch2_id THEN
+        RAISE EXCEPTION
+            'Попытка соединения переездом станций (%, %), принадлежащие разным веткам: (%, %).',
+            NEW.from_id, NEW.to_id, branch1_id, branch2_id;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
