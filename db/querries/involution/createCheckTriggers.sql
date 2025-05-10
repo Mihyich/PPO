@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION ck_branch_unique_chart_ref() RETURNS TRIGGER
+CREATE OR REPLACE FUNCTION ck_railway_unique_station_ref() RETURNS TRIGGER
 AS $$
 BEGIN
     IF EXISTS (
