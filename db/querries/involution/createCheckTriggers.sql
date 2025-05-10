@@ -101,3 +101,102 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+
+-- Проверка связывания станций переходом в рамках разных веток одной и той же схемы
+CREATE OR REPLACE FUNCTION ck_station_transition_different_branch_of_stations_ref() RETURNS TRIGGER
+AS $$
+DECLARE
+    transition_links INT;
+    station1_id INT;
+    station2_id INT;
+    branch1_id INT;
+    branch2_id INT;
+    chart1_id INT;
+    chart2_id INT;
+BEGIN
+    -- Подсчет количества станций ведущих на один и тот же переход
+    SELECT
+        count(st.transition_id) INTO transition_links
+    FROM
+        station_transition AS st
+    WHERE
+        st.transition_id = NEW.transition_id;
+
+    -- Гарантия, что только две станции ведут на переход
+    IF transition_links < 2 THEN
+        RETURN NEW; -- переход еще не полностью установлен
+    ELSIF transition_links > 2 THEN
+        RAISE EXCEPTION
+            'Попытка связать переход (%) с больше чем 2-мя станциями',
+            NEW.transition_id;
+    END IF;
+
+    -- Первая станция уже имеется в новой записи NEW
+    SELECT
+        NEW.station_id INTO station1_id;
+
+    -- Вторая станция избирается с учетом того, что всего станций 2 и проверкой
+    -- на несовпадение с NEW.station_id
+    SELECT
+        st.station_id INTO station2_id
+    FROM
+        station_transition AS st
+    WHERE
+        st.transition_id = NEW.transition_id AND st.station_id <> NEW.station_id
+    LIMIT 1; -- Необязательно, но пусть будет
+
+    -- Вторая станция должна быть найдена
+    IF station2_id IS NULL THEN
+        RAISE EXCEPTION
+            'Не удалось определить вторую станцию для перехода %',
+            NEW.transition_id;
+    END IF;
+
+    -- Поиск ветки и схемы для первой станции
+    SELECT
+        bs.branch_id, cb.chart_id INTO branch1_id, chart1_id
+    FROM
+        branch_station bs
+    LEFT JOIN
+        chart_branch cb ON cb.branch_id = bs.branch_id
+    WHERE
+        bs.station_id = station1_id
+    LIMIT 1;
+    
+    -- Поиск ветки и схемы для второй станции
+    SELECT
+        bs.branch_id, cb.chart_id INTO branch2_id, chart2_id
+    FROM
+        branch_station bs
+    LEFT JOIN
+        chart_branch cb ON cb.branch_id = bs.branch_id
+    WHERE
+        bs.station_id = station2_id
+    LIMIT 1;
+
+    IF branch1_id IS NULL THEN
+        RAISE EXCEPTION
+            'Станция (%) не привязана к ветке',
+            station1_id;
+    ELSIF branch2_id IS NULL THEN
+        RAISE EXCEPTION
+            'Станция (%) не привязана к ветке',
+            station2_id;
+    ELSIF chart1_id IS NULL THEN
+        RAISE EXCEPTION
+            'Ветка (%) не привязана к схеме',
+            branch1_id;
+    ELSIF chart2_id IS NULL THEN
+        RAISE EXCEPTION
+            'Ветка (%) не привязана к схеме',
+            branch2_id;
+    ELSIF branch1_id = branch2_id THEN
+        RAISE EXCEPTION
+            'Попытка соединения переходом станций (%, %), принадлежащие одной и той же ветке: (%).',
+            statoin1_id, station2_id, branch1_id;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
