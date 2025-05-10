@@ -54,13 +54,15 @@ ALTER TABLE way_item
 ALTER TABLE chart_branch
 	ALTER COLUMN chart_id SET NOT NULL,
 	ALTER COLUMN branch_id SET NOT NULL,
-	ADD CONSTRAINT uk_chart_branch_chart_id_branch_id UNIQUE (chart_id, branch_id);
+	ADD CONSTRAINT uk_chart_branch_chart_id_branch_id UNIQUE (chart_id, branch_id), -- Ни одна схема не имеет дубликатов веток
+	ADD CONSTRAINT uk_chart_branch_branch_id UNIQUE (branch_id); -- Каждая ветка связывается со схемой только один раз
 
 
 ALTER TABLE branch_station
 	ALTER COLUMN branch_id SET NOT NULL,
 	ALTER COLUMN station_id SET NOT NULL,
-	ADD CONSTRAINT uk_branch_station_branch_id_station_id UNIQUE (branch_id, station_id);
+	ADD CONSTRAINT uk_branch_station_branch_id_station_id UNIQUE (branch_id, station_id), -- Ни одна ветка не имеет дубликатов станций
+	ADD CONSTRAINT uk_branch_station_station_id UNIQUE (station_id); -- Каждая станция связывается с веткой только один раз
 
 
 ALTER TABLE railway
