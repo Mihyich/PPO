@@ -1,3 +1,23 @@
+CREATE OR REPLACE FUNCTION ck_chart_branch_unique_ref() RETURNS TRIGGER
+AS $$
+BEGIN
+    IF EXISTS (
+        SELECT
+            1
+        FROM
+            chart_branch
+        WHERE
+            chart_id <> NEW.chart_id AND branch_id = NEW.branch_id
+    ) THEN
+        RAISE EXCEPTION
+            'Попытка связать ветку (%), уже связанную со схемой (%), со схемой (%)',
+            branch_id, chart_id, NEW.chart_id;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
 CREATE OR REPLACE FUNCTION ck_railway_unique_station_ref() RETURNS TRIGGER
 AS $$
 BEGIN
