@@ -1,5 +1,6 @@
 from pathlib import Path
 from itertools import takewhile
+import argparse
 import shutil
 import json
 import psycopg2
@@ -15,7 +16,8 @@ branch_stationFileName = workTempDir / Path("branch_station.csv")
 railwayFileName = workTempDir / Path("railway.csv")
 station_transitionFileName = workTempDir / Path("station_transition.csv")
 
-chartFile = "/home/mihail/Рабочий стол/BMSTU/PPO_BACKUP/cities/Moscow/chart.json"
+
+# chartFile = "/home/mihail/Рабочий стол/BMSTU/PPO_BACKUP/cities/Moscow/chart.json"
 
 
 dbname = "metro"
@@ -46,9 +48,9 @@ getStationSerialIndex = lambda bTitle, sTitle, data: \
     getStationSerialIndexInsideLocalBranch(bTitle, sTitle, data)
 
 
-def readJsonFile(file: str):
+def readJsonFile(fileName: str):
     try:
-        with open(chartFile, 'r', encoding='utf-8') as file:
+        with open(fileName, 'r', encoding='utf-8') as file:
             data = json.load(file)
     except FileNotFoundError:
         print("[Ошибка] Файл не найден")
@@ -249,7 +251,11 @@ def insertData(chartFileName, branchFileName,
 
 
 def main():
-    data = readJsonFile(chartFile)
+    parser = argparse.ArgumentParser(description='Загрузка схемы метро в БД')
+    parser.add_argument('--chart', type=Path, required=True, help='Путь к файлу chart.json')
+    args = parser.parse_args()
+    
+    data = readJsonFile(args.chart)
     involuteDirectories()
 
     createChartCSV(chartFileName, data)
