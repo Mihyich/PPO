@@ -157,7 +157,7 @@ def createRailwayCSV(fileName: str, data):
             stationNextId += len(b['railways'])
 
 
-def createStationTransition(fileName: str, data):
+def createStationTransitionSCV(fileName: str, data):
     stationNextId = getNextPrimaryKeyValue("station", "id")
     transitionNextId = getNextPrimaryKeyValue("transition", "id")
 
@@ -253,7 +253,7 @@ def main():
     createChartBranchCSV(chart_branchFileName, data)
     createBranchStationCSV(branch_stationFileName, data)
     createRailwayCSV(railwayFileName, data)
-    createStationTransition(station_transitionFileName, data)
+    createStationTransitionSCV(station_transitionFileName, data)
 
     insertData(chartFileName, branchFileName,
                stationFileName, transitionFileName,
