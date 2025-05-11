@@ -154,7 +154,7 @@ def createRailwayCSV(fileName: str, data):
                 duration = r['duration']
                 print(f"{from_id};{to_id};{duration}", file=f)
 
-            stationNextId += len(b['railways'])
+            stationNextId += len(b['stations'])
 
 
 def createStationTransitionSCV(fileName: str, data):
