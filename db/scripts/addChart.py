@@ -88,7 +88,7 @@ def getNextPrimaryKeyValue(chart: str, key: str) -> int:
 
 
 def involuteDirectories():
-    workTempDir.mkdir(exist_ok=True)
+    workTempDir.mkdir(mode=0o777, exist_ok=True) # Доступ для всех
 
 
 def convoluteDirectories():
