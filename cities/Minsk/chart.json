@@ -1,0 +1,485 @@
+{
+	"title": "Схема метро",
+	"city": "Минск",
+	"branches": [
+		{
+			"title": "Автозаводская линия",
+			"color": "#ff0000",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Каменная горка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кунцевщина",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Спортивная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Пушкинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Молодёжная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Фрунзенская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Немига",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Купаловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Первомайская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Пролетарская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тракторный завод",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Партизанская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Автозаводская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Могилёвская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Каменная горка",
+					"to": "Кунцевщина",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Кунцевщина",
+					"to": "Спортивная",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Спортивная",
+					"to": "Пушкинская",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Пушкинская",
+					"to": "Молодёжная",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Молодёжная",
+					"to": "Фрунзенская",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Фрунзенская",
+					"to": "Немига",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Немига",
+					"to": "Купаловская",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Купаловская",
+					"to": "Первомайская",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Первомайская",
+					"to": "Пролетарская",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Пролетарская",
+					"to": "Тракторный завод",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Тракторный завод",
+					"to": "Партизанская",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Партизанская",
+					"to": "Автозаводская",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Автозаводская",
+					"to": "Могилёвская",
+					"duration": "00:03:00"
+				}
+			]
+		},
+		{
+			"title": "Московская линия",
+			"color": "#0000FF",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Уручье",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Борисовский тракт",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Восток",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Московская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Парк Челюскинцев",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Академия наук",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Площадь Якуба Коласа",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Площадь Победы",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Октябрьская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Площадь Ленина",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Институт культуры",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Грушевка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Михалово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Петровщина",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Малиновка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Уручье",
+					"to": "Борисовский тракт",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Борисовский тракт",
+					"to": "Восток",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Восток",
+					"to": "Московская",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Московская",
+					"to": "Парк Челюскинцев",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Парк Челюскинцев",
+					"to": "Академия наук",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Академия наук",
+					"to": "Площадь Якуба Коласа",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Площадь Якуба Коласа",
+					"to": "Площадь Победы",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Площадь Победы",
+					"to": "Октябрьская",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Октябрьская",
+					"to": "Площадь Ленина",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Площадь Ленина",
+					"to": "Институт культуры",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Институт культуры",
+					"to": "Грушевка",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Грушевка",
+					"to": "Михалово",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Михалово",
+					"to": "Петровщина",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Петровщина",
+					"to": "Малиновка",
+					"duration": "00:03:00"
+				}
+			]
+		},
+		{
+			"title": "Зеленолужская линия",
+			"color": "#00FF00",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Юбилейная площадь",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Площадь Франтишка Богушевича",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Вокзальная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ковальская Слобода",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Аэродромная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Неморшанский Сад",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Слуцкий Гостинец",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Юбилейная площадь",
+					"to": "Площадь Франтишка Богушевича",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Площадь Франтишка Богушевича",
+					"to": "Вокзальная",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Вокзальная",
+					"to": "Ковальская Слобода",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Ковальская Слобода",
+					"to": "Аэродромная",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Аэродромная",
+					"to": "Неморшанский Сад",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Неморшанский Сад",
+					"to": "Слуцкий Гостинец",
+					"duration": "00:05:00"
+				}
+			]
+		}
+	],
+	"transitions": [
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Автозаводская линия",
+			"stationsrc": "Фрунзенская",
+			"branchdst": "Зеленолужская линия",
+			"stationdst": "Юбилейная площадь"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Автозаводская линия",
+			"stationsrc": "Купаловская",
+			"branchdst": "Московская линия",
+			"stationdst": "Октябрьская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московская линия",
+			"stationsrc": "Площадь Ленина",
+			"branchdst": "Зеленолужская линия",
+			"stationdst": "Вокзальная"
+		}
+	]
+}
