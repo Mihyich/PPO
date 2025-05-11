@@ -6,6 +6,15 @@ import psycopg2
 
 
 workTempDir = Path("./TempData")
+chartFileName = workTempDir / Path("chart.csv")
+branchFileName = workTempDir / Path("branch.csv")
+stationFileName = workTempDir / Path("station.csv")
+transitionFileName = workTempDir / Path("transition.csv")
+chart_branchFileName = workTempDir / Path("chart_branch.csv")
+branch_stationFileName = workTempDir / Path("branch_station.csv")
+railwayFileName = workTempDir / Path("railway.csv")
+station_transitionFileName = workTempDir / Path("station_transition.csv")
+
 chartFile = "/home/mihail/Рабочий стол/BMSTU/PPO_BACKUP/cities/Moscow/chart.json"
 
 
@@ -87,40 +96,31 @@ def convoluteDirectories():
         shutil.rmtree(workTempDir)
 
 
-def createChartCSV(data):
-    fileName = workTempDir / Path("chart.csv")
-
+def createChartCSV(fileName: str, data):
     with open(fileName, "w", encoding='utf-8') as f:
         print(f"{data['title']};{data['city']}", file=f)
 
 
-def createBranchCSV(data):
-    fileName = workTempDir / Path("branch.csv")
-
+def createBranchCSV(fileName: str, data):
     with open(fileName, "w", encoding='utf-8') as f:
         for b in data['branches']:
             print(f"{b['title']};{hexColorToDecimal(b['color'])};{b['accesstype']}", file=f)
 
 
-def createStationCSV(data):
-    fileName = workTempDir / Path("station.csv")
-
+def createStationCSV(fileName: str, data):
     with open(fileName, "w", encoding='utf-8') as f:
         for b in data['branches']:
             for s in b['stations']:
                 print(f"{s['title']};{s['occupancy']};{s['accesstype']};{s['opentime']};{s['closetime']}", file=f)
 
 
-def createTransitionCSV(data):
-    fileName = workTempDir / Path("transition.csv")
-
+def createTransitionCSV(fileName: str, data):
     with open(fileName, "w", encoding='utf-8') as f:
         for t in data['transitions']:
             print(f"{t['occupancy']};{t['accesstype']};{t['duration']};{t['opentime']};{t['closetime']}", file=f)
 
 
-def createChartBranchCSV(data):
-    fileName = workTempDir / Path("chart_branch.csv")
+def createChartBranchCSV(fileName: str, data):
     chartNextId = getNextPrimaryKeyValue("chart", "id")
     branchNextId = getNextPrimaryKeyValue("branch", "id")
 
@@ -130,8 +130,7 @@ def createChartBranchCSV(data):
             branchNextId += 1
 
 
-def createBranchStationCSV(data):
-    fileName = workTempDir / Path("branch_station.csv")
+def createBranchStationCSV(fileName: str, data):
     branchNextId = getNextPrimaryKeyValue("branch", "id")
     stationNextId = getNextPrimaryKeyValue("station", "id")
 
@@ -144,8 +143,7 @@ def createBranchStationCSV(data):
             branchNextId += 1
 
 
-def createRailwayCSV(data):
-    fileName = workTempDir / Path("railway.csv")
+def createRailwayCSV(fileName: str, data):
     stationNextId = getNextPrimaryKeyValue("station", "id")
 
     with open(fileName, "w", encoding='utf-8') as f:
@@ -159,8 +157,7 @@ def createRailwayCSV(data):
             stationNextId += len(b['railways'])
 
 
-def createStationTransition(data):
-    fileName = workTempDir / Path("station_transition.csv")
+def createStationTransition(fileName: str, data):
     stationNextId = getNextPrimaryKeyValue("station", "id")
     transitionNextId = getNextPrimaryKeyValue("transition", "id")
 
@@ -181,15 +178,15 @@ def main():
     data = readJsonFile(chartFile)
     involuteDirectories()
 
-    createChartCSV(data)
-    createBranchCSV(data)
-    createStationCSV(data)
-    createTransitionCSV(data)
+    createChartCSV(chartFileName, data)
+    createBranchCSV(branchFileName, data)
+    createStationCSV(stationFileName, data)
+    createTransitionCSV(transitionFileName, data)
 
-    createChartBranchCSV(data)
-    createBranchStationCSV(data)
-    createRailwayCSV(data)
-    createStationTransition(data)
+    createChartBranchCSV(chart_branchFileName, data)
+    createBranchStationCSV(branch_stationFileName, data)
+    createRailwayCSV(railwayFileName, data)
+    createStationTransition(station_transitionFileName, data)
 
     convoluteDirectories()
     exit(0)
