@@ -9,7 +9,8 @@ ALTER TABLE chart
 	ALTER COLUMN city SET NOT NULL,
 	ALTER COLUMN title SET NOT NULL,
 	ALTER COLUMN svg_content SET DEFAULT '<svg width="200" height="200"><text y="16">Пустая схема</text></svg>',
-	ADD CONSTRAINT ck_valid_svg CHECK (svg_content::xml IS DOCUMENT);
+	ADD CONSTRAINT ck_valid_svg CHECK (svg_content::xml IS DOCUMENT),
+	ADD CONSTRAINT uk_chart_city_title UNIQUE (city, title); -- Не должно быть такого!!!
 
 
 ALTER TABLE branch
