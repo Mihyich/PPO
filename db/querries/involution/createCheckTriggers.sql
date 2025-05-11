@@ -211,7 +211,7 @@ CREATE OR REPLACE TRIGGER trg_ck_chart_branch_unique_ref
 
 
 CREATE OR REPLACE TRIGGER trg_ck_branch_station_unique_ref
-	BEFORE INSERT OR UPDATE ON chart_branch
+	BEFORE INSERT OR UPDATE ON branch_station
 	FOR EACH ROW
 	EXECUTE FUNCTION ck_branch_station_unique_ref();
 
