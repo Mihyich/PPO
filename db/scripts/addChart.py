@@ -5,7 +5,7 @@ import json
 import psycopg2
 
 
-workTempDir = Path("./TempData")
+workTempDir = Path.cwd() / Path("./TempData")
 chartFileName = workTempDir / Path("chart.csv")
 branchFileName = workTempDir / Path("branch.csv")
 stationFileName = workTempDir / Path("station.csv")
