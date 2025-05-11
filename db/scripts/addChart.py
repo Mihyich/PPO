@@ -83,6 +83,9 @@ def getNextPrimaryKeyValue(chart: str, key: str) -> int:
                     );
                     """, (seq_name.split('.')[-1],))  # Убрать имя схемы из имени, если есть
                 next_id = curs.fetchone()[0]
+            else:
+                print(f"[Ошибка] Не найдено имя последовательности для ключа '{key}' в таблице '{chart}'")
+                exit(1)
 
     conn.close()
 
@@ -190,62 +193,64 @@ def insertData(chartFileName, branchFileName,
                         curs.copy_expert("COPY chart(city, title) FROM STDIN WITH DELIMITER ';';", f)
                 except Exception as e:
                     print(f"Ошибка при загрузке данных в chart из файла {chartFileName}: {e}")
-                    raise
+                    exit(1)
 
                 try:
                     with open(branchFileName, 'r', encoding='utf-8') as f:
                         curs.copy_expert("COPY branch(title, color, access) FROM STDIN WITH DELIMITER ';';", f)
                 except Exception as e:
                     print(f"Ошибка при загрузке данных в branch из файла {branchFileName}: {e}")
-                    raise
+                    exit(1)
 
                 try:
                     with open(chart_branchFileName, 'r', encoding='utf-8') as f:
                         curs.copy_expert("COPY chart_branch(chart_id, branch_id) FROM STDIN WITH DELIMITER ';';", f)
                 except Exception as e:
                     print(f"Ошибка при загрузке данных в chart_branch из файла {chart_branchFileName}: {e}")
-                    raise
+                    exit(1)
 
                 try:
                     with open(stationFileName, 'r', encoding='utf-8') as f:
                         curs.copy_expert("COPY station(title, occupancy, access, open_time, close_time) FROM STDIN WITH DELIMITER ';';", f)
                 except Exception as e:
                     print(f"Ошибка при загрузке данных в station из файла {stationFileName}: {e}")
-                    raise
+                    exit(1)
 
                 try:    
                     with open(branch_stationFileName, 'r', encoding='utf-8') as f:
                         curs.copy_expert("COPY branch_station(branch_id, station_id) FROM STDIN WITH DELIMITER ';';", f)
                 except Exception as e:
                     print(f"Ошибка при загрузке данных в branch_station из файла {branch_stationFileName}: {e}")
-                    raise
+                    exit(1)
 
                 try:
                     with open(railwayFileName, 'r', encoding='utf-8') as f:
                         curs.copy_expert("COPY railway(from_id, to_id, duration) FROM STDIN WITH DELIMITER ';';", f)
                 except Exception as e:
                     print(f"Ошибка при загрузке данных в railway из файла {railwayFileName}: {e}")
-                    raise
+                    exit(1)
 
                 try:
                     with open(transitionFileName, 'r', encoding='utf-8') as f:
                         curs.copy_expert("COPY transition(occupancy, access, duration, open_time, close_time) FROM STDIN WITH DELIMITER ';';", f)
                 except Exception as e:
                     print(f"Ошибка при загрузке данных в transition из файла {transitionFileName}: {e}")
-                    raise
+                    exit(1)
 
                 try:
                     with open(station_transitionFileName, 'r', encoding='utf-8') as f:
                         curs.copy_expert("COPY station_transition(station_id, transition_id) FROM STDIN WITH DELIMITER ';';", f)
                 except Exception as e:
                     print(f"Ошибка при загрузке данных в station_transition из файла {station_transitionFileName}: {e}")
-                    raise
+                    exit(1)
     except psycopg2.Error as e:
         print(f"Ошибка БД: {e}")
         conn.rollback()
+        exit(1)
     except Exception as e:
         print(f"Ошибка: {e}")
         conn.rollback()
+        exit(1)
     finally:
         conn.close()
 
