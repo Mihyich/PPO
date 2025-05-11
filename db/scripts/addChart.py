@@ -184,56 +184,56 @@ def insertData(chartFileName, branchFileName,
         with conn.cursor() as curs:
             try:
                 with open(chartFileName, 'r', encoding='utf-8') as f:
-                    curs.copy_expert("COPY chart FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
+                    curs.copy_expert("COPY chart(city, title) FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
             except Exception as e:
                 print(f"Ошибка при загрузке данных в chart из файла {chartFileName}: {e}")
                 raise
 
             try:
                 with open(branchFileName, 'r', encoding='utf-8') as f:
-                    curs.copy_expert("COPY branch FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
+                    curs.copy_expert("COPY branch(title, color, access) FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
             except Exception as e:
                 print(f"Ошибка при загрузке данных в branch из файла {branchFileName}: {e}")
                 raise
 
             try:
                 with open(chart_branchFileName, 'r', encoding='utf-8') as f:
-                    curs.copy_expert("COPY chart_branch FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
+                    curs.copy_expert("COPY chart_branch(chart_id, branch_id) FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
             except Exception as e:
                 print(f"Ошибка при загрузке данных в chart_branch из файла {chart_branchFileName}: {e}")
                 raise
 
             try:
                 with open(stationFileName, 'r', encoding='utf-8') as f:
-                    curs.copy_expert("COPY station FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
+                    curs.copy_expert("COPY station(title, occupancy, access, open_time, close_time) FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
             except Exception as e:
                 print(f"Ошибка при загрузке данных в station из файла {stationFileName}: {e}")
                 raise
 
             try:    
                 with open(branch_stationFileName, 'r', encoding='utf-8') as f:
-                    curs.copy_expert("COPY branch_station FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
+                    curs.copy_expert("COPY branch_station(branch_id, station_id) FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
             except Exception as e:
                 print(f"Ошибка при загрузке данных в branch_station из файла {branch_stationFileName}: {e}")
                 raise
 
             try:
                 with open(railwayFileName, 'r', encoding='utf-8') as f:
-                    curs.copy_expert("COPY railway FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
+                    curs.copy_expert("COPY railway(from_id, to_id, duration) FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
             except Exception as e:
                 print(f"Ошибка при загрузке данных в railway из файла {railwayFileName}: {e}")
                 raise
 
             try:
                 with open(transitionFileName, 'r', encoding='utf-8') as f:
-                    curs.copy_expert("COPY transition FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
+                    curs.copy_expert("COPY transition(occupancy, access, duration, open_time, close_time) FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
             except Exception as e:
                 print(f"Ошибка при загрузке данных в transition из файла {transitionFileName}: {e}")
                 raise
 
             try:
                 with open(station_transitionFileName, 'r', encoding='utf-8') as f:
-                    curs.copy_expert("COPY station_transition FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
+                    curs.copy_expert("COPY station_transition(station_id, transition_id) FROM STDIN WITH DELIMITER ';' CSV HEADER ENCODING 'utf-8'", f)
             except Exception as e:
                 print(f"Ошибка при загрузке данных в station_transition из файла {station_transitionFileName}: {e}")
                 raise
