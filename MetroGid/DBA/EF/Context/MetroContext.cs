@@ -64,6 +64,11 @@ public partial class MetroContext : DbContext
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .HasColumnName("title");
+            entity.Property(e => e.Access)
+                .HasConversion(
+                    v => v.ToString(), // C# -> БД
+                    v => (AccessType)Enum.Parse(typeof(AccessType), v))  // БД -> С#
+                .HasColumnName("access");
         });
 
         modelBuilder.Entity<BranchStation>(entity =>
@@ -189,6 +194,11 @@ public partial class MetroContext : DbContext
             entity.Property(e => e.Occupancy)
                 .HasDefaultValue((short)5)
                 .HasColumnName("occupancy");
+            entity.Property(e => e.Access)
+                .HasConversion(
+                    v => v.ToString(), // C# -> БД
+                    v => (AccessType)Enum.Parse(typeof(AccessType), v))  // БД -> С#
+                .HasColumnName("access");
             entity.Property(e => e.OpenTime).HasColumnName("open_time");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
@@ -235,6 +245,11 @@ public partial class MetroContext : DbContext
             entity.Property(e => e.Occupancy)
                 .HasDefaultValue((short)5)
                 .HasColumnName("occupancy");
+            entity.Property(e => e.Access)
+                .HasConversion(
+                    v => v.ToString(), // C# -> БД
+                    v => (AccessType)Enum.Parse(typeof(AccessType), v))  // БД -> С#
+                .HasColumnName("access");
             entity.Property(e => e.OpenTime).HasColumnName("open_time");
 
             entity.HasOne(d => d.Duty).WithMany(p => p.Transitions)

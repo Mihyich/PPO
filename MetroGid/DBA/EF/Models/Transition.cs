@@ -8,6 +8,8 @@ public partial class Transition
 
     public short? Occupancy { get; set; }
 
+    public AccessType Access { get; set; } = AccessType.ACCESSIBLE;
+
     public TimeOnly Duration { get; set; }
 
     public TimeOnly OpenTime { get; set; }

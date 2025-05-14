@@ -10,6 +10,8 @@ public partial class Station
 
     public short? Occupancy { get; set; }
 
+    public AccessType Access { get; set; } = AccessType.ACCESSIBLE;
+
     public TimeOnly OpenTime { get; set; }
 
     public TimeOnly CloseTime { get; set; }
