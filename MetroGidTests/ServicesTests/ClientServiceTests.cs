@@ -2,9 +2,9 @@ using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Handlers;
 using MetroGid.Core.Exceptions.Super;
+using MetroGid.Core.Interfaces;
 using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Services;
-using MetroGid.DBA.Interfaces;
 using Moq;
 
 namespace MetroGidTests.ServicesTests;
