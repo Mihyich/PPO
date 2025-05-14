@@ -1,8 +1,8 @@
 using MetroGid.Controllers.DTO;
 using MetroGid.Controllers.Interfaces;
 using MetroGid.Core.Converters;
+using MetroGid.Core.Interfaces;
 using MetroGid.Core.Models.Concrete;
-using MetroGid.DBA.Interfaces;
 
 namespace MetroGid.Core.Services;
 
