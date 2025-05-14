@@ -1,6 +1,6 @@
 using MetroGid.Core.Models.Concrete;
 
-namespace MetroGid.DBA.Interfaces;
+namespace MetroGid.Core.Interfaces;
 
 public interface IChartRepository
 {
