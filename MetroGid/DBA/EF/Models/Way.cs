@@ -16,5 +16,5 @@ public partial class Way
 
     public virtual Client Client { get; set; } = null!;
 
-    public virtual ICollection<WayItem> WayItems { get; set; } = new List<WayItem>();
+    public virtual ICollection<WayItem> WayItems { get; set; } = [];
 }

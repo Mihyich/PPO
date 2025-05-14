@@ -14,5 +14,5 @@ public partial class Railway
 
     public virtual Station To { get; set; } = null!;
 
-    public virtual ICollection<WayItemRailway> WayItemRailways { get; set; } = new List<WayItemRailway>();
+    public virtual ICollection<WayItemRailway> WayItemRailways { get; set; } = [];
 }

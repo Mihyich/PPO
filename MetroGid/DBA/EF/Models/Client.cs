@@ -10,9 +10,9 @@ public partial class Client
 
     public string Mail { get; set; } = null!;
 
-    public virtual ICollection<Station> Stations { get; set; } = new List<Station>();
+    public virtual ICollection<Station> Stations { get; set; } = [];
 
-    public virtual ICollection<Transition> Transitions { get; set; } = new List<Transition>();
+    public virtual ICollection<Transition> Transitions { get; set; } = [];
 
-    public virtual ICollection<Way> Ways { get; set; } = new List<Way>();
+    public virtual ICollection<Way> Ways { get; set; } = [];
 }

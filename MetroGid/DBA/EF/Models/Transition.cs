@@ -16,7 +16,7 @@ public partial class Transition
 
     public virtual Client? Duty { get; set; }
 
-    public virtual ICollection<StationTransition> StationTransitions { get; set; } = new List<StationTransition>();
+    public virtual ICollection<StationTransition> StationTransitions { get; set; } = [];
 
-    public virtual ICollection<WayItemTransition> WayItemTransitions { get; set; } = new List<WayItemTransition>();
+    public virtual ICollection<WayItemTransition> WayItemTransitions { get; set; } = [];
 }
