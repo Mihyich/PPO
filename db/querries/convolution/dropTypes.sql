@@ -2,5 +2,8 @@ DROP TYPE IF EXISTS role_type CASCADE;
 DROP TYPE IF EXISTS access_type CASCADE;
 DROP TYPE IF EXISTS nexus_type CASCADE;
 
+DROP DOMAIN IF EXISTS login_inst;
+DROP DOMAIN IF EXISTS password_inst;
+DROP DOMAIN IF EXISTS mail_inst;
 DROP DOMAIN IF EXISTS occupancy_level;
 DROP DOMAIN IF EXISTS decimal_hexcolor;
