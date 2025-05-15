@@ -2,7 +2,7 @@ ALTER TABLE client
 	ALTER COLUMN client_login SET NOT NULL,
 	ALTER COLUMN client_password SET NOT NULL,
 	ALTER COLUMN mail SET NOT NULL,
-	ALTER COLUMN privilege SET DEFAULT 'UNSIGNED'::role_typ;
+	ALTER COLUMN privilege SET DEFAULT 'UNSIGNED'::role_type;
 
 
 ALTER TABLE chart
