@@ -304,6 +304,11 @@ public partial class MetroContext : DbContext
             entity.HasIndex(e => new { e.WayId, e.StepNomer }, "uk_way_item_way_id_step_nomer").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Nexus)
+                .HasConversion(
+                    v => v.ToString(), // C# -> БД
+                    v => (NexusType)Enum.Parse(typeof(NexusType), v))  // БД -> С#
+                .HasColumnName("nexus");
             entity.Property(e => e.StepNomer).HasColumnName("step_nomer");
             entity.Property(e => e.WayId).HasColumnName("way_id");
 

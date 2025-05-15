@@ -6,6 +6,8 @@ public partial class WayItem
 
     public int WayId { get; set; }
 
+    public NexusType Nexus { get; set; } = NexusType.STATION;
+
     public int StepNomer { get; set; }
 
     public virtual Way Way { get; set; } = null!;
