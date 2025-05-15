@@ -68,6 +68,7 @@ public partial class MetroContext : DbContext
                 .HasConversion(
                     v => v.ToString(), // C# -> БД
                     v => (AccessType)Enum.Parse(typeof(AccessType), v))  // БД -> С#
+                .HasDefaultValueSql("'ACCESSIBLE'::access_type")
                 .HasColumnName("access");
         });
 
@@ -204,6 +205,7 @@ public partial class MetroContext : DbContext
                 .HasConversion(
                     v => v.ToString(), // C# -> БД
                     v => (AccessType)Enum.Parse(typeof(AccessType), v))  // БД -> С#
+                .HasDefaultValueSql("'ACCESSIBLE'::access_type")
                 .HasColumnName("access");
             entity.Property(e => e.OpenTime).HasColumnName("open_time");
             entity.Property(e => e.Title)
@@ -255,6 +257,7 @@ public partial class MetroContext : DbContext
                 .HasConversion(
                     v => v.ToString(), // C# -> БД
                     v => (AccessType)Enum.Parse(typeof(AccessType), v))  // БД -> С#
+                .HasDefaultValueSql("'ACCESSIBLE'::access_type")
                 .HasColumnName("access");
             entity.Property(e => e.OpenTime).HasColumnName("open_time");
 
