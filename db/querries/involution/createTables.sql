@@ -2,9 +2,9 @@
 
 CREATE TABLE IF NOT EXISTS client (
 	id              SERIAL PRIMARY KEY,
-	client_login    VARCHAR(255),
-	client_password VARCHAR(255),
-	mail            VARCHAR(255),
+	client_login    login_inst,
+	client_password password_inst,
+	mail            mail_inst,
 	privilege       role_type
 );
 
