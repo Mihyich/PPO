@@ -60,6 +60,7 @@ public partial class MetroContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Color)
+                .HasColumnType("decimal_hexcolor")
                 .HasDefaultValue(0)
                 .HasColumnName("color");
             entity.Property(e => e.Title)
@@ -150,12 +151,15 @@ public partial class MetroContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ClientLogin)
+                .HasColumnType("login_inst")
                 .HasMaxLength(255)
                 .HasColumnName("client_login");
             entity.Property(e => e.ClientPassword)
+                .HasColumnType("password_inst")
                 .HasMaxLength(255)
                 .HasColumnName("client_password");
             entity.Property(e => e.Mail)
+                .HasColumnType("mail_inst")
                 .HasMaxLength(255)
                 .HasColumnName("mail");
             entity.Property(e => e.Privilege)
@@ -200,6 +204,7 @@ public partial class MetroContext : DbContext
             entity.Property(e => e.CloseTime).HasColumnName("close_time");
             entity.Property(e => e.DutyId).HasColumnName("duty_id");
             entity.Property(e => e.Occupancy)
+                .HasColumnType("occupancy_level")
                 .HasDefaultValue((short)5)
                 .HasColumnName("occupancy");
             entity.Property(e => e.Access)
@@ -252,6 +257,7 @@ public partial class MetroContext : DbContext
             entity.Property(e => e.Duration).HasColumnName("duration");
             entity.Property(e => e.DutyId).HasColumnName("duty_id");
             entity.Property(e => e.Occupancy)
+                .HasColumnType("occupancy_level")
                 .HasDefaultValue((short)5)
                 .HasColumnName("occupancy");
             entity.Property(e => e.Access)
