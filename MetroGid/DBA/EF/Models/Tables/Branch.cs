@@ -1,4 +1,6 @@
-﻿namespace MetroGid.DBA.EF.Models;
+﻿using MetroGid.DBA.EF.Models.UserDefinedTypes;
+
+namespace MetroGid.DBA.EF.Models.Tables;
 
 public partial class Branch
 {

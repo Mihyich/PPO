@@ -1,4 +1,4 @@
-﻿namespace MetroGid.DBA.EF.Models;
+﻿namespace MetroGid.DBA.EF.Models.Tables;
 
 public partial class StationTransition
 {

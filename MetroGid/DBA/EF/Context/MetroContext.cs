@@ -1,4 +1,5 @@
-﻿using MetroGid.DBA.EF.Models;
+﻿using MetroGid.DBA.EF.Models.Tables;
+using MetroGid.DBA.EF.Models.UserDefinedTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace MetroGid.DBA.EF.Context;
