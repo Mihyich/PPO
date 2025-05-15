@@ -156,6 +156,12 @@ public partial class MetroContext : DbContext
             entity.Property(e => e.Mail)
                 .HasMaxLength(255)
                 .HasColumnName("mail");
+            entity.Property(e => e.Privilege)
+                .HasConversion(
+                    v => v.ToString(), // C# -> БД
+                    v => (RoleType)Enum.Parse(typeof(RoleType), v))  // БД -> С#
+                .HasDefaultValueSql("'UNSIGNED'::role_type")
+                .HasColumnName("privilege");
         });
 
         modelBuilder.Entity<Railway>(entity =>

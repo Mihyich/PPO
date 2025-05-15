@@ -10,6 +10,8 @@ public partial class Client
 
     public string Mail { get; set; } = null!;
 
+    public RoleType Privilege { get; set; } = RoleType.UNSIGNED;
+
     public virtual ICollection<Station> Stations { get; set; } = [];
 
     public virtual ICollection<Transition> Transitions { get; set; } = [];
