@@ -1,6 +1,7 @@
 ﻿using MetroGid.DBA.EF.Models.Tables;
 using MetroGid.DBA.EF.Models.UserDefinedTypes;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace MetroGid.DBA.EF.Context;
 
@@ -14,36 +15,37 @@ public partial class MetroContext : DbContext
     {
     }
 
-    public virtual DbSet<Branch> Branches { get; set; }
+    public virtual DbSet<Branch> Branches { get; set; } = null!;
 
-    public virtual DbSet<BranchStation> BranchStations { get; set; }
+    public virtual DbSet<BranchStation> BranchStations { get; set; } = null!;
 
-    public virtual DbSet<Chart> Charts { get; set; }
+    public virtual DbSet<Chart> Charts { get; set; } = null!;
 
-    public virtual DbSet<ChartBranch> ChartBranches { get; set; }
+    public virtual DbSet<ChartBranch> ChartBranches { get; set; } = null!;
 
-    public virtual DbSet<Client> Clients { get; set; }
+    public virtual DbSet<Client> Clients { get; set; } = null!;
 
-    public virtual DbSet<Railway> Railways { get; set; }
+    public virtual DbSet<Railway> Railways { get; set; } = null!;
 
-    public virtual DbSet<Station> Stations { get; set; }
+    public virtual DbSet<Station> Stations { get; set; } = null!;
 
-    public virtual DbSet<StationTransition> StationTransitions { get; set; }
+    public virtual DbSet<StationTransition> StationTransitions { get; set; } = null!;
 
-    public virtual DbSet<Transition> Transitions { get; set; }
+    public virtual DbSet<Transition> Transitions { get; set; } = null!;
 
-    public virtual DbSet<Way> Ways { get; set; }
+    public virtual DbSet<Way> Ways { get; set; } = null!;
 
-    public virtual DbSet<WayItem> WayItems { get; set; }
+    public virtual DbSet<WayItem> WayItems { get; set; } = null!;
 
-    public virtual DbSet<WayItemRailway> WayItemRailways { get; set; }
+    public virtual DbSet<WayItemRailway> WayItemRailways { get; set; } = null!;
 
-    public virtual DbSet<WayItemStation> WayItemStations { get; set; }
+    public virtual DbSet<WayItemStation> WayItemStations { get; set; } = null!;
 
-    public virtual DbSet<WayItemTransition> WayItemTransitions { get; set; }
+    public virtual DbSet<WayItemTransition> WayItemTransitions { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=metro;Username=postgres;Password=1234");
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=metro;Username=postgres;Password=1234")
+            .LogTo(Console.WriteLine, LogLevel.Information);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -65,6 +67,7 @@ public partial class MetroContext : DbContext
                 .HasColumnName("color");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
+                .IsRequired()
                 .HasColumnName("title");
             entity.Property(e => e.Access)
                 .HasConversion(
