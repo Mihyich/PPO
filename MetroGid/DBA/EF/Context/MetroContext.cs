@@ -44,16 +44,10 @@ public partial class MetroContext : DbContext
     public virtual DbSet<WayItemTransition> WayItemTransitions { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=metro;Username=postgres;Password=1234")
-            .LogTo(Console.WriteLine, LogLevel.Information);
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=metro;Username=postgres;Password=1234");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder
-            .HasPostgresEnum("access_type", ["ACCESSIBLE", "INACCESSIBLE"])
-            .HasPostgresEnum("nexus_type", ["STATION", "TRANSITION", "RAILWAY"])
-            .HasPostgresEnum("role_type", ["UNSIGNED", "SIGNED", "DUTY"]);
-
         modelBuilder.Entity<Branch>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("branch_pkey");
@@ -169,7 +163,7 @@ public partial class MetroContext : DbContext
                 .HasConversion(
                     v => v.ToString(), // C# -> БД
                     v => (RoleType)Enum.Parse(typeof(RoleType), v))  // БД -> С#
-                .HasDefaultValueSql("'UNSIGNED'::role_type")
+                .HasColumnType("role_domain")
                 .HasColumnName("privilege");
         });
 
