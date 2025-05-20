@@ -96,4 +96,52 @@ public class EFClientRepository(MetroContext context) : IClientRepository
     
     public async Task<bool> IsMailExistsAsync(string mail) =>
         await _context.Clients.AnyAsync(c => c.Mail == mail);
+
+    public async Task<int> GetStationDuty(int stationId) =>
+        await _context.Stations
+            .AsNoTracking()
+            .Where(s => s.Id == stationId)
+            .Select(s => (int?)s.DutyId)
+            .FirstOrDefaultAsync()
+            ?? 0;
+
+    public async Task<int> GetTransitionDuty(int transitionId) =>
+        await _context.Transitions
+            .AsNoTracking()
+            .Where(t => t.Id == transitionId)
+            .Select(t => (int?)t.DutyId)
+            .FirstOrDefaultAsync()
+            ?? 0;
+
+    public async Task<int> MakeDutyOfStation(int clientId, int stationId) =>
+        await _context.Stations
+            .Where(s => s.Id == stationId)
+            .ExecuteUpdateAsync(s => s
+                .SetProperty(s => s.DutyId, clientId));
+
+    public async Task<int> MakeDutyOfTransition(int clientId, int transitionId) =>
+        await _context.Transitions
+            .Where(t => t.Id == transitionId)
+            .ExecuteUpdateAsync(t => t
+                .SetProperty(t => t.DutyId, clientId));
+
+    public async Task<int> MakeDuty(int clientId, int stationId, int transitionId) =>
+        await MakeDutyOfStation(clientId, stationId) +
+        await MakeDutyOfTransition(clientId, transitionId);
+
+    public async Task<int> DismissDutyFromStation(int stationId) =>
+        await _context.Stations
+            .Where(s => s.Id == stationId)
+            .ExecuteUpdateAsync(s => s
+                .SetProperty(s => s.DutyId, (int?)null));
+
+    public async Task<int> DismissDutyFromTransition(int transitionId) =>
+        await _context.Transitions
+                .Where(t => t.Id == transitionId)
+                .ExecuteUpdateAsync(t => t
+                    .SetProperty(t => t.DutyId, (int?)null));
+
+    public async Task<int> DismissDuty(int stationId, int transitionId) =>
+        await DismissDutyFromStation(stationId) +
+        await DismissDutyFromTransition(transitionId);
 }
