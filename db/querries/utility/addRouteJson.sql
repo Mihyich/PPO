@@ -79,8 +79,8 @@ BEGIN
                     );
 
                 -- Вставка звена маршрута <Станция>
-                -- INSERT INTO way_item_station (way_item_id, station_id)
-                -- VALUES (v_way_item_id, v_station_id);
+                INSERT INTO way_item_station (way_item_id, station_id)
+                VALUES (v_way_item_id, v_station_id);
 
             -- Переезд
             WHEN v_item->>'$type' = 'railway' THEN
