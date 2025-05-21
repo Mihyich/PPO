@@ -4,6 +4,10 @@ using MCMT = MetroGid.Core.Models.Types;
 using MDEMT = MetroGid.DBA.EF.Models.Tables;
 using MDEME = MetroGid.DBA.EF.Models.UserDefinedTypes;
 
+using System.Text.Json.Serialization;
+using MetroGid.Core.Models.Concrete;
+using System.Text.Json;
+
 namespace MetroGid.DBA.EF.Converters;
 
 public static class DomainModelConverter
@@ -86,4 +90,98 @@ public static class DomainModelConverter
             Mail = client.Mail,
             Privilege = Convert(client.Role)  
         };
+
+    public static string Convert(MCMC.Route route)
+    {
+        List<RouteItemJsonDTO> routeItems = [];
+        Station? ps = null;
+
+        foreach (var item in route.Path)
+        {
+            // Станция
+            if (item is MCMC.RouteStationItem { Station: MCMC.Station s })
+            {
+                ps = s;
+                StationRouteItemDTO sri = new(s.Title, s.Branch?.Title ?? string.Empty);
+                routeItems.Add(sri);
+            }
+            else if (item is MCMC.RouteConnectionItem { Connection: MCMC.StationConnection connection })
+            {
+                // Переезд
+                if (connection is MCMC.RailwayConnection { Railway: MCMC.Railway r })
+                {
+                    RailwayRouteItemDTO rri = new(r.Prev?.Title ?? string.Empty, r.Next?.Title ?? string.Empty);
+                    routeItems.Add(rri);
+                }
+                // Переход
+                else if (connection is MCMC.TransitionConnection { Transition: MCMC.Transition t })
+                {
+                    Station ts = t.ToFrom(
+                        ps ?? throw new Exception("Некорректная маршрут")
+                    ) ?? throw new Exception("Некорректная схема");
+
+                    TransitionRouteItemDTO tri = new(
+                        ps.Branch?.Title ?? string.Empty, ps.Title,
+                        ts.Branch?.Title ?? string.Empty, ts.Title
+                    );
+
+                    routeItems.Add(tri);
+                }
+            }
+        }
+
+        RouteJsonDTO routeJsonDTO = new(route.Title, route.Duration, routeItems);
+        return JsonSerializer.Serialize(routeJsonDTO);
+    }
+
+    private class RouteJsonDTO(string title, TimeSpan duration, List<RouteItemJsonDTO> routeItems)
+    {
+        public string Title { get; } = title;
+        public TimeSpan Duration { get; } = duration;
+        public List<RouteItemJsonDTO> RouteItems { get; } = routeItems;
+    };
+
+    private enum RouteItemType
+    {
+        STATION = 0,
+        RAILWAY,
+        TRANSITION
+    };
+
+    [JsonDerivedType(typeof(StationRouteItemDTO), typeDiscriminator: "station")]
+    [JsonDerivedType(typeof(RailwayRouteItemDTO), typeDiscriminator: "railway")]
+    [JsonDerivedType(typeof(TransitionRouteItemDTO), typeDiscriminator: "transition")]
+    private abstract class RouteItemJsonDTO
+    {
+        public abstract RouteItemType Type { get; }
+    };
+
+    private class StationRouteItemDTO(string title, string branchTitle) : RouteItemJsonDTO
+    {
+        public override RouteItemType Type => RouteItemType.STATION;
+        public string Title { get; } = title;
+        public string BranchTitle { get; } = branchTitle;
+    };
+
+    private class RailwayRouteItemDTO(
+        string fromStationTitle, string toStationTitle
+    ) : RouteItemJsonDTO
+    {
+        public override RouteItemType Type => RouteItemType.RAILWAY;
+
+        public string FromStationTitle { get; } = fromStationTitle;
+        public string ToStationTitle { get; } = toStationTitle;
+    };
+
+    private class TransitionRouteItemDTO(
+        string fromBranchTitle, string fromStationTitle,
+        string toBranchTitle, string toStationTitle
+    ) : RouteItemJsonDTO
+    {
+        public override RouteItemType Type => RouteItemType.TRANSITION;
+        public string FromBranchTitle { get; } = fromBranchTitle;
+        public string FromStationTitle { get; } = fromStationTitle;
+        public string ToBranchTitle { get; } = toBranchTitle;
+        public string ToStationTitle { get; } = toStationTitle;
+    };
 }
