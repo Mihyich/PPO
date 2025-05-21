@@ -7,6 +7,7 @@ using MDEME = MetroGid.DBA.EF.Models.UserDefinedTypes;
 using System.Text.Json.Serialization;
 using MetroGid.Core.Models.Concrete;
 using System.Text.Json;
+using System.Text.Encodings.Web;
 
 namespace MetroGid.DBA.EF.Converters;
 
@@ -131,7 +132,7 @@ public static class DomainModelConverter
         }
 
         RouteJsonDTO routeJsonDTO = new(route.Title, route.Duration, routeItems);
-        return JsonSerializer.Serialize(routeJsonDTO);
+        return JsonSerializer.Serialize(routeJsonDTO, JsonOptions);
     }
 
     private class RouteJsonDTO(string title, TimeSpan duration, List<RouteItemJsonDTO> routeItems)
@@ -183,5 +184,11 @@ public static class DomainModelConverter
         public string FromStationTitle { get; } = fromStationTitle;
         public string ToBranchTitle { get; } = toBranchTitle;
         public string ToStationTitle { get; } = toStationTitle;
+    };
+
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, // Кириллица
+        WriteIndented = true // Форматирование с отступами
     };
 }
