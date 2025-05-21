@@ -152,14 +152,10 @@ public static class DomainModelConverter
     [JsonDerivedType(typeof(StationRouteItemDTO), typeDiscriminator: "station")]
     [JsonDerivedType(typeof(RailwayRouteItemDTO), typeDiscriminator: "railway")]
     [JsonDerivedType(typeof(TransitionRouteItemDTO), typeDiscriminator: "transition")]
-    private abstract class RouteItemJsonDTO
-    {
-        public abstract RouteItemType Type { get; }
-    };
+    private abstract class RouteItemJsonDTO{};
 
     private class StationRouteItemDTO(string title, string branchTitle) : RouteItemJsonDTO
     {
-        public override RouteItemType Type => RouteItemType.STATION;
         public string Title { get; } = title;
         public string BranchTitle { get; } = branchTitle;
     };
@@ -168,7 +164,6 @@ public static class DomainModelConverter
         string fromStationTitle, string toStationTitle
     ) : RouteItemJsonDTO
     {
-        public override RouteItemType Type => RouteItemType.RAILWAY;
 
         public string FromStationTitle { get; } = fromStationTitle;
         public string ToStationTitle { get; } = toStationTitle;
@@ -179,7 +174,6 @@ public static class DomainModelConverter
         string toBranchTitle, string toStationTitle
     ) : RouteItemJsonDTO
     {
-        public override RouteItemType Type => RouteItemType.TRANSITION;
         public string FromBranchTitle { get; } = fromBranchTitle;
         public string FromStationTitle { get; } = fromStationTitle;
         public string ToBranchTitle { get; } = toBranchTitle;
