@@ -48,6 +48,13 @@ public partial class MetroContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDbFunction(
+            typeof(MetroContext).GetMethod(nameof(GetChartJsonById))
+            ?? throw new Exception("Эээ, а где функция!?")
+        )
+            .HasName("get_chart_json_by_id")
+            .HasSchema("public");
+
         modelBuilder.Entity<Branch>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("branch_pkey");
@@ -401,4 +408,11 @@ public partial class MetroContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+
+    // маппинг функций
+
+
+    public string GetChartJsonById(int chartId) =>
+        throw new NotSupportedException();
 }
