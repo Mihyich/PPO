@@ -18,7 +18,7 @@ public class ChartService(IChartRepository chartRepo) : IChartService
     public async Task<int> GetChartId(string city, string title) =>
         await ChartRepo.GetChartIdAsync(city, title);
 
-    public async Task<List<ValueTuple<string, string>>> GetChartsCitiesTitles() =>
+    public async Task<(string, string)> GetChartsCitiesTitles() =>
         await ChartRepo.GetAllChartCityTitleAsync();
 
 

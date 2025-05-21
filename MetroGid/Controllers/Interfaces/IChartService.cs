@@ -6,7 +6,7 @@ public interface IChartService
 {
     Task<ChartDTO> GetChart(int chartId);
     Task<int> GetChartId(string city, string title);
-    Task<List<ValueTuple<string, string>>> GetChartsCitiesTitles();
+    Task<(string, string)> GetChartsCitiesTitles();
 
     Task<BranchDTO> GetBranch(int branchId);
     Task<int> GetChartBranchId(string title, int chartId);
