@@ -1,5 +1,5 @@
 -- Фунция сохранения маршрута p_json_data для пользователя p_client_id для схемы p_chart_id
-CREATE OR REPLACE FUNCTION import_route_from_json(
+CREATE OR REPLACE FUNCTION add_route_json(
     p_client_id INT,
     p_chart_id INT,
     p_json_data JSONB
@@ -34,41 +34,41 @@ BEGIN
         VALUES (
             v_way_id,
             CASE 
-                WHEN v_item->>'$type' = 'station' THEN 'STATION'::nexus_type
-                WHEN v_item->>'$type' = 'railway' THEN 'RAILWAY'::nexus_type
-                WHEN v_item->>'$type' = 'transition' THEN 'TRANSITION'::nexus_type
+                WHEN (v_item.value)->>'$type' = 'station' THEN 'STATION'::nexus_type
+                WHEN (v_item.value)->>'$type' = 'railway' THEN 'RAILWAY'::nexus_type
+                WHEN (v_item.value)->>'$type' = 'transition' THEN 'TRANSITION'::nexus_type
             END,
             v_step_nomer
         )
         RETURNING id INTO v_way_item_id;
 
-        -- Поиск связываемой ветки
-        SELECT
-            b.id INTO v_branch_id
-        FROM 
-            branch AS b
-        WHERE
-            b.title = v_item->>'BranchTitle' AND
-            EXISTS(
-                SELECT
-                    1
-                FROM
-                    chart_branch AS cb
-                WHERE
-                    cb.chart_id = p_chart_id AND cb.branch_id = b.id
-            );
-
         -- Конкретизация и связывание звяна с реальными станциями, переездами и перехода схемы
         CASE
             -- Станция
-            WHEN v_item->>'$type' = 'station' THEN
+            WHEN (v_item.value)->>'$type' = 'station' THEN
+                -- Поиск связываемой ветки (обновлять айди нужно только на каждую станцию)
+                SELECT
+                    b.id INTO v_branch_id
+                FROM 
+                    branch AS b
+                WHERE
+                    b.title = (v_item.value)->>'BranchTitle' AND
+                    EXISTS(
+                        SELECT
+                            1
+                        FROM
+                            chart_branch AS cb
+                        WHERE
+                            cb.chart_id = p_chart_id AND cb.branch_id = b.id
+                    );
+
                 -- Поиск связываемой станции
                 SELECT
                     s.id INTO v_station_id
                 FROM
                     station AS s
                 WHERE
-                    s.title = v_item->>'Title' AND
+                    s.title = (v_item.value)->>'Title' AND
                     EXISTS(
                         SELECT
                             1
@@ -83,14 +83,14 @@ BEGIN
                 VALUES (v_way_item_id, v_station_id);
 
             -- Переезд
-            WHEN v_item->>'$type' = 'railway' THEN
+            WHEN (v_item.value)->>'$type' = 'railway' THEN
                 -- Поиск отправной станции
                 SELECT
                     s.id INTO v_station_from_id
                 FROM
                     station AS s
                 WHERE
-                    s.title = v_item->>'FromStationTitle' AND
+                    s.title = (v_item.value)->>'FromStationTitle' AND
                     EXISTS(
                         SELECT
                             1
@@ -106,7 +106,7 @@ BEGIN
                 FROM
                     station AS s
                 WHERE
-                    s.title = v_item->>'ToStationTitle' AND
+                    s.title = (v_item.value)->>'ToStationTitle' AND
                     EXISTS(
                         SELECT
                             1
@@ -129,21 +129,21 @@ BEGIN
                 VALUES (v_way_item_id, v_railway_id);
             
             -- Переход
-            WHEN v_item->>'$type' = 'transition' THEN
+            WHEN (v_item.value)->>'$type' = 'transition' THEN
                 -- Поиск первой связанной станции
                 SELECT
                     s.id INTO v_station_from_id
                 FROM
                     station AS s
                 WHERE
-                    s.Title = v_item->>'FromStationTitle' AND
+                    s.Title = (v_item.value)->>'FromStationTitle' AND
                     EXISTS(
                         SELECT
                             1
                         FROM
                             branch AS b
                         WHERE
-                            b.title = v_item->>'FromBranchTitle'
+                            b.title = (v_item.value)->>'FromBranchTitle'
                     );
                 
                 -- Поиск второй связанной станции
@@ -152,14 +152,14 @@ BEGIN
                 FROM
                     station AS s
                 WHERE
-                    s.Title = v_item->>'ToStationTitle' AND
+                    s.Title = (v_item.value)->>'ToStationTitle' AND
                     EXISTS(
                         SELECT
                             1
                         FROM
                             branch AS b
                         WHERE
-                            b.title = v_item->>'ToBranchTitle'
+                            b.title = (v_item.value)->>'ToBranchTitle'
                     );
                 
                 -- Поиск связываемого перехода
