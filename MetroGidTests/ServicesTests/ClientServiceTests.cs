@@ -17,7 +17,7 @@ public class ClientServiceTests
     public async void ClientAttribsRegTest(string login, string password, string mail, string exMessege, ExceptionType exType, ExceptionReason exReason)
     {
         Mock<IClientRepository> mockClientRepo = new();
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ReturnsAsync(1);
@@ -43,7 +43,7 @@ public class ClientServiceTests
         DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
@@ -69,7 +69,7 @@ public class ClientServiceTests
         DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
@@ -95,7 +95,7 @@ public class ClientServiceTests
         DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.GetIdByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
@@ -121,7 +121,7 @@ public class ClientServiceTests
         DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.GetByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
@@ -147,7 +147,7 @@ public class ClientServiceTests
         DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.GetByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
@@ -173,7 +173,7 @@ public class ClientServiceTests
         DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
         mockClientRepo.Setup(x => x.GetByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);

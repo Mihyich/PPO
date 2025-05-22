@@ -14,7 +14,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        SuperHandlerException handler = new WarningHandlerException();
+        SuperExceptionHandler handler = new WarningHandlerException();
         IExceptionVisitor logger = new ExceptionMessenger();
 
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler, logger);

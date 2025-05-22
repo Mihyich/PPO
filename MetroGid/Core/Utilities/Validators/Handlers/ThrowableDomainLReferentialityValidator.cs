@@ -8,11 +8,11 @@ using MetroGid.Core.Utilities.Validators.Interfaces;
 namespace MetroGid.Core.Utilities.Validators.Handlers;
 
 public class ThrowableDomainReferentialityValidator(
-    SuperHandlerException handler,
+    SuperExceptionHandler handler,
     IExceptionVisitor? logger = null
 ) : IDomainValidatorVisitor
 {
-    private readonly SuperHandlerException Handler = handler;
+    private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
     public void Visit(Client client) {}

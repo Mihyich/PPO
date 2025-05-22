@@ -16,7 +16,7 @@ public class StationReferentialityTests
     [Fact]
     public void UnlinkedStationTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
@@ -38,7 +38,7 @@ public class StationReferentialityTests
     [Fact]
     public void UnLinkiedPrevStaionTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
@@ -61,7 +61,7 @@ public class StationReferentialityTests
     [Fact]
     public void MismatchLinkingPrevStaionTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
@@ -84,7 +84,7 @@ public class StationReferentialityTests
     [Fact]
     public void UnLinkiedNextStaionTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
@@ -107,7 +107,7 @@ public class StationReferentialityTests
     [Fact]
     public void MismatchLinkingNextStaionTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);

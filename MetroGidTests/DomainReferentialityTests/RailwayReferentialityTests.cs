@@ -16,7 +16,7 @@ public class RailwayReferentialityTests
     [Fact]
     public void UnlinkedPrevRailwayTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
@@ -39,7 +39,7 @@ public class RailwayReferentialityTests
     [Fact]
     public void UnlinkedNextRailwayTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);

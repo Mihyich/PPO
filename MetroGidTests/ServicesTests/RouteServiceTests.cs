@@ -15,7 +15,7 @@ public class RouteServiceTests
     [Fact]
     public async void UsualSearchingAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -77,7 +77,7 @@ public class RouteServiceTests
     [Fact]
     public async void InaccessibleBranchSearchingAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
 
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -107,7 +107,7 @@ public class RouteServiceTests
     [Fact]
     public async void InaccessibleFirstStationSearchingAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -137,7 +137,7 @@ public class RouteServiceTests
     [Fact]
     public async void InaccessibleLastStationSearchingAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -167,7 +167,7 @@ public class RouteServiceTests
     [Fact]
     public async void InaccessibleOnWayStationAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -229,7 +229,7 @@ public class RouteServiceTests
     [Fact]
     public async void NotFoundDstStationSearchingAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -259,7 +259,7 @@ public class RouteServiceTests
     [Fact]
     public async void UsualSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -359,7 +359,7 @@ public class RouteServiceTests
     [Fact]
     public async void InaccessibleOnWayStationSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -459,7 +459,7 @@ public class RouteServiceTests
     [Fact]
     public async void InaccessibleFirstStationSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -489,7 +489,7 @@ public class RouteServiceTests
     [Fact]
     public async void InaccessibleLastStationSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -519,7 +519,7 @@ public class RouteServiceTests
     [Fact]
     public async void NotFoundSrcStationSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -549,7 +549,7 @@ public class RouteServiceTests
     [Fact]
     public async void NotFoundDstStationSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();

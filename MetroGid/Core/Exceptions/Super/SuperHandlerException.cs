@@ -2,7 +2,7 @@ using MetroGid.Core.Exceptions.Interfaces;
 
 namespace MetroGid.Core.Exceptions.Super;
 
-public abstract class SuperHandlerException
+public abstract class SuperExceptionHandler
 {
     public T? Snap<T>(Func<T> func, IExceptionVisitor? logger = null)
     {

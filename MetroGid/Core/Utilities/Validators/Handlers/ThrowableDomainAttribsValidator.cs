@@ -9,11 +9,11 @@ using MetroGid.Core.Utilities.Validators.Predicators;
 namespace MetroGid.Core.Utilities.Validators.Handlers;
 
 public class ThrowableDomainAttribsValidator(
-    SuperHandlerException handler,
+    SuperExceptionHandler handler,
     IExceptionVisitor? logger = null
 ) : IDomainValidatorVisitor
 {
-    private readonly SuperHandlerException Handler = handler;
+    private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
     public void Visit(Client client)

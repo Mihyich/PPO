@@ -26,7 +26,7 @@ public class ChartAttribsTests
     {
         Chart chart = new(title, city, svg_inst);
 
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         var ex = Assert.Throws<DomainValidationException>(() => { chart.Validate(domainAttribsValidator); });
 

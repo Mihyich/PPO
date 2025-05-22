@@ -77,7 +77,7 @@ public class StationAttribsTests
         TimeOnly closeTime = TimeConverter.FromString(closeTimeStr);
         Station station = new(title, occupancy, (AccessType)type, openTime, closeTime);
 
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         var ex = Assert.Throws<DomainValidationException>(() => { station.Validate(domainAttribsValidator); });
 
