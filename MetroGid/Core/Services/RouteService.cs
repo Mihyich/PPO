@@ -103,8 +103,8 @@ public class RouteService(
         return DomainDtoConverter.Convert(route);
     }
 
-    public Task SaveRoute(int clientId, RouteDTO route, int chartId) =>
-        RouteRepo.AddAsync(DtoDomainConverter.Convert(route), clientId, chartId);
+    public async Task SaveRoute(int clientId, RouteDTO route, int chartId) =>
+        await RouteRepo.AddAsync(DtoDomainConverter.Convert(route), clientId, chartId);
 
     public async Task<List<RouteDTO>> LookForSavedRoutesInChart(int clientId, int chartId) =>
         (await RouteRepo
