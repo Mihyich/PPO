@@ -1,3 +1,4 @@
+using System.Linq;
 using MetroGid.Controllers.DTO;
 using MetroGid.Controllers.Interfaces;
 using MetroGid.Core.Converters;
@@ -105,8 +106,8 @@ public class RouteService(
     public Task SaveRoute(int clientId, RouteDTO route, int chartId) =>
         RouteRepo.AddAsync(DtoDomainConverter.Convert(route), clientId, chartId);
 
-    public Task<List<RouteDTO>> LookForSavedRoutesInChart(int clientId, int chartId)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<List<RouteDTO>> LookForSavedRoutesInChart(int clientId, int chartId) =>
+        (await RouteRepo
+            .GetAllForClientOfChartIdAsync(clientId, chartId))
+                .ConvertAll(route => DomainDtoConverter.Convert(route));
 }
