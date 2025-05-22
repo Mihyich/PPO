@@ -11,11 +11,11 @@ public abstract record RouteItem;
 public record RouteStationItem(Station Station) : RouteItem;
 public record RouteConnectionItem(StationConnection Connection) : RouteItem;
 
-public class Route : IDomainValidatorAccepter
+public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDomainValidatorAccepter
 {
-    public string Title = string.Empty;
-    public List<RouteItem> Path = [];
-    public TimeSpan Duration = TimeSpan.Zero;
+    public string Title = title;
+    public List<RouteItem> Path = path;
+    public TimeSpan Duration = duration;
     public Chart? Chart;
 
     public void UpdateDuration()
@@ -71,7 +71,7 @@ public class Route : IDomainValidatorAccepter
 
     public Route Clone()
     {
-        Route Route = new();
+        Route Route = new(string.Empty, [], TimeSpan.Zero);
 
         foreach (var item in Path)
         {
