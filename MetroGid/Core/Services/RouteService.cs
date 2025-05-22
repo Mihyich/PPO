@@ -37,10 +37,7 @@ public class RouteService(
             await ChartRepo.GetChartJsonAsync(city, chartTitle)
         );
 
-        StrategySearchRouteBase searcher = new StrategySearchRouteBFS();
         Chart chart = director.Construct();
-
-        chart.Searcher = searcher;
 
         return chart;
     }
@@ -67,7 +64,8 @@ public class RouteService(
 
     private Route SearchRouteProcess(Chart chart, Station src, Station dst, TimeOnly startTime)
     {
-        Route route = chart.Search(src, dst, startTime);
+        StrategySearchRouteBase searcher = new StrategySearchRouteBFS();
+        Route route = chart.Search(src, dst, startTime, searcher);
 
         if (route.Path.Count == 0)
         {
