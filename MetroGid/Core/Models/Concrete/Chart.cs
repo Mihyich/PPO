@@ -10,8 +10,6 @@ public class Chart(string title, string city, string svg_inst) : IDomainValidato
     public string SvgInst { get; set; } = svg_inst;
     public List<Branch> Branches { get; set; } = [];
 
-    public StrategySearchRouteBase Searcher = new StrategySearchRouteBFS();
-
     public Station? GetStation(string branch_title, string station_title)
     {
         Branch? branch = null;
@@ -23,7 +21,7 @@ public class Chart(string title, string city, string svg_inst) : IDomainValidato
         return station;
     }
 
-    public Route Search(Station src, Station dst, TimeOnly timeStart)
+    public Route Search(Station src, Station dst, TimeOnly timeStart, StrategySearchRouteBase Searcher)
     {
         Route route = Searcher.Search(Branches, src, dst, timeStart);
         route.Title = "Новый маршрут";
