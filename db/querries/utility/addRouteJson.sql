@@ -46,7 +46,7 @@ BEGIN
         CASE
             -- Станция
             WHEN (v_item.value)->>'$type' = 'station' THEN
-                -- Поиск связываемой ветки (обновлять айди нужно только на каждую станцию)
+                -- Поиск связываемой ветки (обновлять айди нужно только на каждую станцию и переход)
                 SELECT
                     b.id INTO v_branch_id
                 FROM 
@@ -124,12 +124,17 @@ BEGIN
                 WHERE
                     r.from_id = v_station_from_id AND r.to_id = v_station_to_id;
 
+                IF v_railway_id IS NULL THEN
+                    RAISE EXCEPTION 'На шаге % не найден переезд между станциями % и % на ветке %',
+                        v_step_nomer, v_station_from_id, v_station_to_id, v_branch_id;
+                END IF;
+
                 -- Вставка звена маршрута <Переезд>
                 INSERT INTO way_item_railway (way_item_id, railway_id)
                 VALUES (v_way_item_id, v_railway_id);
             
             -- Переход
-            WHEN (v_item.value)->>'$type' = 'transition' THEN
+            WHEN (v_item.value)->>'$type' = 'transition' THEN               
                 -- Поиск первой связанной станции
                 SELECT
                     s.id INTO v_station_from_id
