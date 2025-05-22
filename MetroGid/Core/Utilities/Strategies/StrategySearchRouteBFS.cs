@@ -8,11 +8,11 @@ public class StrategySearchRouteBFS : StrategySearchRouteBase
     {
         Queue<Route> queue = new();
         HashSet<Station> visited = [];
-        Route initialRoute = new();
+        Route initialRoute = new(string.Empty, [], TimeSpan.Zero);
 
         if ((!src.Branch?.IsAccessible() ?? true) || !src.IsAccessible() || !src.IsOpenAt(timeStart) ||
             (!dst.Branch?.IsAccessible() ?? true) || !dst.IsAccessible())
-            return new();
+            return initialRoute;
 
         initialRoute.Add(src);
         queue.Enqueue(initialRoute);
@@ -34,7 +34,7 @@ public class StrategySearchRouteBFS : StrategySearchRouteBase
             }
         }
 
-        return new();
+        return initialRoute;
     }
 
     private static void SearchRailwayNeighbors(Station curStation, Route curRoute, Queue<Route> queue, HashSet<Station> visited)
