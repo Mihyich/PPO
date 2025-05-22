@@ -188,20 +188,20 @@ public class BuilderChart(
 
     public override void BuildChart(string title, string city, string svg_inst)
     {
-        Chart = new(title, city, svg_inst)
+        Result = new(title, city, svg_inst)
         {
             Branches = Branches
         };
 
-        foreach (Branch branch in Chart.Branches)
-            branch.Chart = Chart;
+        foreach (Branch branch in Result.Branches)
+            branch.Chart = Result;
 
-        Chart.Validate(DomainAttribsValidator);
-        Chart.Validate(DomainReferentialityValidator);
+        Result.Validate(DomainAttribsValidator);
+        Result.Validate(DomainReferentialityValidator);
     }
 
     public override Chart GetResult() =>
-        Chart ??
+        Result ??
             throw new BuilderValidationException(
                 "BuilderChart не создал конечный продукт (null)",
                 ExceptionType.Error,
