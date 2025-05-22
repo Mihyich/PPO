@@ -40,7 +40,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
         Station? lstation;
 
         // Создание отправной точки
-        Route route = new();
+        Route route = new(string.Empty, [], TimeSpan.Zero);
         route.Add(src);
         route.UpdateDuration();
 
@@ -103,7 +103,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
 
                 if (railPrev != null && (neighbor = railPrev.Prev) != null)
                 {
-                    route = new();
+                    route = new(string.Empty, [], TimeSpan.Zero);
                     route.Add(station);
                     route.Add(railPrev);
                     route.Add(neighbor);
@@ -113,7 +113,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
 
                 if (railNext != null && (neighbor = railNext.Next) != null)
                 {
-                    route = new();
+                    route = new(string.Empty, [], TimeSpan.Zero);
                     route.Add(station);
                     route.Add(railNext);
                     route.Add(neighbor);
@@ -125,7 +125,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                 {
                     if ((neighbor = transition.ToFrom(station)) != null)
                     {
-                        route = new();
+                        route = new(string.Empty, [], TimeSpan.Zero);
                         route.Add(station);
                         route.Add(transition);
                         route.Add(neighbor);
@@ -147,7 +147,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
 
         foreach (var branch in branches)
             foreach (var station in branch.Stations)
-                dist[station] = new Route() { Duration = TimeSpan.MaxValue };
+                dist[station] = new Route(string.Empty, [], TimeSpan.MaxValue);
 
         return dist;
     }
