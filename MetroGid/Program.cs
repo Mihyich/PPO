@@ -25,7 +25,6 @@ class Program
         DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/cities/Moscow/chart.json"));
         Chart chart = director.Construct();
 
-        chart.Searcher = new StrategySearchRouteBFS();
         // chart.Searcher = new StrategySearchRouteDijkstra();
         // Station? stationA = chart.GetStation("Арбатско-Покровская линия", "Щёлковская");
         // Station? stationB = chart.GetStation("Солнцевская линия", "Аэропорт Внуково");
@@ -37,7 +36,7 @@ class Program
 
         if (stationA != null && stationB != null)
         {
-            Route? route = chart.Search(stationA, stationB, timeStart);
+            Route? route = chart.Search(stationA, stationB, timeStart, new StrategySearchRouteBFS());
             route?.Validate(domainAttribsValidator);
             route?.Validate(domainReferentialityValidator);
             route?.Output();
