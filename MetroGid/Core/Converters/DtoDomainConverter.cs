@@ -66,11 +66,6 @@ public static class DtoDomainConverter
             }
         }
 
-        return new()
-        {
-            Title = route.Title,
-            Path = ConPath,
-            Duration = route.Duration
-        };
+        return new(route.Title, ConPath, route.Duration);
     }
 }
