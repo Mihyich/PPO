@@ -17,17 +17,20 @@ namespace MetroGid.Core.Services;
 
 public class RouteService(
     IChartRepository chartRepo, IRouteRepository routeRepo,
-    SuperExceptionHandler handler, IExceptionVisitor? logger = null
+    ThrowableDomainAttribsValidator domainAttribsValidator,
+    ThrowableDomainReferentialityValidator domainReferentialityValidator,
+    SuperExceptionHandler handler,
+    IExceptionVisitor? logger = null
 ) : IRouteService
 {
     private readonly IChartRepository ChartRepo = chartRepo;
     private readonly IRouteRepository RouteRepo = routeRepo;
 
+    private readonly ThrowableDomainAttribsValidator DomainAttribsValidator = domainAttribsValidator;
+    private readonly ThrowableDomainReferentialityValidator DomainReferentialityValidator = domainReferentialityValidator;
+
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
-
-    private readonly ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler, logger);
-    private readonly ThrowableDomainReferentialityValidator DomainReferentialityValidator = new(handler, logger);
 
     private async Task<Chart> LoadChartAsync(string city, string chartTitle)
     {
