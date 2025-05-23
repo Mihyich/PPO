@@ -86,20 +86,11 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         return Route;
     }
 
-    public int GetStationCount() => IsValid() ? Path.Count / 2 + Path.Count % 2 : 0;
-
-    public int GetTransitionCount()
-    {
-        int cnt = 0;
-
-        if (IsValid())
-            foreach (var item in Path)
-                if (item is RouteConnectionItem { Connection: var connection } &&
-                    connection is TransitionConnection { Transition: var transition })
-                    ++cnt;
-
-        return cnt;
-    }
+    public int GetStationCount() => Path.Count(p => p is RouteStationItem);
+    
+    public int GetRailwayCount() => Path.Count(p => p is RouteConnectionItem { Connection: RailwayConnection });
+    
+    public int GetTransitionCount() => Path.Count(p => p is RouteConnectionItem { Connection: TransitionConnection });
 
     public void UpdateDuration()
     {
