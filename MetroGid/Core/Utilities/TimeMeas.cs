@@ -68,7 +68,7 @@ public static class TimeMeas
         WaitOnStation(s) + r.Duration.ToTimeSpan() / 2;
 
     public static TimeSpan Measure(Railway r, Station s) => 
-        Measure(s, r);
+        r.Duration.ToTimeSpan() / 2;
 
     public static TimeSpan Measure(Station s1, Railway r, Station s2) =>
         Measure(s1, r) + Measure(r, s2);
