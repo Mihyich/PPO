@@ -22,8 +22,6 @@ public class StrategySearchRouteBFS : StrategySearchRouteBase
             Route curRoute = queue.Dequeue();
             Station? lastStation = curRoute.GetLastStation();
 
-            curRoute.UpdateDuration();
-
             if (lastStation != null)
             {
                 if (lastStation == dst)
