@@ -47,7 +47,7 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     }
 
     public void Add(RouteItem item) => Path.Add(item);
-    public void Add(Station station) => Path.Add(new RouteStationItem(station));
+    public void Add(Station station) => Add(new RouteStationItem(station));
     public void Add(StationConnection connection) => Path.Add(new RouteConnectionItem(connection));
     public void Add(Railway railway) => Add(new RailwayConnection(railway));
     public void Add(Transition transition) => Add(new TransitionConnection(transition));
