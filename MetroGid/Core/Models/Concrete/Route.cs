@@ -63,6 +63,12 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
 
     public Station? GetLastStation() => (Path.LastOrDefault(p => p is RouteStationItem) as RouteStationItem)?.Station;
 
+    public Railway? GetLastRailway() =>
+        ((Path.LastOrDefault(p => p is RouteConnectionItem { Connection: RailwayConnection }) as RouteConnectionItem)?.Connection as RailwayConnection)?.Railway;
+
+    public Transition? GetLastTransition() =>
+        ((Path.LastOrDefault(p => p is RouteConnectionItem { Connection: TransitionConnection }) as RouteConnectionItem)?.Connection as TransitionConnection)?.Transition;
+
     public Route DeepCopy()
     {
         Route Route = new(string.Empty, [], TimeSpan.Zero);
