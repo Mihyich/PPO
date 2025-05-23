@@ -18,6 +18,8 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     public TimeSpan Duration = duration;
     public Chart? Chart;
 
+    public void Add(Route other) => Path.AddRange(other.Path);
+    
     public void Add(RouteItem item) => Path.Add(item);
     public void Add(StationConnection connection) => Path.Add(new RouteConnectionItem(connection));
 
@@ -25,9 +27,15 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     public void Add(Railway railway) => Add(new RailwayConnection(railway));
     public void Add(Transition transition) => Add(new TransitionConnection(transition));
 
+    public Route Append(Route other)
+    {
+        Add(other);
+        return this;
+    }
+
     public Route Append(RouteItem item)
     {
-        Path.Add(item);
+        Add(item);
         return this;
     }
 
@@ -47,7 +55,11 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
             Path.RemoveAt(Path.Count - 1);
     }
 
-    public void Merge(Route other) => Path.AddRange(other.Path);
+    public Route PopBack()
+    {
+        RemoveLast();
+        return this;
+    }
 
     public Station? GetLastStation()
     {
@@ -58,7 +70,7 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         };
     }
 
-    public Route Clone()
+    public Route DeepCopy()
     {
         Route Route = new(string.Empty, [], TimeSpan.Zero);
 

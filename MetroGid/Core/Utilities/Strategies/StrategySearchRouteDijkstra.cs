@@ -70,9 +70,9 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                     // neighbor.IsOpenAt(timeStart + )
                     !visited.Contains(neighbor))
                 {
-                    newRoute = route.Clone();
+                    newRoute = route.DeepCopy();
                     newRoute.RemoveLast();
-                    newRoute.Merge(r);
+                    newRoute.Add(r);
                     newRoute.UpdateDuration();
 
                     dist[neighbor] = newRoute;
