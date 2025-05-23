@@ -18,19 +18,26 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     public TimeSpan Duration = duration;
     public Chart? Chart;
 
-    public void Add(Route other) => Path.AddRange(other.Path);
-    
-    public void Add(RouteItem item) => Path.Add(item);
-    public void Add(StationConnection connection) => Path.Add(new RouteConnectionItem(connection));
+    public void Add(RouteItem item)
+    {
+        Path.Add(item);
+        UpdateDurationAfterAddRouteItem();
+    }
+
+    public void Add(StationConnection connection)
+    {
+        Path.Add(new RouteConnectionItem(connection));
+        UpdateDurationAfterAddRouteItem();
+    }
 
     public void Add(Station station) => Add(new RouteStationItem(station));
     public void Add(Railway railway) => Add(new RailwayConnection(railway));
     public void Add(Transition transition) => Add(new TransitionConnection(transition));
 
-    public Route Append(Route other)
+    public void AddAsOrphan(Route other)
     {
-        Add(other);
-        return this;
+        for (int i = 1; i < other.Path.Count; ++i)
+            Path.Add(other.Path[i]);
     }
 
     public Route Append(RouteItem item)
@@ -41,7 +48,7 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
 
     public Route Append(StationConnection connection)
     {
-        Path.Add(new RouteConnectionItem(connection));
+        Add(new RouteConnectionItem(connection));
         return this;
     }
 
@@ -49,8 +56,16 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     public Route Append(Railway railway) => Append(new RailwayConnection(railway));
     public Route Append(Transition transition) => Append(new TransitionConnection(transition));
 
+    public Route AppendAsOrphan(Route other)
+    {
+        AddAsOrphan(other);
+        return this;
+    }
+
     public void RemoveLast()
     {
+        UpdateDurationBeforeRemoveLastRouteItem();
+
         if (Path.Count > 0)
             Path.RemoveAt(Path.Count - 1);
     }
@@ -93,6 +108,30 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         }
 
         Duration = NewDuration;
+    }
+
+    private void UpdateDurationAfterAddRouteItem()
+    {
+        if (Path.Count < 2)
+            return;
+
+        int li = Path.Count - 1;
+        RouteItem from = Path[li - 1];
+        RouteItem to = Path[li];
+
+        Duration += TimeMeas.Measure(from, to);
+    }
+
+    private void UpdateDurationBeforeRemoveLastRouteItem()
+    {
+        if (Path.Count < 2)
+            return;
+
+        int li = Path.Count - 1;
+        RouteItem from = Path[li - 1];
+        RouteItem to = Path[li];
+
+        Duration -= TimeMeas.Measure(from, to);
     }
 
     public bool IsReferenceEquals(Route? route)
