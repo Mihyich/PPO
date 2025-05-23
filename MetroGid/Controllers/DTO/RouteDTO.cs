@@ -24,6 +24,6 @@ public record RouteDTO(
         Duration == other.Duration &&
         Path.SequenceEqual(other.Path);
     
-     public override int GetHashCode() =>
+    public override int GetHashCode() =>
         HashCode.Combine(Title, City, ChartTitle, Path, Duration);
 }
