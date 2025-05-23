@@ -40,8 +40,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
         Station? lstation;
 
         // Создание отправной точки
-        Route route = new(string.Empty, [], TimeSpan.Zero);
-        route.Add(src);
+        Route route = new Route(string.Empty, [], TimeSpan.Zero).Append(src);
         route.UpdateDuration();
 
         // По умолчанию минимальный способ добраться до src это route.
@@ -70,9 +69,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                     // neighbor.IsOpenAt(timeStart + )
                     !visited.Contains(neighbor))
                 {
-                    newRoute = route.DeepCopy();
-                    newRoute.RemoveLast();
-                    newRoute.Add(r);
+                    newRoute = route.DeepCopy().PopBack().Append(r);
                     newRoute.UpdateDuration();
 
                     dist[neighbor] = newRoute;
@@ -103,16 +100,14 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
 
                 if (railPrev != null && (neighbor = railPrev.Prev) != null)
                 {
-                    route = new(string.Empty, [], TimeSpan.Zero);
-                    route.Append(station).Append(railPrev).Add(neighbor);
+                    route = new Route(string.Empty, [], TimeSpan.Zero).Append(station).Append(railPrev).Append(neighbor);
                     route.UpdateDuration();
                     routes.Add(route);
                 }
 
                 if (railNext != null && (neighbor = railNext.Next) != null)
                 {
-                    route = new(string.Empty, [], TimeSpan.Zero);
-                    route.Append(station).Append(railNext).Add(neighbor);
+                    route = new Route(string.Empty, [], TimeSpan.Zero).Append(station).Append(railNext).Append(neighbor);
                     route.UpdateDuration();
                     routes.Add(route);
                 }
@@ -121,8 +116,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                 {
                     if ((neighbor = transition.ToFrom(station)) != null)
                     {
-                        route = new(string.Empty, [], TimeSpan.Zero);
-                        route.Append(station).Append(transition).Add(neighbor);
+                        route = new Route(string.Empty, [], TimeSpan.Zero).Append(station).Append(transition).Append(neighbor);
                         route.UpdateDuration();
                         routes.Add(route);
                     }
