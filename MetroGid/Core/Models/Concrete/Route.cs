@@ -18,37 +18,10 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     public TimeSpan Duration = duration;
     public Chart? Chart;
 
-    public void UpdateDuration()
-    {
-        TimeSpan NewDuration = TimeSpan.Zero;
-
-        if (Path.Count >= 3 && IsValid())
-        {
-            for (int i = 2; i < Path.Count; i += 2)
-            {
-                Station src = ((RouteStationItem)Path[i - 2]).Station;
-                StationConnection connection = ((RouteConnectionItem)Path[i - 1]).Connection;
-                Station dst = ((RouteStationItem)Path[i - 0]).Station;
-
-                if (connection is RailwayConnection railcon)
-                {
-                    Railway railway = railcon.Railway;
-                    NewDuration += TimeMeas.Measure(src, railway);
-                }
-                else if (connection is TransitionConnection trancon)
-                {
-                    Transition transition = trancon.Transition;
-                    NewDuration += TimeMeas.Measure(src, transition, dst);
-                }
-            }
-        }
-
-        Duration = NewDuration;
-    }
-
     public void Add(RouteItem item) => Path.Add(item);
-    public void Add(Station station) => Add(new RouteStationItem(station));
     public void Add(StationConnection connection) => Path.Add(new RouteConnectionItem(connection));
+
+    public void Add(Station station) => Add(new RouteStationItem(station));
     public void Add(Railway railway) => Add(new RailwayConnection(railway));
     public void Add(Transition transition) => Add(new TransitionConnection(transition));
 
@@ -58,14 +31,13 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         return this;
     }
 
-    public Route Append(Station station) => Append(new RouteStationItem(station));
-
     public Route Append(StationConnection connection)
     {
         Path.Add(new RouteConnectionItem(connection));
         return this;
     }
 
+    public Route Append(Station station) => Append(new RouteStationItem(station));
     public Route Append(Railway railway) => Append(new RailwayConnection(railway));
     public Route Append(Transition transition) => Append(new TransitionConnection(transition));
 
@@ -101,6 +73,49 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         Route.Duration = Duration;
 
         return Route;
+    }
+
+    public int GetStationCount() => IsValid() ? Path.Count / 2 + Path.Count % 2 : 0;
+
+    public int GetTransitionCount()
+    {
+        int cnt = 0;
+
+        if (IsValid())
+            foreach (var item in Path)
+                if (item is RouteConnectionItem { Connection: var connection } &&
+                    connection is TransitionConnection { Transition: var transition })
+                    ++cnt;
+
+        return cnt;
+    }
+
+    public void UpdateDuration()
+    {
+        TimeSpan NewDuration = TimeSpan.Zero;
+
+        if (Path.Count >= 3 && IsValid())
+        {
+            for (int i = 2; i < Path.Count; i += 2)
+            {
+                Station src = ((RouteStationItem)Path[i - 2]).Station;
+                StationConnection connection = ((RouteConnectionItem)Path[i - 1]).Connection;
+                Station dst = ((RouteStationItem)Path[i - 0]).Station;
+
+                if (connection is RailwayConnection railcon)
+                {
+                    Railway railway = railcon.Railway;
+                    NewDuration += TimeMeas.Measure(src, railway);
+                }
+                else if (connection is TransitionConnection trancon)
+                {
+                    Transition transition = trancon.Transition;
+                    NewDuration += TimeMeas.Measure(src, transition, dst);
+                }
+            }
+        }
+
+        Duration = NewDuration;
     }
 
     public bool IsValid()
@@ -145,21 +160,6 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
                 return false;
 
         return true;
-    }
-
-    public int GetStationCount() => IsValid() ? Path.Count / 2 + Path.Count % 2 : 0;
-
-    public int GetTransitionCount()
-    {
-        int cnt = 0;
-
-        if (IsValid())
-            foreach (var item in Path)
-                if (item is RouteConnectionItem { Connection: var connection } &&
-                    connection is TransitionConnection { Transition: var transition })
-                    ++cnt;
-
-        return cnt;
     }
 
     public void Output()
