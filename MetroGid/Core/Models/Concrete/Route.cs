@@ -37,7 +37,7 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     public void AddAsOrphan(Route other)
     {
         for (int i = 1; i < other.Path.Count; ++i)
-            Path.Add(other.Path[i]);
+            Add(other.Path[i]);
     }
 
     public Route Append(RouteItem item)
@@ -84,7 +84,7 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     public Transition? GetLastTransition() =>
         ((Path.LastOrDefault(p => p is RouteConnectionItem { Connection: TransitionConnection }) as RouteConnectionItem)?.Connection as TransitionConnection)?.Transition;
 
-    public Route SemiShallowCopy() =>
+    public Route SemiShallowClone() =>
         new (Title, new List<RouteItem>(Path), Duration)
         {
             Chart = this.Chart

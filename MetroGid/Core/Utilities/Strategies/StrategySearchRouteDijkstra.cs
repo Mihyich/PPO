@@ -72,7 +72,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                     // neighbor.IsOpenAt(timeStart + )
                     !visited.Contains(neighbor))
                 {
-                    newRoute = route.SemiShallowCopy().AppendAsOrphan(r);
+                    newRoute = route.SemiShallowClone().AppendAsOrphan(r);
 
                     dist[neighbor] = newRoute;
                     pq.Enqueue(newRoute, newRoute.Duration);

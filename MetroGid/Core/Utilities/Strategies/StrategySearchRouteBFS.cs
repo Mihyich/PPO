@@ -70,7 +70,7 @@ public class StrategySearchRouteBFS : StrategySearchRouteBase
     {
         if (stationNeighbor != null && !visited.Contains(stationNeighbor))
         {
-            Route newRoute = curRoute.SemiShallowCopy().Append(railwayNeigbor).Append(stationNeighbor);
+            Route newRoute = curRoute.SemiShallowClone().Append(railwayNeigbor).Append(stationNeighbor);
             queue.Enqueue(newRoute);
             visited.Add(stationNeighbor);
         }
@@ -80,7 +80,7 @@ public class StrategySearchRouteBFS : StrategySearchRouteBase
     {
         if (stationNeighbor != null && stationNeighbor.IsAccessible() && stationNeighbor.IsOpenAt(curTime) && (stationNeighbor?.Branch?.IsAccessible() ?? false) && !visited.Contains(stationNeighbor))
         {
-            Route newRoute = curRoute.SemiShallowCopy().Append(transitionNeigbor).Append(stationNeighbor);
+            Route newRoute = curRoute.SemiShallowClone().Append(transitionNeigbor).Append(stationNeighbor);
             queue.Enqueue(newRoute);
             visited.Add(stationNeighbor);
         }
