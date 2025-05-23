@@ -95,23 +95,6 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         Duration = NewDuration;
     }
 
-    public bool IsValid()
-    {
-        bool shouldBeStation;
-        bool isStation = false;
-
-        for (int i = 0; i < Path.Count; ++i)
-        {
-            shouldBeStation = i % 2 == 0;
-            isStation = Path[i] is RouteStationItem;
-
-            if (shouldBeStation != isStation)
-                return false;
-        }
-
-        return isStation;
-    }
-
     public bool IsReferenceEquals(Route? route)
     {
         if (route == null)
@@ -141,9 +124,6 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
 
     public void Output()
     {
-        if (!IsValid())
-            return;
-
         int StationCnt = GetStationCount();
         int TransitionCnt = GetTransitionCount();
 
