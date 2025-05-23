@@ -41,7 +41,7 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     public Route Append(Railway railway) => Append(new RailwayConnection(railway));
     public Route Append(Transition transition) => Append(new TransitionConnection(transition));
 
-    public void PopBack()
+    public void RemoveLast()
     {
         if (Path.Count > 0)
             Path.RemoveAt(Path.Count - 1);

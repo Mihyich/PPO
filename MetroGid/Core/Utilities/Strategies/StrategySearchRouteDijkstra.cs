@@ -71,7 +71,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                     !visited.Contains(neighbor))
                 {
                     newRoute = route.Clone();
-                    newRoute.PopBack();
+                    newRoute.RemoveLast();
                     newRoute.Merge(r);
                     newRoute.UpdateDuration();
 
