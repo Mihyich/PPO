@@ -85,25 +85,11 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     {
         TimeSpan NewDuration = TimeSpan.Zero;
 
-        if (Path.Count >= 3 && IsValid())
+        for (int i = 2; i < Path.Count; ++i)
         {
-            for (int i = 2; i < Path.Count; i += 2)
-            {
-                Station src = ((RouteStationItem)Path[i - 2]).Station;
-                StationConnection connection = ((RouteConnectionItem)Path[i - 1]).Connection;
-                Station dst = ((RouteStationItem)Path[i - 0]).Station;
-
-                if (connection is RailwayConnection railcon)
-                {
-                    Railway railway = railcon.Railway;
-                    NewDuration += TimeMeas.Measure(src, railway);
-                }
-                else if (connection is TransitionConnection trancon)
-                {
-                    Transition transition = trancon.Transition;
-                    NewDuration += TimeMeas.Measure(src, transition, dst);
-                }
-            }
+            RouteItem from = Path[i - 1];
+            RouteItem to = Path[i - 0];
+            NewDuration += TimeMeas.Measure(from, to);
         }
 
         Duration = NewDuration;
