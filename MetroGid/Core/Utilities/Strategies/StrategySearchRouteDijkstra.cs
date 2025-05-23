@@ -104,9 +104,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                 if (railPrev != null && (neighbor = railPrev.Prev) != null)
                 {
                     route = new(string.Empty, [], TimeSpan.Zero);
-                    route.Add(station);
-                    route.Add(railPrev);
-                    route.Add(neighbor);
+                    route.Append(station).Append(railPrev).Add(neighbor);
                     route.UpdateDuration();
                     routes.Add(route);
                 }
@@ -114,9 +112,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                 if (railNext != null && (neighbor = railNext.Next) != null)
                 {
                     route = new(string.Empty, [], TimeSpan.Zero);
-                    route.Add(station);
-                    route.Add(railNext);
-                    route.Add(neighbor);
+                    route.Append(station).Append(railNext).Add(neighbor);
                     route.UpdateDuration();
                     routes.Add(route);
                 }
@@ -126,9 +122,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                     if ((neighbor = transition.ToFrom(station)) != null)
                     {
                         route = new(string.Empty, [], TimeSpan.Zero);
-                        route.Add(station);
-                        route.Add(transition);
-                        route.Add(neighbor);
+                        route.Append(station).Append(transition).Add(neighbor);
                         route.UpdateDuration();
                         routes.Add(route);
                     }
