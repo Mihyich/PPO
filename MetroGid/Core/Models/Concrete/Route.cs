@@ -61,14 +61,7 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         return this;
     }
 
-    public Station? GetLastStation()
-    {
-        return Path.LastOrDefault() switch
-        {
-            RouteStationItem item => item.Station,
-            _ => null
-        };
-    }
+    public Station? GetLastStation() => (Path.LastOrDefault(p => p is RouteStationItem) as RouteStationItem)?.Station;
 
     public Route DeepCopy()
     {
