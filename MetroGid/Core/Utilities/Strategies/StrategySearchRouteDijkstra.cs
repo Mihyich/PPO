@@ -69,7 +69,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                     // neighbor.IsOpenAt(timeStart + )
                     !visited.Contains(neighbor))
                 {
-                    newRoute = route.DeepCopy().PopBack().Append(r);
+                    newRoute = route.SemiShallowCopy().PopBack().Append(r);
                     newRoute.UpdateDuration();
 
                     dist[neighbor] = newRoute;

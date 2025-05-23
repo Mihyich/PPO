@@ -69,27 +69,16 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     public Transition? GetLastTransition() =>
         ((Path.LastOrDefault(p => p is RouteConnectionItem { Connection: TransitionConnection }) as RouteConnectionItem)?.Connection as TransitionConnection)?.Transition;
 
-    public Route DeepCopy()
-    {
-        Route Route = new(string.Empty, [], TimeSpan.Zero);
-
-        foreach (var item in Path)
+    public Route SemiShallowCopy() =>
+        new (Title, new List<RouteItem>(Path), Duration)
         {
-            if (item is RouteStationItem { Station: var station })
-                Route.Add(station);
-            else if (item is RouteConnectionItem { Connection: var connection })
-                Route.Add(connection);
-        }
-
-        Route.Duration = Duration;
-
-        return Route;
-    }
+            Chart = this.Chart
+        };
 
     public int GetStationCount() => Path.Count(p => p is RouteStationItem);
-    
+
     public int GetRailwayCount() => Path.Count(p => p is RouteConnectionItem { Connection: RailwayConnection });
-    
+
     public int GetTransitionCount() => Path.Count(p => p is RouteConnectionItem { Connection: TransitionConnection });
 
     public void UpdateDuration()
