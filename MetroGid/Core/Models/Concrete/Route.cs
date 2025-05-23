@@ -52,6 +52,23 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     public void Add(Railway railway) => Add(new RailwayConnection(railway));
     public void Add(Transition transition) => Add(new TransitionConnection(transition));
 
+    public Route Append(RouteItem item)
+    {
+        Path.Add(item);
+        return this;
+    }
+
+    public Route Append(Station station) => Append(new RouteStationItem(station));
+
+    public Route Append(StationConnection connection)
+    {
+        Path.Add(new RouteConnectionItem(connection));
+        return this;
+    }
+
+    public Route Append(Railway railway) => Append(new RailwayConnection(railway));
+    public Route Append(Transition transition) => Append(new TransitionConnection(transition));
+
     public void PopBack()
     {
         if (Path.Count > 0)
