@@ -18,6 +18,11 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
     public TimeSpan Duration = duration;
     public Chart? Chart;
 
+    public Route(Route other) : this(other.Title, new List<RouteItem>(other.Path), other.Duration)
+    {
+        Chart = other.Chart;
+    }
+
     public void Add(RouteItem item)
     {
         Path.Add(item);
@@ -89,6 +94,14 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         {
             Chart = this.Chart
         };
+
+    public void SemiShallowCopy(Route other)
+    {
+        Title = other.Title;
+        Path = new List<RouteItem>(other.Path);
+        Duration = other.Duration;
+        Chart = other.Chart;
+    }
 
     public int GetStationCount() => Path.Count(p => p is RouteStationItem);
 
