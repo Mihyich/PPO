@@ -24,9 +24,7 @@ public class Station(
 
 
     public override int GetHashCode() =>
-        Title == null || Branch == null || Branch.Title == null ?
-        0 :
-        HashCode.Combine(Title, Branch.Title);
+        Branch == null ? 0 : HashCode.Combine(Title, Branch.Title);
 
     public bool IsAccessible() => Type == AccessType.ACCESSIBLE;
 
