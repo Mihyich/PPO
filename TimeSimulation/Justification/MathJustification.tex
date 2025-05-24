@@ -1,0 +1,217 @@
+\documentclass[12pt]{article}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{hyperref}
+
+\geometry{a4paper, margin=2cm}
+
+\title{Математическое обоснование симуляции времени маршрута}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{1. Описание модели}\mbox{}\\*
+
+\subsection*{1.1 Сущности}\mbox{}\\*
+
+Рассматриваемая схема метро состоит из ключевых сущностей:
+
+\begin{itemize}
+  \item \textbf{Станция} — $S$,
+  \item \textbf{Переезд} — $R$,
+  \item \textbf{Переход} — $T$.
+\end{itemize}
+
+Ветки не рассматриваются напрямую, их влияние косвенное.
+
+\subsection*{1.2 Типы связей}\mbox{}\\*
+
+Вычисления происходят между сущностями следующим образом:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Связь & Станция ($S_2$) & Переезд ($R_2$) & Переход ($T_2$) \\
+\hline
+Станция ($S_1$) & :x: & :white\_check\_mark: & :white\_check\_mark: \\
+\hline
+Переезд ($R_1$) & :white\_check\_mark: & :x: & :x: \\
+\hline
+Переход ($T_1$) & :white\_check\_mark: & :x: & :x: \\
+\hline
+\end{tabular}
+\end{table}
+
+Таким образом, необходимо рассчитать время для следующих типов переходов:
+
+\begin{enumerate}
+  \item $S \to R$,
+  \item $R \to S$,
+  \item $S \to T$,
+  \item $T \to S$.
+\end{enumerate}
+
+\section*{2. Параметры}\mbox{}\\*
+
+\subsection*{2.1 Локальные параметры}\mbox{}\\*
+
+Локальные параметры задаются на этапе создания сущностей и остаются неизменными в рамках одной симуляции.
+
+\subsubsection*{Параметры сущностей}\mbox{}\\*
+
+\begin{enumerate}
+\item \textbf{Станция (S)}:
+  \begin{itemize}
+    \item \texttt{Occupancy} — уровень загруженности станции;
+  \end{itemize}
+\item \textbf{Переезд (R)}:
+  \begin{itemize}
+    \item \texttt{Duration} — среднее время движения поезда по перегону;
+  \end{itemize}
+\item \textbf{Переход (T)}:
+  \begin{itemize}  
+    \item \texttt{Occupancy} — уровень загруженности перехода;
+    \item \texttt{Duration} — среднее время движения пассажира по переходу при нулевой загруженности.
+  \end{itemize}
+\end{enumerate}
+
+\subsubsection*{Ограничения локальных параметров}\mbox{}\\*
+
+\begin{tabular}{|l|>{\raggedright\arraybackslash}m{7cm}|l|l|}
+\hline
+Имя & Описание & Тип & Ограничения \\
+\hline
+\texttt{Occupancy} & Уровень загруженности по x-бальной шкале & Целое число $\geq 0$ & $[0, 10]$ \\
+\hline
+\texttt{Duration} & Временной отрезок, секунды & Целое число $\geq 0$ & $[0, +\infty)$ \\
+\hline
+\end{tabular}
+
+\subsection*{2.2 Глобальные параметры}\mbox{}\\*
+
+\subsubsection*{Произвольные константы}\mbox{}\\*
+
+\begin{itemize}  
+  \item \texttt{AverStationEntryTime} или \texttt{asEntryT} или $\zeta$ — среднее время входа пассажира на станцию;
+  \item \texttt{AverStationExitTime} или \texttt{asExitT} или $\eta$ — среднее время выхода пассажира со станции;
+  \item \texttt{AverTrainWaitTime} или \texttt{atwaitT} или $\tau$ — среднее время ожидания поезда на станции;
+  \item \texttt{QuintileTrustLevel} или \texttt{qtl} или $\gamma$ — уровень доверия квантилей.
+\end{itemize} 
+
+\subsubsection*{Характеристические данные}\mbox{}\\*
+
+\begin{itemize}
+  \item \texttt{AverChartBranchesStationsOccupancy} или \texttt{acbsOcc} - средняя загруженность станций веток схемы;
+  \item \texttt{AverChartBranchesRailwaysDuration} или \texttt{acbrDur} - среднее время движения поезда в перегонах веток схемы;
+  \item \texttt{AverBranchStationsOccupancy} или \texttt{absOcc} - средняя загруженность станций ветки;
+  \item \texttt{AverBranchRailwaysDuration} или \texttt{abrDur} - среднее время движения поезда в перегонах ветки.
+\end{itemize}
+
+\subsubsection*{Ограничения глобальных параметров}\mbox{}\\*
+
+\paragraph{Произвольные константы:}\mbox{}\\*
+
+\begin{tabular}{|l|>{\raggedright\arraybackslash}m{5cm}|l|l|}
+\hline
+Имя & Описание & Тип & Ограничения \\
+\hline
+\texttt{AverStationEntryTime} & Среднее время входа на станцию, с. & Целое $\geq 0$ & $[0, +\infty)$ \\
+\hline
+\texttt{AverStationExitTime} & Среднее время выхода со станции, с. & Целое $\geq 0$ & $[0, +\infty)$ \\
+\hline
+\texttt{AverTrainWaitTime} & Среднее время ожидания поезда, с. & Целое $\geq 0$ & $[0, +\infty)$ \\
+\hline
+\texttt{QuintileTrustLevel} & Уровень доверия квантилей & Плавающее $\in [0, 1]$ & $[0, 1]$ \\
+\hline
+\end{tabular}
+
+\paragraph{Характеристические данные:}\mbox{}\\*
+
+\begin{tabular}{|l|>{\raggedright\arraybackslash}m{3.6cm}|l|l|}
+\hline
+Имя & Описание & Тип & Ограничения \\
+\hline
+\texttt{AverChartBranchesStationsOccupancy} & Средняя загруженность станций схемы & Целое $\geq 0$ & $[0, +\infty)$ \\
+\hline
+\texttt{AverChartBranchesRailwaysDuration} & Среднее время поездок в перегонах & Целое $\geq 0$ & $[0, +\infty)$ \\
+\hline
+\texttt{AverBranchStationsOccupancy} & Средняя загруженность станций ветки & Целое $\geq 0$ & $[0, +\infty)$ \\
+\hline
+\texttt{AverBranchRailwaysDuration} & Среднее время поездок по ветке & Целое $\geq 0$ & $[0, +\infty)$ \\
+\hline
+\end{tabular}
+
+\section*{3. Вычисления}\mbox{}\\*
+
+\subsection*{3.1 Локальные параметры}\mbox{}\\*
+
+Пусть:
+
+\begin{itemize}
+  \item $S_i$ — $i$-я станция, где $i = 1, ..., S_N$, $S_N$ — количество станций,
+  \item $R_j$ — $j$-й переезд, где $j = 1, ..., R_N$, $R_N$ — количество переездов,
+  \item $T_k$ — $k$-й переход, где $k = 1, ..., T_N$, $T_N$ — количество переходов.
+\end{itemize}
+
+Тогда:
+
+\begin{itemize}
+  \item $\text{Socc}_i$ — загруженность $i$-й станции,
+  \item $\text{Rdur}_j$ — среднее время поезда по $j$-му переезду,
+  \item $\text{Tocc}_k$ — загруженность $k$-го перехода,
+  \item $\text{Tdur}_k$ — среднее время движения по $k$-му переходу.
+\end{itemize}
+
+Все эти данные берутся из заготовленных таблиц.
+
+\subsection*{3.2 Глобальные параметры}\mbox{}\\*
+
+\subsubsection*{Произвольные константы}\mbox{}\\*
+
+Задать вручную:
+
+\begin{itemize}
+  \item $\zeta$ --- \texttt{AverStationEntryTime},
+  \item $\eta$ --- \texttt{AverStationExitTime},
+  \item $\tau$ --- \texttt{AverTrainWaitTime},
+  \item $\gamma$ --- \texttt{QuintileTrustLevel}.
+\end{itemize}
+
+\subsubsection*{Характеристические данные}\mbox{}\\*
+
+\begin{itemize}
+  \item \texttt{AverChartBranchesStationsOccupancy} или \texttt{acbsOcc} или $\mathcal{O}$:
+    \begin{equation}
+      \mathcal{O} = \frac{1}{R_N} \sum_{i=1}^{S_N} \text{Socc}_i
+      \label{eq:characteristic:acbsOcc}
+    \end{equation}
+  \item \texttt{AverChartBranchesRailwaysDuration} или \texttt{acbrDur} или $\Upsilon$:
+    \begin{equation}
+      \Upsilon = \frac{1}{R_N} \sum_{j=1}^{R_N} \text{Rdur}_j
+      \label{eq:characteristic:acbrDur}
+    \end{equation}
+  \item \texttt{AverBranchStationsOccupancy} или \texttt{absOcc} или $\mathrm{o}_b$:
+    \begin{equation}
+      \mathrm{o}_b = \frac{1}{N_b} \sum_{i}^{N_b} \text{Socc}_i
+      \label{eq:characteristic:absOcc}
+    \end{equation}
+    для станций, принадлежащих $b$-ой ветке.
+  \item \texttt{AverBranchRailwaysDuration} или \texttt{abrDur} или $\upsilon_b$:
+    \begin{equation}
+      \upsilon_b = \frac{1}{N_b} \sum_{j}^{N_b} \text{Rdur}_j
+      \label{eq:characteristic:abrDur}
+    \end{equation}
+    для переездов, принадлежащих $b$-ой ветке.
+\end{itemize}
+
+\end{document}
