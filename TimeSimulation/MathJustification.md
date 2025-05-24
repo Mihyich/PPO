@@ -93,11 +93,65 @@
 
 Пусть:
 
-- **S<sub>i</sub>** - _i_-ая станция, где _i_ = <span style="text-decoration: overline;">_1, SN_</span>, _SN_ = количетсво станций,
+- **S<sub>i</sub>** - _i_-ая станция, где
+<math display="inline">
+  <mi>i</mi>
+  <mo>=</mo>
+  <mi>1</mi>
+  <mo>,</mo>
+  <mo>...</mo>
+  <mo>,</mo>
+  <msub>
+    <mi>S</mi>
+    <mi>N</mi>
+  </msub>
+</math> и
+<math display="inline">
+  <msub>
+    <mi>S</mi>
+    <mi>N</mi>
+  </msub>
+</math> - количество станций,
 
-- **R<sub>j</sub>** - _j_-ый переезд, где _j_ = <span style="text-decoration: overline;">_1, RN_</span>, _RN_ = количетсво переездов,
+- **R<sub>j</sub>** - _j_-ый переезд, где
+<math display="inline">
+  <mi>j</mi>
+  <mo>=</mo>
+  <mi>1</mi>
+  <mo>,</mo>
+  <mo>...</mo>
+  <mo>,</mo>
+  <msub>
+    <mi>R</mi>
+    <mi>N</mi>
+  </msub>
+</math> и
+<math display="inline">
+  <msub>
+    <mi>R</mi>
+    <mi>N</mi>
+  </msub>
+</math> - количество переездов,
 
-- **T<sub>k</sub>** - _k_-ыя переход, где _k_ = <span style="text-decoration: overline;">_1, TN_</span>, _TN_ = количетсво переходов.
+- **T<sub>k</sub>** - _k_-ый переход, где
+<math display="inline">
+  <mi>k</mi>
+  <mo>=</mo>
+  <mi>1</mi>
+  <mo>,</mo>
+  <mo>...</mo>
+  <mo>,</mo>
+  <msub>
+    <mi>T</mi>
+    <mi>N</mi>
+  </msub>
+</math> и
+<math display="inline">
+  <msub>
+    <mi>T</mi>
+    <mi>N</mi>
+  </msub>
+</math> - количетсво переходов.
 
 Тогда:
 
@@ -112,4 +166,138 @@
 Все эти данные берутся из заготовленных таблиц.
 
 ### <a id="JustyGlobalParams">3.2 Глобальные параметры</a>
+
+1. **Произвольные константы**:
+
+    - ___AverStationEntryTime___, "**asEntryT**", <math display="inline"><mi>ζ</mi></math> - задать вручную;
+
+    - ___AverStationExitTime___, "**asExitT**", <math display="inline"><mi>η</mi></math> - задать вручную;
+
+    - ___AverTrainWaitTime___, "**atwaitT**", <math display="inline"><mi>τ</mi></math> - задать вручную;
+
+    - ___QuintileTrustLevel___, "**qtl**", <math display="inline"><mi>γ</mi></math> - задать вручную;
+
+2. **Характеристические данные**:
+
+    - ___AverChartBranchesStationsOccupancy___, "_acbsOcc_", <math display="inline"><mi>Ο</mi></math> :
+    <math display="block">
+      <mi>Ο</mi>
+      <mo>=</mo>
+       <mfrac>
+        <mn>1</mn>
+        <msub>
+          <mi>R</mi>
+          <mi>N</mi>
+        </msub>
+      </mfrac>
+      <munderover>
+        <mo>∑</mo>
+        <mrow>
+          <mi>i</mi>
+          <mo>=</mo>
+          <mn>1</mn>
+          </mrow>
+        <msub>
+          <mi>S</mi>
+          <mi>N</mi>
+        </msub>
+      </munderover>
+    <msub>
+      <mi>Socc</mi>
+      <mi>i</mi>
+    </msub>
+    <mtext>;</mtext>
+    </math>
+
+    - ___AverChartBranchesRailwaysDuration___, "**acbrDur**", <math display="inline"><mi>Υ</mi></math> :
+    <math display="block">
+      <mi>Υ</mi>
+      <mo>=</mo>
+      <mfrac>
+        <mn>1</mn>
+        <msub>
+          <mi>R</mi>
+          <mi>N</mi>
+        </msub>
+      </mfrac>
+      <munderover>
+        <mo>∑</mo>
+        <mrow>
+          <mi>j</mi>
+          <mo>=</mo>
+          <mn>1</mn>
+          </mrow>
+        <msub>
+          <mi>R</mi>
+          <mi>N</mi>
+        </msub>
+      </munderover>
+    <msub>
+      <mi>Rdur</mi>
+      <mi>j</mi>
+    </msub>
+    <mtext>;</mtext>
+    </math>
+
+    - ___AverBranchStationsOccupancy___, "**absOcc**", <math display="inline"><msub><mi>ο</mi><mi>b</mi></msub></math> :
+    <math display="block">
+      <msub>
+        <mi>ο</mi>
+        <mi>b</mi>
+    </msub>
+      <mo>=</mo>
+      <mfrac>
+        <mn>1</mn>
+        <msub>
+          <mi>N</mi>
+          <mi>b</mi>
+        </msub>
+      </mfrac>
+      <munderover>
+        <mo>∑</mo>
+        <mrow>
+          <mi>i</mi>
+          </mrow>
+        <msub>
+          <mi>N</mi>
+          <mi>b</mi>
+        </msub>
+      </munderover>
+    <msub>
+      <mi>Socc</mi>
+      <mi>i</mi>
+    </msub>
+    <mtext>,</mtext>
+    </math> для станций, которые принадлежат _b_-ой ветке;
+
+    - ___AverBranchRailwaysDuration___, "**abrDur**", <math display="inline"><msub><mi>υ</mi><mi>b</mi></msub></math> :
+    <math display="block">
+      <msub>
+        <mi>υ</mi>
+        <mi>b</mi>
+    </msub>
+      <mo>=</mo>
+      <mfrac>
+        <mn>1</mn>
+        <msub>
+          <mi>N</mi>
+          <mi>b</mi>
+        </msub>
+      </mfrac>
+      <munderover>
+        <mo>∑</mo>
+        <mrow>
+          <mi>j</mi>
+          </mrow>
+        <msub>
+          <mi>N</mi>
+          <mi>b</mi>
+        </msub>
+      </munderover>
+    <msub>
+      <mi>Rdur</mi>
+      <mi>j</mi>
+    </msub>
+    <mtext>,</mtext>
+    </math> для переездов, принадлежащих _b_-ой ветке.
 
