@@ -68,8 +68,9 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                 Route newRoute;
 
                 if (neighbor != null &&
+                    neighbor.IsAccessible() &&
+                    (neighbor.Branch?.IsAccessible() ?? false) &&
                     dist[neighbor].Duration > newTime &&
-                    // neighbor.IsOpenAt(timeStart + )
                     !visited.Contains(neighbor))
                 {
                     newRoute = route.SemiShallowClone().AppendAsOrphan(r);
