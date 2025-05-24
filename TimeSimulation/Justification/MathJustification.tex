@@ -103,7 +103,9 @@
 
 \begin{itemize}  
   \item \texttt{AverStationEntryTime} или \texttt{asEntryT} или $\zeta$ — среднее время входа пассажира на станцию;
+  \item \texttt{DispersionStationEntryTime} или \texttt{dsEntryT} или $\rho$ — разброс времени входа пассажира на станцию;
   \item \texttt{AverStationExitTime} или \texttt{asExitT} или $\eta$ — среднее время выхода пассажира со станции;
+  \item \texttt{DispersionStationExitTime} или \texttt{dsExitT} или $\epsilon$ — разброс времени выхода пассажира со станции;
   \item \texttt{AverTrainWaitTime} или \texttt{atwaitT} или $\tau$ — среднее время ожидания поезда на станции;
   \item \texttt{QuintileTrustLevel} или \texttt{qtl} или $\gamma$ — уровень доверия квантилей.
 \end{itemize} 
@@ -213,5 +215,80 @@
     \end{equation}
     для переездов, принадлежащих $b$-ой ветке.
 \end{itemize}
+
+\subsection*{3.3 Расчёт времени входа на станцию}\mbox{}\\*
+
+Пассажир, перед началом следования маршруту, обязан очутиться на стации, потратив некоторое время на это.
+Оно зависит от базового среднего времени входа, разброса времени входа со станции,
+уровня загруженности станции и выбранного доверительного уровня.
+
+Для симуляции выберем \textbf{логнормальное распределение}.
+
+\subsection*{Описание параметров:}\mbox{}\\*
+
+\begin{itemize}
+\item \texttt{occupancy} — уровень загруженности станции ($Socc$), целое число $[0, 10]$;
+\item \texttt{zeta} ($\zeta$) — среднее время входа при нулевой загруженности (c.);
+\item \texttt{rho} ($\rho$) — разброс времени входа (стандартное отклонение, c.);
+\item \texttt{k} ($k$) — коэффициент влияния загруженности на среднее время;
+\item \texttt{gamma} ($\gamma$) — доверительный уровень для квантили.
+\end{itemize}
+
+\subsection*{Формулы}\mbox{}\\*
+
+Расчёт производится с учётом логнормального распределения времени входа,
+чтобы учесть несимметричность реального поведения пассажиров.
+
+\begin{enumerate}
+\item Скорректированное среднее время входа:
+  \begin{equation}
+    \mu_{\text{вход}} = \zeta \cdot \left(1 + k \cdot \frac{\text{Socc}_i}{10} \right),
+    \label{eq:station:entry:correctAver}
+  \end{equation}
+
+  где:
+
+  \begin{itemize} 
+    \item $\zeta = \texttt{AverStationEntryTime}$ — базовое время входа;
+    \item $\text{Socc}_i$ — уровень загруженности $i$-й станции;
+    \item $k$ — коэффициент влияния загрузки.
+  \end{itemize}
+
+\item Параметры логнормального распределения:
+  \begin{equation}
+    \mu_{\ln} = \ln(\mu_{\text{вход}}) - \frac{1}{2} \ln\left(1 + \left(\frac{\rho}{\mu_{\text{вход}}} \right)^2\right),
+    \label{eq:station:entry:correctAverLn}
+  \end{equation}
+
+  \begin{equation}
+    \sigma_{\ln} = \sqrt{\ln\left(1 + \left(\frac{\rho}{\mu_{\text{вход}}} \right)^2\right)},
+    \label{eq:station:entry:correctSigmaLn}
+  \end{equation}
+
+  где:
+
+  \begin{itemize}
+    \item $\mu_{\text{вход}}$ из (\ref{eq:station:entry:correctAver}),
+    \item $\rho$ — разброс времени входа (стандартное отклонение, c.).
+  \end{itemize}
+
+\item Квантиль нормального распределения уровня $\gamma$:
+  \begin{equation}
+    z_\gamma = \Phi^{-1}(\gamma)
+    \label{eq:station:entry:quintile}
+  \end{equation}
+
+\item Итоговое время входа с уровнем уверенности $\gamma$:
+  \begin{equation}
+    T_{\text{вход}} = \mu_{\text{вход}} + z_\gamma \cdot \sigma
+    \label{eq:station:entry:lastReplace}
+  \end{equation}
+
+\end{enumerate}
+
+\subsection*{3.4 Расчёт времени выхода со станции}\mbox{}\\*
+
+Пассажир, успешно преодалев маршрут, должен выйти на улицу со станции.
+Для этого используется готовое решение по формулам (\ref{eq:station:entry:correctAver} -- \ref{eq:station:entry:lastReplace}).
 
 \end{document}
