@@ -147,6 +147,14 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         Duration -= TimeMeas.Measure(from, to);
     }
 
+    public TimeSpan PredictDurationAfterAddAsOrphan(Route other)
+    {
+        RouteItem? from = Path.LastOrDefault();
+        RouteItem? to = other.Path.FirstOrDefault();
+        TimeSpan joinDuration = from != null && to != null ? TimeMeas.Measure(from, to) : TimeSpan.Zero;
+        return Duration + joinDuration + other.Duration;
+    }
+    
     public bool IsReferenceEquals(Route? route)
     {
         if (route == null)

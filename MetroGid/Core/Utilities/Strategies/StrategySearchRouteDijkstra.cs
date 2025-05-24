@@ -64,7 +64,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
             foreach (Route r in Adj[lstation])
             {
                 Station? neighbor = r.GetLastStation();
-                TimeSpan newTime = dist[lstation].Duration + r.Duration;
+                TimeSpan newTime = dist[lstation].PredictDurationAfterAddAsOrphan(r);
                 Route newRoute;
 
                 if (neighbor != null &&
