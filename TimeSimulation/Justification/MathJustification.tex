@@ -332,4 +332,42 @@
 
 \end{enumerate}
 
+\subsection*{3.6 Расчёт времени ожидания поезда на станции}\mbox{}\\*
+
+Когда поезд достигает станции, он не отправляется немедленно —
+пассажиры должны успеть выйти или войти в вагоны.
+Это время зависит от следующих факторов:
+
+\begin{itemize}
+  \item \texttt{AverTrainWaitTime} ($\tau$) — среднее время ожидания поезда на станции;
+  \item \texttt{DispersionTrainWaitTime} ($\epsilon$) — разброс (стандартное отклонение) времени ожидания;
+  \item $\mathcal{O}_b$ (\texttt{AverBranchStationsOccupancy}) — средняя загруженность станций текущей ветки;
+  \item $\text{Socc}_i$ — уровень загруженности текущей станции;
+  \item $\gamma$ - уровень доверия.
+\end{itemize}
+
+Для симуляции выберем \textbf{гамма-распределение}.
+
+\subsubsection*{Формулы}
+
+\begin{enumerate}
+  \item Скорректированное среднее время ожидания:
+    \begin{equation}
+     \mu = \tau \cdot \left(1 + k_1 \cdot \frac{\mathcal{O}_b}{10} + k_2 \cdot \frac{\text{Socc}_i}{10} \right)
+    \end{equation},
+    где $k_1$, $k_2$ — коэффициенты влияния загрузки ветки и станции соответственно.
+
+\item Параметры гамма-распределения:
+$$
+\text{shape} = \frac{\mu^2}{\epsilon^2}, \quad
+\text{scale} = \frac{\epsilon^2}{\mu}
+$$
+
+\item Итоговое время ожидания на уровне уверенности $\gamma$ (квантиль гамма-распределения):
+$$
+T_{\text{ожид}} = \Gamma^{-1}(\gamma; \text{shape}, \text{scale})
+$$
+где $\Gamma^{-1}$ — обратная функция распределения гамма-закона.
+\end{enumerate}
+
 \end{document}
