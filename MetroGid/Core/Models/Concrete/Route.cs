@@ -15,7 +15,7 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
 {
     public string Title = title;
     public List<RouteItem> Path = path;
-    public TimeSpan Duration = duration;
+    public TimeSpan Duration { get; private set; } = duration;
     public Chart? Chart;
 
     public Route(Route other) : this(other.Title, new List<RouteItem>(other.Path), other.Duration)
