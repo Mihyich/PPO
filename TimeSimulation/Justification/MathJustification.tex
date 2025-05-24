@@ -256,13 +256,13 @@
 
 \item Параметры логнормального распределения:
   \begin{equation}
-    \mu_{\ln} = \ln(\mu_{\text{вход}}) - \frac{1}{2} \ln\left(1 + \left(\frac{\rho}{\mu_{\text{вход}}} \right)^2\right),
-    \label{eq:station:entry:correctAverLn}
+    \sigma_{\ln} = \sqrt{\ln\left(1 + \left(\frac{\rho}{\mu_{\text{вход}}} \right)^2\right)},
+    \label{eq:station:entry:correctSigmaLn}
   \end{equation}
 
   \begin{equation}
-    \sigma_{\ln} = \sqrt{\ln\left(1 + \left(\frac{\rho}{\mu_{\text{вход}}} \right)^2\right)},
-    \label{eq:station:entry:correctSigmaLn}
+    \mu_{\ln} = \ln(\mu_{\text{поезд}}) - \frac{1}{2} \sigma_{\ln}^2.
+    \label{eq:station:entry:correctAverLn}
   \end{equation}
 
   где:

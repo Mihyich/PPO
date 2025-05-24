@@ -14,8 +14,8 @@ def calcStationEntryOrEntyTime(
     mu_base = zeta * (1 + k * occupancy / 10)
 
     # Преобразование матожидания и дисперсии, ожидаемые логнормальным распределением
-    mu_ln = math.log(mu_base) - 0.5 * math.log(1 + (rho / mu_base) ** 2)
     sigma_ln = math.sqrt(math.log(1 + (rho / mu_base) ** 2))
+    mu_ln = math.log(mu_base) - 0.5 * sigma_ln ** 2
 
     # Квантиль
     z = norm.ppf(gamma)
