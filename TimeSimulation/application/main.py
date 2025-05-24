@@ -1,7 +1,7 @@
 import math
 from scipy.stats import norm
 
-def calc_station_entry_time(
+def calcStationEntryOrEntyTime(
     occupancy: int,
     zeta=15,
     rho: float = 3,
@@ -30,7 +30,7 @@ def main():
     k = 0.5       # линейная значимость уровня загруженности станции
     gamma = 0.9   # доверительный уровень
 
-    res = calc_station_entry_time(occupancy, zeta, rho, k, gamma)
+    res = calcStationEntryOrEntyTime(occupancy, zeta, rho, k, gamma)
     minutes, seconds = int(res // 60), int(res % 60)
     print(f"Пассажир потратит {minutes}:{seconds:02d} на вход на станцию")
 
