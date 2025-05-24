@@ -71,6 +71,51 @@ def calcTrainWaitOnStationTime(
     return gamma.ppf(g, a=shape, scale=scale)
 
 
+def calcStationToTransitionTime(
+    dur: float,
+    durD: float,
+    socc: float,
+    occ: float,
+    k1: float = 0.25,
+    k2: float = 0.5,
+    gamma_level: float = 0.95
+) -> float:
+    """Расчет времени движения пассажира от входа на станцию до начала перехода"""
+
+    # Скорректированное среднее
+    mu_base = dur * (1 + k1 * socc / 10 + k2 * occ / 10)
+
+    # Параметры гамма-распределения
+    shape = mu_base**2 / durD**2
+    scale = durD**2 / mu_base
+
+    # Квантиль
+    return gamma.ppf(gamma_level, a=shape, scale=scale)
+
+
+def calcTransitionTime(
+    dur: float,
+    occ: int,
+    durD: float = 5,
+    k: float = 0.5,
+    gamma_level: float = 0.95
+) -> float:
+    """Расчет времени движения пассажира по переходу между станциями"""
+
+    # Скорректированное среднее
+    mu_base = dur * (1 + k * occ / 10)
+
+    # Параметры логнормального распределения
+    sigma_ln = math.sqrt(math.log(1 + (durD / mu_base) ** 2))
+    mu_ln = math.log(mu_base) - 0.5 * sigma_ln ** 2
+
+    # Квантиль
+    z = norm.ppf(gamma_level)
+
+    # Итоговое время
+    return math.exp(mu_ln + z * sigma_ln)
+
+
 def main():
     occupancy = 10 # уровень загруженности станции
     dur = 3*60     # среднее время движения по перегону
@@ -96,6 +141,14 @@ def main():
     res = calcTrainWaitOnStationTime(atwT, dtwT, absOcc, occupancy, k1, k2, gamma)
     minutes, seconds = int(res // 60), int(res % 60)
     print(f"Поезд потратит {minutes}:{seconds:02d} на ожидание на станции")
+
+    res = calcStationToTransitionTime(30, socc=acbsOcc, occ=occupancy, durD=5, k1=0.2, k2=0.4, gamma_level=gamma)
+    minutes, seconds = int(res // 60), int(res % 60)
+    print(f"Пассажир потратит {minutes}:{seconds:02d} на движение до перехода")
+
+    res = calcTransitionTime(45, occ=occupancy, durD=10, k=0.3, gamma_level=gamma)
+    minutes, seconds = int(res // 60), int(res % 60)
+    print(f"Пассажир потратит {minutes}:{seconds:02d} на прохождение перехода")
 
 if __name__ == "__main__":
     main()
