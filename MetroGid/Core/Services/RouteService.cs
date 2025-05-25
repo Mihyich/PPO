@@ -109,5 +109,5 @@ public class RouteService(
     public async Task<List<RouteDTO>> LookForSavedRoutesInChart(int clientId, int chartId) =>
         (await RouteRepo
             .GetAllForClientOfChartIdAsync(clientId, chartId))
-                .ConvertAll(route => DomainDtoConverter.Convert(route));
+                .ConvertAll(DomainDtoConverter.Convert);
 }
