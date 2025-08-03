@@ -31,14 +31,14 @@ namespace MetroGid.Core.Utilities.Strategies;
 
 public class StrategySearchRouteDijkstra : StrategySearchRouteBase
 {
-    public override Route Search(List<Branch> branches, Station src, Station dst, TimeOnly timeStart)
+    public override Route Search(Chart chart, Station src, Station dst, TimeOnly timeStart)
     {
         if ((!src.Branch?.IsAccessible() ?? true) || !src.IsAccessible() || !src.IsOpenAt(timeStart) ||
             (!dst.Branch?.IsAccessible() ?? true) || !dst.IsAccessible())
             return new (string.Empty, [], TimeSpan.Zero);
 
-        Dictionary<Station, List<Route>> Adj = GenAdj(branches); // Аналог матрицы смежностей
-        Dictionary<Station, Route> dist = GenDist(branches); // Поиск маршрутов к каждому из узлов графа
+        Dictionary<Station, List<Route>> Adj = GenAdj(chart.Branches); // Аналог матрицы смежностей
+        Dictionary<Station, Route> dist = GenDist(chart.Branches); // Поиск маршрутов к каждому из узлов графа
         HashSet<Station> visited = []; // Посещенные станции
         PriorityQueue<Route, TimeSpan> pq = new(); // Приоритетная очередь по времени маршрутов
         Station? lstation;

@@ -4,5 +4,5 @@ namespace MetroGid.Core.Utilities.Strategies;
 
 public abstract class StrategySearchRouteBase
 {
-    public abstract Route Search(List<Branch> branches, Station src, Station dst, TimeOnly timeStart);
+    public abstract Route Search(Chart chart, Station src, Station dst, TimeOnly timeStart);
 }

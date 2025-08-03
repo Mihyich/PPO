@@ -17,7 +17,7 @@ public class Chart(string title, string city, string svg_inst) : IDomainValidato
 
     public Route Search(Station src, Station dst, TimeOnly timeStart, StrategySearchRouteBase searcher)
     {
-        Route route = searcher.Search(Branches, src, dst, timeStart);
+        Route route = searcher.Search(this, src, dst, timeStart);
         route.Title = "Новый маршрут";
         route.Chart = this;
 

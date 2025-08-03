@@ -4,7 +4,7 @@ namespace MetroGid.Core.Utilities.Strategies;
 
 public class StrategySearchRouteBFS : StrategySearchRouteBase
 {
-    public override Route Search(List<Branch> branches, Station src, Station dst, TimeOnly timeStart)
+    public override Route Search(Chart chart, Station src, Station dst, TimeOnly timeStart)
     {
         Queue<Route> queue = new();
         HashSet<Station> visited = [];
