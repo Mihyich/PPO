@@ -13,8 +13,8 @@ public record RouteConnectionItem(StationConnection Connection) : RouteItem;
 
 public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDomainValidatorAccepter
 {
-    public string Title = title;
-    public List<RouteItem> Path = path;
+    public string Title { get; set; } = title;
+    public List<RouteItem> Path { get; private set; } = path;
     public TimeSpan Duration { get; private set; } = duration;
     public Chart? Chart;
 

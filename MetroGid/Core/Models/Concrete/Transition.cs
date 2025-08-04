@@ -9,9 +9,9 @@ public class Transition(
     int occupancy, AccessType type, TimeOnly duration,
     TimeOnly opentime, TimeOnly closetime) : TemporaryAvailability(opentime, closetime), IAccessAvailability, IDomainValidatorAccepter
 {
-    public int Occupancy { get; set; } = occupancy;
-    public AccessType Type { get; set; } = type;
-    public TimeOnly Duration { get; set; } = duration;
+    public int Occupancy { get; } = occupancy;
+    public AccessType Type { get; } = type;
+    public TimeOnly Duration { get; } = duration;
     public Station? From { get; set; }
     public Station? To { get; set; }
 

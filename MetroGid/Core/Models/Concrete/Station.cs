@@ -12,9 +12,9 @@ public class Station(
     IAccessAvailability, IDomainValidatorAccepter
 {
     public string Title { get; set; } = title;
-    public int Occupancy { get; set; } = occupancy;
-    public AccessType Type { get; set; } = type;
-    public List<Transition> Transitions { get; set; } = [];
+    public int Occupancy { get; } = occupancy;
+    public AccessType Type { get; } = type;
+    public List<Transition> Transitions { get; } = [];
     public Railway? Prev { get; set; }
     public Railway? Next { get; set; }
     public Branch? Branch { get; set; }
