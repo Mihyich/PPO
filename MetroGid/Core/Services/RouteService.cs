@@ -71,21 +71,8 @@ public class RouteService(
         StrategySearchRouteBase searcher = new StrategySearchRouteBFS();
         Route route = chart.Search(src, dst, startTime, searcher);
 
-        if (route.Path.Count == 0)
-        {
-            ServiceRouteException ex = new(
-                $"Маршрут не удалось найти в схеме '{chart.Title}' в городе '{chart.City}' от станции '{src.Title}' ветки '{src.Branch?.Title ?? "Неизвестно"}' до станции '{dst.Title}' ветки '{dst.Branch?.Title ?? "Неизвестно"}'",
-                ExceptionType.Quiet,
-                ExceptionReason.NotFound
-            );
-
-            Handler.Snap(() => throw ex, Logger);
-        }
-        else
-        {
-            route.Validate(DomainAttribsValidator);
-            route.Validate(DomainReferentialityValidator);
-        }
+        route.Validate(DomainAttribsValidator);
+        route.Validate(DomainReferentialityValidator);
 
         return route;
     }
