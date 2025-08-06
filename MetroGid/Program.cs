@@ -39,7 +39,6 @@ class Program
             Route? route = chart.Search(stationA, stationB, timeStart, new StrategySearchRouteBFS());
             route?.Validate(domainAttribsValidator);
             route?.Validate(domainReferentialityValidator);
-            route?.Output();
         }
         else
         {

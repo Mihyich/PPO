@@ -177,31 +177,5 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         return true;
     }
 
-    public void Output()
-    {
-        int StationCnt = GetStationCount();
-        int TransitionCnt = GetTransitionCount();
-
-        Console.WriteLine($"Название: {Title}");
-        Console.WriteLine($"Количество станций:   {StationCnt}");
-        Console.WriteLine($"Количество пересадок: {TransitionCnt}");
-        Console.WriteLine($"Время в пути: {Duration}");
-
-        foreach (var item in Path)
-        {
-            if (item is RouteStationItem { Station: var station })
-            {
-                Console.WriteLine($"|---Станция: {station.Title}");
-            }
-            else if (item is RouteConnectionItem { Connection: var connection })
-            {
-                if (connection is RailwayConnection { Railway: var railway })
-                    Console.WriteLine($"|===Переезд: {railway.Duration}");
-                else if (connection is TransitionConnection { Transition: var transition })
-                    Console.WriteLine($"|>>>Переход: {transition.Duration}");
-            }
-        }
-    }
-
     public void Validate(IDomainValidatorVisitor visitor) => visitor.Visit(this);
 }
