@@ -7,10 +7,14 @@ namespace MetroGid.Core.Utilities.Builders;
 public abstract class BuilderChartBase(
     IDomainValidatorVisitor domainAttribsValidator,
     IDomainValidatorVisitor domainReferentialityValidator
-) : BuilderBase<Chart>
+)
 {
     protected IDomainValidatorVisitor DomainAttribsValidator = domainAttribsValidator;
     protected IDomainValidatorVisitor DomainReferentialityValidator = domainReferentialityValidator;
+
+    protected Chart? Result;
+
+    public abstract Chart GetResult();
 
     public abstract void BuildBranch(string title, int color, AccessType type);
 

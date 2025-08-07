@@ -20,7 +20,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        SuperHandlerException handler = new WarningHandlerException();
+        SuperExceptionHandler handler = new WarningHandlerException();
         IExceptionVisitor logger = new ExceptionMessenger();
 
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler, logger);
@@ -32,7 +32,6 @@ class Program
         DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO_BACKUP/cities/Moscow/chart.json"));
         Chart chart = director.Construct();
 
-        chart.Searcher = new StrategySearchRouteBFS();
         // chart.Searcher = new StrategySearchRouteDijkstra();
         // Station? stationA = chart.GetStation("Арбатско-Покровская линия", "Щёлковская");
         // Station? stationB = chart.GetStation("Солнцевская линия", "Аэропорт Внуково");
@@ -44,13 +43,9 @@ class Program
 
         if (stationA != null && stationB != null)
         {
-            Route? route = chart.Search(stationA, stationB, timeStart);
+            Route? route = chart.Search(stationA, stationB, timeStart, new StrategySearchRouteBFS());
             route?.Validate(domainAttribsValidator);
             route?.Validate(domainReferentialityValidator);
-            route?.Output();
-
-            string jsonContent = DomainModelConverter.Convert(route!);
-            File.WriteAllText("/home/mihail/Рабочий стол/BMSTU/PPO/route.json", jsonContent);
         }
         else
         {

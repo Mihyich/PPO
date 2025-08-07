@@ -1,3 +1,4 @@
+using System.Linq;
 using MetroGid.Controllers.DTO;
 using MetroGid.Controllers.Interfaces;
 using MetroGid.Core.Converters;
@@ -17,17 +18,20 @@ namespace MetroGid.Core.Services;
 
 public class RouteService(
     IChartRepository chartRepo, IRouteRepository routeRepo,
-    SuperHandlerException handler, IExceptionVisitor? logger = null
+    ThrowableDomainAttribsValidator domainAttribsValidator,
+    ThrowableDomainReferentialityValidator domainReferentialityValidator,
+    SuperExceptionHandler handler,
+    IExceptionVisitor? logger = null
 ) : IRouteService
 {
     private readonly IChartRepository ChartRepo = chartRepo;
     private readonly IRouteRepository RouteRepo = routeRepo;
 
-    private readonly SuperHandlerException Handler = handler;
-    private readonly IExceptionVisitor? Logger = logger;
+    private readonly ThrowableDomainAttribsValidator DomainAttribsValidator = domainAttribsValidator;
+    private readonly ThrowableDomainReferentialityValidator DomainReferentialityValidator = domainReferentialityValidator;
 
-    private readonly ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler, logger);
-    private readonly ThrowableDomainReferentialityValidator DomainReferentialityValidator = new(handler, logger);
+    private readonly SuperExceptionHandler Handler = handler;
+    private readonly IExceptionVisitor? Logger = logger;
 
     private async Task<Chart> LoadChartAsync(string city, string chartTitle)
     {
@@ -37,10 +41,7 @@ public class RouteService(
             await ChartRepo.GetChartJsonAsync(city, chartTitle)
         );
 
-        StrategySearchRouteBase searcher = new StrategySearchRouteBFS();
         Chart chart = director.Construct();
-
-        chart.Searcher = searcher;
 
         return chart;
     }
@@ -67,23 +68,11 @@ public class RouteService(
 
     private Route SearchRouteProcess(Chart chart, Station src, Station dst, TimeOnly startTime)
     {
-        Route route = chart.Search(src, dst, startTime);
+        StrategySearchRouteBase searcher = new StrategySearchRouteBFS();
+        Route route = chart.Search(src, dst, startTime, searcher);
 
-        if (route.Path.Count == 0)
-        {
-            ServiceRouteException ex = new(
-                $"Маршрут не удалось найти в схеме '{chart.Title}' в городе '{chart.City}' от станции '{src.Title}' ветки '{src.Branch?.Title ?? "Неизвестно"}' до станции '{dst.Title}' ветки '{dst.Branch?.Title ?? "Неизвестно"}'",
-                ExceptionType.Quiet,
-                ExceptionReason.NotFound
-            );
-
-            Handler.Snap(() => throw ex, Logger);
-        }
-        else
-        {
-            route.Validate(DomainAttribsValidator);
-            route.Validate(DomainReferentialityValidator);
-        }
+        route.Validate(DomainAttribsValidator);
+        route.Validate(DomainReferentialityValidator);
 
         return route;
     }
@@ -101,11 +90,11 @@ public class RouteService(
         return DomainDtoConverter.Convert(route);
     }
 
-    public Task SaveRoute(int clientId, RouteDTO route, int chartId) =>
-        RouteRepo.AddAsync(DtoDomainConverter.Convert(route), clientId, chartId);
+    public async Task SaveRoute(int clientId, RouteDTO route, int chartId) =>
+        await RouteRepo.AddAsync(DtoDomainConverter.Convert(route), clientId, chartId);
 
-    public Task<List<RouteDTO>> LookForSavedRoutesInChart(int clientId, int chartId)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<List<RouteDTO>> LookForSavedRoutesInChart(int clientId, int chartId) =>
+        (await RouteRepo
+            .GetAllForClientOfChartIdAsync(clientId, chartId))
+                .ConvertAll(DomainDtoConverter.Convert);
 }

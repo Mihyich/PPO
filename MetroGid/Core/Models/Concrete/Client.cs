@@ -8,10 +8,10 @@ public class Client(
     RoleType role = RoleType.UNSIGNED
 ) : IDomainValidatorAccepter
 {
-    public string Login { get; set; } = login;
-    public string Password { get; set; } = password;
-    public string Mail { get; set; } = mail;
-    public RoleType Role { get; set; } = role;
+    public string Login { get; } = login;
+    public string Password { get; } = password;
+    public string Mail { get; } = mail;
+    public RoleType Role { get; } = role;
 
     public void Validate(IDomainValidatorVisitor visitor) => visitor.Visit(this);
 }

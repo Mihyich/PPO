@@ -5,27 +5,19 @@ namespace MetroGid.Core.Models.Concrete;
 
 public class Chart(string title, string city, string svg_inst) : IDomainValidatorAccepter
 {
-    public string Title { get; set; } = title;
-    public string City { get; set; } = city;
-    public string SvgInst { get; set; } = svg_inst;
+    public string Title { get; } = title;
+    public string City { get; } = city;
+    public string SvgInst { get; } = svg_inst;
     public List<Branch> Branches { get; set; } = [];
 
-    public StrategySearchRouteBase Searcher = new StrategySearchRouteBFS();
+    public Station? GetStation(string branchTitle, string stationTitle) =>
+        Branches
+            .FirstOrDefault(b => b.Title == branchTitle)?.Stations?
+                .FirstOrDefault(s => s.Title == stationTitle);
 
-    public Station? GetStation(string branch_title, string station_title)
+    public Route Search(Station src, Station dst, TimeOnly timeStart, StrategySearchRouteBase searcher)
     {
-        Branch? branch = null;
-        Station? station = null;
-
-        if ((branch = Branches.FirstOrDefault(b => b.Title == branch_title)) != null)
-            station = branch.Stations.FirstOrDefault(s => s.Title == station_title);
-
-        return station;
-    }
-
-    public Route Search(Station src, Station dst, TimeOnly timeStart)
-    {
-        Route route = Searcher.Search(Branches, src, dst, timeStart);
+        Route route = searcher.Search(this, src, dst, timeStart);
         route.Title = "Новый маршрут";
         route.Chart = this;
 

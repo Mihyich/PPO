@@ -16,7 +16,7 @@ public class ChartReferentialityTests
     [Fact]
     public void NoBranchesTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
@@ -36,7 +36,7 @@ public class ChartReferentialityTests
     [Fact]
     public void DuplicatedBranchTitlesTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
@@ -56,7 +56,7 @@ public class ChartReferentialityTests
     [Fact]
     public void UnlinkedBranchTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
@@ -76,7 +76,7 @@ public class ChartReferentialityTests
     [Fact]
     public void MismatchlinkingBranchTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;

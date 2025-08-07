@@ -2,7 +2,7 @@ using MetroGid.Core.Exceptions.Super;
 
 namespace MetroGid.Core.Exceptions.Handlers;
 
-public class PassThroughHandlerException : SuperHandlerException
+public class PassThroughHandlerException : SuperExceptionHandler
 {
     protected override bool ShouldHandle(SuperException ex) => false;
 

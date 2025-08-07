@@ -96,49 +96,44 @@ public class DirectorChartJson(BuilderChartBase builder, string jsonContent) : D
         return chartDto;
     }
 
-    private class BranchJsonDto
-    {
-        public string Title { get; set; } = string.Empty;
-        public string Color { get; set; } = string.Empty;
-        public string AccessType { get; set; } = string.Empty;
-        public List<StationJsonDto> Stations { get; set; } = [];
-        public List<RailwayJsonDto> Railways { get; set; } = [];
-    }
+    private record BranchJsonDto(
+        string Title,
+        string Color,
+        string AccessType,
+        List<StationJsonDto> Stations,
+        List<RailwayJsonDto> Railways
+    );
 
-    private class StationJsonDto
-    {
-        public string Title { get; set; } = string.Empty;
-        public int Occupancy { get; set; }
-        public string AccessType { get; set; } = string.Empty;
-        public string OpenTime { get; set; } = string.Empty;
-        public string CloseTime { get; set; } = string.Empty;
-    }
+    private record StationJsonDto(
+        string Title,
+        int Occupancy,
+        string AccessType,
+        string OpenTime,
+        string CloseTime
+    );
 
-    private class RailwayJsonDto
-    {
-        public string From { get; set; } = string.Empty;
-        public string To { get; set; } = string.Empty;
-        public string Duration { get; set; } = string.Empty;
-    }
+    private record RailwayJsonDto(
+        string From,
+        string To,
+        string Duration
+    );
 
-    private class TransitionJsonDto
-    {
-        public int Occupancy { get; set; }
-        public string AccessType { get; set; } = string.Empty;
-        public string Duration { get; set; } = string.Empty;
-        public string OpenTime { get; set; } = string.Empty;
-        public string CloseTime { get; set; } = string.Empty;
-        public string BranchSrc { get; set; } = string.Empty;
-        public string StationSrc { get; set; } = string.Empty;
-        public string BranchDst { get; set; } = string.Empty;
-        public string StationDst { get; set; } = string.Empty;
-    }
+    private record TransitionJsonDto(
+        int Occupancy,
+        string AccessType,
+        string Duration,
+        string OpenTime,
+        string CloseTime,
+        string BranchSrc,
+        string StationSrc,
+        string BranchDst,
+        string StationDst
+    );
 
-    private class ChartJsonDto
-    {
-        public string Title { get; set; } = string.Empty;
-        public string City { get; set; } = string.Empty;
-        public List<BranchJsonDto> Branches { get; set; } = [];
-        public List<TransitionJsonDto> Transitions { get; set; } = [];
-    }
+    private record ChartJsonDto(
+        string Title,
+        string City,
+        List<BranchJsonDto> Branches,
+        List<TransitionJsonDto> Transitions
+    );
 }

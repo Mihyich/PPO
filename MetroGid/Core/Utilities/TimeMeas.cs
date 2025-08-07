@@ -4,11 +4,87 @@ namespace MetroGid.Core.Utilities;
 
 public static class TimeMeas
 {
-    public static TimeSpan Measure(Station s1, Railway r) =>
-        WaitOnStation(s1) + r.Duration.ToTimeSpan();
+    public static TimeSpan Measure(RouteItem from, RouteItem to)
+    {
+        if (from is RouteStationItem { Station: var stationFrom })
+        {
+            if (to is RouteStationItem {Station: var stationTo})
+                return TimeSpan.Zero;
+            else if (to is RouteConnectionItem { Connection: var conTo })
+            {
+                if (conTo is RailwayConnection { Railway: var railwayTo })
+                    return Measure(stationFrom, railwayTo);
+                else if (conTo is TransitionConnection { Transition: var transitionTo })
+                    return Measure(stationFrom, transitionTo);
+                else
+                    return TimeSpan.Zero;
+            }
+            else
+                return TimeSpan.Zero;
+        }
+        else if (from is RouteConnectionItem { Connection: var conFrom })
+        {
+            if (conFrom is RailwayConnection { Railway: var railwayFrom })
+            {
+                if (to is RouteStationItem {Station: var stationTo})
+                    return Measure(railwayFrom, stationTo);
+                else if (to is RouteConnectionItem { Connection: var conTo })
+                {
+                    if (conTo is RailwayConnection { Railway: var railwayTo })
+                        return TimeSpan.Zero;
+                    else if (conTo is TransitionConnection { Transition: var transitionTo })
+                        return TimeSpan.Zero;
+                    else
+                        return TimeSpan.Zero;
+                }
+                else
+                    return TimeSpan.Zero;
+            }
+            else if (conFrom is TransitionConnection { Transition: var transitionFrom })
+            {
+                if (to is RouteStationItem {Station: var stationTo})
+                    return Measure(transitionFrom, stationTo);
+                else if (to is RouteConnectionItem { Connection: var conTo })
+                {
+                    if (conTo is RailwayConnection { Railway: var railwayTo })
+                        return TimeSpan.Zero;
+                    else if (conTo is TransitionConnection { Transition: var transitionTo })
+                        return TimeSpan.Zero;
+                    else
+                        return TimeSpan.Zero;
+                }
+                else
+                    return TimeSpan.Zero;
+            }
+            else
+                return TimeSpan.Zero;
+        }
+        else
+            return TimeSpan.Zero;
+    }
+
+
+    public static TimeSpan Measure(Station s, Railway r) =>
+        WaitOnStation(s) + r.Duration.ToTimeSpan() / 2;
+
+    public static TimeSpan Measure(Railway r, Station s) => 
+        r.Duration.ToTimeSpan() / 2;
+
+    public static TimeSpan Measure(Station s1, Railway r, Station s2) =>
+        Measure(s1, r) + Measure(r, s2);
+    
+
+
+    public static TimeSpan Measure(Station s, Transition t) =>
+        MoveOnStation(s) + MoveOnTransition(t) / 2;
+
+    public static TimeSpan Measure(Transition t, Station s) =>
+        Measure(s, t);
 
     public static TimeSpan Measure(Station s1, Transition t, Station s2) =>
-        MoveOnStation(s1) + MoveOnTransition(t) + MoveOnStation(s2);
+        Measure(s1, t) + Measure(t, s2);
+    
+
 
     private static TimeSpan WaitOnStation(Station s) =>
         TimeSpan.FromSeconds(6 * Math.Max(s.Occupancy, 1));

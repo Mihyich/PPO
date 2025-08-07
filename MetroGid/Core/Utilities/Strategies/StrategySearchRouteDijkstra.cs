@@ -31,18 +31,20 @@ namespace MetroGid.Core.Utilities.Strategies;
 
 public class StrategySearchRouteDijkstra : StrategySearchRouteBase
 {
-    public override Route Search(List<Branch> branches, Station src, Station dst, TimeOnly timeStart)
+    public override Route Search(Chart chart, Station src, Station dst, TimeOnly timeStart)
     {
-        Dictionary<Station, List<Route>> Adj = GenAdj(branches); // Аналог матрицы смежностей
-        Dictionary<Station, Route> dist = GenDist(branches); // Поиск маршрутов к каждому из узлов графа
+        if ((!src.Branch?.IsAccessible() ?? true) || !src.IsAccessible() || !src.IsOpenAt(timeStart) ||
+            (!dst.Branch?.IsAccessible() ?? true) || !dst.IsAccessible())
+            return new (string.Empty, [], TimeSpan.Zero);
+
+        Dictionary<Station, List<Route>> Adj = GenAdj(chart.Branches); // Аналог матрицы смежностей
+        Dictionary<Station, Route> dist = GenDist(chart.Branches); // Поиск маршрутов к каждому из узлов графа
         HashSet<Station> visited = []; // Посещенные станции
         PriorityQueue<Route, TimeSpan> pq = new(); // Приоритетная очередь по времени маршрутов
         Station? lstation;
 
         // Создание отправной точки
-        Route route = new();
-        route.Add(src);
-        route.UpdateDuration();
+        Route route = new Route(string.Empty, [], TimeSpan.Zero).Append(src);
 
         // По умолчанию минимальный способ добраться до src это route.
         dist[src] = route;
@@ -62,18 +64,16 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
             foreach (Route r in Adj[lstation])
             {
                 Station? neighbor = r.GetLastStation();
-                TimeSpan newTime = dist[lstation].Duration + r.Duration;
+                TimeSpan newTime = dist[lstation].PredictDurationAfterAddAsOrphan(r);
                 Route newRoute;
 
                 if (neighbor != null &&
+                    neighbor.IsAccessible() &&
+                    (neighbor.Branch?.IsAccessible() ?? false) &&
                     dist[neighbor].Duration > newTime &&
-                    // neighbor.IsOpenAt(timeStart + )
                     !visited.Contains(neighbor))
                 {
-                    newRoute = route.Clone();
-                    newRoute.PopBack();
-                    newRoute.Merge(r);
-                    newRoute.UpdateDuration();
+                    newRoute = route.SemiShallowClone().AppendAsOrphan(r);
 
                     dist[neighbor] = newRoute;
                     pq.Enqueue(newRoute, newRoute.Duration);
@@ -103,21 +103,13 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
 
                 if (railPrev != null && (neighbor = railPrev.Prev) != null)
                 {
-                    route = new();
-                    route.Add(station);
-                    route.Add(railPrev);
-                    route.Add(neighbor);
-                    route.UpdateDuration();
+                    route = new Route(string.Empty, [], TimeSpan.Zero).Append(station).Append(railPrev).Append(neighbor);
                     routes.Add(route);
                 }
 
                 if (railNext != null && (neighbor = railNext.Next) != null)
                 {
-                    route = new();
-                    route.Add(station);
-                    route.Add(railNext);
-                    route.Add(neighbor);
-                    route.UpdateDuration();
+                    route = new Route(string.Empty, [], TimeSpan.Zero).Append(station).Append(railNext).Append(neighbor);
                     routes.Add(route);
                 }
 
@@ -125,11 +117,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                 {
                     if ((neighbor = transition.ToFrom(station)) != null)
                     {
-                        route = new();
-                        route.Add(station);
-                        route.Add(transition);
-                        route.Add(neighbor);
-                        route.UpdateDuration();
+                        route = new Route(string.Empty, [], TimeSpan.Zero).Append(station).Append(transition).Append(neighbor);
                         routes.Add(route);
                     }
                 }
@@ -147,7 +135,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
 
         foreach (var branch in branches)
             foreach (var station in branch.Stations)
-                dist[station] = new Route() { Duration = TimeSpan.MaxValue };
+                dist[station] = new Route(string.Empty, [], TimeSpan.MaxValue);
 
         return dist;
     }

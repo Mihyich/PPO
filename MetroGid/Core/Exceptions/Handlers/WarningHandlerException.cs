@@ -3,7 +3,7 @@ using MetroGid.Core.Exceptions.Super;
 
 namespace MetroGid.Core.Exceptions.Handlers;
 
-public class WarningHandlerException : SuperHandlerException
+public class WarningHandlerException : SuperExceptionHandler
 {
     protected override bool ShouldHandle(SuperException ex) =>
         ex.ExcType == ExceptionType.Warning ||

@@ -7,9 +7,9 @@ namespace MetroGid.Core.Models.Concrete;
 public class Branch(string title, int color, AccessType type) : IAccessAvailability, IDomainValidatorAccepter
 {
     public string Title { get; set; } = title;
-    public int Color { get; set; } = color;
-    public AccessType Type { get; set; } = type;
-    public List<Station> Stations { get; set; } = [];
+    public int Color { get; } = color;
+    public AccessType Type { get; } = type;
+    public List<Station> Stations { get; } = [];
     public Chart? Chart { get; set; }
 
     public bool IsAccessible() => Type == AccessType.ACCESSIBLE;

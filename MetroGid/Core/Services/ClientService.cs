@@ -11,12 +11,12 @@ namespace MetroGid.Core.Services;
 
 public class ClientService(
     IClientRepository clientRepo,
-    SuperHandlerException handler, IExceptionVisitor? logger = null
+    SuperExceptionHandler handler, IExceptionVisitor? logger = null
 ) : IClientService
 {
     private readonly IClientRepository ClientRepo = clientRepo;
 
-    private readonly SuperHandlerException Handler = handler;
+    private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
     private readonly ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler, logger);

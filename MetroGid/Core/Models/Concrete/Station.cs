@@ -12,9 +12,9 @@ public class Station(
     IAccessAvailability, IDomainValidatorAccepter
 {
     public string Title { get; set; } = title;
-    public int Occupancy { get; set; } = occupancy;
-    public AccessType Type { get; set; } = type;
-    public List<Transition> Transitions { get; set; } = [];
+    public int Occupancy { get; } = occupancy;
+    public AccessType Type { get; } = type;
+    public List<Transition> Transitions { get; } = [];
     public Railway? Prev { get; set; }
     public Railway? Next { get; set; }
     public Branch? Branch { get; set; }
@@ -24,9 +24,7 @@ public class Station(
 
 
     public override int GetHashCode() =>
-        Title == null || Branch == null || Branch.Title == null ?
-        0 :
-        HashCode.Combine(Title, Branch.Title);
+        Branch == null ? 0 : HashCode.Combine(Title, Branch.Title);
 
     public bool IsAccessible() => Type == AccessType.ACCESSIBLE;
 

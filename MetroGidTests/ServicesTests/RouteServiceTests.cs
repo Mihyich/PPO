@@ -6,6 +6,7 @@ using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Services;
 using MetroGid.Core.Utilities;
 using MetroGid.Core.Interfaces;
+using MetroGid.Core.Utilities.Validators.Handlers;
 using Moq;
 
 namespace MetroGidTests.ServicesTests;
@@ -15,7 +16,9 @@ public class RouteServiceTests
     [Fact]
     public async void UsualSearchingAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -32,13 +35,14 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "chart.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
         RouteDTO route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
-        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle, TimeSpan.FromMinutes(2 * 60 + 6))
-        {
-            Path =
+        RouteDTO expectedRoute = new(
+            "Новый маршрут",
+            city,
+            chartTitle,
             [
                 new RouteStationItemDTO(new StationDTO("Больница", "Линия 1", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Линия 1", "Больница", "Анатолийский лицей", new TimeOnly(0, 10)))),
@@ -65,8 +69,9 @@ public class RouteServiceTests
                 new RouteStationItemDTO(new StationDTO("Джумхуриет", "Линия 1", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Линия 1", "Джумхуриет", "Акынджилар", new TimeOnly(0, 10)))),
                 new RouteStationItemDTO(new StationDTO("Акынджилар", "Линия 1", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30)))
-            ]
-        };
+            ],
+            TimeSpan.FromMinutes(2 * 60 + 6)
+        );
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
         Assert.True(route.Equals(expectedRoute));
@@ -75,7 +80,9 @@ public class RouteServiceTests
     [Fact]
     public async void InaccessibleBranchSearchingAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
 
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -92,20 +99,22 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "InaccessibleBranch.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+        DomainValidationException ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"Маршрут не удалось найти в схеме '{chartTitle}' в городе '{city}' от станции '{stationSrcTitle}' ветки '{branchSrcTitle}' до станции '{stationDstTitle}' ветки '{branchDstTitle}'", ex.Message);
-        Assert.Equal(ExceptionType.Quiet, ex.ExcType);
-        Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
+        Assert.Equal($"Маршрут 'Новый маршрут' схемы '{chartTitle}' в городе '{city}' пустой", ex.Message);
+        Assert.Equal(ExceptionType.Warning, ex.ExcType);
+        Assert.Equal(ExceptionReason.NullResult, ex.ExcReason);
     }
 
     [Fact]
     public async void InaccessibleFirstStationSearchingAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -122,20 +131,22 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "InaccessibleFatih.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+        DomainValidationException ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"Маршрут не удалось найти в схеме '{chartTitle}' в городе '{city}' от станции '{stationSrcTitle}' ветки '{branchSrcTitle}' до станции '{stationDstTitle}' ветки '{branchDstTitle}'", ex.Message);
-        Assert.Equal(ExceptionType.Quiet, ex.ExcType);
-        Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
+        Assert.Equal($"Маршрут 'Новый маршрут' схемы '{chartTitle}' в городе '{city}' пустой", ex.Message);
+        Assert.Equal(ExceptionType.Warning, ex.ExcType);
+        Assert.Equal(ExceptionReason.NullResult, ex.ExcReason);
     }
 
     [Fact]
     public async void InaccessibleLastStationSearchingAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -152,20 +163,22 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "InaccessibleFatih.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+        DomainValidationException ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"Маршрут не удалось найти в схеме '{chartTitle}' в городе '{city}' от станции '{stationSrcTitle}' ветки '{branchSrcTitle}' до станции '{stationDstTitle}' ветки '{branchDstTitle}'", ex.Message);
-        Assert.Equal(ExceptionType.Quiet, ex.ExcType);
-        Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
+        Assert.Equal($"Маршрут 'Новый маршрут' схемы '{chartTitle}' в городе '{city}' пустой", ex.Message);
+        Assert.Equal(ExceptionType.Warning, ex.ExcType);
+        Assert.Equal(ExceptionReason.NullResult, ex.ExcReason);
     }
 
     [Fact]
     public async void InaccessibleOnWayStationAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -182,13 +195,14 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "InaccessibleFatih.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
         RouteDTO route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
-        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle, TimeSpan.FromMinutes(2 * 60 + 6))
-        {
-            Path =
+        RouteDTO expectedRoute = new(
+            "Новый маршрут",
+            city,
+            chartTitle,
             [
                 new RouteStationItemDTO(new StationDTO("Больница", "Линия 1", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Линия 1", "Больница", "Анатолийский лицей", new TimeOnly(0, 10)))),
@@ -215,8 +229,9 @@ public class RouteServiceTests
                 new RouteStationItemDTO(new StationDTO("Джумхуриет", "Линия 1", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Линия 1", "Джумхуриет", "Акынджилар", new TimeOnly(0, 10)))),
                 new RouteStationItemDTO(new StationDTO("Акынджилар", "Линия 1", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30)))
-            ]
-        };
+            ],
+            TimeSpan.FromMinutes(2 * 60 + 6)
+        );
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
         Assert.True(route.Equals(expectedRoute));
@@ -225,7 +240,9 @@ public class RouteServiceTests
     [Fact]
     public async void NotFoundDstStationSearchingAdanaTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -242,7 +259,7 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "chart.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
         ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
 
@@ -255,7 +272,9 @@ public class RouteServiceTests
     [Fact]
     public async void UsualSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -272,13 +291,14 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "chart.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
         RouteDTO route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
-        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle, TimeSpan.FromHours(3) + TimeSpan.FromMinutes(49) + TimeSpan.FromSeconds(10))
-        {
-            Path =
+        RouteDTO expectedRoute = new(
+            "Новый маршрут",
+            city,
+            chartTitle,
             [
                 new RouteStationItemDTO(new StationDTO("Нахабино", "МЦД-2", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("МЦД-2", "Нахабино", "Аникеевка", new TimeOnly(0, 9)))),
@@ -343,8 +363,9 @@ public class RouteServiceTests
                 new RouteStationItemDTO(new StationDTO("Красногвардейская", "Замоскворецкая линия", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Замоскворецкая линия", "Красногвардейская", "Алма-Атинская", new TimeOnly(0, 5)))),
                 new RouteStationItemDTO(new StationDTO("Алма-Атинская", "Замоскворецкая линия", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
-            ]
-        };
+            ],
+            TimeSpan.FromHours(3) + TimeSpan.FromMinutes(49) + TimeSpan.FromSeconds(10)
+        );
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
         Assert.True(route.Equals(expectedRoute));
@@ -353,7 +374,9 @@ public class RouteServiceTests
     [Fact]
     public async void InaccessibleOnWayStationSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -370,13 +393,14 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
         RouteDTO route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
-        RouteDTO expectedRoute = new("Новый маршрут", city, chartTitle, TimeSpan.FromHours(3) + TimeSpan.FromMinutes(49) + TimeSpan.FromSeconds(10))
-        {
-            Path =
+        RouteDTO expectedRoute = new(
+            "Новый маршрут",
+            city,
+            chartTitle,
             [
                 new RouteStationItemDTO(new StationDTO("Нахабино", "МЦД-2", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("МЦД-2", "Нахабино", "Аникеевка", new TimeOnly(0, 9)))),
@@ -441,8 +465,9 @@ public class RouteServiceTests
                 new RouteStationItemDTO(new StationDTO("Красногвардейская", "Замоскворецкая линия", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Замоскворецкая линия", "Красногвардейская", "Алма-Атинская", new TimeOnly(0, 5)))),
                 new RouteStationItemDTO(new StationDTO("Алма-Атинская", "Замоскворецкая линия", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
-            ]
-        };
+            ],
+            TimeSpan.FromHours(3) + TimeSpan.FromMinutes(49) + TimeSpan.FromSeconds(10)
+        );
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
         Assert.True(route.Equals(expectedRoute));
@@ -451,7 +476,9 @@ public class RouteServiceTests
     [Fact]
     public async void InaccessibleFirstStationSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -468,20 +495,22 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+        DomainValidationException ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"Маршрут не удалось найти в схеме '{chartTitle}' в городе '{city}' от станции '{stationSrcTitle}' ветки '{branchSrcTitle}' до станции '{stationDstTitle}' ветки '{branchDstTitle}'", ex.Message);
-        Assert.Equal(ExceptionType.Quiet, ex.ExcType);
-        Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
+        Assert.Equal($"Маршрут 'Новый маршрут' схемы '{chartTitle}' в городе '{city}' пустой", ex.Message);
+        Assert.Equal(ExceptionType.Warning, ex.ExcType);
+        Assert.Equal(ExceptionReason.NullResult, ex.ExcReason);
     }
 
     [Fact]
     public async void InaccessibleLastStationSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -498,20 +527,22 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+        DomainValidationException ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"Маршрут не удалось найти в схеме '{chartTitle}' в городе '{city}' от станции '{stationSrcTitle}' ветки '{branchSrcTitle}' до станции '{stationDstTitle}' ветки '{branchDstTitle}'", ex.Message);
-        Assert.Equal(ExceptionType.Quiet, ex.ExcType);
-        Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
+        Assert.Equal($"Маршрут 'Новый маршрут' схемы '{chartTitle}' в городе '{city}' пустой", ex.Message);
+        Assert.Equal(ExceptionType.Warning, ex.ExcType);
+        Assert.Equal(ExceptionReason.NullResult, ex.ExcReason);
     }
 
     [Fact]
     public async void NotFoundSrcStationSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -528,7 +559,7 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
         ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
 
@@ -541,7 +572,9 @@ public class RouteServiceTests
     [Fact]
     public async void NotFoundDstStationSearchingMoscowTest()
     {
-        SuperHandlerException handler = new PassThroughHandlerException();
+        SuperExceptionHandler handler = new PassThroughHandlerException();
+        ThrowableDomainAttribsValidator domainAttribsValidator = new(handler);
+        ThrowableDomainReferentialityValidator domainReferentialityValidator = new(handler);
         
         Mock<IChartRepository> mockChartRepo = new();
         Mock<IRouteRepository> mockRouteRepo = new();
@@ -558,7 +591,7 @@ public class RouteServiceTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
 
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
-        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, handler);
+        RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
         ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
 
