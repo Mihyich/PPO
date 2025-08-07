@@ -103,7 +103,7 @@ def convoluteDirectories():
 
 def createChartCSV(fileName: str, data):
     with open(fileName, "w", encoding='utf-8') as f:
-        print(f"{data['title']};{data['city']}", file=f)
+        print(f"{data['city']};{data['title']}", file=f)
 
 
 def createBranchCSV(fileName: str, data):
