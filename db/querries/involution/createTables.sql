@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS way (
 	client_id       INT,
 	chart_id        INT,
 	title           VARCHAR(255),
-	init_date       TIMESTAMP
+	init_date       TIMESTAMPTZ
 );
 
 CREATE TABLE IF NOT EXISTS way_item (
