@@ -22,7 +22,7 @@ BEGIN
         p_client_id,
         p_chart_id,
         p_json_data->>'Title',
-        NOW()
+        date_trunc('second', NOW())::TIMESTAMPTZ
     )
     RETURNING id INTO v_way_id;
 
@@ -67,16 +67,11 @@ BEGIN
                     s.id INTO v_station_id
                 FROM
                     station AS s
+                INNER JOIN
+                    branch_station AS bs ON s.id = bs.station_id
                 WHERE
-                    s.title = (v_item.value)->>'Title' AND
-                    EXISTS(
-                        SELECT
-                            1
-                        FROM
-                            branch_station AS bs
-                        WHERE
-                            bs.branch_id = v_branch_id
-                    );
+                    bs.branch_id = v_branch_id AND
+                    s.title = (v_item.value)->>'Title';
 
                 -- Вставка звена маршрута <Станция>
                 INSERT INTO way_item_station (way_item_id, station_id)
@@ -89,32 +84,22 @@ BEGIN
                     s.id INTO v_station_from_id
                 FROM
                     station AS s
+                INNER JOIN
+                    branch_station AS bs ON s.id = bs.station_id
                 WHERE
-                    s.title = (v_item.value)->>'FromStationTitle' AND
-                    EXISTS(
-                        SELECT
-                            1
-                        FROM
-                            branch AS b
-                        WHERE
-                            b.id = v_branch_id
-                    );
+                    bs.branch_id = v_branch_id AND
+                    s.title = (v_item.value)->>'FromStationTitle';
                 
                 -- Поиск станции назначения
                 SELECT
                     s.id INTO v_station_to_id
                 FROM
                     station AS s
+                INNER JOIN
+                    branch_station AS bs ON s.id = bs.station_id
                 WHERE
-                    s.title = (v_item.value)->>'ToStationTitle' AND
-                    EXISTS(
-                        SELECT
-                            1
-                        FROM
-                            branch AS b
-                        WHERE
-                            b.id = v_branch_id
-                    );
+                    bs.branch_id = v_branch_id AND
+                    s.title = (v_item.value)->>'ToStationTitle';
 
                 -- Поиск связываемого переезда
                 SELECT
@@ -122,7 +107,8 @@ BEGIN
                 FROM
                     railway AS r
                 WHERE
-                    r.from_id = v_station_from_id AND r.to_id = v_station_to_id;
+                    (r.from_id = v_station_from_id AND r.to_id = v_station_to_id) OR
+                    (r.from_id = v_station_to_id AND r.to_id = v_station_from_id);
 
                 IF v_railway_id IS NULL THEN
                     RAISE EXCEPTION 'На шаге % не найден переезд между станциями % и % на ветке %',
@@ -148,7 +134,15 @@ BEGIN
                         FROM
                             branch AS b
                         WHERE
-                            b.title = (v_item.value)->>'FromBranchTitle'
+                            b.title = (v_item.value)->>'FromBranchTitle' AND
+                            EXISTS (
+                                SELECT
+                                    1
+                                FROM
+                                    branch_station AS bs
+                                WHERE
+                                    bs.branch_id = b.id AND bs.station_id = s.id
+                            )
                     );
                 
                 -- Поиск второй связанной станции
@@ -164,7 +158,15 @@ BEGIN
                         FROM
                             branch AS b
                         WHERE
-                            b.title = (v_item.value)->>'ToBranchTitle'
+                            b.title = (v_item.value)->>'ToBranchTitle' AND
+                            EXISTS (
+                                SELECT
+                                    1
+                                FROM
+                                    branch_station AS bs
+                                WHERE
+                                    bs.branch_id = b.id AND bs.station_id = s.id
+                            )
                     );
                 
                 -- Поиск связываемого перехода
@@ -173,24 +175,11 @@ BEGIN
                 FROM
                     station_transition AS st
                 WHERE
-                    (st.station_id = v_station_from_id OR st.station_id = v_station_to_id) AND
-                    EXISTS(
-                        SELECT
-                            1
-                        FROM
-                            branch_station AS bs1
-                        WHERE
-                            bs1.branch_id = v_branch_id AND bs1.station_id = st.station_id AND
-                            EXISTS(
-                                SELECT
-                                    1
-                                FROM
-                                    branch_station AS bs2
-                                WHERE
-                                    bs2.branch_id != bs1.branch_id AND
-                                    (bs2.station_id = v_station_from_id OR bs2.station_id = v_station_to_id)
-                            )
-                    );
+                    st.station_id = v_station_from_id OR st.station_id = v_station_to_id
+                GROUP BY
+                    st.transition_id
+                HAVING
+                    COUNT(*) = 2; -- Только у подходящего перехода количесво связей будет равно 2
 
                 -- Вставка звена маршрута <Переход>
                 INSERT INTO way_item_transition (way_item_id, transition_id)
