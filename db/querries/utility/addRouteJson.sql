@@ -17,11 +17,12 @@ DECLARE
     v_transition_id INT;   -- айди найденного перехода
 BEGIN
     -- Создать запись нового маршрута
-    INSERT INTO way (client_id, chart_id, title, init_date)
+    INSERT INTO way (client_id, chart_id, title, duration, init_date)
     VALUES (
         p_client_id,
         p_chart_id,
         p_json_data->>'Title',
+        (p_json_data->>'Duration')::TIME,
         date_trunc('second', NOW())::TIMESTAMPTZ
     )
     RETURNING id INTO v_way_id;
