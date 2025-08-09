@@ -1,7 +1,6 @@
 CREATE OR REPLACE FUNCTION get_route_json_by_id(way_id INT)
 RETURNS JSONB AS $$
 DECLARE
-    v_station_id INT;
     result_json JSONB;
 BEGIN
     SELECT
