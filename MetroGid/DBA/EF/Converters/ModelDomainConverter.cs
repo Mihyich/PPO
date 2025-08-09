@@ -3,7 +3,6 @@ using MCMT = MetroGid.Core.Models.Types;
 
 using MDEMT = MetroGid.DBA.EF.Models.Tables;
 using MDEME = MetroGid.DBA.EF.Models.UserDefinedTypes;
-using System.Transactions;
 
 namespace MetroGid.DBA.EF.Converters;
 
