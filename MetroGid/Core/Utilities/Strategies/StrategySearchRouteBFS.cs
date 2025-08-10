@@ -1,14 +1,16 @@
 using MetroGid.Core.Models.Concrete;
+using MetroGid.Core.Utilities.TimeMeter.Concrete;
+using MetroGid.Core.Utilities.TimeMeter.Super;
 
 namespace MetroGid.Core.Utilities.Strategies;
 
-public class StrategySearchRouteBFS : StrategySearchRouteBase
+public class StrategySearchRouteBFS(TimeSuper? timerSuper = null) : StrategySearchRouteBase(timerSuper ?? new TimeFast())
 {
     public override Route Search(Chart chart, Station src, Station dst, TimeOnly timeStart)
     {
         Queue<Route> queue = new();
         HashSet<Station> visited = [];
-        Route initialRoute = new(string.Empty, [], TimeSpan.Zero);
+        Route initialRoute = new(string.Empty, [], TimeSpan.Zero, ts);
 
         if ((!src.Branch?.IsAccessible() ?? true) || !src.IsAccessible() || !src.IsOpenAt(timeStart) ||
             (!dst.Branch?.IsAccessible() ?? true) || !dst.IsAccessible())
@@ -55,7 +57,7 @@ public class StrategySearchRouteBFS : StrategySearchRouteBase
         }
     }
 
-    private static void SearchTransitionNeighbors(Station curStation, Route curRoute, Queue<Route> queue, HashSet<Station> visited, TimeOnly timeStart)
+    private void SearchTransitionNeighbors(Station curStation, Route curRoute, Queue<Route> queue, HashSet<Station> visited, TimeOnly timeStart)
     {
         TimeOnly curTime = TimeOnly.FromTimeSpan(TimeSpan.FromTicks(curRoute.Duration.Ticks) + TimeSpan.FromTicks(timeStart.Ticks));
         Station? stationNeighbor;
@@ -63,7 +65,7 @@ public class StrategySearchRouteBFS : StrategySearchRouteBase
         foreach (var transitionNeighbor in curStation.Transitions)
             if (transitionNeighbor.IsAccessible() && transitionNeighbor.IsOpenAt(curTime) && (stationNeighbor = transitionNeighbor.ToFrom(curStation)) != null)
                 UpdateProcess(curRoute, transitionNeighbor, stationNeighbor, queue, visited,
-                    TimeOnly.FromTimeSpan(TimeSpan.FromTicks(curTime.Ticks) + TimeMeas.Measure(curStation, transitionNeighbor, stationNeighbor)));
+                    TimeOnly.FromTimeSpan(TimeSpan.FromTicks(curTime.Ticks) + ts.Measure(curStation, transitionNeighbor, stationNeighbor)));
     }
 
     private static void UpdateProcess(Route curRoute, Railway railwayNeigbor, Station? stationNeighbor, Queue<Route> queue, HashSet<Station> visited)
