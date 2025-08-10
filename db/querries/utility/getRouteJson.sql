@@ -19,16 +19,14 @@ BEGIN
                             way_item
                         WHERE
                             way_item.way_id = w.id
-                        ORDER BY
-                            way_item.step_nomer
                     ),
                     ris AS (
                         SELECT
                             wis.way_item_id,
                             wis.station_id,
                             bs.branch_id,
-                            s.title,
-                            b.title AS branchtitle,
+                            s.title AS station_title,
+                            b.title AS branch_title,
                             wi.step_nomer
                         FROM
                             wi
@@ -40,74 +38,129 @@ BEGIN
                             branch_station AS bs ON bs.station_id = s.id
                         INNER JOIN
                             branch AS b ON b.id = bs.branch_id
-                        ORDER BY
-                            wi.step_nomer
                     ),
                     rir AS (
                         SELECT
-                            wir.way_item_id,
-                            fs.title AS fromstationtitle,
-                            ts.title AS tostationtitle,
-                            wi.step_nomer
-                        FROM
-                            wi
-                        INNER JOIN
-                            way_item_railway AS wir ON wi.id = wir.way_item_id
-                        INNER JOIN
-                            ris AS fs ON fs.step_nomer = wi.step_nomer - 1
-                        INNER JOIN
-                            ris AS ts ON ts.step_nomer = wi.step_nomer + 1
-                        ORDER BY
-                            wi.step_nomer
+                            way_item_id,
+                            from_station_title,
+                            to_station_title,
+                            step_nomer
+                        FROM (
+                            SELECT
+                                wir.way_item_id,
+                                wi.nexus,
+                                LAG(ris.station_title) OVER (ORDER BY wi.step_nomer) AS from_station_title,
+                                LEAD(ris.station_title) OVER (ORDER BY wi.step_nomer) AS to_station_title,
+                                wi.step_nomer
+                            FROM
+                                wi
+                            LEFT JOIN
+                                ris ON wi.id = ris.way_item_id
+                            LEFT JOIN
+                                way_item_railway AS wir ON wi.id = wir.way_item_id
+                        )
+                        WHERE
+                            nexus = 'RAILWAY'::nexus_type
                     ),
                     rit AS (
                         SELECT
-                            wit.way_item_id,
-                            fs.branchtitle AS frombranchtitle,
-                            fs.title AS fromstationtitle,
-                            ts.branchtitle AS tobranchtitle,
-                            ts.title AS tostationtitle,
-                            wi.step_nomer
+                            way_item_id,
+                            from_station_title,
+                            from_branch_title,
+                            to_station_title,
+                            to_branch_title,
+                            step_nomer
+                        FROM (
+                            SELECT
+                                wit.way_item_id,
+                                wi.nexus,
+                                LAG(ris.station_title) OVER (ORDER BY wi.step_nomer) AS from_station_title,
+                                LAG(ris.branch_title) OVER (ORDER BY wi.step_nomer) AS from_branch_title,
+                                LEAD(ris.station_title) OVER (ORDER BY wi.step_nomer) AS to_station_title,
+                                LEAD(ris.branch_title) OVER (ORDER BY wi.step_nomer) AS to_branch_title,
+                                wi.step_nomer
+                            FROM
+                                wi
+                            LEFT JOIN
+                                ris ON wi.id = ris.way_item_id
+                            LEFT JOIN
+                                way_item_transition AS wit ON wi.id = wit.way_item_id
+                            WHERE
+                                wi.nexus != 'RAILWAY'::nexus_type
+                        )
+                        WHERE
+                            nexus = 'TRANSITION'::nexus_type
+                    ),
+                    res AS (
+                        SELECT
+                            wi.step_nomer,
+                            wi.nexus,
+                            CASE wi.nexus
+                                WHEN 'STATION'::nexus_type THEN ris.station_title
+                                ELSE NULL
+                            END AS station_title,
+                            CASE wi.nexus
+                                WHEN 'STATION'::nexus_type THEN ris.branch_title
+                                ELSE NULL
+                            END AS branch_title,
+                            CASE wi.nexus
+                                WHEN 'RAILWAY'::nexus_type THEN rir.from_station_title
+                                WHEN 'TRANSITION'::nexus_type THEN rit.from_station_title
+                                ELSE NULL
+                            END AS from_station_title,
+                            CASE wi.nexus
+                                WHEN 'RAILWAY'::nexus_type THEN rir.to_station_title
+                                WHEN 'TRANSITION'::nexus_type THEN rit.to_station_title
+                                ELSE NULL
+                            END AS to_station_title,
+                            CASE wi.nexus
+                                WHEN 'TRANSITION'::nexus_type THEN rit.from_branch_title
+                                ELSE NULL
+                            END AS from_branch_title,
+                            CASE wi.nexus
+                                WHEN 'TRANSITION'::nexus_type THEN rit.to_branch_title
+                                ELSE NULL
+                            END AS to_branch_title
                         FROM
                             wi
-                        INNER JOIN
-                            way_item_transition AS wit ON wi.id = wit.way_item_id
-                        INNER JOIN
-                            ris AS fs ON fs.step_nomer = wi.step_nomer - 1
-                        INNER JOIN
-                            ris AS ts ON ts.step_nomer = wi.step_nomer + 1
+                        LEFT JOIN
+                            ris ON wi.id = ris.way_item_id
+                        LEFT JOIN
+                            rir ON wi.id = rir.way_item_id
+                        LEFT JOIN
+                            rit ON wi.id = rit.way_item_id
                         ORDER BY
                             wi.step_nomer
                     )
                 SELECT
                     json_agg(
-                        CASE wi.nexus
+                        CASE res.nexus
                             WHEN 'STATION'::nexus_type THEN
                                 json_build_object(
                                     '$type', 'station',
-                                    'Title', (SELECT ris.title FROM ris WHERE ris.step_nomer = wi.step_nomer),
-                                    'BranchTitle', (SELECT ris.branchtitle FROM ris WHERE ris.step_nomer = wi.step_nomer)
+                                    'Title', res.station_title,
+                                    'BranchTitle', res.branch_title
                                 )
                             WHEN 'RAILWAY'::nexus_type THEN
                                 json_build_object(
                                     '$type', 'railway',
-                                    'FromStationTitle', (SELECT rir.fromstationtitle FROM rir WHERE rir.step_nomer = wi.step_nomer),
-                                    'ToStationTitle', (SELECT rir.tostationtitle FROM rir WHERE rir.step_nomer = wi.step_nomer)
+                                    'FromStationTitle', res.from_station_title,
+                                    'ToStationTitle', res.to_station_title
                                 )
                             WHEN 'TRANSITION'::nexus_type THEN
                                 json_build_object(
                                     '$type', 'transition',
-                                    'FromBranchTitle', (SELECT rit.frombranchtitle FROM rit WHERE rit.step_nomer = wi.step_nomer),
-                                    'FromStationTitle', (SELECT rit.fromstationtitle FROM rit WHERE rit.step_nomer = wi.step_nomer),
-                                    'ToBranchTitle', (SELECT rit.tobranchtitle FROM rit WHERE rit.step_nomer = wi.step_nomer),
-                                    'ToStationTitle', (SELECT rit.tostationtitle FROM rit WHERE rit.step_nomer = wi.step_nomer)
+                                    'FromBranchTitle', res.from_branch_title,
+                                    'FromStationTitle', res.from_station_title,
+                                    'ToBranchTitle', res.to_branch_title,
+                                    'ToStationTitle', res.to_station_title
                                 )
                             ELSE
                                 json_build_object('$type', 'unknown')
                         END
                     )
                 FROM
-                    wi
+                    res
             )
         ) INTO result_json
     FROM
