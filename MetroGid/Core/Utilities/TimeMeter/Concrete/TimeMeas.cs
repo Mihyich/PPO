@@ -1,10 +1,11 @@
 using MetroGid.Core.Models.Concrete;
+using MetroGid.Core.Utilities.TimeMeter.Super;
 
-namespace MetroGid.Core.Utilities;
+namespace MetroGid.Core.Utilities.TimeMeter.Concrete;
 
-public static class TimeMeas
+public class TimeFast : TimeSuper
 {
-    public static TimeSpan Measure(RouteItem from, RouteItem to)
+    public override TimeSpan Measure(RouteItem from, RouteItem to)
     {
         if (from is RouteStationItem { Station: var stationFrom })
         {
@@ -64,24 +65,24 @@ public static class TimeMeas
     }
 
 
-    public static TimeSpan Measure(Station s, Railway r) =>
+    public override TimeSpan Measure(Station s, Railway r) =>
         WaitOnStation(s) + r.Duration.ToTimeSpan() / 2;
 
-    public static TimeSpan Measure(Railway r, Station s) => 
+    public override TimeSpan Measure(Railway r, Station s) => 
         r.Duration.ToTimeSpan() / 2;
 
-    public static TimeSpan Measure(Station s1, Railway r, Station s2) =>
+    public override TimeSpan Measure(Station s1, Railway r, Station s2) =>
         Measure(s1, r) + Measure(r, s2);
     
 
 
-    public static TimeSpan Measure(Station s, Transition t) =>
+    public override TimeSpan Measure(Station s, Transition t) =>
         MoveOnStation(s) + MoveOnTransition(t) / 2;
 
-    public static TimeSpan Measure(Transition t, Station s) =>
+    public override TimeSpan Measure(Transition t, Station s) =>
         Measure(s, t);
 
-    public static TimeSpan Measure(Station s1, Transition t, Station s2) =>
+    public override TimeSpan Measure(Station s1, Transition t, Station s2) =>
         Measure(s1, t) + Measure(t, s2);
     
 
