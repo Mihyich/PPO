@@ -1,4 +1,6 @@
 using MetroGid.Core.Models.Concrete;
+using MetroGid.Core.Utilities.TimeMeter.Concrete;
+using MetroGid.Core.Utilities.TimeMeter.Super;
 
 /*
 Алгоритм Дейкстры: https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%94%D0%B5%D0%B9%D0%BA%D1%81%D1%82%D1%80%D1%8B
@@ -29,7 +31,7 @@ pq - приоритетная оцередь. Используется для к
 
 namespace MetroGid.Core.Utilities.Strategies;
 
-public class StrategySearchRouteDijkstra : StrategySearchRouteBase
+public class StrategySearchRouteDijkstra(TimeSuper? timerSuper = null) : StrategySearchRouteBase(timerSuper ?? new TimeFast())
 {
     public override Route Search(Chart chart, Station src, Station dst, TimeOnly timeStart)
     {
@@ -44,7 +46,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
         Station? lstation;
 
         // Создание отправной точки
-        Route route = new Route(string.Empty, [], TimeSpan.Zero).Append(src);
+        Route route = new Route(string.Empty, [], TimeSpan.Zero, ts).Append(src);
 
         // По умолчанию минимальный способ добраться до src это route.
         dist[src] = route;
@@ -86,7 +88,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
         return dist[dst];
     }
 
-    private static Dictionary<Station, List<Route>> GenAdj(List<Branch> branches)
+    private Dictionary<Station, List<Route>> GenAdj(List<Branch> branches)
     {
         Dictionary<Station, List<Route>> Adj = [];
 
@@ -103,13 +105,13 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
 
                 if (railPrev != null && (neighbor = railPrev.Prev) != null)
                 {
-                    route = new Route(string.Empty, [], TimeSpan.Zero).Append(station).Append(railPrev).Append(neighbor);
+                    route = new Route(string.Empty, [], TimeSpan.Zero, ts).Append(station).Append(railPrev).Append(neighbor);
                     routes.Add(route);
                 }
 
                 if (railNext != null && (neighbor = railNext.Next) != null)
                 {
-                    route = new Route(string.Empty, [], TimeSpan.Zero).Append(station).Append(railNext).Append(neighbor);
+                    route = new Route(string.Empty, [], TimeSpan.Zero, ts).Append(station).Append(railNext).Append(neighbor);
                     routes.Add(route);
                 }
 
@@ -117,7 +119,7 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
                 {
                     if ((neighbor = transition.ToFrom(station)) != null)
                     {
-                        route = new Route(string.Empty, [], TimeSpan.Zero).Append(station).Append(transition).Append(neighbor);
+                        route = new Route(string.Empty, [], TimeSpan.Zero, ts).Append(station).Append(transition).Append(neighbor);
                         routes.Add(route);
                     }
                 }
@@ -129,13 +131,13 @@ public class StrategySearchRouteDijkstra : StrategySearchRouteBase
         return Adj;
     }
 
-    private static Dictionary<Station, Route> GenDist(List<Branch> branches)
+    private Dictionary<Station, Route> GenDist(List<Branch> branches)
     {
         Dictionary<Station, Route> dist = [];
 
         foreach (var branch in branches)
             foreach (var station in branch.Stations)
-                dist[station] = new Route(string.Empty, [], TimeSpan.MaxValue);
+                dist[station] = new Route(string.Empty, [], TimeSpan.MaxValue, ts);
 
         return dist;
     }

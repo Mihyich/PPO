@@ -1,4 +1,5 @@
-using MetroGid.Core.Utilities;
+using MetroGid.Core.Utilities.TimeMeter.Concrete;
+using MetroGid.Core.Utilities.TimeMeter.Super;
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
 namespace MetroGid.Core.Models.Concrete;
@@ -11,12 +12,14 @@ public abstract record RouteItem;
 public record RouteStationItem(Station Station) : RouteItem;
 public record RouteConnectionItem(StationConnection Connection) : RouteItem;
 
-public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDomainValidatorAccepter
+public class Route(string title, List<RouteItem> path, TimeSpan duration, TimeSuper? timeSuper = null) : IDomainValidatorAccepter
 {
     public string Title { get; set; } = title;
     public List<RouteItem> Path { get; private set; } = path;
     public TimeSpan Duration { get; private set; } = duration;
     public Chart? Chart;
+
+    private readonly TimeSuper ts = timeSuper ?? new TimeFast();
 
     public Route(Route other) : this(other.Title, new List<RouteItem>(other.Path), other.Duration)
     {
@@ -117,7 +120,7 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         {
             RouteItem from = Path[i - 1];
             RouteItem to = Path[i - 0];
-            NewDuration += TimeMeas.Measure(from, to);
+            NewDuration += ts.Measure(from, to);
         }
 
         Duration = NewDuration;
@@ -132,7 +135,7 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         RouteItem from = Path[li - 1];
         RouteItem to = Path[li];
 
-        Duration += TimeMeas.Measure(from, to);
+        Duration += ts.Measure(from, to);
     }
 
     private void UpdateDurationBeforeRemoveLastRouteItem()
@@ -144,7 +147,7 @@ public class Route(string title, List<RouteItem> path, TimeSpan duration) : IDom
         RouteItem from = Path[li - 1];
         RouteItem to = Path[li];
 
-        Duration -= TimeMeas.Measure(from, to);
+        Duration -= ts.Measure(from, to);
     }
 
     public TimeSpan PredictDurationAfterAddAsOrphan(Route other) =>
