@@ -8,61 +8,44 @@ public class TimeFast : TimeSuper
     public override TimeSpan Measure(RouteItem from, RouteItem to)
     {
         if (from is RouteStationItem { Station: var stationFrom })
-        {
-            if (to is RouteStationItem {Station: var stationTo})
-                return TimeSpan.Zero;
-            else if (to is RouteConnectionItem { Connection: var conTo })
-            {
-                if (conTo is RailwayConnection { Railway: var railwayTo })
-                    return Measure(stationFrom, railwayTo);
-                else if (conTo is TransitionConnection { Transition: var transitionTo })
-                    return Measure(stationFrom, transitionTo);
-                else
-                    return TimeSpan.Zero;
-            }
-            else
-                return TimeSpan.Zero;
-        }
+            return Measure(stationFrom, to);
         else if (from is RouteConnectionItem { Connection: var conFrom })
-        {
-            if (conFrom is RailwayConnection { Railway: var railwayFrom })
-            {
-                if (to is RouteStationItem {Station: var stationTo})
-                    return Measure(railwayFrom, stationTo);
-                else if (to is RouteConnectionItem { Connection: var conTo })
-                {
-                    if (conTo is RailwayConnection { Railway: var railwayTo })
-                        return TimeSpan.Zero;
-                    else if (conTo is TransitionConnection { Transition: var transitionTo })
-                        return TimeSpan.Zero;
-                    else
-                        return TimeSpan.Zero;
-                }
-                else
-                    return TimeSpan.Zero;
-            }
-            else if (conFrom is TransitionConnection { Transition: var transitionFrom })
-            {
-                if (to is RouteStationItem {Station: var stationTo})
-                    return Measure(transitionFrom, stationTo);
-                else if (to is RouteConnectionItem { Connection: var conTo })
-                {
-                    if (conTo is RailwayConnection { Railway: var railwayTo })
-                        return TimeSpan.Zero;
-                    else if (conTo is TransitionConnection { Transition: var transitionTo })
-                        return TimeSpan.Zero;
-                    else
-                        return TimeSpan.Zero;
-                }
-                else
-                    return TimeSpan.Zero;
-            }
-            else
-                return TimeSpan.Zero;
-        }
-        else
-            return TimeSpan.Zero;
+            return Measure(conFrom, to);
+        
+        return TimeSpan.Zero;
     }
+
+    private TimeSpan Measure(Station s, RouteItem ri)
+    {
+        if (ri is RouteStationItem {Station: _ })
+            return TimeSpan.Zero;
+        
+        if (ri is RouteConnectionItem { Connection: var conTo })
+        {
+            if (conTo is RailwayConnection { Railway: var railwayTo })
+                return Measure(s, railwayTo);
+            else if (conTo is TransitionConnection { Transition: var transitionTo })
+                return Measure(s, transitionTo);
+        }
+        
+        return TimeSpan.Zero;
+    }
+
+    private TimeSpan Measure(StationConnection sc, RouteItem ri)
+    {
+        if (sc is RailwayConnection { Railway: var railwayFrom })
+            return Measure(railwayFrom, ri);
+        else if (sc is TransitionConnection { Transition: var transitionFrom })
+            return Measure(transitionFrom, ri);
+        
+        return TimeSpan.Zero;
+    }
+
+    private TimeSpan Measure(Railway r, RouteItem ri) =>
+        (ri is RouteStationItem { Station: var stationTo }) ? Measure(r, stationTo) : TimeSpan.Zero;
+
+    private TimeSpan Measure(Transition t, RouteItem ri) =>
+        (ri is RouteStationItem {Station: var stationTo}) ? Measure(t, stationTo) : TimeSpan.Zero;
 
 
     public override TimeSpan Measure(Station s, Railway r) =>
