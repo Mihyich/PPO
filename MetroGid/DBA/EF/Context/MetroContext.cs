@@ -62,20 +62,16 @@ public partial class MetroContext : DbContext
             entity.ToTable("branch");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Access)
+                .HasMaxLength(12)
+                .HasDefaultValueSql("'ACCESSIBLE'::character varying")
+                .HasColumnName("access");
             entity.Property(e => e.Color)
-                .HasColumnType("decimal_hexcolor")
                 .HasDefaultValue(0)
                 .HasColumnName("color");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
-                .IsRequired()
                 .HasColumnName("title");
-            entity.Property(e => e.Access)
-                .HasConversion(
-                    v => v.ToString(), // C# -> БД
-                    v => (AccessType)Enum.Parse(typeof(AccessType), v))  // БД -> С#
-                .HasDefaultValueSql("'ACCESSIBLE'::access_type")
-                .HasColumnName("access");
         });
 
         modelBuilder.Entity<BranchStation>(entity =>
@@ -94,13 +90,11 @@ public partial class MetroContext : DbContext
 
             entity.HasOne(d => d.Branch).WithMany(p => p.BranchStations)
                 .HasForeignKey(d => d.BranchId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("branch_station_branch_id_fkey");
+                .HasConstraintName("fk_branch_station_branch_id");
 
             entity.HasOne(d => d.Station).WithOne(p => p.BranchStation)
                 .HasForeignKey<BranchStation>(d => d.StationId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("branch_station_station_id_fkey");
+                .HasConstraintName("fk_branch_station_station_id");
         });
 
         modelBuilder.Entity<Chart>(entity =>
@@ -108,6 +102,8 @@ public partial class MetroContext : DbContext
             entity.HasKey(e => e.Id).HasName("chart_pkey");
 
             entity.ToTable("chart");
+
+            entity.HasIndex(e => new { e.City, e.Title }, "uk_chart_city_title").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.City)
@@ -138,13 +134,11 @@ public partial class MetroContext : DbContext
 
             entity.HasOne(d => d.Branch).WithOne(p => p.ChartBranch)
                 .HasForeignKey<ChartBranch>(d => d.BranchId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("chart_branch_branch_id_fkey");
+                .HasConstraintName("fk_chart_branch_branch_id");
 
             entity.HasOne(d => d.Chart).WithMany(p => p.ChartBranches)
                 .HasForeignKey(d => d.ChartId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("chart_branch_chart_id_fkey");
+                .HasConstraintName("fk_chart_branch_chart_id");
         });
 
         modelBuilder.Entity<Client>(entity =>
@@ -155,22 +149,17 @@ public partial class MetroContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ClientLogin)
-                .HasColumnType("login_inst")
                 .HasMaxLength(255)
                 .HasColumnName("client_login");
             entity.Property(e => e.ClientPassword)
-                .HasColumnType("password_inst")
                 .HasMaxLength(255)
                 .HasColumnName("client_password");
             entity.Property(e => e.Mail)
-                .HasColumnType("mail_inst")
                 .HasMaxLength(255)
                 .HasColumnName("mail");
             entity.Property(e => e.Privilege)
-                .HasConversion(
-                    v => v.ToString(), // C# -> БД
-                    v => (RoleType)Enum.Parse(typeof(RoleType), v))  // БД -> С#
-                .HasColumnType("role_domain")
+                .HasMaxLength(8)
+                .HasDefaultValueSql("'UNSIGNED'::character varying")
                 .HasColumnName("privilege");
         });
 
@@ -189,13 +178,11 @@ public partial class MetroContext : DbContext
 
             entity.HasOne(d => d.From).WithMany(p => p.RailwayFroms)
                 .HasForeignKey(d => d.FromId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("railway_from_id_fkey");
+                .HasConstraintName("fk_railway_from_id");
 
             entity.HasOne(d => d.To).WithMany(p => p.RailwayTos)
                 .HasForeignKey(d => d.ToId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("railway_to_id_fkey");
+                .HasConstraintName("fk_railway_to_id");
         });
 
         modelBuilder.Entity<Station>(entity =>
@@ -205,18 +192,15 @@ public partial class MetroContext : DbContext
             entity.ToTable("station");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Access)
+                .HasMaxLength(12)
+                .HasDefaultValueSql("'ACCESSIBLE'::character varying")
+                .HasColumnName("access");
             entity.Property(e => e.CloseTime).HasColumnName("close_time");
             entity.Property(e => e.DutyId).HasColumnName("duty_id");
             entity.Property(e => e.Occupancy)
-                .HasColumnType("occupancy_level")
                 .HasDefaultValue((short)5)
                 .HasColumnName("occupancy");
-            entity.Property(e => e.Access)
-                .HasConversion(
-                    v => v.ToString(), // C# -> БД
-                    v => (AccessType)Enum.Parse(typeof(AccessType), v))  // БД -> С#
-                .HasDefaultValueSql("'ACCESSIBLE'::access_type")
-                .HasColumnName("access");
             entity.Property(e => e.OpenTime).HasColumnName("open_time");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
@@ -224,7 +208,8 @@ public partial class MetroContext : DbContext
 
             entity.HasOne(d => d.Duty).WithMany(p => p.Stations)
                 .HasForeignKey(d => d.DutyId)
-                .HasConstraintName("station_duty_id_fkey");
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_station_duty_id");
         });
 
         modelBuilder.Entity<StationTransition>(entity =>
@@ -241,13 +226,11 @@ public partial class MetroContext : DbContext
 
             entity.HasOne(d => d.Station).WithMany(p => p.StationTransitions)
                 .HasForeignKey(d => d.StationId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("station_transition_station_id_fkey");
+                .HasConstraintName("fk_station_transition_station_id");
 
             entity.HasOne(d => d.Transition).WithMany(p => p.StationTransitions)
                 .HasForeignKey(d => d.TransitionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("station_transition_transition_id_fkey");
+                .HasConstraintName("fk_station_transition_transition_id");
         });
 
         modelBuilder.Entity<Transition>(entity =>
@@ -257,24 +240,22 @@ public partial class MetroContext : DbContext
             entity.ToTable("transition");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Access)
+                .HasMaxLength(12)
+                .HasDefaultValueSql("'ACCESSIBLE'::character varying")
+                .HasColumnName("access");
             entity.Property(e => e.CloseTime).HasColumnName("close_time");
             entity.Property(e => e.Duration).HasColumnName("duration");
             entity.Property(e => e.DutyId).HasColumnName("duty_id");
             entity.Property(e => e.Occupancy)
-                .HasColumnType("occupancy_level")
                 .HasDefaultValue((short)5)
                 .HasColumnName("occupancy");
-            entity.Property(e => e.Access)
-                .HasConversion(
-                    v => v.ToString(), // C# -> БД
-                    v => (AccessType)Enum.Parse(typeof(AccessType), v))  // БД -> С#
-                .HasDefaultValueSql("'ACCESSIBLE'::access_type")
-                .HasColumnName("access");
             entity.Property(e => e.OpenTime).HasColumnName("open_time");
 
             entity.HasOne(d => d.Duty).WithMany(p => p.Transitions)
                 .HasForeignKey(d => d.DutyId)
-                .HasConstraintName("transition_duty_id_fkey");
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_transition_duty_id");
         });
 
         modelBuilder.Entity<Way>(entity =>
@@ -288,22 +269,19 @@ public partial class MetroContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ChartId).HasColumnName("chart_id");
             entity.Property(e => e.ClientId).HasColumnName("client_id");
-            entity.Property(e => e.InitDate)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("init_date");
+            entity.Property(e => e.Duration).HasColumnName("duration");
+            entity.Property(e => e.InitDate).HasColumnName("init_date");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .HasColumnName("title");
 
             entity.HasOne(d => d.Chart).WithMany(p => p.Ways)
                 .HasForeignKey(d => d.ChartId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("way_chart_id_fkey");
+                .HasConstraintName("fk_way_chart_id");
 
             entity.HasOne(d => d.Client).WithMany(p => p.Ways)
                 .HasForeignKey(d => d.ClientId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("way_client_id_fkey");
+                .HasConstraintName("fk_way_client_id");
         });
 
         modelBuilder.Entity<WayItem>(entity =>
@@ -316,17 +294,14 @@ public partial class MetroContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nexus)
-                .HasConversion(
-                    v => v.ToString(), // C# -> БД
-                    v => (NexusType)Enum.Parse(typeof(NexusType), v))  // БД -> С#
+                .HasMaxLength(10)
                 .HasColumnName("nexus");
             entity.Property(e => e.StepNomer).HasColumnName("step_nomer");
             entity.Property(e => e.WayId).HasColumnName("way_id");
 
             entity.HasOne(d => d.Way).WithMany(p => p.WayItems)
                 .HasForeignKey(d => d.WayId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("way_item_way_id_fkey");
+                .HasConstraintName("fk_way_item_way_id");
         });
 
         modelBuilder.Entity<WayItemRailway>(entity =>
@@ -345,13 +320,11 @@ public partial class MetroContext : DbContext
 
             entity.HasOne(d => d.Railway).WithMany(p => p.WayItemRailways)
                 .HasForeignKey(d => d.RailwayId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("way_item_railway_railway_id_fkey");
+                .HasConstraintName("fk_way_item_railway_railway_id");
 
             entity.HasOne(d => d.WayItem).WithOne(p => p.WayItemRailway)
                 .HasForeignKey<WayItemRailway>(d => d.WayItemId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("way_item_railway_way_item_id_fkey");
+                .HasConstraintName("fk_way_item_railway_way_item_id");
         });
 
         modelBuilder.Entity<WayItemStation>(entity =>
@@ -370,13 +343,11 @@ public partial class MetroContext : DbContext
 
             entity.HasOne(d => d.Station).WithMany(p => p.WayItemStations)
                 .HasForeignKey(d => d.StationId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("way_item_station_station_id_fkey");
+                .HasConstraintName("fk_way_item_station_station_id");
 
             entity.HasOne(d => d.WayItem).WithOne(p => p.WayItemStation)
                 .HasForeignKey<WayItemStation>(d => d.WayItemId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("way_item_station_way_item_id_fkey");
+                .HasConstraintName("fk_way_item_station_way_item_id");
         });
 
         modelBuilder.Entity<WayItemTransition>(entity =>
@@ -395,13 +366,11 @@ public partial class MetroContext : DbContext
 
             entity.HasOne(d => d.Transition).WithMany(p => p.WayItemTransitions)
                 .HasForeignKey(d => d.TransitionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("way_item_transition_transition_id_fkey");
+                .HasConstraintName("fk_way_item_transition_transition_id");
 
             entity.HasOne(d => d.WayItem).WithOne(p => p.WayItemTransition)
                 .HasForeignKey<WayItemTransition>(d => d.WayItemId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("way_item_transition_way_item_id_fkey");
+                .HasConstraintName("fk_way_item_transition_way_item_id");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -10,11 +10,13 @@ public partial class Way
 
     public string Title { get; set; } = null!;
 
+    public TimeOnly? Duration { get; set; }
+
     public DateTime InitDate { get; set; }
 
     public virtual Chart Chart { get; set; } = null!;
 
     public virtual Client Client { get; set; } = null!;
 
-    public virtual ICollection<WayItem> WayItems { get; set; } = [];
+    public virtual ICollection<WayItem> WayItems { get; set; } = new List<WayItem>();
 }

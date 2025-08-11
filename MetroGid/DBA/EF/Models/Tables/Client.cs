@@ -12,11 +12,11 @@ public partial class Client
 
     public string Mail { get; set; } = null!;
 
-    public RoleType Privilege { get; set; } = RoleType.UNSIGNED;
+    public string? Privilege { get; set; }
 
-    public virtual ICollection<Station> Stations { get; set; } = [];
+    public virtual ICollection<Station> Stations { get; set; } = new List<Station>();
 
-    public virtual ICollection<Transition> Transitions { get; set; } = [];
+    public virtual ICollection<Transition> Transitions { get; set; } = new List<Transition>();
 
-    public virtual ICollection<Way> Ways { get; set; } = [];
+    public virtual ICollection<Way> Ways { get; set; } = new List<Way>();
 }

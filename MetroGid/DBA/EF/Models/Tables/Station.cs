@@ -12,7 +12,7 @@ public partial class Station
 
     public short? Occupancy { get; set; }
 
-    public AccessType Access { get; set; } = AccessType.ACCESSIBLE;
+    public string? Access { get; set; }
 
     public TimeOnly OpenTime { get; set; }
 
@@ -22,11 +22,11 @@ public partial class Station
 
     public virtual Client? Duty { get; set; }
 
-    public virtual ICollection<Railway> RailwayFroms { get; set; } = [];
+    public virtual ICollection<Railway> RailwayFroms { get; set; } = new List<Railway>();
 
-    public virtual ICollection<Railway> RailwayTos { get; set; } = [];
+    public virtual ICollection<Railway> RailwayTos { get; set; } = new List<Railway>();
 
-    public virtual ICollection<StationTransition> StationTransitions { get; set; } = [];
+    public virtual ICollection<StationTransition> StationTransitions { get; set; } = new List<StationTransition>();
 
-    public virtual ICollection<WayItemStation> WayItemStations { get; set; } = [];
+    public virtual ICollection<WayItemStation> WayItemStations { get; set; } = new List<WayItemStation>();
 }

@@ -8,7 +8,7 @@ public partial class WayItem
 
     public int WayId { get; set; }
 
-    public NexusType Nexus { get; set; } = NexusType.STATION;
+    public string Nexus { get; set; } = null!;
 
     public int StepNomer { get; set; }
 

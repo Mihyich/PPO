@@ -10,9 +10,9 @@ public partial class Branch
 
     public int? Color { get; set; }
 
-    public AccessType Access { get; set; } = AccessType.ACCESSIBLE;
+    public string? Access { get; set; }
 
-    public virtual ICollection<BranchStation> BranchStations { get; set; } = [];
+    public virtual ICollection<BranchStation> BranchStations { get; set; } = new List<BranchStation>();
 
     public virtual ChartBranch? ChartBranch { get; set; }
 }

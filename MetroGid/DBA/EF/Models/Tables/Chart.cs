@@ -10,7 +10,7 @@ public partial class Chart
 
     public string? SvgContent { get; set; }
 
-    public virtual ICollection<ChartBranch> ChartBranches { get; set; } = [];
+    public virtual ICollection<ChartBranch> ChartBranches { get; set; } = new List<ChartBranch>();
 
-    public virtual ICollection<Way> Ways { get; set; } = [];
+    public virtual ICollection<Way> Ways { get; set; } = new List<Way>();
 }

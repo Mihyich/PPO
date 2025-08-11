@@ -10,7 +10,7 @@ public partial class Transition
 
     public short? Occupancy { get; set; }
 
-    public AccessType Access { get; set; } = AccessType.ACCESSIBLE;
+    public string? Access { get; set; }
 
     public TimeOnly Duration { get; set; }
 
@@ -20,7 +20,7 @@ public partial class Transition
 
     public virtual Client? Duty { get; set; }
 
-    public virtual ICollection<StationTransition> StationTransitions { get; set; } = [];
+    public virtual ICollection<StationTransition> StationTransitions { get; set; } = new List<StationTransition>();
 
-    public virtual ICollection<WayItemTransition> WayItemTransitions { get; set; } = [];
+    public virtual ICollection<WayItemTransition> WayItemTransitions { get; set; } = new List<WayItemTransition>();
 }
