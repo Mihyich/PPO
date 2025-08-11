@@ -13,30 +13,30 @@ namespace MetroGid.DBA.EF.Converters;
 
 public static class DomainModelConverter
 {
-    public static MDEME.AccessType Convert(MCMT.AccessType type) =>
+    public static string Convert(MCMT.AccessType type) =>
         type switch
         {
-            MCMT.AccessType.ACCESSIBLE => MDEME.AccessType.ACCESSIBLE,
-            MCMT.AccessType.INACCESSIBLE => MDEME.AccessType.INACCESSIBLE,
-            _ => MDEME.AccessType.INACCESSIBLE
+            MCMT.AccessType.ACCESSIBLE => MDEME.AccessType.ACCESSIBLE.ToString(),
+            MCMT.AccessType.INACCESSIBLE => MDEME.AccessType.INACCESSIBLE.ToString(),
+            _ => MDEME.AccessType.INACCESSIBLE.ToString()
         };
 
-    public static MDEME.NexusType Convert(MCMT.WayType type) =>
+    public static string Convert(MCMT.WayType type) =>
         type switch
         {
-            MCMT.WayType.STATION => MDEME.NexusType.STATION,
-            MCMT.WayType.RAILWAY => MDEME.NexusType.RAILWAY,
-            MCMT.WayType.TRANSITION => MDEME.NexusType.TRANSITION,
-            _ => MDEME.NexusType.STATION
+            MCMT.WayType.STATION => MDEME.NexusType.STATION.ToString(),
+            MCMT.WayType.RAILWAY => MDEME.NexusType.RAILWAY.ToString(),
+            MCMT.WayType.TRANSITION => MDEME.NexusType.TRANSITION.ToString(),
+            _ => MDEME.NexusType.STATION.ToString()
         };
 
-    public static MDEME.RoleType Convert(MCMT.RoleType type) =>
+    public static string Convert(MCMT.RoleType type) =>
         type switch
         {
-            MCMT.RoleType.UNSIGNED => MDEME.RoleType.UNSIGNED,
-            MCMT.RoleType.SIGNED => MDEME.RoleType.SIGNED,
-            MCMT.RoleType.DUTY => MDEME.RoleType.DUTY,
-            _ => MDEME.RoleType.UNSIGNED
+            MCMT.RoleType.UNSIGNED => MDEME.RoleType.UNSIGNED.ToString(),
+            MCMT.RoleType.SIGNED => MDEME.RoleType.SIGNED.ToString(),
+            MCMT.RoleType.DUTY => MDEME.RoleType.DUTY.ToString(),
+            _ => MDEME.RoleType.UNSIGNED.ToString()
         };
 
     public static MDEMT.Chart Convert(MCMC.Chart chart) =>
