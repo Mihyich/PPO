@@ -7,7 +7,7 @@ using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Services;
 using Moq;
 
-namespace MetroGidTests.ServicesTests;
+namespace MetroGidUnitTests.ServicesTests;
 
 public class ClientServiceTests
 {

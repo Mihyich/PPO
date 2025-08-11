@@ -9,7 +9,7 @@ using MetroGid.Core.Interfaces;
 using MetroGid.Core.Utilities.Validators.Handlers;
 using Moq;
 
-namespace MetroGidTests.ServicesTests;
+namespace MetroGidUnitTests.ServicesTests;
 
 public class RouteServiceTests
 {

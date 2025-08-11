@@ -1,5 +1,3 @@
-namespace MetroGidTests.DomainAttribsTests;
-
 using MetroGid.Core.Converters;
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
@@ -9,6 +7,8 @@ using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Models.Types;
 using MetroGid.Core.Utilities.Validators.Handlers;
 using MetroGid.Core.Utilities.Validators.Interfaces;
+
+namespace MetroGidUnitTests.DomainAttribsTests;
 
 public class StationAttribsTests
 {

@@ -1,5 +1,3 @@
-namespace MetroGidTests.DomainReferentialityTests;
-
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Handlers;
@@ -10,6 +8,8 @@ using MetroGid.Core.Utilities.Builders;
 using MetroGid.Core.Utilities.Directors;
 using MetroGid.Core.Utilities.Validators.Handlers;
 using MetroGid.Core.Utilities.Validators.Interfaces;
+
+namespace MetroGidUnitTests.DomainReferentialityTests;
 
 public class RailwayReferentialityTests
 {

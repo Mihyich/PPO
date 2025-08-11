@@ -1,5 +1,3 @@
-namespace MetroGidTests.DomainReferentialityTests;
-
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Handlers;
@@ -11,30 +9,33 @@ using MetroGid.Core.Utilities.Directors;
 using MetroGid.Core.Utilities.Validators.Handlers;
 using MetroGid.Core.Utilities.Validators.Interfaces;
 
-public class ChartReferentialityTests
+namespace MetroGidUnitTests.DomainReferentialityTests;
+
+public class BranchReferentialityTests
 {
     [Fact]
-    public void NoBranchesTest()
+    public void NoStationsTest()
     {
         SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
         BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
-        string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "chart.json");
+        string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "chart.json");
         DirectorChartJson director = new(builder, FileReader.ReadAll(filePath));
         Chart chart = director.Construct();
-        chart.Branches.Clear();
+        Branch branch = chart.Branches[chart.Branches.Count / 2];
+        branch.Stations.Clear();
 
         var ex = Assert.Throws<DomainValidationException>(() => { chart.Validate(domainReferentialityValidator); });
 
-        Assert.Equal($"Схема '{chart.Title}' в городе '{chart.City}' не имеет ни одной ветки", ex.Message);
+        Assert.Equal($"Ветка '{branch.Title}' схемы '{chart.Title}' в городе '{chart.City}' не имеет ни одной станции", ex.Message);
         Assert.Equal(ExceptionType.Warning, ex.ExcType);
         Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
     }
 
     [Fact]
-    public void DuplicatedBranchTitlesTest()
+    public void DuplicatedStationTitlesTest()
     {
         SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
@@ -44,17 +45,19 @@ public class ChartReferentialityTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "chart.json");
         DirectorChartJson director = new(builder, FileReader.ReadAll(filePath));
         Chart chart = director.Construct();
-        chart.Branches[chart.Branches.Count / 2].Title = chart.Branches[^1].Title;
+        Branch branch = chart.Branches[chart.Branches.Count / 2];
+        Station station = branch.Stations[branch.Stations.Count / 2];
+        station.Title = branch.Stations[^1].Title;
 
         var ex = Assert.Throws<DomainValidationException>(() => { chart.Validate(domainReferentialityValidator); });
 
-        Assert.Equal($"Схема '{chart.Title}' в городе '{chart.City}' имеет ветки с одинаковыми наименованиями: '{chart.Branches[chart.Branches.Count / 2].Title}'", ex.Message);
+        Assert.Equal($"Ветка схемы '{chart.Title}' имеет станции с одинаковыми наименованиями: '{station.Title}'", ex.Message);
         Assert.Equal(ExceptionType.Error, ex.ExcType);
         Assert.Equal(ExceptionReason.ValueDuplicate, ex.ExcReason);
     }
 
     [Fact]
-    public void UnlinkedBranchTest()
+    public void UnlinkedStationTest()
     {
         SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
@@ -64,31 +67,35 @@ public class ChartReferentialityTests
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "chart.json");
         DirectorChartJson director = new(builder, FileReader.ReadAll(filePath));
         Chart chart = director.Construct();
-        chart.Branches[chart.Branches.Count / 2].Chart = null;
+        Branch branch = chart.Branches[chart.Branches.Count / 2];
+        Station station = branch.Stations[chart.Branches[chart.Branches.Count / 2].Stations.Count / 2];
+        station.Branch = null;
 
         var ex = Assert.Throws<DomainValidationException>(() => { chart.Validate(domainReferentialityValidator); });
 
-        Assert.Equal($"Ветка '{chart.Branches[chart.Branches.Count / 2].Title}' схемы '{chart.Title}' в городе '{chart.City}' не привязана к родной схеме", ex.Message);
+        Assert.Equal($"Станция '{station.Title}' ветки '{branch.Title}' схемы '{chart.Title}' в городе '{chart.City}' не привязана к родной ветке", ex.Message);
         Assert.Equal(ExceptionType.Error, ex.ExcType);
         Assert.Equal(ExceptionReason.NullArgument, ex.ExcReason);
     }
 
     [Fact]
-    public void MismatchlinkingBranchTest()
+    public void MismatchlinkingStationTest()
     {
         SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
         IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
+        BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
-        string filePath1 = Path.Combine(currentDirectory, "Cities", "Moscow", "chart.json");
-        string filePath2 = Path.Combine(currentDirectory, "Cities", "Sankt-Peterburg", "chart.json");
-        Chart chart1 = new DirectorChartJson(new BuilderChart(domainAttribsValidator, domainReferentialityValidator), FileReader.ReadAll(filePath1)).Construct();
-        Chart chart2 = new DirectorChartJson(new BuilderChart(domainAttribsValidator, domainReferentialityValidator), FileReader.ReadAll(filePath2)).Construct();
-        chart1.Branches[chart1.Branches.Count / 2].Chart = chart2;
+        string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "chart.json");
+        DirectorChartJson director = new(builder, FileReader.ReadAll(filePath));
+        Chart chart = director.Construct();
+        Branch branch = chart.Branches[chart.Branches.Count / 2];
+        Station station = branch.Stations[chart.Branches[chart.Branches.Count / 2].Stations.Count / 2];
+        station.Branch = chart.Branches[^1];
 
-        var ex = Assert.Throws<DomainValidationException>(() => { chart1.Validate(domainReferentialityValidator); });
+        var ex = Assert.Throws<DomainValidationException>(() => { chart.Validate(domainReferentialityValidator); });
 
-        Assert.Equal($"Ветка '{chart1.Branches[chart1.Branches.Count / 2].Title}' схемы '{chart1.Title}' в городе '{chart1.City}' ссылается не на родную схему", ex.Message);
+        Assert.Equal($"Станция '{station.Title}' ветки '{branch.Title}' схемы '{chart.Title}' в городе '{chart.City}' ссылается не на родную ветку", ex.Message);
         Assert.Equal(ExceptionType.Error, ex.ExcType);
         Assert.Equal(ExceptionReason.IncorrectLink, ex.ExcReason);
     }
