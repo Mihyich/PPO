@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroGid", "MetroGid\MetroGid.csproj", "{4A3C7F1D-A0A3-4ADC-9AEE-342E81913C49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroGidUnitTests", "MetroGidUnitTests\MetroGidUnitTests.csproj", "{2BE7DEAB-1EDB-493D-9126-26748D7CAF7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroGidIntegrationTests", "MetroGidIntegrationTests\MetroGidIntegrationTests.csproj", "{D5ED25D2-B0E5-41AC-9ABD-968D24B3E450}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A3C7F1D-A0A3-4ADC-9AEE-342E81913C49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A3C7F1D-A0A3-4ADC-9AEE-342E81913C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A3C7F1D-A0A3-4ADC-9AEE-342E81913C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A3C7F1D-A0A3-4ADC-9AEE-342E81913C49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BE7DEAB-1EDB-493D-9126-26748D7CAF7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BE7DEAB-1EDB-493D-9126-26748D7CAF7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BE7DEAB-1EDB-493D-9126-26748D7CAF7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BE7DEAB-1EDB-493D-9126-26748D7CAF7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5ED25D2-B0E5-41AC-9ABD-968D24B3E450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5ED25D2-B0E5-41AC-9ABD-968D24B3E450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5ED25D2-B0E5-41AC-9ABD-968D24B3E450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5ED25D2-B0E5-41AC-9ABD-968D24B3E450}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
