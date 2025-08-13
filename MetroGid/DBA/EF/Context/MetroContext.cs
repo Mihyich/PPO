@@ -7,10 +7,6 @@ namespace MetroGid.DBA.EF.Context;
 
 public partial class MetroContext : DbContext
 {
-    public MetroContext()
-    {
-    }
-
     public MetroContext(DbContextOptions<MetroContext> options) : base(options)
     {
     }
@@ -42,9 +38,6 @@ public partial class MetroContext : DbContext
     public virtual DbSet<WayItemStation> WayItemStations { get; set; } = null!;
 
     public virtual DbSet<WayItemTransition> WayItemTransitions { get; set; } = null!;
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=metro;Username=postgres;Password=1234");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
