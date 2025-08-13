@@ -1,13 +1,11 @@
 ﻿using MetroGid.DBA.EF.Models.Tables;
-using MetroGid.DBA.EF.Models.UserDefinedTypes;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace MetroGid.DBA.EF.Context;
 
-public partial class MetroContext : DbContext
+public partial class MetroDbContext : DbContext
 {
-    public MetroContext(DbContextOptions<MetroContext> options) : base(options)
+    public MetroDbContext(DbContextOptions<MetroDbContext> options) : base(options)
     {
     }
 
@@ -42,7 +40,7 @@ public partial class MetroContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDbFunction(
-            typeof(MetroContext).GetMethod(nameof(GetChartJsonById))
+            typeof(MetroDbContext).GetMethod(nameof(GetChartJsonById))
             ?? throw new Exception("Эээ, а где функция!?")
         )
             .HasName("get_chart_json_by_id")

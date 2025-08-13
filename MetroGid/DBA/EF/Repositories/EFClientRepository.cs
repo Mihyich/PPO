@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MetroGid.DBA.EF.Repositories;
 
-public class EFClientRepository(MetroContext context) : IClientRepository
+public class EFClientRepository(MetroDbContext context) : IClientRepository
 {
-    private readonly MetroContext _context = context;
+    private readonly MetroDbContext _context = context;
 
     public async Task<int> AddAsync(MCMC.Client client)
     {

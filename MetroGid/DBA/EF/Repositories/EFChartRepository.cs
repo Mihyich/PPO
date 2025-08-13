@@ -7,9 +7,9 @@ using MetroGid.DBA.EF.Converters;
 
 namespace MetroGid.DBA.EF.Repositories;
 
-public class EFChartRepository(MetroContext context) : IChartRepository
+public class EFChartRepository(MetroDbContext context) : IChartRepository
 {
-    private readonly MetroContext _context = context;
+    private readonly MetroDbContext _context = context;
 
     public Task<int> AddAsync(MCMC.Chart chart)
     {

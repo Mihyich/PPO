@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MetroGid.DBA.EF.Repositories;
 
-public class EFRouteRepository(MetroContext context) : IRouteRepository
+public class EFRouteRepository(MetroDbContext context) : IRouteRepository
 {
-    private readonly MetroContext _context = context;
+    private readonly MetroDbContext _context = context;
 
     public async Task<int> AddAsync(MCMC.Route route, int clientId, int chartId)
     {
