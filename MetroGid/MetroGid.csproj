@@ -24,6 +24,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Работа с переменными окружения -->
+    <PackageReference Include="dotenv.net" Version="4.0.0" />
+
     <!-- Основной провайдер PostgreSQL -->
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
 
