@@ -2,7 +2,11 @@ ALTER TABLE client
 	ALTER COLUMN client_login SET NOT NULL,
 	ALTER COLUMN client_password SET NOT NULL,
 	ALTER COLUMN mail SET NOT NULL,
-	ALTER COLUMN privilege SET DEFAULT 'UNSIGNED';
+	ALTER COLUMN privilege SET DEFAULT 'UNSIGNED',
+	ADD CONSTRAINT uk_client_login
+		UNIQUE (client_login),
+	ADD CONSTRAINT uk_client_mail
+		UNIQUE (mail);
 
 
 ALTER TABLE chart
