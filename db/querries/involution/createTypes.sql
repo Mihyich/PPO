@@ -18,7 +18,7 @@ CHECK (
 
 CREATE DOMAIN login_inst AS VARCHAR(255)
 CHECK(
-    LENGTH(VALUE) >= 6
+    LENGTH(VALUE) >= 0
 );
 
 CREATE DOMAIN password_inst AS VARCHAR(255)
