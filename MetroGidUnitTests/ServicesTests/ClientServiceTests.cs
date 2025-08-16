@@ -12,8 +12,8 @@ namespace MetroGidUnitTests.ServicesTests;
 public class ClientServiceTests
 {
     [Theory]
-    [InlineData("abc", "1234", "abc@mail.ru", "Логин клиента с почтой 'abc@mail.ru' имеет недопустимую длину: 3 не принадлежит [4, 255]", ExceptionType.Warning, ExceptionReason.StringLenghtOutOfRange)]
-    [InlineData("abcd", "123", "abc@mail.ru", "Пароль клиента 'abcd' с почтой 'abc@mail.ru' имеет недопустимую длину: 3 не принадлежит [4, 255]", ExceptionType.Warning, ExceptionReason.StringLenghtOutOfRange)]
+    [InlineData("", "Aa1234", "abc@mail.ru", "Логин клиента с почтой 'abc@mail.ru' имеет недопустимую длину: 0 не принадлежит [1, 255]", ExceptionType.Warning, ExceptionReason.StringLenghtOutOfRange)]
+    [InlineData("abcd", "123", "abc@mail.ru", "Пароль клиента 'abcd' с почтой 'abc@mail.ru' имеет недопустимую длину: 3 не принадлежит [6, 255]", ExceptionType.Warning, ExceptionReason.StringLenghtOutOfRange)]
     public async void ClientAttribsRegTest(string login, string password, string mail, string exMessege, ExceptionType exType, ExceptionReason exReason)
     {
         Mock<IClientRepository> mockClientRepo = new();
@@ -33,7 +33,7 @@ public class ClientServiceTests
     public async void ClientLoginInUseRegTest()
     {
         string login = "abcd";
-        string password = "1234";
+        string password = "Aa1234";
         string mail = "abc@mail.ru";
 
         string exMessege = $"Логин '{login}' уже занят";
@@ -59,7 +59,7 @@ public class ClientServiceTests
     public async void ClientMailInUseRegTest()
     {
         string login = "abcd";
-        string password = "1234";
+        string password = "Aa1234";
         string mail = "abc@mail.ru";
 
         string exMessege = $"Почта '{mail}' уже занята";
@@ -85,7 +85,7 @@ public class ClientServiceTests
     public async void ClientNotFoundUnRegTest()
     {
         string login = "abcd";
-        string password = "1234";
+        string password = "Aa1234";
         string mail = "abc@mail.ru";
 
         string exMessege = $"Пользователь '{login}' с почтой '{mail}' не существует";
@@ -111,7 +111,7 @@ public class ClientServiceTests
     public async void ClientNotFoundSingInTest()
     {
         string login = "abcd";
-        string password = "1234";
+        string password = "Aa1234";
         string mail = "abc@mail.ru";
 
         string exMessege = $"Пользователь '{login}' с почтой '{mail}' не существует";
@@ -137,7 +137,7 @@ public class ClientServiceTests
     public async void ClientNotFoundSingOutTest()
     {
         string login = "abcd";
-        string password = "1234";
+        string password = "Aa1234";
         string mail = "abc@mail.ru";
 
         string exMessege = $"Пользователь '{login}' с почтой '{mail}' не существует";
@@ -163,7 +163,7 @@ public class ClientServiceTests
     public async void ClientNotFoundGetRoleTest()
     {
         string login = "abcd";
-        string password = "1234";
+        string password = "Aa1234";
         string mail = "abc@mail.ru";
 
         string exMessege = $"Пользователь '{login}' с почтой '{mail}' не существует";
