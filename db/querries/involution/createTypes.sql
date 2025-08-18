@@ -26,13 +26,13 @@ CHECK(
     VALUE ~ '[A-ZА-Я]' AND
     VALUE ~ '[a-zа-я]' AND
     VALUE ~ '\d' AND
-    VALUE ~ '^[A-ZА-Яa-zа-я0-9_]+$' AND
+    VALUE ~ '^[A-ZА-Яa-zа-я0-9_!@#$%^&*()\-+=\[\]{}|:;,.?<>~`"]+$' AND
     LENGTH(VALUE) >= 6
 );
 
 CREATE DOMAIN mail_inst AS VARCHAR(255)
 CHECK(
-    VALUE ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    VALUE ~ '^[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+(\.[a-zA-Z0-9!#$%&''*+/=?^_`{|}~-]+)*@([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$'
 );
 
 CREATE DOMAIN occupancy_level AS SMALLINT
