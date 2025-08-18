@@ -12,7 +12,7 @@ using MetroGid.Core.Utilities.Builders;
 using MetroGid.Core.Utilities.Directors;
 using MetroGid.Core.Utilities.Strategies;
 using MetroGid.Core.Utilities.Validators.Handlers;
-using MetroGid.DBA.Interfaces;
+using MetroGid.Core.Interfaces;
 
 namespace MetroGid.Core.Services;
 

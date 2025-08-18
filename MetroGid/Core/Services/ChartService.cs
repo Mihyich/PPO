@@ -2,7 +2,7 @@ using MetroGid.Controllers.DTO;
 using MetroGid.Controllers.Interfaces;
 using MetroGid.Core.Converters;
 using MetroGid.Core.Models.Concrete;
-using MetroGid.DBA.Interfaces;
+using MetroGid.Core.Interfaces;
 
 namespace MetroGid.Core.Services;
 
