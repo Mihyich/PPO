@@ -9,7 +9,7 @@ public interface IClientService
     // Удаление пользователя из БД
     Task UnReg(string login, string password, string mail);
     // Вход
-    Task<int> SingIn(string login, string password, string mail);
+    Task<RoleTypeDTO> SingIn(string login, string password, string mail);
     // Выход
     Task SingOut(string login, string password, string mail);
     // Получить роль пользователя
