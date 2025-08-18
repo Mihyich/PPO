@@ -6,6 +6,9 @@ using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Interfaces;
 using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utilities.Validators.Handlers;
+using MetroGid.Core.Interfaces;
+using MetroGid.Core.Exceptions.Concrete;
+using MetroGid.Core.Exceptions.Classification;
 
 namespace MetroGid.Core.Services;
 
@@ -25,6 +28,26 @@ public class ClientService(
     {
         Client client = new(login, password, mail);
         client.Validate(DomainAttribsValidator);
+
+        await Handler.SnapAsync(
+            async () =>
+            {
+                if (await ClientRepo.IsLoginExistsAsync(login))
+                    throw new DataBaseException(
+                        $"Логин '{login}' уже занят",
+                        ExceptionType.Quiet,
+                        ExceptionReason.ItemAlreadyInUse
+                    );
+
+                if (await ClientRepo.IsMailExistsAsync(login))
+                    throw new DataBaseException(
+                        $"Почта '{mail}' уже занята",
+                        ExceptionType.Quiet,
+                        ExceptionReason.ItemAlreadyInUse
+                    );
+            }, Logger
+        );
+
         return await ClientRepo.AddAsync(client);
     }
 
@@ -32,13 +55,30 @@ public class ClientService(
         await ClientRepo.DeleteAsync(
             await ClientRepo.GetIdByCredentialsAsync(login, password, mail));
 
-    public async Task<int> SingIn(string login, string password, string mail) =>
-        await ClientRepo.GetIdAsync(
-            await ClientRepo.GetByCredentialsAsync(login, password, mail));
+    public async Task<RoleTypeDTO> SignIn(string login, string password, string mail) =>
+        await GetRole(login, password, mail);
 
-    public async Task SingOut(string login, string password, string mail) =>
+    public async Task SignOut(string login, string password, string mail) =>
         await ClientRepo.GetByCredentialsAsync(login, password, mail);
 
-    public async Task<RoleTypeDTO> GetRole(string login, string password, string mail) =>
-        DomainDtoConverter.Convert((await ClientRepo.GetByCredentialsAsync(login, password, mail)).Role);
+    public async Task<RoleTypeDTO> GetRole(string login, string password, string mail)
+    {
+        int clientId = await Handler.SnapAsync(
+            async () =>
+            {
+                int id = await ClientRepo.GetIdByCredentialsAsync(login, password, mail);
+
+                if (id == 0)
+                    throw new DataBaseException(
+                        $"Пользователь с логином \"{login}\" и почтой \"{mail}\" не найден",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+
+                return id;
+            }, Logger
+        );
+
+        return DomainDtoConverter.Convert(await ClientRepo.GetRoleByIdAsync(clientId));
+    }
 }
