@@ -54,10 +54,10 @@ public class ClientService(
         await ClientRepo.DeleteAsync(
             await ClientRepo.GetIdByCredentialsAsync(login, password, mail));
 
-    public async Task<RoleTypeDTO> SingIn(string login, string password, string mail) =>
+    public async Task<RoleTypeDTO> SignIn(string login, string password, string mail) =>
         await GetRole(login, password, mail);
 
-    public async Task SingOut(string login, string password, string mail) =>
+    public async Task SignOut(string login, string password, string mail) =>
         await ClientRepo.GetByCredentialsAsync(login, password, mail);
 
     public async Task<RoleTypeDTO> GetRole(string login, string password, string mail)
