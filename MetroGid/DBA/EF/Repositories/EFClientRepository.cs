@@ -1,6 +1,7 @@
 using MetroGid.Core.Interfaces;
 using MCMC = MetroGid.Core.Models.Concrete;
-using MetroGid.DBA.EF.Models.Tables;
+using MCMT = MetroGid.Core.Models.Types;
+using MDEMT = MetroGid.DBA.EF.Models.Tables;
 using MetroGid.DBA.EF.Converters;
 using MetroGid.DBA.EF.Context;
 using Microsoft.EntityFrameworkCore;
@@ -13,39 +14,40 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
 
     public async Task<int> AddAsync(MCMC.Client client)
     {
-        Client entity = DomainModelConverter.Convert(client);
-        _context.Clients.Add(entity);
+        MDEMT.Client entity = DomainModelConverter.Convert(client);
+        await _context.Clients.AddAsync(entity);
         await _context.SaveChangesAsync();
         return entity.Id;
     }
 
     public async Task<int> GetIdAsync(MCMC.Client client)
     {
-        Client entity = DomainModelConverter.Convert(client);
-        
-        return await _context.Clients
-            .AsNoTracking()
-            .Where(c => c.ClientLogin == entity.ClientLogin &&
-                    c.ClientPassword == entity.ClientPassword &&
-                    c.Mail == entity.Mail)
-            .Select(c => c.Id)
-            .FirstOrDefaultAsync();
+        MDEMT.Client entity = DomainModelConverter.Convert(client);
+        return await GetIdByCredentialsAsync(entity.ClientLogin, entity.ClientPassword, entity.Mail);
     }
 
-    public async Task<int> GetIdByCredentialsAsync(string login, string password, string mail)
-    {
-        return await _context.Clients
+    public async Task<int> GetIdByCredentialsAsync(string login, string password, string mail) =>
+        await _context.Clients
             .AsNoTracking()
             .Where(c => c.ClientLogin == login &&
                     c.ClientPassword == password &&
                     c.Mail == mail)
             .Select(c => c.Id)
             .FirstOrDefaultAsync();
-    }
+
+    public async Task<MCMT.RoleType> GetRoleByIdAsync(int id) =>
+        ModelDomainConverter.Convert<MCMT.RoleType>(
+            await _context.Clients
+                .AsNoTracking()
+                .Where(c => c.Id == id)
+                .Select(c => c.Privilege)
+                .FirstOrDefaultAsync() ??
+                MCMT.RoleType.UNSIGNED.ToString()
+        );
 
     public async Task<MCMC.Client> GetByIdAsync(int id)
     {
-        Client entity = await _context.Clients
+        MDEMT.Client entity = await _context.Clients
             .AsNoTracking()
             .FirstOrDefaultAsync(c => c.Id == id)
             ?? throw new Exception();
@@ -55,7 +57,7 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
 
     public async Task<MCMC.Client> GetByCredentialsAsync(string login, string password, string mail)
     {
-        Client entity = await _context.Clients
+        MDEMT.Client entity = await _context.Clients
             .AsNoTracking()
             .FirstOrDefaultAsync(c => c.ClientLogin == login &&
                 c.ClientPassword == password &&
@@ -67,26 +69,23 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
 
     public async Task UpdateAsync(int id, MCMC.Client client)
     {
-        Client trackEntity = await _context.Clients
-            .FirstOrDefaultAsync(c => c.Id == id)
-            ?? throw new Exception();
+        MDEMT.Client updClient = DomainModelConverter.Convert(client);
 
-        Client updatedEntity = DomainModelConverter.Convert(client);
-
-        _context.Entry(trackEntity).CurrentValues.SetValues(updatedEntity);
-        
-        await _context.SaveChangesAsync();
+        await _context.Clients
+            .Where(c => c.Id == id)
+            .ExecuteUpdateAsync(setters => setters
+                .SetProperty(c => c.ClientLogin, updClient.ClientLogin)
+                .SetProperty(c => c.ClientPassword, updClient.ClientPassword)
+                .SetProperty(c => c.Mail, updClient.Mail)
+                .SetProperty(c => c.Privilege, updClient.Privilege)
+            );
     }
 
     public async Task DeleteAsync(int id)
     {
-        Client client = await _context.Clients
-            .FirstOrDefaultAsync(c => c.Id == id)
-            ?? throw new Exception();
-
-        _context.Clients.Remove(client);
-        
-        await _context.SaveChangesAsync();
+        await _context.Clients
+            .Where(c => c.Id == id)
+            .ExecuteDeleteAsync();
     }
 
     public async Task<bool> IsLoginExistsAsync(string login) =>
@@ -99,7 +98,7 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
         await _context.Stations
             .AsNoTracking()
             .Where(s => s.Id == stationId)
-            .Select(s => (int?)s.DutyId)
+            .Select(s => s.DutyId)
             .FirstOrDefaultAsync()
             ?? 0;
 
@@ -107,7 +106,7 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
         await _context.Transitions
             .AsNoTracking()
             .Where(t => t.Id == transitionId)
-            .Select(t => (int?)t.DutyId)
+            .Select(t => t.DutyId)
             .FirstOrDefaultAsync()
             ?? 0;
 
