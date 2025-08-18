@@ -35,6 +35,36 @@ public abstract class SuperExceptionHandler
         }
     }
 
+    public async Task<T?> SnapAsync<T>(Func<Task<T>> func, IExceptionVisitor? logger = null)
+    {
+        try
+        {
+            return await func();
+        }
+        catch (SuperException ex) when (ShouldHandle(ex))
+        {
+            if (logger != null)
+                ex.Accept(logger);
+
+            return HandleException<T>(ex);
+        }
+    }
+
+    public async Task SnapAsync(Func<Task> func, IExceptionVisitor? logger = null)
+    {
+        try
+        {
+            await func();
+        }
+        catch (SuperException ex) when (ShouldHandle(ex))
+        {
+            if (logger != null)
+                ex.Accept(logger);
+
+            HandleException(ex);
+        }
+    }
+
     protected abstract bool ShouldHandle(SuperException ex);
 
     protected abstract T? HandleException<T>(SuperException ex);
