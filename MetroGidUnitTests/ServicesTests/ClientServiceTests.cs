@@ -4,7 +4,7 @@ using MetroGid.Core.Exceptions.Handlers;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Services;
-using MetroGid.DBA.Interfaces;
+using MetroGid.Core.Interfaces;
 using Moq;
 
 namespace MetroGidTests.ServicesTests;
@@ -33,7 +33,7 @@ public class ClientServiceTests
     public async void ClientLoginInUseRegTest()
     {
         string login = "abcd";
-        string password = "1234";
+        string password = "Aa1234";
         string mail = "abc@mail.ru";
 
         string exMessege = $"Логин '{login}' уже занят";
@@ -46,10 +46,10 @@ public class ClientServiceTests
         SuperExceptionHandler handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
-        mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
+        mockClientRepo.Setup(x => x.IsLoginExistsAsync(It.IsAny<string>())).ReturnsAsync(true);
         var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.Reg(login, password, mail); });
 
-        mockClientRepo.Verify(x => x.AddAsync(It.IsAny<Client>()), Times.Once);
+        mockClientRepo.Verify(x => x.IsLoginExistsAsync(It.IsAny<string>()), Times.Once);
         Assert.Equal(exMessege, ex.Message);
         Assert.Equal(exType, ex.ExcType);
         Assert.Equal(exReason, ex.ExcReason);
@@ -59,7 +59,7 @@ public class ClientServiceTests
     public async void ClientMailInUseRegTest()
     {
         string login = "abcd";
-        string password = "1234";
+        string password = "Aa1234";
         string mail = "abc@mail.ru";
 
         string exMessege = $"Почта '{mail}' уже занята";
@@ -72,10 +72,10 @@ public class ClientServiceTests
         SuperExceptionHandler handler = new PassThroughHandlerException();
         ClientService clientService = new(mockClientRepo.Object, handler);
 
-        mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
+        mockClientRepo.Setup(x => x.IsMailExistsAsync(It.IsAny<string>())).ReturnsAsync(true);
         var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.Reg(login, password, mail); });
 
-        mockClientRepo.Verify(x => x.AddAsync(It.IsAny<Client>()), Times.Once);
+        mockClientRepo.Verify(x => x.IsMailExistsAsync(It.IsAny<string>()), Times.Once);
         Assert.Equal(exMessege, ex.Message);
         Assert.Equal(exType, ex.ExcType);
         Assert.Equal(exReason, ex.ExcReason);
@@ -108,7 +108,7 @@ public class ClientServiceTests
     }
 
     [Fact]
-    public async void ClientNotFoundSingInTest()
+    public async void ClientNotFoundSignInTest()
     {
         string login = "abcd";
         string password = "1234";

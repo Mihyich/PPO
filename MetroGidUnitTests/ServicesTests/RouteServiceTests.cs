@@ -6,7 +6,7 @@ using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Services;
 using MetroGid.Core.Utilities;
 using MetroGid.Core.Utilities.Validators.Handlers;
-using MetroGid.DBA.Interfaces;
+using MetroGid.Core.Interfaces;
 using Moq;
 
 namespace MetroGidTests.ServicesTests;
