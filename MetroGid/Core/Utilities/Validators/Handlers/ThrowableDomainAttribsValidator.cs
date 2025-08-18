@@ -25,7 +25,7 @@ public class ThrowableDomainAttribsValidator(
 
                 if (thrown)
                     throw new DomainValidationException(
-                        $"Логин клиента с почтой '{client.Mail}' имеет недопустимую длину: {client.Login.Length} не принадлежит [{LoginP.MinLength}, {LoginP.MaxLength}]",
+                        $"Логин клиента '{client.Login}' имеет недопустимую длину: {client.Login.Length} не принадлежит [{LoginP.MinLength}, {LoginP.MaxLength}]",
                         ExceptionType.Warning,
                         ExceptionReason.StringLenghtOutOfRange
                     );
@@ -41,7 +41,39 @@ public class ThrowableDomainAttribsValidator(
 
                 if (thrown)
                     throw new DomainValidationException(
-                        $"Пароль клиента '{client.Login}' с почтой '{client.Mail}' имеет недопустимую длину: {client.Password.Length} не принадлежит [{PasswordP.MinLength}, {PasswordP.MaxLength}]",
+                        $"Пароль клиента '{client.Password}' имеет недопустимую длину: {client.Password.Length} не принадлежит [{PasswordP.MinLength}, {PasswordP.MaxLength}]",
+                        ExceptionType.Warning,
+                        ExceptionReason.StringLenghtOutOfRange
+                    );
+
+                return thrown;
+            }, Logger
+        );
+
+        Handler.Snap(
+            () =>
+            {
+                bool thrown = !PasswordP.IsValid(client.Password);
+
+                if (thrown)
+                    throw new DomainValidationException(
+                        $"Пароль клиета '{client.Password}' не валиден",
+                        ExceptionType.Warning,
+                        ExceptionReason.ValidationFailed
+                    );
+
+                return thrown;
+            }, Logger
+        );
+
+        Handler.Snap(
+            () =>
+            {
+                bool thrown = MailP.IsOutOfRange(client.Mail);
+
+                if (thrown)
+                    throw new DomainValidationException(
+                        $"Почта клиента '{client.Mail}' имеет недопустимую длину: {client.Mail.Length} превышает {MailP.MaxLength}",
                         ExceptionType.Warning,
                         ExceptionReason.StringLenghtOutOfRange
                     );
