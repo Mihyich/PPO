@@ -1,6 +1,7 @@
 using MetroGid.Core.Models.Concrete;
+using MetroGid.Core.Models.Types;
 
-namespace MetroGid.DBA.Interfaces;
+namespace MetroGid.Core.Interfaces;
 
 public interface IClientRepository
 {
@@ -8,6 +9,7 @@ public interface IClientRepository
 
     Task<int> GetIdAsync(Client client);
     Task<int> GetIdByCredentialsAsync(string login, string password, string mail);
+    Task<RoleType> GetRoleByIdAsync(int id);
     Task<Client> GetByIdAsync(int id);
     Task<Client> GetByCredentialsAsync(string login, string password, string mail);
 
