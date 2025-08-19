@@ -1,6 +1,6 @@
 using MetroGid.Core.Interfaces;
 using MCMC = MetroGid.Core.Models.Concrete;
-using MetroGid.DBA.EF.Models.Tables;
+using MDEMT = MetroGid.DBA.EF.Models.Tables;
 using MetroGid.DBA.EF.Context;
 using Microsoft.EntityFrameworkCore;
 using MetroGid.DBA.EF.Converters;
@@ -16,75 +16,68 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         throw new NotImplementedException();
     }
 
-    public async Task<string> GetChartJsonByIdAsync(int chartId) =>
+    public async Task<string?> GetChartJsonByIdAsync(int chartId) =>
         await _context.Charts
             .AsNoTracking()
             .Where(c => c.Id == chartId)
             .Select(c => _context.GetChartJsonById(c.Id))
-            .FirstOrDefaultAsync()
-            ?? throw new Exception();
+            .FirstOrDefaultAsync();
 
-    public async Task<string> GetChartJsonAsync(string city, string title) =>
+    public async Task<string?> GetChartJsonAsync(string city, string title) =>
         await _context.Charts
             .AsNoTracking()
             .Where(c => c.City == city && c.Title == title)
             .Select(c => _context.GetChartJsonById(c.Id))
-            .FirstOrDefaultAsync()
-            ?? throw new Exception();
+            .FirstOrDefaultAsync();
 
-    public async Task<MCMC.Chart> GetChartWeakByIdAsync(int chartId)
+    public async Task<MCMC.Chart?> GetChartWeakByIdAsync(int chartId)
     {
-        Chart chart = await _context.Charts
+        MDEMT.Chart? chart = await _context.Charts
             .AsNoTracking()
             .Where(c => c.Id == chartId)
-            .FirstOrDefaultAsync()
-            ?? throw new Exception();
+            .FirstOrDefaultAsync();
 
-        return ModelDomainConverter.Convert(chart);
+        return chart != null ? ModelDomainConverter.Convert(chart) : null;
     }
 
-    public async Task<MCMC.Branch> GetBranchWeakByIdAsync(int branchId)
+    public async Task<MCMC.Branch?> GetBranchWeakByIdAsync(int branchId)
     {
-        Branch branch = await _context.Branches
+        MDEMT.Branch? branch = await _context.Branches
             .AsNoTracking()
             .Where(b => b.Id == branchId)
-            .FirstOrDefaultAsync()
-            ?? throw new Exception();
+            .FirstOrDefaultAsync();
 
-        return ModelDomainConverter.Convert(branch);
+        return branch != null ? ModelDomainConverter.Convert(branch) : null;
     }
 
-    public async Task<MCMC.Station> GetStationWeakByIdAsync(int stationId)
+    public async Task<MCMC.Station?> GetStationWeakByIdAsync(int stationId)
     {
-        Station station = await _context.Stations
+        MDEMT.Station? station = await _context.Stations
             .AsNoTracking()
             .Where(s => s.Id == stationId)
-            .FirstOrDefaultAsync()
-            ?? throw new Exception();
+            .FirstOrDefaultAsync();
 
-        return ModelDomainConverter.Convert(station);
+        return station != null ? ModelDomainConverter.Convert(station) : null;
     }
 
-    public async Task<MCMC.Railway> GetRailwayByIdAsync(int railwayId)
+    public async Task<MCMC.Railway?> GetRailwayByIdAsync(int railwayId)
     {
-        Railway railway = await _context.Railways
+        MDEMT.Railway? railway = await _context.Railways
             .AsNoTracking()
             .Where(r => r.Id == railwayId)
-            .FirstOrDefaultAsync()
-            ?? throw new Exception();
+            .FirstOrDefaultAsync();
 
-        return ModelDomainConverter.Convert(railway);
+        return railway != null ? ModelDomainConverter.Convert(railway) : null;
     }
 
-    public async Task<MCMC.Transition> GetTransitionByIdAsync(int transitionId)
+    public async Task<MCMC.Transition?> GetTransitionByIdAsync(int transitionId)
     {
-        Transition transition = await _context.Transitions
+        MDEMT.Transition? transition = await _context.Transitions
             .AsNoTracking()
             .Where(t => t.Id == transitionId)
-            .FirstOrDefaultAsync()
-            ?? throw new Exception();
+            .FirstOrDefaultAsync();
 
-        return ModelDomainConverter.Convert(transition);
+        return transition != null ? ModelDomainConverter.Convert(transition) : null;
     }
 
     public async Task<int> GetChartIdAsync(string city, string title) =>
@@ -124,7 +117,7 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             .Where(cb => cb.ChartId == chartId)
             .Select(cb => cb.BranchId)
             .ToListAsync();
-    
+
     public async Task<List<int>> GetAllBranchStationIdAsync(int branchId) =>
         await _context.BranchStations
             .AsNoTracking()
@@ -132,16 +125,13 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             .Select(bs => bs.StationId)
             .ToListAsync();
 
-    public async Task<(string, string)> GetAllChartCityTitleAsync()
-    {
-        var query = await _context.Charts
+    public async Task<List<(string, string)>> GetAllChartCityTitleAsync() =>
+        (await _context.Charts
             .AsNoTracking()
             .Select(c => new { c.City, c.Title })
-            .FirstOrDefaultAsync()
-            ?? throw new Exception();
-
-        return (query.City, query.Title);
-    }
+            .ToListAsync())
+                .Select(x => (x.City, x.Title))
+                .ToList();
 
     public async Task<List<string>> GetAllChartBranchTitleAsync(int chartId) =>
         await _context.ChartBranches
@@ -183,106 +173,92 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             .Select(st => st.TransitionId)
             .ToListAsync();
 
-    public async Task<(int, int)> GetFromToStationIdByRailwayIdAsync(int railwayId)
+    public async Task<(int, int)?> GetFromToStationIdByRailwayIdAsync(int railwayId)
     {
-        var query = await _context.Railways
+        var result = await _context.Railways
             .AsNoTracking()
             .Where(r => r.Id == railwayId)
             .Select(r => new { r.FromId, r.ToId })
-            .FirstOrDefaultAsync()
-            ?? throw new Exception();
+            .FirstOrDefaultAsync();
 
-        return (query.FromId, query.ToId);
+        return result != null ? (result.FromId, result.ToId) : null;
     }
 
-    public async Task<(int, int)> GetFromToStationIdByTransitionIdAsync(int transitionId)
+    public async Task<(int, int)?> GetFromToStationIdByTransitionIdAsync(int transitionId)
     {
-        var query = await _context.StationTransitions
+        var result = await _context.StationTransitions
             .AsNoTracking()
             .Where(t => t.TransitionId == transitionId)
             .Select(st => st.StationId)
-            .ToListAsync()
-            ?? throw new Exception();
+            .ToListAsync();
 
-        if (query.Count != 2)
-            throw new Exception();
-
-        return (query[0], query[1]);
+        return result.Count == 2 ? (result[0], result[1]) : null;
     }
 
-    public async Task UpdateChartByIdAsync(int chartId, MCMC.Chart chart)
+    public async Task<int> UpdateChartByIdAsync(int chartId, MCMC.Chart chart)
     {
-        Chart trackEntity = await _context.Charts
-            .FirstOrDefaultAsync(c => c.Id == chartId)
-            ?? throw new Exception();
+        MDEMT.Chart? trackEntity = await _context.Charts.FirstOrDefaultAsync(c => c.Id == chartId);
 
-        Chart updatedEntity = DomainModelConverter.Convert(chart);
+        if (trackEntity != null)
+            _context.Entry(trackEntity).CurrentValues.SetValues(DomainModelConverter.Convert(chart));
 
-        _context.Entry(trackEntity).CurrentValues.SetValues(updatedEntity);
-        
-        await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateBranchByIdAsync(int branchId, MCMC.Branch branch)
+    public async Task<int> UpdateBranchByIdAsync(int branchId, MCMC.Branch branch)
     {
-        Branch trackEntity = await _context.Branches
-            .FirstOrDefaultAsync(b => b.Id == branchId)
-            ?? throw new Exception();
+        MDEMT.Branch? trackEntity = await _context.Branches.FirstOrDefaultAsync(b => b.Id == branchId);
 
-        Branch updatedEntity = DomainModelConverter.Convert(branch);
+        if (trackEntity != null)
+            _context.Entry(trackEntity).CurrentValues.SetValues(DomainModelConverter.Convert(branch));
 
-        _context.Entry(trackEntity).CurrentValues.SetValues(updatedEntity);
-        
-        await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateStationByIdAsync(int stationId, MCMC.Station station)
+    public async Task<int> UpdateStationByIdAsync(int stationId, MCMC.Station station)
     {
-        Station trackEntity = await _context.Stations
-            .FirstOrDefaultAsync(s => s.Id == stationId)
-            ?? throw new Exception();
+        MDEMT.Station? trackEntity = await _context.Stations.FirstOrDefaultAsync(s => s.Id == stationId);
 
-        Station updatedEntity = DomainModelConverter.Convert(station);
+        if (trackEntity != null)
+            _context.Entry(trackEntity).CurrentValues.SetValues(DomainModelConverter.Convert(station));
 
-        _context.Entry(trackEntity).CurrentValues.SetValues(updatedEntity);
-        
-        await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateRailwayByIdAsync(int railwayId, MCMC.Railway railway)
+    public async Task<int> UpdateRailwayByIdAsync(int railwayId, MCMC.Railway railway)
     {
-        Railway trackEntity = await _context.Railways
-            .FirstOrDefaultAsync(r => r.Id == railwayId)
-            ?? throw new Exception();
+        MDEMT.Railway? trackEntity = await _context.Railways.FirstOrDefaultAsync(r => r.Id == railwayId);
 
-        Railway updatedEntity = DomainModelConverter.Convert(railway);
+        if (trackEntity != null)
+            _context.Entry(trackEntity).CurrentValues.SetValues(DomainModelConverter.Convert(railway));
 
-        _context.Entry(trackEntity).CurrentValues.SetValues(updatedEntity);
-        
-        await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateTransitionByIdAsync(int transitionId, MCMC.Transition transition)
+    public async Task<int> UpdateTransitionByIdAsync(int transitionId, MCMC.Transition transition)
     {
-        Transition trackEntity = await _context.Transitions
-            .FirstOrDefaultAsync(t => t.Id == transitionId)
-            ?? throw new Exception();
+        MDEMT.Transition? trackEntity = await _context.Transitions.FirstOrDefaultAsync(t => t.Id == transitionId);
 
-        Transition updatedEntity = DomainModelConverter.Convert(transition);
+        if (trackEntity != null)
+            _context.Entry(trackEntity).CurrentValues.SetValues(DomainModelConverter.Convert(transition));
 
-        _context.Entry(trackEntity).CurrentValues.SetValues(updatedEntity);
-        
-        await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteChartByIdAsync(int id)
-    {
-        Branch branch = await _context.Branches
-            .FirstOrDefaultAsync(b => b.Id == id)
-            ?? throw new Exception();
+    public async Task<int> DeleteChartByIdAsync(int id) =>
+        await _context.Charts
+            .Where(c => c.Id == id)
+            .ExecuteDeleteAsync();
 
-        _context.Branches.Remove(branch);
-        
-        await _context.SaveChangesAsync();
-    }
+    public async Task<bool> IsCityTitleUniqueAsync(string city, string title) =>
+        !await _context.Charts
+            .AsNoTracking()
+            .Where(c => c.City == city && c.Title == title)
+            .AnyAsync();
+
+    public async Task<bool> IsBranchTitleUniqueInChartAsync(string title, int chartId) =>
+        !await _context.ChartBranches
+            .AsNoTracking()
+            .Where(cb => cb.ChartId == chartId)
+            .AnyAsync(cb => cb.Branch.Title == title);
 }

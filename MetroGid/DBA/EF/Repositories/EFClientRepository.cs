@@ -45,33 +45,27 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
                 MCMT.RoleType.UNSIGNED.ToString()
         );
 
-    public async Task<MCMC.Client> GetByIdAsync(int id)
+    public async Task<MCMC.Client?> GetByIdAsync(int id)
     {
-        MDEMT.Client entity = await _context.Clients
-            .AsNoTracking()
-            .FirstOrDefaultAsync(c => c.Id == id)
-            ?? throw new Exception();
-
-        return ModelDomainConverter.Convert(entity);
+        MDEMT.Client? entity = await _context.Clients.FirstOrDefaultAsync(c => c.Id == id);
+        return entity != null ? ModelDomainConverter.Convert(entity) : null;
     }
 
-    public async Task<MCMC.Client> GetByCredentialsAsync(string login, string password, string mail)
+    public async Task<MCMC.Client?> GetByCredentialsAsync(string login, string password, string mail)
     {
-        MDEMT.Client entity = await _context.Clients
-            .AsNoTracking()
+        MDEMT.Client? entity = await _context.Clients
             .FirstOrDefaultAsync(c => c.ClientLogin == login &&
                 c.ClientPassword == password &&
-                c.Mail == mail)
-            ?? throw new Exception();
+                c.Mail == mail);
 
-        return ModelDomainConverter.Convert(entity);
+        return entity != null ? ModelDomainConverter.Convert(entity) : null;
     }
 
-    public async Task UpdateAsync(int id, MCMC.Client client)
+    public async Task<int> UpdateAsync(int id, MCMC.Client client)
     {
         MDEMT.Client updClient = DomainModelConverter.Convert(client);
 
-        await _context.Clients
+        return await _context.Clients
             .Where(c => c.Id == id)
             .ExecuteUpdateAsync(setters => setters
                 .SetProperty(c => c.ClientLogin, updClient.ClientLogin)
@@ -81,12 +75,10 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
             );
     }
 
-    public async Task DeleteAsync(int id)
-    {
+    public async Task<int> DeleteAsync(int id) =>
         await _context.Clients
             .Where(c => c.Id == id)
             .ExecuteDeleteAsync();
-    }
 
     public async Task<bool> IsLoginExistsAsync(string login) =>
         await _context.Clients.AnyAsync(c => c.ClientLogin == login);
