@@ -135,7 +135,7 @@ public class RouteService(
 
         return (roleType == RoleType.SIGNED || roleType == RoleType.DUTY) ?
         (await RouteRepo
-            .GetAllRouteForClientOfChartIdAsync(clientId, chartId))
+            .GetAllForClientOfChartIdAsync(clientId, chartId))
                 .ConvertAll(DomainDtoConverter.Convert) :
         new List<RouteDTO>();
     }

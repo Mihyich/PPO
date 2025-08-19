@@ -3,7 +3,6 @@ using MetroGid.Controllers.Interfaces;
 using MetroGid.Core.Converters;
 using MetroGid.Core.Interfaces;
 using MetroGid.Core.Models.Concrete;
-using MetroGid.Core.Interfaces;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Concrete;
@@ -42,7 +41,7 @@ public class ChartService(
     public async Task<int> GetChartId(string city, string title) =>
         await ChartRepo.GetChartIdAsync(city, title);
 
-    public async Task<(string, string)> GetChartsCitiesTitles() =>
+    public async Task<List<ValueTuple<string, string>>> GetChartsCitiesTitles() =>
         await ChartRepo.GetAllChartCityTitleAsync();
 
 
