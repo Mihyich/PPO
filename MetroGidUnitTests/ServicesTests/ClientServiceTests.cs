@@ -6,6 +6,7 @@ using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Services;
 using MetroGid.Core.Interfaces;
 using Moq;
+using MetroGid.Core.Utilities.Validators.Handlers;
 
 namespace MetroGidTests.ServicesTests;
 
@@ -18,7 +19,8 @@ public class ClientServiceTests
     {
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
+        ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
+        ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ReturnsAsync(1);
         var ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await clientService.Reg(login, password, mail); });
@@ -44,7 +46,8 @@ public class ClientServiceTests
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
+        ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
+        ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.IsLoginExistsAsync(It.IsAny<string>())).ReturnsAsync(true);
         var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.Reg(login, password, mail); });
@@ -70,7 +73,8 @@ public class ClientServiceTests
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
+        ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
+        ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.IsMailExistsAsync(It.IsAny<string>())).ReturnsAsync(true);
         var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.Reg(login, password, mail); });
@@ -96,7 +100,8 @@ public class ClientServiceTests
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
+        ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
+        ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.GetIdByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
         var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.UnReg(login, password, mail); });
@@ -122,10 +127,11 @@ public class ClientServiceTests
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
+        ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
+        ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.GetIdByCredentialsAsync(login, password, mail)).ReturnsAsync(0);
-        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.SingIn(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.SignIn(login, password, mail); });
 
         mockClientRepo.Verify(x => x.GetIdByCredentialsAsync(login, password, mail), Times.Once);
         Assert.Equal(exMessege, ex.Message);

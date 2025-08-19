@@ -101,12 +101,10 @@ public class RouteServiceTests
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
         RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        DomainValidationException ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+        RouteDTO routeDTO = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"Маршрут 'Новый маршрут' схемы '{chartTitle}' в городе '{city}' пустой", ex.Message);
-        Assert.Equal(ExceptionType.Warning, ex.ExcType);
-        Assert.Equal(ExceptionReason.NullResult, ex.ExcReason);
+        Assert.Null(routeDTO);
     }
 
     [Fact]
@@ -133,12 +131,10 @@ public class RouteServiceTests
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
         RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        DomainValidationException ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+        RouteDTO routeDTO = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"Маршрут 'Новый маршрут' схемы '{chartTitle}' в городе '{city}' пустой", ex.Message);
-        Assert.Equal(ExceptionType.Warning, ex.ExcType);
-        Assert.Equal(ExceptionReason.NullResult, ex.ExcReason);
+        Assert.Null(routeDTO);
     }
 
     [Fact]
@@ -165,12 +161,10 @@ public class RouteServiceTests
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
         RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        DomainValidationException ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+        RouteDTO routeDTO = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"Маршрут 'Новый маршрут' схемы '{chartTitle}' в городе '{city}' пустой", ex.Message);
-        Assert.Equal(ExceptionType.Warning, ex.ExcType);
-        Assert.Equal(ExceptionReason.NullResult, ex.ExcReason);
+        Assert.Null(routeDTO);
     }
 
     [Fact]
@@ -264,7 +258,7 @@ public class RouteServiceTests
         ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"В схеме '{chartTitle}' в городе '{city}' не найдена станция '{stationSrcTitle}' ветки '{branchSrcTitle}'", ex.Message);
+        Assert.Equal($"В схеме '{chartTitle}' для города '{city}' не найдена станция '{stationSrcTitle}' ветки '{branchSrcTitle}'", ex.Message);
         Assert.Equal(ExceptionType.Error, ex.ExcType);
         Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
     }
@@ -497,12 +491,10 @@ public class RouteServiceTests
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
         RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        DomainValidationException ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+        RouteDTO routeDTO = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"Маршрут 'Новый маршрут' схемы '{chartTitle}' в городе '{city}' пустой", ex.Message);
-        Assert.Equal(ExceptionType.Warning, ex.ExcType);
-        Assert.Equal(ExceptionReason.NullResult, ex.ExcReason);
+        Assert.Null(routeDTO);
     }
 
     [Fact]
@@ -529,12 +521,10 @@ public class RouteServiceTests
         mockChartRepo.Setup(x => x.GetChartJsonAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
         RouteService routeService = new(mockChartRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        DomainValidationException ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
+        RouteDTO routeDTO = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"Маршрут 'Новый маршрут' схемы '{chartTitle}' в городе '{city}' пустой", ex.Message);
-        Assert.Equal(ExceptionType.Warning, ex.ExcType);
-        Assert.Equal(ExceptionReason.NullResult, ex.ExcReason);
+        Assert.Null(routeDTO);
     }
 
     [Fact]
@@ -564,7 +554,7 @@ public class RouteServiceTests
         ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"В схеме '{chartTitle}' в городе '{city}' не найдена станция '{stationSrcTitle}' ветки '{branchSrcTitle}'", ex.Message);
+        Assert.Equal($"В схеме '{chartTitle}' для города '{city}' не найдена станция '{stationSrcTitle}' ветки '{branchSrcTitle}'", ex.Message);
         Assert.Equal(ExceptionType.Error, ex.ExcType);
         Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
     }
@@ -596,7 +586,7 @@ public class RouteServiceTests
         ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
 
         mockChartRepo.Verify(x => x.GetChartJsonAsync(city, chartTitle), Times.Once);
-        Assert.Equal($"В схеме '{chartTitle}' в городе '{city}' не найдена станция '{stationDstTitle}' ветки '{branchDstTitle}'", ex.Message);
+        Assert.Equal($"В схеме '{chartTitle}' для города '{city}' не найдена станция '{stationDstTitle}' ветки '{branchDstTitle}'", ex.Message);
         Assert.Equal(ExceptionType.Error, ex.ExcType);
         Assert.Equal(ExceptionReason.NotFound, ex.ExcReason);
     }
