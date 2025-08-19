@@ -8,6 +8,7 @@ using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Classification;
+using MetroGid.Core.Models.Types;
 
 namespace MetroGid.Core.Services;
 
@@ -96,15 +97,23 @@ public class ChartService(
 
 
 
-    public async Task<int> UpdateChart(int chartId, ChartDTO chart) =>
-        await ChartRepo.UpdateChartByIdAsync(chartId, DtoDomainConverter.Convert(chart));
+    public async Task<int> UpdateChart(RoleTypeDTO role, int chartId, ChartDTO chart) =>
+        DtoDomainConverter.Convert(role) == RoleType.DUTY ?
+        await ChartRepo.UpdateChartByIdAsync(chartId, DtoDomainConverter.Convert(chart)) :
+        0;
 
-    public async Task<int> UpdateBranch(int branchId, BranchDTO branch) =>
-        await ChartRepo.UpdateBranchByIdAsync(branchId, DtoDomainConverter.Convert(branch));
+    public async Task<int> UpdateBranch(RoleTypeDTO role, int branchId, BranchDTO branch) =>
+        DtoDomainConverter.Convert(role) == RoleType.DUTY ?
+        await ChartRepo.UpdateBranchByIdAsync(branchId, DtoDomainConverter.Convert(branch)) :
+        0;
 
-    public async Task<int> UpdateStation(int stationId, StationDTO station) =>
-        await ChartRepo.UpdateStationByIdAsync(stationId, DtoDomainConverter.Convert(station));
+    public async Task<int> UpdateStation(RoleTypeDTO role, int stationId, StationDTO station) =>
+        DtoDomainConverter.Convert(role) == RoleType.DUTY ?
+        await ChartRepo.UpdateStationByIdAsync(stationId, DtoDomainConverter.Convert(station)) :
+        0;
 
-    public async Task<int> UpdateTransition(int transitionId, TransitionDTO transition) =>
-        await ChartRepo.UpdateTransitionByIdAsync(transitionId, DtoDomainConverter.Convert(transition));
+    public async Task<int> UpdateTransition(RoleTypeDTO role, int transitionId, TransitionDTO transition) =>
+        DtoDomainConverter.Convert(role) == RoleType.DUTY ?
+        await ChartRepo.UpdateTransitionByIdAsync(transitionId, DtoDomainConverter.Convert(transition)) :
+        0;
 }
