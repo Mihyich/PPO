@@ -149,7 +149,7 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             .Select(s => s.Title)
             .ToListAsync();
 
-    public async Task<(int, int)> GetNeighborStationRailwayIdAsync(int stationId)
+    public async Task<(int, int)?> GetNeighborStationRailwayIdAsync(int stationId)
     {
         int fromId = await _context.Railways
             .AsNoTracking()
@@ -163,7 +163,7 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             .Select(r => r.Id)
             .FirstOrDefaultAsync();
 
-        return (fromId, toId);
+        return (fromId > 0 && toId > 0) ? (fromId, toId) : null;
     }
 
     public async Task<List<int>> GetNeighborStationTransitionIdAsync(int stationId) =>
