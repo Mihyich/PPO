@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION get_chart_json_by_id(chart_id INT)
-RETURNS JSON AS $$
+RETURNS JSONB AS $$
 DECLARE
-    result_json JSON;
+    result_json JSONB;
 BEGIN
     SELECT
         json_build_object(
