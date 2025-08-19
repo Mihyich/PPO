@@ -1,4 +1,3 @@
-using System.Linq;
 using MetroGid.Controllers.DTO;
 using MetroGid.Controllers.Interfaces;
 using MetroGid.Core.Converters;
@@ -33,64 +32,95 @@ public class RouteService(
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
-    private async Task<Chart> LoadChartAsync(string city, string chartTitle)
+    private async Task<Chart?> LoadChartAsync(string city, string chartTitle)
     {
-        BuilderChart builder = new(DomainAttribsValidator, DomainReferentialityValidator);
-        DirectorChartJson director = new(
-            builder,
-            await ChartRepo.GetChartJsonAsync(city, chartTitle)
+        string? jsonContent = await Handler.SnapAsync(
+            async () =>
+            {
+                string? json = await ChartRepo.GetChartJsonAsync(city, chartTitle);
+
+                if (json == null)
+                    throw new DataBaseException(
+                        $"Json схема \"{chartTitle}\" для города \"{city}\" не найдена",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+                return json;
+            }, Logger
         );
 
-        Chart chart = director.Construct();
+        Chart? chart = null;
+
+        if (jsonContent != null)
+        {
+            BuilderChart builder = new(DomainAttribsValidator, DomainReferentialityValidator);
+            DirectorChartJson director = new(builder, jsonContent);
+            chart = director.Construct();
+        }
 
         return chart;
     }
 
-    private Station FindStation(Chart chart, string branchTitle, string stationTitle)
+    private Station? FindStation(Chart chart, string branchTitle, string stationTitle)
     {
-        Station? station = chart.GetStation(branchTitle, stationTitle);
-        
-        if (station == null)
-        {
-            ServiceRouteException ex = new(
-                $"В схеме '{chart.Title}' в городе '{chart.City}' не найдена станция '{stationTitle}' ветки '{branchTitle}'",
-                ExceptionType.Error,
-                ExceptionReason.NotFound
-            );
-            
-            Handler.Snap(() => throw ex, Logger);
+        Station? station = Handler.Snap(
+            () =>
+            {
+                Station? s = chart.GetStation(branchTitle, stationTitle);
 
-            station = new("Исключение из FindStation()", 0, AccessType.INACCESSIBLE, new TimeOnly(0, 0), new TimeOnly(0, 0));
-        }
+                if (s == null)
+                    throw new ServiceRouteException(
+                        $"В схеме '{chart.Title}' для города '{chart.City}' не найдена станция '{stationTitle}' ветки '{branchTitle}'",
+                        ExceptionType.Error,
+                        ExceptionReason.NotFound
+                    );
+
+                return s;
+            }, Logger
+        );
 
         return station;
     }
 
-    private Route SearchRouteProcess(Chart chart, Station src, Station dst, TimeOnly startTime)
+    private Route? SearchRouteProcess(Chart chart, Station src, Station dst, TimeOnly startTime)
     {
         StrategySearchRouteBase searcher = new StrategySearchRouteBFS();
-        Route route = chart.Search(src, dst, startTime, searcher);
+        Route? route = chart.Search(src, dst, startTime, searcher);
 
-        route.Validate(DomainAttribsValidator);
-        route.Validate(DomainReferentialityValidator);
+        if (route != null)
+        {
+            route.Validate(DomainAttribsValidator);
+            route.Validate(DomainReferentialityValidator);
+        }
 
         return route;
     }
     
-    public async Task<RouteDTO> SearchRoute(
+    public async Task<RouteDTO?> SearchRoute(
         string city, string chartTitle,
         string branchSrcTitle, string stationSrcTitle,
         string branchDstTitle, string stationDstTitle,
         TimeOnly startTime)
     {
-        Chart chart = await LoadChartAsync(city, chartTitle);
-        Station src = FindStation(chart, branchSrcTitle, stationSrcTitle);
-        Station dst = FindStation(chart, branchDstTitle, stationDstTitle);
-        Route route = SearchRouteProcess(chart, src, dst, startTime);
-        return DomainDtoConverter.Convert(route);
+        Chart? chart = await LoadChartAsync(city, chartTitle);
+        Station? src = null;
+        Station? dst = null;
+        RouteDTO? routeDTO = null;
+        Route? route = null;
+
+        if (chart != null &&
+            (src = FindStation(chart, branchSrcTitle, stationSrcTitle)) != null &&
+            (dst = FindStation(chart, branchDstTitle, stationDstTitle)) != null &&
+            (route = SearchRouteProcess(chart, src, dst, startTime)) != null
+        )
+        {
+            routeDTO = DomainDtoConverter.Convert(route);
+        }
+
+        return routeDTO;
     }
 
-    public async Task SaveRoute(int clientId, RouteDTO route, int chartId) =>
+    public async Task<int> SaveRoute(int clientId, RouteDTO route, int chartId) =>
         await RouteRepo.AddAsync(DtoDomainConverter.Convert(route), clientId, chartId);
 
     public async Task<List<RouteDTO>> LookForSavedRoutesInChart(int clientId, int chartId) =>

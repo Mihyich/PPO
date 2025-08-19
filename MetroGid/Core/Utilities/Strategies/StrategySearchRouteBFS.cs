@@ -6,7 +6,7 @@ namespace MetroGid.Core.Utilities.Strategies;
 
 public class StrategySearchRouteBFS(TimeSuper? timerSuper = null) : StrategySearchRouteBase(timerSuper ?? new TimeFast())
 {
-    public override Route Search(Chart chart, Station src, Station dst, TimeOnly timeStart)
+    public override Route? Search(Chart chart, Station src, Station dst, TimeOnly timeStart)
     {
         Queue<Route> queue = new();
         HashSet<Station> visited = [];
@@ -14,7 +14,7 @@ public class StrategySearchRouteBFS(TimeSuper? timerSuper = null) : StrategySear
 
         if ((!src.Branch?.IsAccessible() ?? true) || !src.IsAccessible() || !src.IsOpenAt(timeStart) ||
             (!dst.Branch?.IsAccessible() ?? true) || !dst.IsAccessible())
-            return initialRoute;
+            return null;
 
         initialRoute.Add(src);
         queue.Enqueue(initialRoute);
@@ -34,7 +34,7 @@ public class StrategySearchRouteBFS(TimeSuper? timerSuper = null) : StrategySear
             }
         }
 
-        return initialRoute;
+        return null;
     }
 
     private static void SearchRailwayNeighbors(Station curStation, Route curRoute, Queue<Route> queue, HashSet<Station> visited)

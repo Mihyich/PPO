@@ -6,6 +6,7 @@ using MetroGid.Core.Interfaces;
 using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Services;
 using Moq;
+using MetroGid.Core.Utilities.Validators.Handlers;
 
 namespace MetroGidUnitTests.ServicesTests;
 
@@ -18,7 +19,8 @@ public class ClientServiceTests
     {
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
+        ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
+        ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ReturnsAsync(1);
         var ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await clientService.Reg(login, password, mail); });
@@ -44,7 +46,8 @@ public class ClientServiceTests
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
+        ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
+        ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
         var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.Reg(login, password, mail); });
@@ -70,7 +73,8 @@ public class ClientServiceTests
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
+        ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
+        ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
         var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.Reg(login, password, mail); });
@@ -96,7 +100,8 @@ public class ClientServiceTests
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
+        ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
+        ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.GetIdByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
         var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.UnReg(login, password, mail); });
@@ -108,33 +113,34 @@ public class ClientServiceTests
     }
 
     [Fact]
-    public async void ClientNotFoundSingInTest()
+    public async void ClientNotFoundSignInTest()
     {
         string login = "abcd";
-        string password = "Aa1234";
+        string password = "1234";
         string mail = "abc@mail.ru";
 
-        string exMessege = $"Пользователь '{login}' с почтой '{mail}' не существует";
-        ExceptionType exType = ExceptionType.Error;
+        string exMessege = $"Пользователь с логином \"{login}\" и почтой \"{mail}\" не найден";
+        ExceptionType exType = ExceptionType.Warning;
         ExceptionReason exReason = ExceptionReason.NotFound;
 
         DataBaseException expectedEx = new(exMessege, exType, exReason);
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
+        ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
+        ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
-        mockClientRepo.Setup(x => x.GetByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.SingIn(login, password, mail); });
+        mockClientRepo.Setup(x => x.GetIdByCredentialsAsync(login, password, mail)).ReturnsAsync(0);
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.SignIn(login, password, mail); });
 
-        mockClientRepo.Verify(x => x.GetByCredentialsAsync(login, password, mail), Times.Once);
+        mockClientRepo.Verify(x => x.GetIdByCredentialsAsync(login, password, mail), Times.Once);
         Assert.Equal(exMessege, ex.Message);
         Assert.Equal(exType, ex.ExcType);
         Assert.Equal(exReason, ex.ExcReason);
     }
 
     [Fact]
-    public async void ClientNotFoundSingOutTest()
+    public async void ClientNotFoundSignOutTest()
     {
         string login = "abcd";
         string password = "Aa1234";
@@ -148,36 +154,11 @@ public class ClientServiceTests
 
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
+        ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
+        ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.GetByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.SingOut(login, password, mail); });
-
-        mockClientRepo.Verify(x => x.GetByCredentialsAsync(login, password, mail), Times.Once);
-        Assert.Equal(exMessege, ex.Message);
-        Assert.Equal(exType, ex.ExcType);
-        Assert.Equal(exReason, ex.ExcReason);
-    }
-
-    [Fact]
-    public async void ClientNotFoundGetRoleTest()
-    {
-        string login = "abcd";
-        string password = "Aa1234";
-        string mail = "abc@mail.ru";
-
-        string exMessege = $"Пользователь '{login}' с почтой '{mail}' не существует";
-        ExceptionType exType = ExceptionType.Error;
-        ExceptionReason exReason = ExceptionReason.NotFound;
-
-        DataBaseException expectedEx = new(exMessege, exType, exReason);
-
-        Mock<IClientRepository> mockClientRepo = new();
-        SuperExceptionHandler handler = new PassThroughHandlerException();
-        ClientService clientService = new(mockClientRepo.Object, handler);
-
-        mockClientRepo.Setup(x => x.GetByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.GetRole(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.SignOut(login, password, mail); });
 
         mockClientRepo.Verify(x => x.GetByCredentialsAsync(login, password, mail), Times.Once);
         Assert.Equal(exMessege, ex.Message);

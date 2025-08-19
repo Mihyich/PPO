@@ -10,12 +10,12 @@ public interface IClientRepository
     Task<int> GetIdAsync(Client client);
     Task<int> GetIdByCredentialsAsync(string login, string password, string mail);
     Task<RoleType> GetRoleByIdAsync(int id);
-    Task<Client> GetByIdAsync(int id);
-    Task<Client> GetByCredentialsAsync(string login, string password, string mail);
+    Task<Client?> GetByIdAsync(int id);
+    Task<Client?> GetByCredentialsAsync(string login, string password, string mail);
 
-    Task UpdateAsync(int id, Client client);
+    Task<int> UpdateAsync(int id, Client client);
 
-    Task DeleteAsync(int id);
+    Task<int> DeleteAsync(int id);
 
     Task<bool> IsLoginExistsAsync(string login);
     Task<bool> IsMailExistsAsync(string mail);

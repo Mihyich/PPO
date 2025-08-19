@@ -14,15 +14,15 @@ namespace MetroGid.Core.Services;
 
 public class ClientService(
     IClientRepository clientRepo,
+    ThrowableDomainAttribsValidator domainAttribsValidator,
     SuperExceptionHandler handler, IExceptionVisitor? logger = null
 ) : IClientService
 {
     private readonly IClientRepository ClientRepo = clientRepo;
 
+    private readonly ThrowableDomainAttribsValidator DomainAttribsValidator = domainAttribsValidator;
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
-
-    private readonly ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler, logger);
 
     public async Task<int> Reg(string login, string password, string mail)
     {
@@ -51,15 +51,15 @@ public class ClientService(
         return await ClientRepo.AddAsync(client);
     }
 
-    public async Task UnReg(string login, string password, string mail) =>
+    public async Task<int> UnReg(string login, string password, string mail) =>
         await ClientRepo.DeleteAsync(
             await ClientRepo.GetIdByCredentialsAsync(login, password, mail));
 
     public async Task<RoleTypeDTO> SignIn(string login, string password, string mail) =>
         await GetRole(login, password, mail);
 
-    public async Task SignOut(string login, string password, string mail) =>
-        await ClientRepo.GetByCredentialsAsync(login, password, mail);
+    public async Task<int> SignOut(string login, string password, string mail) =>
+        await ClientRepo.GetIdByCredentialsAsync(login, password, mail);
 
     public async Task<RoleTypeDTO> GetRole(string login, string password, string mail)
     {
