@@ -6,12 +6,12 @@ using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Models.Concrete;
-using MetroGid.Core.Models.Types;
 using MetroGid.Core.Utilities.Builders;
 using MetroGid.Core.Utilities.Directors;
 using MetroGid.Core.Utilities.Strategies;
 using MetroGid.Core.Utilities.Validators.Handlers;
 using MetroGid.Core.Interfaces;
+using MetroGid.Core.Models.Types;
 
 namespace MetroGid.Core.Services;
 
@@ -37,7 +37,7 @@ public class RouteService(
         string? jsonContent = await Handler.SnapAsync(
             async () =>
             {
-                string? json = await ChartRepo.GetChartJsonAsync(city, chartTitle);
+                string? json = await ChartRepo.GetChartJsonByCredentialsAsync(city, chartTitle);
 
                 if (json == null)
                     throw new DataBaseException(
@@ -120,11 +120,23 @@ public class RouteService(
         return routeDTO;
     }
 
-    public async Task<int> SaveRoute(int clientId, RouteDTO route, int chartId) =>
-        await RouteRepo.AddAsync(DtoDomainConverter.Convert(route), clientId, chartId);
+    public async Task<int> SaveRoute(RoleTypeDTO role, int clientId, RouteDTO route, int chartId)
+    {
+        RoleType roleType = DtoDomainConverter.Convert(role);
 
-    public async Task<List<RouteDTO>> LookForSavedRoutesInChart(int clientId, int chartId) =>
+        return (roleType == RoleType.SIGNED || roleType == RoleType.DUTY) ?
+        await RouteRepo.AddAsync(clientId, chartId, DtoDomainConverter.Convert(route)) :
+        0;
+    }
+
+    public async Task<List<RouteDTO>> LookForSavedRoutesInChart(RoleTypeDTO role, int clientId, int chartId)
+    {
+        RoleType roleType = DtoDomainConverter.Convert(role);
+
+        return (roleType == RoleType.SIGNED || roleType == RoleType.DUTY) ?
         (await RouteRepo
-            .GetAllForClientOfChartIdAsync(clientId, chartId))
-                .ConvertAll(DomainDtoConverter.Convert);
+            .GetAllRouteForClientOfChartIdAsync(clientId, chartId))
+                .ConvertAll(DomainDtoConverter.Convert) :
+        new List<RouteDTO>();
+    }
 }

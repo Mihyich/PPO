@@ -17,8 +17,8 @@ public interface IChartService
     Task<List<string>> GetBranchStationTitles(int branchId);
 
     // Изменение атрибутов таблиц
-    Task<int> UpdateChart(int chartId, ChartDTO chart);
-    Task<int> UpdateBranch(int branchId, BranchDTO branch);
-    Task<int> UpdateStation(int stationId, StationDTO station);
-    Task<int> UpdateTransition(int transitionId, TransitionDTO transition);
+    Task<int> UpdateChart(RoleTypeDTO role, int chartId, ChartDTO chart);
+    Task<int> UpdateBranch(RoleTypeDTO role, int branchId, BranchDTO branch);
+    Task<int> UpdateStation(RoleTypeDTO role, int stationId, StationDTO station);
+    Task<int> UpdateTransition(RoleTypeDTO role, int transitionId, TransitionDTO transition);
 }
