@@ -33,11 +33,11 @@ namespace MetroGid.Core.Utilities.Strategies;
 
 public class StrategySearchRouteDijkstra(TimeSuper? timerSuper = null) : StrategySearchRouteBase(timerSuper ?? new TimeFast())
 {
-    public override Route Search(Chart chart, Station src, Station dst, TimeOnly timeStart)
+    public override Route? Search(Chart chart, Station src, Station dst, TimeOnly timeStart)
     {
         if ((!src.Branch?.IsAccessible() ?? true) || !src.IsAccessible() || !src.IsOpenAt(timeStart) ||
             (!dst.Branch?.IsAccessible() ?? true) || !dst.IsAccessible())
-            return new (string.Empty, [], TimeSpan.Zero);
+            return null;
 
         Dictionary<Station, List<Route>> Adj = GenAdj(chart.Branches); // Аналог матрицы смежностей
         Dictionary<Station, Route> dist = GenDist(chart.Branches); // Поиск маршрутов к каждому из узлов графа
@@ -85,7 +85,7 @@ public class StrategySearchRouteDijkstra(TimeSuper? timerSuper = null) : Strateg
             visited.Add(lstation);
         }
 
-        return dist[dst];
+        return dist[dst].Duration == TimeSpan.MaxValue ? null : dist[dst];
     }
 
     private Dictionary<Station, List<Route>> GenAdj(List<Branch> branches)

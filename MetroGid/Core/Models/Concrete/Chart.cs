@@ -15,11 +15,15 @@ public class Chart(string title, string city, string svg_inst) : IDomainValidato
             .FirstOrDefault(b => b.Title == branchTitle)?.Stations?
                 .FirstOrDefault(s => s.Title == stationTitle);
 
-    public Route Search(Station src, Station dst, TimeOnly timeStart, StrategySearchRouteBase searcher)
+    public Route? Search(Station src, Station dst, TimeOnly timeStart, StrategySearchRouteBase searcher)
     {
-        Route route = searcher.Search(this, src, dst, timeStart);
-        route.Title = "Новый маршрут";
-        route.Chart = this;
+        Route? route = searcher.Search(this, src, dst, timeStart);
+
+        if (route != null)
+        {
+            route.Title = "Новый маршрут";
+            route.Chart = this;
+        }
 
         return route;
     }
