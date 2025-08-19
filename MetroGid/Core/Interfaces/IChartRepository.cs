@@ -6,18 +6,18 @@ public interface IChartRepository
 {
     Task<int> AddAsync(Chart chart);
 
-    Task<string> GetChartJsonByIdAsync(int chartId);
-    Task<Chart> GetChartWeakByIdAsync(int chartId);
-    Task<Branch> GetBranchWeakByIdAsync(int branchId);
-    Task<Station> GetStationWeakByIdAsync(int stationId);
-    Task<Railway> GetRailwayByIdAsync(int railwayId);
-    Task<Transition> GetTransitionByIdAsync(int transitionId);
+    Task<string?> GetChartJsonByIdAsync(int chartId);
+    Task<Chart?> GetChartWeakByIdAsync(int chartId);
+    Task<Branch?> GetBranchWeakByIdAsync(int branchId);
+    Task<Station?> GetStationWeakByIdAsync(int stationId);
+    Task<Railway?> GetRailwayByIdAsync(int railwayId);
+    Task<Transition?> GetTransitionByIdAsync(int transitionId);
 
     Task<int> GetChartIdAsync(string city, string title);
     Task<int> GetBranchIdAsync(string title, int chartId);
     Task<int> GetStationIdAsync(string title, int branchId);
 
-    Task<string> GetChartJsonAsync(string city, string title);
+    Task<string?> GetChartJsonAsync(string city, string title);
 
     Task<List<int>> GetAllChartIdAsync();
     Task<List<int>> GetAllChartBranchIdAsync(int chartId);
@@ -33,13 +33,13 @@ public interface IChartRepository
     Task<List<int>> GetFromToStationIdByRailwayIdAsync(int railwayId);
     Task<List<int>> GetFromToStationIdByTransitionIdAsync(int transitionId);
 
-    Task UpdateChartByIdAsync(int chartId, Chart chart);
-    Task UpdateBranchByIdAsync(int branchId, Branch branch);
-    Task UpdateStationByIdAsync(int stationId, Station station);
-    Task UpdateRailwayByIdAsync(int railwayId, Railway railway);
-    Task UpdateTransitionByIdAsync(int stationId, Transition transition);
+    Task<int> UpdateChartByIdAsync(int chartId, Chart chart);
+    Task<int> UpdateBranchByIdAsync(int branchId, Branch branch);
+    Task<int> UpdateStationByIdAsync(int stationId, Station station);
+    Task<int> UpdateRailwayByIdAsync(int railwayId, Railway railway);
+    Task<int> UpdateTransitionByIdAsync(int stationId, Transition transition);
 
-    Task DeleteChartByIdAsync(int id);
+    Task<int> DeleteChartByIdAsync(int id);
 
     Task<bool> IsCityTitleUniqueAsync(string city, string title);
     Task<bool> IsBranchTitleUniqueInChartAsync(string title, int chartId);
