@@ -118,7 +118,7 @@ public static class DomainModelConverter
                 else if (connection is MCMC.TransitionConnection { Transition: MCMC.Transition t })
                 {
                     Station ts = t.ToFrom(
-                        ps ?? throw new Exception("Некорректная маршрут")
+                        ps ?? throw new Exception("Некорректный маршрут")
                     ) ?? throw new Exception("Некорректная схема");
 
                     TransitionRouteItemDTO tri = new(
