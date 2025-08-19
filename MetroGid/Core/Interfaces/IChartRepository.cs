@@ -27,8 +27,8 @@ public interface IChartRepository
     Task<List<string>> GetAllChartBranchTitleAsync(int chartId);
     Task<List<string>> GetAllBranchStationTitleAsync(int branchId);
 
-    Task<(int, int)?> GetNeighborStationRailwayAsync(int stationId);
-    Task<List<int>> GetNeighborStationTransitionAsync(int stationId);
+    Task<(int, int)?> GetNeighborStationRailwayIdAsync(int stationId);
+    Task<List<int>> GetNeighborStationTransitionIdAsync(int stationId);
 
     Task<(int, int)?> GetFromToStationIdByRailwayIdAsync(int railwayId);
     Task<(int, int)?> GetFromToStationIdByTransitionIdAsync(int transitionId);
