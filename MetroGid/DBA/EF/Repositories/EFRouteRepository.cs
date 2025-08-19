@@ -12,7 +12,7 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
 {
     private readonly MetroDbContext _context = context;
 
-    public Task<int> AddAsync(MCMC.Route route, int clientId, int chartId)
+    public Task<int> AddAsync(int clientId, int chartId, MCMC.Route route)
     {
         throw new NotImplementedException();
     }

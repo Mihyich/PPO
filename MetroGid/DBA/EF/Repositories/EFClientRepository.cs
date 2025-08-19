@@ -35,16 +35,6 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
             .Select(c => c.Id)
             .FirstOrDefaultAsync();
 
-    public async Task<MCMT.RoleType> GetRoleByIdAsync(int id) =>
-        ModelDomainConverter.Convert<MCMT.RoleType>(
-            await _context.Clients
-                .AsNoTracking()
-                .Where(c => c.Id == id)
-                .Select(c => c.Privilege)
-                .FirstOrDefaultAsync() ??
-                MCMT.RoleType.UNSIGNED.ToString()
-        );
-
     public async Task<MCMC.Client?> GetByIdAsync(int id)
     {
         MDEMT.Client? entity = await _context.Clients.FirstOrDefaultAsync(c => c.Id == id);
@@ -60,6 +50,16 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
 
         return entity != null ? ModelDomainConverter.Convert(entity) : null;
     }
+
+    public async Task<MCMT.RoleType> GetRoleByIdAsync(int id) =>
+        ModelDomainConverter.Convert<MCMT.RoleType>(
+            await _context.Clients
+                .AsNoTracking()
+                .Where(c => c.Id == id)
+                .Select(c => c.Privilege)
+                .FirstOrDefaultAsync() ??
+                MCMT.RoleType.UNSIGNED.ToString()
+        );
 
     public async Task<int> UpdateAsync(int id, MCMC.Client client)
     {

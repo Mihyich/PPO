@@ -16,17 +16,55 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         throw new NotImplementedException();
     }
 
+    public async Task<int> GetChartIdAsync(string city, string title) =>
+        await _context.Charts
+            .AsNoTracking()
+            .Where(c => c.City == city && c.Title == title)
+            .Select(c => c.Id)
+            .FirstOrDefaultAsync();
+
+    public async Task<int> GetBranchIdAsync(string title, int chartId) =>
+        await _context.ChartBranches
+            .AsNoTracking()
+            .Where(cb => cb.ChartId == chartId)
+            .Select(cb => cb.Branch)
+            .Where(b => b.Title == title)
+            .Select(b => b.Id)
+            .FirstOrDefaultAsync();
+
+    public async Task<int> GetStationIdAsync(string title, int branchId) =>
+        await _context.BranchStations
+            .AsNoTracking()
+            .Where(bs => bs.BranchId == branchId)
+            .Select(bs => bs.Station)
+            .Where(s => s.Title == title)
+            .Select(s => s.Id)
+            .FirstOrDefaultAsync();
+
+    public async Task<List<int>> GetAllChartIdAsync() =>
+        await _context.Charts
+            .AsNoTracking()
+            .Select(c => c.Id)
+            .ToListAsync();
+
+    public async Task<List<int>> GetAllChartBranchIdAsync(int chartId) =>
+        await _context.ChartBranches
+            .AsNoTracking()
+            .Where(cb => cb.ChartId == chartId)
+            .Select(cb => cb.BranchId)
+            .ToListAsync();
+
+    public async Task<List<int>> GetAllBranchStationIdAsync(int branchId) =>
+        await _context.BranchStations
+            .AsNoTracking()
+            .Where(bs => bs.BranchId == branchId)
+            .Select(bs => bs.StationId)
+            .ToListAsync();
+
     public async Task<string?> GetChartJsonByIdAsync(int chartId) =>
         await _context.Charts
             .AsNoTracking()
             .Where(c => c.Id == chartId)
-            .Select(c => _context.GetChartJsonById(c.Id))
-            .FirstOrDefaultAsync();
-
-    public async Task<string?> GetChartJsonAsync(string city, string title) =>
-        await _context.Charts
-            .AsNoTracking()
-            .Where(c => c.City == city && c.Title == title)
             .Select(c => _context.GetChartJsonById(c.Id))
             .FirstOrDefaultAsync();
 
@@ -80,50 +118,12 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         return transition != null ? ModelDomainConverter.Convert(transition) : null;
     }
 
-    public async Task<int> GetChartIdAsync(string city, string title) =>
+    public async Task<string?> GetChartJsonByCredentialsAsync(string city, string title) =>
         await _context.Charts
             .AsNoTracking()
             .Where(c => c.City == city && c.Title == title)
-            .Select(c => c.Id)
+            .Select(c => _context.GetChartJsonById(c.Id))
             .FirstOrDefaultAsync();
-
-    public async Task<int> GetBranchIdAsync(string title, int chartId) =>
-        await _context.ChartBranches
-            .AsNoTracking()
-            .Where(cb => cb.ChartId == chartId)
-            .Select(cb => cb.Branch)
-            .Where(b => b.Title == title)
-            .Select(b => b.Id)
-            .FirstOrDefaultAsync();
-
-    public async Task<int> GetStationIdAsync(string title, int branchId) =>
-        await _context.BranchStations
-            .AsNoTracking()
-            .Where(bs => bs.BranchId == branchId)
-            .Select(bs => bs.Station)
-            .Where(s => s.Title == title)
-            .Select(s => s.Id)
-            .FirstOrDefaultAsync();
-
-    public async Task<List<int>> GetAllChartIdAsync() =>
-        await _context.Charts
-            .AsNoTracking()
-            .Select(c => c.Id)
-            .ToListAsync();
-
-    public async Task<List<int>> GetAllChartBranchIdAsync(int chartId) =>
-        await _context.ChartBranches
-            .AsNoTracking()
-            .Where(cb => cb.ChartId == chartId)
-            .Select(cb => cb.BranchId)
-            .ToListAsync();
-
-    public async Task<List<int>> GetAllBranchStationIdAsync(int branchId) =>
-        await _context.BranchStations
-            .AsNoTracking()
-            .Where(bs => bs.BranchId == branchId)
-            .Select(bs => bs.StationId)
-            .ToListAsync();
 
     public async Task<List<(string, string)>> GetAllChartCityTitleAsync() =>
         (await _context.Charts
