@@ -1,10 +1,7 @@
 using MetroGid.Core.Interfaces;
 using MCMC = MetroGid.Core.Models.Concrete;
-using MDEMT = MetroGid.DBA.EF.Models.Tables;
-using MetroGid.DBA.EF.Converters;
 using MetroGid.DBA.EF.Context;
 using Microsoft.EntityFrameworkCore;
-using MetroGid.Core.Models.Concrete;
 
 namespace MetroGid.DBA.EF.Repositories;
 
