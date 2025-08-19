@@ -9,9 +9,11 @@ public interface IClientRepository
 
     Task<int> GetIdAsync(Client client);
     Task<int> GetIdByCredentialsAsync(string login, string password, string mail);
-    Task<RoleType> GetRoleByIdAsync(int id);
+
     Task<Client?> GetByIdAsync(int id);
     Task<Client?> GetByCredentialsAsync(string login, string password, string mail);
+
+    Task<RoleType> GetRoleByIdAsync(int id);
 
     Task<int> UpdateAsync(int id, Client client);
 

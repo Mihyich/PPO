@@ -6,6 +6,14 @@ public interface IChartRepository
 {
     Task<int> AddAsync(Chart chart);
 
+    Task<int> GetChartIdAsync(string city, string title);
+    Task<int> GetBranchIdAsync(string title, int chartId);
+    Task<int> GetStationIdAsync(string title, int branchId);
+
+    Task<List<int>> GetAllChartIdAsync();
+    Task<List<int>> GetAllChartBranchIdAsync(int chartId);
+    Task<List<int>> GetAllBranchStationIdAsync(int branchId);
+
     Task<string?> GetChartJsonByIdAsync(int chartId);
     Task<Chart?> GetChartWeakByIdAsync(int chartId);
     Task<Branch?> GetBranchWeakByIdAsync(int branchId);
@@ -13,15 +21,7 @@ public interface IChartRepository
     Task<Railway?> GetRailwayByIdAsync(int railwayId);
     Task<Transition?> GetTransitionByIdAsync(int transitionId);
 
-    Task<int> GetChartIdAsync(string city, string title);
-    Task<int> GetBranchIdAsync(string title, int chartId);
-    Task<int> GetStationIdAsync(string title, int branchId);
-
-    Task<string?> GetChartJsonAsync(string city, string title);
-
-    Task<List<int>> GetAllChartIdAsync();
-    Task<List<int>> GetAllChartBranchIdAsync(int chartId);
-    Task<List<int>> GetAllBranchStationIdAsync(int branchId);
+    Task<string?> GetChartJsonByCredentialsAsync(string city, string title);
 
     Task<List<ValueTuple<string, string>>> GetAllChartCityTitleAsync(); // <City, Title>
     Task<List<string>> GetAllChartBranchTitleAsync(int chartId);
