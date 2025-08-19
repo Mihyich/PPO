@@ -5,9 +5,7 @@ namespace MetroGid.DBA.EF.Context;
 
 public partial class MetroDbContext : DbContext
 {
-    public MetroDbContext(DbContextOptions<MetroDbContext> options) : base(options)
-    {
-    }
+    public MetroDbContext(DbContextOptions<MetroDbContext> options) : base(options) { }
 
     public virtual DbSet<Branch> Branches { get; set; } = null!;
 
@@ -40,10 +38,24 @@ public partial class MetroDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDbFunction(
-            typeof(MetroDbContext).GetMethod(nameof(GetChartJsonById))
-            ?? throw new Exception("Эээ, а где функция!?")
+            typeof(MetroDbContext).GetMethod(nameof(AddRouteJson)) ??
+            throw new InvalidOperationException($"Метод '{nameof(AddRouteJson)}' не найден в {typeof(MetroDbContext).Name}.")
+        )
+            .HasName("add_route_json")
+            .HasSchema("public");
+
+        modelBuilder.HasDbFunction(
+            typeof(MetroDbContext).GetMethod(nameof(GetChartJsonById)) ??
+            throw new InvalidOperationException($"Метод '{nameof(GetChartJsonById)}' не найден в {typeof(MetroDbContext).Name}.")
         )
             .HasName("get_chart_json_by_id")
+            .HasSchema("public");
+
+        modelBuilder.HasDbFunction(
+            typeof(MetroDbContext).GetMethod(nameof(GetRouteJsonById)) ??
+            throw new InvalidOperationException($"Метод '{nameof(GetRouteJsonById)}' не найден в {typeof(MetroDbContext).Name}.")
+        )
+            .HasName("get_route_json_by_id")
             .HasSchema("public");
 
         modelBuilder.Entity<Branch>(entity =>
@@ -370,9 +382,14 @@ public partial class MetroDbContext : DbContext
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
 
-    // маппинг функций
-
+    // Заглушки
+    
+    public int AddRouteJson(int clientId, int chartId, string jsonRoute) =>
+        throw new NotSupportedException($"Метод {nameof(AddRouteJson)} используется только в LINQ через EF Core.");
 
     public string GetChartJsonById(int chartId) =>
-        throw new NotSupportedException();
+        throw new NotSupportedException($"Метод {nameof(GetChartJsonById)} используется только в LINQ через EF Core.");
+
+    public string GetRouteJsonById(int wayId) =>
+        throw new NotSupportedException($"Метод {nameof(GetRouteJsonById)} используется только в LINQ через EF Core.");
 }
