@@ -14,6 +14,8 @@ public class EFDataBaseFixture : IDisposable
 
     public IClientRepository clientRepository { get; private set; }
 
+    public IRouteRepository routeRepository { get; private set; }
+
     public EFDataBaseFixture()
     {
         IEnvironmentLoader environmentLoader = new DevelopmentEnvironmentLoader();
@@ -32,6 +34,7 @@ public class EFDataBaseFixture : IDisposable
 
         Context = new MetroDbContext(dbContextOptions);
         clientRepository = new EFClientRepository(Context);
+        routeRepository = new EFRouteRepository(Context);
     }
 
     public void Dispose()
