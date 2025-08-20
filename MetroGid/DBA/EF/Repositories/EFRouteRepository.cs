@@ -24,10 +24,12 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
             .Select(w => w.Id)
             .FirstOrDefaultAsync();
 
-    public Task<MCMC.Route?> GetByIdAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<string?> GetByIdAsync(int id) =>
+        await _context.Ways
+            .AsNoTracking()
+            .Where(w => w.Id == id)
+            .Select(w => _context.GetRouteJsonById(w.Id))
+            .FirstOrDefaultAsync();
 
     public async Task<List<string>> GetAllTitlesForClientAsync(int clientId) =>
         await _context.Ways
@@ -43,15 +45,19 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
             .Select(w => w.Title)
             .ToListAsync();
 
-    public Task<List<MCMC.Route>> GetAllForClientIdAsync(int clientId)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<List<string>> GetAllForClientIdAsync(int clientId) =>
+        await _context.Ways
+            .AsNoTracking()
+            .Where(w => w.ClientId == clientId)
+            .Select(w => _context.GetRouteJsonById(w.Id))
+            .ToListAsync();
 
-    public Task<List<MCMC.Route>> GetAllForClientOfChartIdAsync(int clientId, int chartId)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<List<string>> GetAllForClientOfChartIdAsync(int clientId, int chartId) =>
+        await _context.Ways
+            .AsNoTracking()
+            .Where(w => w.ChartId == chartId && w.ClientId == clientId)
+            .Select(w => _context.GetRouteJsonById(w.Id))
+            .ToListAsync();
 
     public Task<int> UpdateAsync(int clientId, int chartId, MCMC.Route route)
     {
