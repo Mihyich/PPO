@@ -37,13 +37,14 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
 
     public async Task<MCMC.Client?> GetByIdAsync(int id)
     {
-        MDEMT.Client? entity = await _context.Clients.FirstOrDefaultAsync(c => c.Id == id);
+        MDEMT.Client? entity = await _context.Clients.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
         return entity != null ? ModelDomainConverter.Convert(entity) : null;
     }
 
     public async Task<MCMC.Client?> GetByCredentialsAsync(string login, string password, string mail)
     {
         MDEMT.Client? entity = await _context.Clients
+            .AsNoTracking()
             .FirstOrDefaultAsync(c => c.ClientLogin == login &&
                 c.ClientPassword == password &&
                 c.Mail == mail);
@@ -81,10 +82,10 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
             .ExecuteDeleteAsync();
 
     public async Task<bool> IsLoginExistsAsync(string login) =>
-        await _context.Clients.AnyAsync(c => c.ClientLogin == login);
+        await _context.Clients.AsNoTracking().AnyAsync(c => c.ClientLogin == login);
     
     public async Task<bool> IsMailExistsAsync(string mail) =>
-        await _context.Clients.AnyAsync(c => c.Mail == mail);
+        await _context.Clients.AsNoTracking().AnyAsync(c => c.Mail == mail);
 
     public async Task<int> GetStationDuty(int stationId) =>
         await _context.Stations

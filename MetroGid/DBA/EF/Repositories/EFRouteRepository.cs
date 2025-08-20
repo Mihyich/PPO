@@ -71,6 +71,7 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
 
     public async Task<bool> IsTitleExistsAsync(string title, int clientId) =>
         await _context.Ways
+            .AsNoTracking()
             .Where(w => w.ClientId == clientId)
             .AnyAsync(w => w.Title == title);
 }
