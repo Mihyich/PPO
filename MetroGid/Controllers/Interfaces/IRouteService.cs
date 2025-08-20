@@ -11,5 +11,5 @@ public interface IRouteService
         TimeOnly startTime);
 
     Task<int> SaveRoute(RoleTypeDTO role, int clientId, RouteDTO route, int chartId);
-    Task<List<RouteDTO>> LookForSavedRoutesInChart(RoleTypeDTO role, int clientId, int chartId); // просмотр сохраненных маршрутов в конкретной схеме метро, у конктретного пользователя
+    Task<List<string>> LookForSavedRoutesInChart(RoleTypeDTO role, int clientId, int chartId); // просмотр сохраненных маршрутов в конкретной схеме метро, у конктретного пользователя
 }

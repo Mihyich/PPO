@@ -129,14 +129,12 @@ public class RouteService(
         0;
     }
 
-    public async Task<List<RouteDTO>> LookForSavedRoutesInChart(RoleTypeDTO role, int clientId, int chartId)
+    public async Task<List<string>> LookForSavedRoutesInChart(RoleTypeDTO role, int clientId, int chartId)
     {
         RoleType roleType = DtoDomainConverter.Convert(role);
 
         return (roleType == RoleType.SIGNED || roleType == RoleType.DUTY) ?
-        (await RouteRepo
-            .GetAllRouteForClientOfChartIdAsync(clientId, chartId))
-                .ConvertAll(DomainDtoConverter.Convert) :
-        new List<RouteDTO>();
+        await RouteRepo.GetAllForClientOfChartIdAsync(clientId, chartId) :
+        new List<string>();
     }
 }
