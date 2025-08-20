@@ -2,6 +2,7 @@ using MetroGid.Core.Interfaces;
 using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.DBA.EF.Context;
 using Microsoft.EntityFrameworkCore;
+using MetroGid.DBA.EF.Converters;
 
 namespace MetroGid.DBA.EF.Repositories;
 
@@ -9,10 +10,12 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
 {
     private readonly MetroDbContext _context = context;
 
-    public Task<int> AddAsync(int clientId, int chartId, MCMC.Route route)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<int> AddAsync(int clientId, int chartId, MCMC.Route route) =>
+        await _context.Clients
+            .AsNoTracking()
+            .Where(c => c.Id == clientId)
+            .Select(c => _context.AddRouteJson(c.Id, chartId, DomainRouteJsonConverter.Convert(route)))
+            .FirstOrDefaultAsync();
 
     public async Task<int> GetIdAsync(string title, int clientId) =>
         await _context.Ways
