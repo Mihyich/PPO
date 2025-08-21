@@ -21,8 +21,8 @@ public class Chart(string title, string city, string svg_inst) : IDomainValidato
 
         if (route != null)
         {
-            route.Title = "Новый маршрут";
             route.Chart = this;
+            route.Title = $"[\"{City}\":\"{Title}\"]:[\"{src?.Branch?.Title}\":\"{src?.Title}\"]:[\"{dst?.Branch?.Title}\":\"{dst?.Title}\"]";
         }
 
         return route;

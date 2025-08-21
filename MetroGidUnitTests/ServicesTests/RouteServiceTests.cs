@@ -40,7 +40,7 @@ public class RouteServiceTests
         RouteDTO? route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         RouteDTO expectedRoute = new(
-            "Новый маршрут",
+            $"[\"{city}\":\"{chartTitle}\"]:[\"{branchSrcTitle}\":\"{stationSrcTitle}\"]:[\"{branchDstTitle}\":\"{stationDstTitle}\"]",
             city,
             chartTitle,
             [
@@ -194,7 +194,7 @@ public class RouteServiceTests
         RouteDTO? route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         RouteDTO expectedRoute = new(
-            "Новый маршрут",
+            $"[\"{city}\":\"{chartTitle}\"]:[\"{branchSrcTitle}\":\"{stationSrcTitle}\"]:[\"{branchDstTitle}\":\"{stationDstTitle}\"]",
             city,
             chartTitle,
             [
@@ -290,7 +290,7 @@ public class RouteServiceTests
         RouteDTO? route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         RouteDTO expectedRoute = new(
-            "Новый маршрут",
+            $"[\"{city}\":\"{chartTitle}\"]:[\"{branchSrcTitle}\":\"{stationSrcTitle}\"]:[\"{branchDstTitle}\":\"{stationDstTitle}\"]",
             city,
             chartTitle,
             [
@@ -392,7 +392,7 @@ public class RouteServiceTests
         RouteDTO? route = await routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         RouteDTO expectedRoute = new(
-            "Новый маршрут",
+            $"[\"{city}\":\"{chartTitle}\"]:[\"{branchSrcTitle}\":\"{stationSrcTitle}\"]:[\"{branchDstTitle}\":\"{stationDstTitle}\"]",
             city,
             chartTitle,
             [
