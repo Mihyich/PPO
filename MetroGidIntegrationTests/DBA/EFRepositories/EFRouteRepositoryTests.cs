@@ -1,10 +1,11 @@
 using System.Data;
 using MetroGid.Core.Interfaces;
-using MCMC = MetroGid.Core.Models.Types;
 using MetroGid.DBA.EF.Context;
 using MetroGidIntegrationTests.DBA.EFFixtures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using MCMC = MetroGid.Core.Models.Concrete;
+using MCMT = MetroGid.Core.Models.Types;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Handlers;
@@ -13,11 +14,12 @@ using MetroGid.Core.Utilities.Validators.Interfaces;
 using MetroGid.Core.Utilities.Validators.Handlers;
 using MetroGid.Core.Utilities.Builders;
 using MetroGid.Core.Utilities.Directors;
-using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utilities;
 using MetroGid.Core.Utilities.Strategies;
 using MetroGid.Core.Utilities.TimeMeter.Concrete;
 using MetroGid.Core.Utilities.TimeMeter.Super;
+using MetroGid.DBA.EF.Converters;
+using Newtonsoft.Json.Linq;
 
 namespace MetroGidIntegrationTests.DBA.EFClientRepositoryTests;
 
@@ -25,32 +27,42 @@ namespace MetroGidIntegrationTests.DBA.EFClientRepositoryTests;
 public class EFRouteRepositoryTests : IClassFixture<EFDataBaseFixture>, IAsyncLifetime
 {
     private readonly MetroDbContext _context;
+    private readonly IChartRepository _chartRepository;
     private readonly IClientRepository _clientRepository;
     private readonly IRouteRepository _routeRepository;
     private IDbContextTransaction? _transaction;
 
-
     private TimeOnly TimeStart = new(9, 0);
 
-    private Chart ChartAdana;
-    private Chart ChartMoscow;
-    private Chart ChartSanktPeterburg;
+    private string ChartJsonAdana;
+    private string ChartJsonMoscow;
+    private string ChartJsonSanktPeterburg;
 
+    private MCMC.Chart ChartAdana;
+    private MCMC.Chart ChartMoscow;
+    private MCMC.Chart ChartSanktPeterburg;
 
-    private Route Route_Adana_Bolnitsa_Akindjilar;
+    private MCMC.Route Route_Adana_Bolnitsa_Akindjilar;
 
+    private MCMC.Route Route_Moscow_Izmaylovskaya_Baumanskaya;
+    private MCMC.Route Route_Moscow_Nahabino_Ipodrom;
+    private MCMC.Route Route_Moscow_Sviblovo_Fili;
 
-    private Route Route_Moscow_Izmaylovskaya_Baumanskaya;
-    private Route Route_Moscow_Nahabino_Ipodrom;
-    private Route Route_Moscow_Sviblovo_Fili;
+    private MCMC.Route Route_Sankt_Peterburg_Begovaya_Kupchino;
 
+    private int clientId1;
+    private int clientId2;
+    private int clientId3;
+    private int clientId4;
 
-    private Route Route_Sankt_Peterburg_Begovaya_Kupchino;
-
+    private int ChartAdanaId;
+    private int ChartMoscowId;
+    private int ChartSanktPeterburgId;
 
     public EFRouteRepositoryTests(EFDataBaseFixture fixture)
     {
         _context = fixture.Context;
+        _chartRepository = fixture.chartRepository;
         _clientRepository = fixture.clientRepository;
         _routeRepository = fixture.routeRepository;
 
@@ -58,6 +70,10 @@ public class EFRouteRepositoryTests : IClassFixture<EFDataBaseFixture>, IAsyncLi
         string AdanaChartPath = Path.Combine(currentDirectory, "Cities", "Adana", "chart.json");
         string MoscowChartPath = Path.Combine(currentDirectory, "Cities", "Moscow", "chart.json");
         string SanktPeterburgChartPath = Path.Combine(currentDirectory, "Cities", "Sankt-Peterburg", "chart.json");
+
+        ChartJsonAdana = FileReader.ReadAll(AdanaChartPath);
+        ChartJsonMoscow = FileReader.ReadAll(MoscowChartPath);
+        ChartJsonSanktPeterburg = FileReader.ReadAll(SanktPeterburgChartPath);
 
         SuperExceptionHandler handler = new WarningHandlerException();
         IExceptionVisitor logger = new ExceptionMessenger();
@@ -69,22 +85,22 @@ public class EFRouteRepositoryTests : IClassFixture<EFDataBaseFixture>, IAsyncLi
         DirectorChartBase director;
 
         builder = new BuilderChart(domainAttribsValidator, domainReferentialityValidator);
-        director = new DirectorChartJson(builder, FileReader.ReadAll(AdanaChartPath));
+        director = new DirectorChartJson(builder, ChartJsonAdana);
         ChartAdana = director.Construct();
 
         builder = new BuilderChart(domainAttribsValidator, domainReferentialityValidator);
-        director = new DirectorChartJson(builder, FileReader.ReadAll(MoscowChartPath));
+        director = new DirectorChartJson(builder, ChartJsonMoscow);
         ChartMoscow = director.Construct();
 
         builder = new BuilderChart(domainAttribsValidator, domainReferentialityValidator);
-        director = new DirectorChartJson(builder, FileReader.ReadAll(SanktPeterburgChartPath));
+        director = new DirectorChartJson(builder, ChartJsonSanktPeterburg);
         ChartSanktPeterburg = director.Construct();
 
         TimeSuper timeMeter = new TimeFast();
-        StrategySearchRouteBase searcher = new StrategySearchRouteBFS(timeMeter);
+        StrategySearchRouteBase searcher = new StrategySearchRouteDijkstra(timeMeter);
 
-        Station src;
-        Station dst;
+        MCMC.Station src;
+        MCMC.Station dst;
 
         src = ChartAdana.GetStation("Линия 1", "Больница") ?? throw new InvalidOperationException("Станция не найдена");
         dst = ChartAdana.GetStation("Линия 1", "Акынджилар") ?? throw new InvalidOperationException("Станция не найдена");
@@ -114,12 +130,25 @@ public class EFRouteRepositoryTests : IClassFixture<EFDataBaseFixture>, IAsyncLi
 
         _transaction = await _context.Database.BeginTransactionAsync();
 
-        int clientId1 = await _clientRepository.AddAsync(new("TestUser1", "Aa1234", "Test.User.1@test.ru", MCMC.RoleType.SIGNED));
-        int clientId2 = await _clientRepository.AddAsync(new("TestUser2", "Aa1234", "Test.User.2@test.ru", MCMC.RoleType.SIGNED));
-        int clientId3 = await _clientRepository.AddAsync(new("TestUser3", "Aa1234", "Test.User.3@test.ru", MCMC.RoleType.SIGNED));
-        int clientId4 = await _clientRepository.AddAsync(new("TestUser4", "Aa1234", "Test.User.4@test.ru", MCMC.RoleType.SIGNED));
+        clientId1 = await _clientRepository.AddAsync(new("TestUser1", "Aa1234", "Test.User.1@test.ru", MCMT.RoleType.SIGNED));
+        clientId2 = await _clientRepository.AddAsync(new("TestUser2", "Aa1234", "Test.User.2@test.ru", MCMT.RoleType.SIGNED));
+        clientId3 = await _clientRepository.AddAsync(new("TestUser3", "Aa1234", "Test.User.3@test.ru", MCMT.RoleType.SIGNED));
+        clientId4 = await _clientRepository.AddAsync(new("TestUser4", "Aa1234", "Test.User.4@test.ru", MCMT.RoleType.SIGNED));
 
-        // await _routeRepository.AddAsync(clientId1, )
+        ChartAdanaId = await _chartRepository.AddAsync(ChartJsonAdana);
+        ChartMoscowId = await _chartRepository.AddAsync(ChartJsonMoscow);
+        ChartSanktPeterburgId = await _chartRepository.AddAsync(ChartJsonSanktPeterburg);
+
+        await _routeRepository.AddAsync(clientId1, ChartMoscowId, Route_Moscow_Izmaylovskaya_Baumanskaya);
+        await _routeRepository.AddAsync(clientId1, ChartMoscowId, Route_Moscow_Sviblovo_Fili);
+
+        await _routeRepository.AddAsync(clientId2, ChartAdanaId, Route_Adana_Bolnitsa_Akindjilar);
+
+        await _routeRepository.AddAsync(clientId3, ChartAdanaId, Route_Adana_Bolnitsa_Akindjilar);
+        await _routeRepository.AddAsync(clientId3, ChartMoscowId, Route_Moscow_Izmaylovskaya_Baumanskaya);
+        await _routeRepository.AddAsync(clientId3, ChartMoscowId, Route_Moscow_Nahabino_Ipodrom);
+        await _routeRepository.AddAsync(clientId3, ChartMoscowId, Route_Moscow_Sviblovo_Fili);
+        await _routeRepository.AddAsync(clientId3, ChartSanktPeterburgId, Route_Sankt_Peterburg_Begovaya_Kupchino);
 
         await _context.SaveChangesAsync();
     }
@@ -143,5 +172,33 @@ public class EFRouteRepositoryTests : IClassFixture<EFDataBaseFixture>, IAsyncLi
         Assert.NotNull(await _clientRepository.GetByCredentialsAsync(login, password, mail));
     }
 
-    
+    [Fact]
+    public async Task GetAsyncTest()
+    {
+        var testData = new[]
+        {
+            (Route_Moscow_Izmaylovskaya_Baumanskaya, clientId1),
+            (Route_Moscow_Sviblovo_Fili, clientId1),
+
+            (Route_Adana_Bolnitsa_Akindjilar, clientId2),
+
+            (Route_Adana_Bolnitsa_Akindjilar, clientId3),
+            (Route_Moscow_Izmaylovskaya_Baumanskaya, clientId3),
+            (Route_Moscow_Nahabino_Ipodrom, clientId3),
+            (Route_Moscow_Sviblovo_Fili, clientId3),
+            (Route_Sankt_Peterburg_Begovaya_Kupchino, clientId3)
+        };
+
+        foreach (var (route, clientId) in testData)
+        {
+            int routeId = await _routeRepository.GetIdAsync(route.Title, clientId);
+            string? routeJson = await _routeRepository.GetByIdAsync(routeId);
+
+            Assert.NotNull(routeJson);
+            Assert.True(JToken.DeepEquals(
+                JToken.Parse(routeJson),
+                JToken.Parse(DomainRouteJsonConverter.Convert(route))
+            ));
+        }
+    }
 }
