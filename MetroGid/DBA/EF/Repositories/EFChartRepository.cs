@@ -4,6 +4,7 @@ using MDEMT = MetroGid.DBA.EF.Models.Tables;
 using MetroGid.DBA.EF.Context;
 using Microsoft.EntityFrameworkCore;
 using MetroGid.DBA.EF.Converters;
+using MetroGid.DBA.EF.Models.Shadow;
 
 namespace MetroGid.DBA.EF.Repositories;
 
@@ -11,11 +12,15 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
 {
     private readonly MetroDbContext _context = context;
 
-    public async Task<int> AddAsync(string chartJson) =>
-        await _context.Charts
-            .AsNoTracking()
-            .Select(selector => _context.AddChartJson(chartJson))
+    public async Task<int> AddAsync(string chartJson)
+    {
+        var result = await _context.Set<ScalarResult>()
+            .FromSqlRaw("SELECT public.add_chart_json({0}) AS \"Value\" FROM (VALUES (1)) AS fake", chartJson)
+            .AsAsyncEnumerable()
             .FirstOrDefaultAsync();
+
+        return result?.Value ?? 0;
+    }
 
     public async Task<int> GetChartIdAsync(string city, string title) =>
         await _context.Charts
