@@ -1,8 +1,10 @@
 -- Фунция сохранения схемы в json формате
 CREATE OR REPLACE FUNCTION add_chart_json(
-    p_json_data JSONB
+    p_json_data TEXT
 ) RETURNS INT AS $$
 DECLARE
+    v_json_data JSONB := p_json_data::JSONB;
+
     v_chart_id      INT;   -- айди созданной записи схемы
     v_branch_id     INT;   -- айди созданной записи ветки
     v_station_id    INT;   -- айди созданной записи станции
@@ -13,15 +15,19 @@ DECLARE
     v_railway_item    RECORD;
     v_transition_item RECORD;
 BEGIN
+    IF p_json_data IS NULL OR NOT (p_json_data ~ '^[\s]*\{.*\}[\s]*$') THEN
+        RAISE EXCEPTION 'Некорректный JSON: входные данные пусты или не объект';
+    END IF;
+
     INSERT INTO chart(city, title)
     VALUES(
-        p_json_data->>'city',
-        p_json_data->>'title'
+        v_json_data->>'city',
+        v_json_data->>'title'
     )
     RETURNING id INTO v_chart_id;
 
     FOR v_branch_item IN
-        SELECT * FROM jsonb_array_elements(p_json_data->'branches')
+        SELECT * FROM jsonb_array_elements(v_json_data->'branches')
     LOOP
 
         INSERT INTO branch(title, color, access)
@@ -76,7 +82,7 @@ BEGIN
     END LOOP;
 
     FOR v_transition_item IN
-        SELECT * FROM jsonb_array_elements(p_json_data->'transitions')
+        SELECT * FROM jsonb_array_elements(v_json_data->'transitions')
     LOOP
 
         INSERT INTO transition(occupancy, access, duration, open_time, close_time)

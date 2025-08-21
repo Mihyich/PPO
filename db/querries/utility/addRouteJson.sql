@@ -2,9 +2,11 @@
 CREATE OR REPLACE FUNCTION add_route_json(
     p_client_id INT,
     p_chart_id INT,
-    p_json_data JSONB
+    p_json_data TEXT
 ) RETURNS INT AS $$
 DECLARE
+    v_json_data JSONB := p_json_data::JSONB;
+
     v_way_id INT;          -- айди созданной записи маршрута
     v_item RECORD;         -- обход массива звеньев маршрута  
     v_way_item_id INT;     -- айди созданного звена
@@ -16,19 +18,24 @@ DECLARE
     v_railway_id INT;      -- айди найденного переезда
     v_transition_id INT;   -- айди найденного перехода
 BEGIN
+    -- Проверка конвертации
+    IF p_json_data IS NULL OR NOT (p_json_data ~ '^[\s]*\{.*\}[\s]*$') THEN
+        RAISE EXCEPTION 'Некорректный JSON: входные данные пусты или не объект';
+    END IF;
+
     -- Создать запись нового маршрута
     INSERT INTO way (client_id, chart_id, title, duration, init_date)
     VALUES (
         p_client_id,
         p_chart_id,
-        p_json_data->>'Title',
-        (p_json_data->>'Duration')::TIME,
+        v_json_data->>'Title',
+        (v_json_data->>'Duration')::TIME,
         date_trunc('second', NOW())::TIMESTAMPTZ
     )
     RETURNING id INTO v_way_id;
 
     -- Вставка звеньев маршрута
-    FOR v_item IN SELECT * FROM jsonb_array_elements(p_json_data->'RouteItems')
+    FOR v_item IN SELECT * FROM jsonb_array_elements(v_json_data->'RouteItems')
     LOOP
         -- Создать запись о звенье маршрута
         INSERT INTO way_item (way_id, nexus, step_nomer)
