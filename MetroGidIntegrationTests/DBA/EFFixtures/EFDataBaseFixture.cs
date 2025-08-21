@@ -12,6 +12,8 @@ public class EFDataBaseFixture : IDisposable
 {
     public MetroDbContext Context { get; private set; }
 
+    public IChartRepository chartRepository { get; private set; }
+
     public IClientRepository clientRepository { get; private set; }
 
     public IRouteRepository routeRepository { get; private set; }
@@ -33,6 +35,7 @@ public class EFDataBaseFixture : IDisposable
             .Options;
 
         Context = new MetroDbContext(dbContextOptions);
+        chartRepository = new EFChartRepository(Context);
         clientRepository = new EFClientRepository(Context);
         routeRepository = new EFRouteRepository(Context);
     }
