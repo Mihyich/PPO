@@ -12,7 +12,7 @@ BEGIN
                 json_agg(
                     json_build_object(
                         'title', b.title,
-                        'color', b.color,
+                        'color', UPPER((SELECT int_color_to_hex(b.color))),
                         'accesstype', b.access,
                         'stations', (
                         SELECT
@@ -21,8 +21,8 @@ BEGIN
                                     'title', s.title,
                                     'occupancy', s.occupancy,
                                     'accesstype', s.access,
-                                    'opentime', s.open_time,
-                                    'closetime', s.close_time
+                                    'opentime', (SELECT TO_CHAR(s.open_time, 'HH24:MI')),
+                                    'closetime', (SELECT TO_CHAR(s.close_time, 'HH24:MI'))
                                 )
                             )
                         FROM
@@ -123,8 +123,8 @@ BEGIN
                         'occupancy', d_adj.occupancy,
                         'accesstype', d_adj.access,
                         'duration', d_adj.duration,
-                        'opentime', d_adj.open_time,
-                        'closetime', d_adj.close_time,
+                        'opentime', (SELECT TO_CHAR(d_adj.open_time, 'HH24:MI')),
+                        'closetime', (SELECT TO_CHAR(d_adj.close_time, 'HH24:MI')),
                         'branchsrc', (
                             SELECT
                                 b.title 
