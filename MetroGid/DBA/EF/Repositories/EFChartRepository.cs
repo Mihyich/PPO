@@ -11,10 +11,11 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
 {
     private readonly MetroDbContext _context = context;
 
-    public Task<int> AddAsync(MCMC.Chart chart)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<int> AddAsync(string chartJson) =>
+        await _context.Charts
+            .AsNoTracking()
+            .Select(selector => _context.AddChartJson(chartJson))
+            .FirstOrDefaultAsync();
 
     public async Task<int> GetChartIdAsync(string city, string title) =>
         await _context.Charts

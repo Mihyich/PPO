@@ -4,7 +4,7 @@ namespace MetroGid.Core.Interfaces;
 
 public interface IChartRepository
 {
-    Task<int> AddAsync(Chart chart);
+    Task<int> AddAsync(string chartJson);
 
     Task<int> GetChartIdAsync(string city, string title);
     Task<int> GetBranchIdAsync(string title, int chartId);
