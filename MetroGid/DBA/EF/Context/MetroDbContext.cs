@@ -1,4 +1,5 @@
-﻿using MetroGid.DBA.EF.Models.Tables;
+﻿using MetroGid.DBA.EF.Models.Shadow;
+using MetroGid.DBA.EF.Models.Tables;
 using Microsoft.EntityFrameworkCore;
 
 namespace MetroGid.DBA.EF.Context;
@@ -64,6 +65,14 @@ public partial class MetroDbContext : DbContext
         )
             .HasName("get_route_json_by_id")
             .HasSchema("public");
+
+
+        modelBuilder.Entity<ScalarResult>(eb =>
+        {
+            eb.HasNoKey();
+            eb.ToView(null);
+            eb.ToTable((string?)null);
+        });
 
         modelBuilder.Entity<Branch>(entity =>
         {
