@@ -38,6 +38,13 @@ public partial class MetroDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDbFunction(
+            typeof(MetroDbContext).GetMethod(nameof(AddChartJson)) ??
+            throw new InvalidOperationException($"Метод '{nameof(AddChartJson)}' не найден в {typeof(MetroDbContext).Name}.")
+        )
+            .HasName("add_chart_json")
+            .HasSchema("public");
+
+        modelBuilder.HasDbFunction(
             typeof(MetroDbContext).GetMethod(nameof(AddRouteJson)) ??
             throw new InvalidOperationException($"Метод '{nameof(AddRouteJson)}' не найден в {typeof(MetroDbContext).Name}.")
         )
@@ -384,6 +391,9 @@ public partial class MetroDbContext : DbContext
 
     // Заглушки
     
+    public int AddChartJson(string jsonChart) =>
+        throw new NotSupportedException($"Метод {nameof(AddChartJson)} используется только в LINQ через EF Core.");
+
     public int AddRouteJson(int clientId, int chartId, string jsonRoute) =>
         throw new NotSupportedException($"Метод {nameof(AddRouteJson)} используется только в LINQ через EF Core.");
 
