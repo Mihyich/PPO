@@ -15,6 +15,7 @@ using MetroGidIntegrationTests.DBA.EFFixtures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json.Linq;
+using FluentAssertions;
 
 namespace MetroGidIntegrationTests.DBA.EFClientRepositoryTests;
 
@@ -117,10 +118,7 @@ public class EFChartRepositoryTests : IClassFixture<EFDataBaseFixture>, IAsyncLi
 
             Assert.NotNull(chartJson);
             Assert.Equal(chartId, testChartId);
-            Assert.True(JToken.DeepEquals(
-                JToken.Parse(chartJson),
-                JToken.Parse(expectedChartJson)
-            ));
+            JToken.Parse(chartJson).Should().BeEquivalentTo(JToken.Parse(expectedChartJson));
         }
     }
 }
