@@ -10,13 +10,13 @@ using MCMT = MetroGid.Core.Models.Types;
 namespace MetroGidIntegrationTests.DBA.EFClientRepositoryTests;
 
 [Collection("Database")]
-public class EFClientRepositoryTests : IClassFixture<EFDataBaseFixture>, IDisposable
+public class EFClientRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, IDisposable
 {
     private readonly MetroDbContext _context;
     private readonly IDbContextTransaction _transaction;
     private readonly IClientRepository _repository;
 
-    public EFClientRepositoryTests(EFDataBaseFixture fixture)
+    public EFClientRepositoryTests(EFDataBasePostgresFixture fixture)
     {
         _context = fixture.Context;
 

@@ -24,7 +24,7 @@ using Newtonsoft.Json.Linq;
 namespace MetroGidIntegrationTests.DBA.EFClientRepositoryTests;
 
 [Collection("Database")]
-public class EFRouteRepositoryTests : IClassFixture<EFDataBaseFixture>, IAsyncLifetime
+public class EFRouteRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, IAsyncLifetime
 {
     private readonly MetroDbContext _context;
     private readonly IChartRepository _chartRepository;
@@ -59,7 +59,7 @@ public class EFRouteRepositoryTests : IClassFixture<EFDataBaseFixture>, IAsyncLi
     private int ChartMoscowId;
     private int ChartSanktPeterburgId;
 
-    public EFRouteRepositoryTests(EFDataBaseFixture fixture)
+    public EFRouteRepositoryTests(EFDataBasePostgresFixture fixture)
     {
         _context = fixture.Context;
         _chartRepository = fixture.chartRepository;

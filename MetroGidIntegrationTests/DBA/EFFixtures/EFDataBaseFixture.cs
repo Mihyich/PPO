@@ -8,8 +8,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace MetroGidIntegrationTests.DBA.EFFixtures;
 
-public class EFDataBaseFixture : IDisposable
+public abstract class EFDataBaseFixture : IDisposable
 {
+    protected readonly string ConnectionStringName;
+
     public MetroDbContext Context { get; private set; }
 
     public IChartRepository chartRepository { get; private set; }
@@ -18,8 +20,10 @@ public class EFDataBaseFixture : IDisposable
 
     public IRouteRepository routeRepository { get; private set; }
 
-    public EFDataBaseFixture()
+    public EFDataBaseFixture(string connectionStringName)
     {
+        ConnectionStringName = connectionStringName;
+
         IEnvironmentLoader environmentLoader = new DevelopmentEnvironmentLoader();
         environmentLoader.Load();
 
@@ -27,7 +31,7 @@ public class EFDataBaseFixture : IDisposable
             .AddEnvironmentVariables()
             .Build();
 
-        string connectionString = config.GetConnectionString("MetroDb") ??
+        string connectionString = config.GetConnectionString(ConnectionStringName) ??
             throw new InvalidOperationException("Не найдена конфигурация подключения");
 
         DbContextOptions<MetroDbContext> dbContextOptions = new DbContextOptionsBuilder<MetroDbContext>()

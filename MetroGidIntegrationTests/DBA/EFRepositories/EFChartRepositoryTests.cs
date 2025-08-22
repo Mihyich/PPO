@@ -20,7 +20,7 @@ using FluentAssertions;
 namespace MetroGidIntegrationTests.DBA.EFClientRepositoryTests;
 
 [Collection("Database")]
-public class EFChartRepositoryTests : IClassFixture<EFDataBaseFixture>, IAsyncLifetime
+public class EFChartRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, IAsyncLifetime
 {
     private readonly MetroDbContext _context;
     private readonly IChartRepository _chartRepository;
@@ -40,7 +40,7 @@ public class EFChartRepositoryTests : IClassFixture<EFDataBaseFixture>, IAsyncLi
     private int ChartMoscowId;
     private int ChartSanktPeterburgId;
 
-    public EFChartRepositoryTests(EFDataBaseFixture fixture)
+    public EFChartRepositoryTests(EFDataBasePostgresFixture fixture)
     {
         _context = fixture.Context;
         _chartRepository = fixture.chartRepository;
