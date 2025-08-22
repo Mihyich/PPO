@@ -24,8 +24,6 @@ public class EFChartRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, 
 {
     private readonly MetroDbContext _context;
     private readonly IChartRepository _chartRepository;
-    private readonly IClientRepository _clientRepository;
-    private readonly IRouteRepository _routeRepository;
     private IDbContextTransaction? _transaction;
 
     private string ChartJsonAdana;
@@ -44,8 +42,6 @@ public class EFChartRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, 
     {
         _context = fixture.Context;
         _chartRepository = fixture.chartRepository;
-        _clientRepository = fixture.clientRepository;
-        _routeRepository = fixture.routeRepository;
 
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string AdanaChartPath = Path.Combine(currentDirectory, "Cities", "Adana", "chart.json");
