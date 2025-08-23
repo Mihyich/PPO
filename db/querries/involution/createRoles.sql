@@ -49,6 +49,15 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON
     way_item_transition
 TO signed_client;
 
+GRANT USAGE ON SEQUENCE
+    client_id_seq,
+    way_id_seq,
+    way_item_id_seq,
+    way_item_railway_id_seq,
+    way_item_station_id_seq,
+    way_item_transition_id_seq
+TO signed_client;
+
 GRANT EXECUTE ON FUNCTION
     add_chart_json(TEXT),
     add_route_json(INT, INT, TEXT),
@@ -69,4 +78,4 @@ GRANT UPDATE ON
     station,
     transition,
     railway
-TO signed_client;
+TO duty;
