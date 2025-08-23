@@ -1,8 +1,6 @@
 using System.Data;
 using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Exceptions.Handlers;
-using MetroGid.Core.Exceptions.Interfaces;
-using MetroGid.Core.Exceptions.Loggers;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Interfaces;
 using MetroGid.Core.Utilities;
@@ -53,10 +51,9 @@ public class EFChartRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, 
         ChartJsonSanktPeterburg = FileReader.ReadAll(SanktPeterburgChartPath);
 
         SuperExceptionHandler handler = new WarningHandlerException();
-        IExceptionVisitor logger = new ExceptionMessenger();
 
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler, logger);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler, logger);
+        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
+        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler);
 
         BuilderChartBase builder;
         DirectorChartBase director;
