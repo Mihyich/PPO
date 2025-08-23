@@ -4,10 +4,10 @@ DECLARE
     result_json JSONB;
 BEGIN
     SELECT
-        json_build_object(
+        jsonb_build_object(
             'Title', w.title,
             'Duration', w.duration,
-            'RouteItems', (
+            'RouteItems', COALESCE((
                 WITH
                     wi AS (
                         SELECT
@@ -133,22 +133,22 @@ BEGIN
                             wi.step_nomer
                     )
                 SELECT
-                    json_agg(
+                    jsonb_agg(
                         CASE res.nexus
                             WHEN 'STATION'::nexus_type THEN
-                                json_build_object(
+                                jsonb_build_object(
                                     '$type', 'station',
                                     'Title', res.station_title,
                                     'BranchTitle', res.branch_title
                                 )
                             WHEN 'RAILWAY'::nexus_type THEN
-                                json_build_object(
+                                jsonb_build_object(
                                     '$type', 'railway',
                                     'FromStationTitle', res.from_station_title,
                                     'ToStationTitle', res.to_station_title
                                 )
                             WHEN 'TRANSITION'::nexus_type THEN
-                                json_build_object(
+                                jsonb_build_object(
                                     '$type', 'transition',
                                     'FromBranchTitle', res.from_branch_title,
                                     'FromStationTitle', res.from_station_title,
@@ -156,12 +156,12 @@ BEGIN
                                     'ToStationTitle', res.to_station_title
                                 )
                             ELSE
-                                json_build_object('$type', 'unknown')
+                                jsonb_build_object('$type', 'unknown')
                         END
                     )
                 FROM
                     res
-            )
+            ), '[]'::JSONB)
         ) INTO result_json
     FROM
         way AS w

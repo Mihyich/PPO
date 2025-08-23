@@ -4,20 +4,20 @@ DECLARE
     result_json JSONB;
 BEGIN
     SELECT
-        json_build_object(
+        jsonb_build_object(
             'city', c.city,
             'title', c.title,
-            'branches', (
+            'branches', COALESCE((
             SELECT
-                json_agg(
-                    json_build_object(
+                jsonb_agg(
+                    jsonb_build_object(
                         'title', b.title,
                         'color', UPPER((SELECT int_color_to_hex(b.color))),
                         'accesstype', b.access,
-                        'stations', (
+                        'stations', COALESCE((
                         SELECT
-                            json_agg(
-                                json_build_object(
+                            jsonb_agg(
+                                jsonb_build_object(
                                     'title', s.title,
                                     'occupancy', s.occupancy,
                                     'accesstype', s.access,
@@ -36,11 +36,11 @@ BEGIN
                                 WHERE
                                     bs.station_id = s.id AND bs.branch_id = b.id
                             )
-                        ),
-                        'railways', (
+                        ), '[]'::JSONB),
+                        'railways', COALESCE((
                         SELECT
-                            json_agg(
-                                json_build_object(
+                            jsonb_agg(
+                                jsonb_build_object(
                                     'from', (
                                     SELECT
                                         s.title
@@ -71,15 +71,15 @@ BEGIN
                                 JOIN
                                     station AS s ON b.id = bs.branch_id AND s.id = bs.station_id AND s.id = r.from_id
                             )
-                        )
+                        ), '[]'::JSONB)
                     )
                 )
             FROM
                 branch AS b
             JOIN
                 chart_branch AS cb ON cb.chart_id = c.id AND cb.branch_id = b.id
-            ),
-            'transitions', (
+            ), '[]'::JSONB),
+            'transitions', COALESCE((
             WITH
                 adj AS (
                     SELECT
@@ -118,8 +118,8 @@ BEGIN
                         adj.transition_id
                 )
             SELECT
-                json_agg(
-                    json_build_object(
+                jsonb_agg(
+                    jsonb_build_object(
                         'occupancy', d_adj.occupancy,
                         'accesstype', d_adj.access,
                         'duration', d_adj.duration,
@@ -161,7 +161,7 @@ BEGIN
                 )
             FROM
                 d_adj
-            )
+            ), '[]'::JSONB)
         ) INTO result_json
     FROM
         chart AS c
