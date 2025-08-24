@@ -54,12 +54,12 @@ class Program
 
 
 
-        MetroContext metroContext = new();
-        IClientRepository clientRepository = new EFClientRepository(metroContext);
-        ClientService clientService = new(clientRepository, handler, logger);
+        // MetroContext metroContext = new();
+        // IClientRepository clientRepository = new EFClientRepository(metroContext);
+        // ClientService clientService = new(clientRepository, handler, logger);
 
-        int clientId1 = clientService.Reg("mihail", "qwerASDF1234", "michail.zevahin@gmail.com").GetAwaiter().GetResult();
-        Console.WriteLine($"Айди нового пользователя {clientId1}");
+        // int clientId1 = clientService.Reg("mihail", "qwerASDF1234", "michail.zevahin@gmail.com").GetAwaiter().GetResult();
+        // Console.WriteLine($"Айди нового пользователя {clientId1}");
 
         // int clientId2 = clientService.Reg("GrizlyBear", "GrizlyBearGoyda2004", "berloga.taiga@gmail.com").GetAwaiter().GetResult();
         // Console.WriteLine($"Айди нового пользователя {clientId2}");
