@@ -154,9 +154,10 @@ public class SignedClientServiceTests : IClassFixture<EFServiceSignedFixture>, I
     public async Task saveRouteSignedTest(string city, string chartTitle, string branchSrcTitle, string stationSrcTitle, string branchDstTitle, string stationDstTitle, int startHour, int startMinute)
     {
         TimeOnly timeStart = new(startHour, startMinute);
-        RouteDTO serviceRoute = await _routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart) ?? throw new OperationCanceledException();
-        int chartId = await _chartService.GetChartId(city, chartTitle);
-        int savedRouteId = await _routeService.SaveRoute(RoleTypeDTO.SIGNED, clientId1, serviceRoute, chartId);
+        RouteDTO serviceRoute = await _routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart) ?? throw new OperationCanceledException();
+        int chartId = await _chartRepository.GetChartIdAsync(city, chartTitle);
+        ClientDTO client = new("Jonh", "Aa1234", "John.Tompson@mail.ru", RoleTypeDTO.SIGNED);
+        int savedRouteId = await _routeService.SaveRouteAsync(client, serviceRoute, chartId);
         string? savedRouteJson = await _routeRepository.GetByIdAsync(savedRouteId);
 
         MCMC.Chart[] charts = [ChartAdana, ChartMoscow, ChartSanktPeterburg];

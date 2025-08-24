@@ -131,7 +131,7 @@ public class UnsignedClientServiceTests : IClassFixture<EFServiceUnsignedFixture
     public async Task searchRouteTest(string city, string chartTitle, string branchSrcTitle, string stationSrcTitle, string branchDstTitle, string stationDstTitle, int startHour, int startMinute)
     {
         TimeOnly timeStart = new(startHour, startMinute);
-        RouteDTO? serviceRoute = await _routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart);
+        RouteDTO? serviceRoute = await _routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart);
 
         MCMC.Chart[] charts = [ChartAdana, ChartMoscow, ChartSanktPeterburg];
         MCMC.Chart testChart = charts.Where(c => c.City == city && c.Title == chartTitle).FirstOrDefault() ?? throw new OperationCanceledException();
@@ -154,9 +154,10 @@ public class UnsignedClientServiceTests : IClassFixture<EFServiceUnsignedFixture
     public async Task saveRouteUnsignedTest(string city, string chartTitle, string branchSrcTitle, string stationSrcTitle, string branchDstTitle, string stationDstTitle, int startHour, int startMinute)
     {
         TimeOnly timeStart = new(startHour, startMinute);
-        RouteDTO serviceRoute = await _routeService.SearchRoute(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart) ?? throw new OperationCanceledException();
-        int chartId = await _chartService.GetChartId(city, chartTitle);
-        int savedRouteId = await _routeService.SaveRoute(RoleTypeDTO.UNSIGNED, 1, serviceRoute, chartId);
+        RouteDTO serviceRoute = await _routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart) ?? throw new OperationCanceledException();
+        int chartId = await _chartRepository.GetChartIdAsync(city, chartTitle);
+        ClientDTO client = new("John", "Aa1234", "John.Tompson@mail.ru", RoleTypeDTO.UNSIGNED);
+        int savedRouteId = await _routeService.SaveRouteAsync(client, serviceRoute, chartId);
 
         MCMC.Chart[] charts = [ChartAdana, ChartMoscow, ChartSanktPeterburg];
         MCMC.Chart testChart = charts.Where(c => c.City == city && c.Title == chartTitle).FirstOrDefault() ?? throw new OperationCanceledException();
