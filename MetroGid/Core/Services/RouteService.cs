@@ -142,7 +142,7 @@ public class RouteService(
     {
         RoleType role = DtoDomainConverter.Convert(client.Role);
 
-        if (role == RoleType.SIGNED || role == RoleType.DUTY)
+        if (role != RoleType.SIGNED && role != RoleType.DUTY)
             return 0;
 
         int clientId = await GetClientIdAsync(client.Login, client.Password, client.Mail);
@@ -154,7 +154,7 @@ public class RouteService(
     {
         RoleType role = DtoDomainConverter.Convert(client.Role);
 
-        if (role == RoleType.SIGNED || role == RoleType.DUTY)
+        if (role != RoleType.SIGNED && role != RoleType.DUTY)
             return new List<string>();
 
         int clientId = await GetClientIdAsync(client.Login, client.Password, client.Mail);
