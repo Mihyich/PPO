@@ -10,11 +10,11 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
 {
     private readonly MetroDbContext _context = context;
 
-    public async Task<int> AddAsync(int clientId, int chartId, MCMC.Route route) =>
+    public async Task<int> AddAsync(int clientId, int chartId, string routeJson) =>
         await _context.Clients
             .AsNoTracking()
             .Where(c => c.Id == clientId)
-            .Select(c => _context.AddRouteJson(c.Id, chartId, DomainRouteJsonConverter.Convert(route)))
+            .Select(c => _context.AddRouteJson(c.Id, chartId, routeJson))
             .FirstOrDefaultAsync();
 
     public async Task<int> GetIdAsync(string title, int clientId) =>

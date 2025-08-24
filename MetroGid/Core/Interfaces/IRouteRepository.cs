@@ -4,7 +4,7 @@ namespace MetroGid.Core.Interfaces;
 
 public interface IRouteRepository
 {
-    Task<int> AddAsync(int clientId, int chartId, Route route);
+    Task<int> AddAsync(int clientId, int chartId, string routeJson);
 
     Task<int> GetIdAsync(string title, int clientId);
     

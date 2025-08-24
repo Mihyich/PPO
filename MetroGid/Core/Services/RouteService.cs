@@ -125,7 +125,7 @@ public class RouteService(
         RoleType roleType = DtoDomainConverter.Convert(role);
 
         return (roleType == RoleType.SIGNED || roleType == RoleType.DUTY) ?
-        await RouteRepo.AddAsync(clientId, chartId, DtoDomainConverter.Convert(route)) :
+        await RouteRepo.AddAsync(clientId, chartId, DtoRouteJsonConverter.Convert(route)) :
         0;
     }
 
