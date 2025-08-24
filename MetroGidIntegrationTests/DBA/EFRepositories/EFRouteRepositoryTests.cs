@@ -18,6 +18,7 @@ using MetroGid.Core.Utilities.TimeMeter.Concrete;
 using MetroGid.Core.Utilities.TimeMeter.Super;
 using MetroGid.DBA.EF.Converters;
 using Newtonsoft.Json.Linq;
+using MetroGid.Core.Converters;
 
 namespace MetroGidIntegrationTests.DBA.EFClientRepositoryTests;
 
@@ -136,16 +137,16 @@ public class EFRouteRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, 
         ChartMoscowId = await _chartRepository.AddAsync(ChartJsonMoscow);
         ChartSanktPeterburgId = await _chartRepository.AddAsync(ChartJsonSanktPeterburg);
 
-        await _routeRepository.AddAsync(clientId1, ChartMoscowId, Route_Moscow_Izmaylovskaya_Baumanskaya);
-        await _routeRepository.AddAsync(clientId1, ChartMoscowId, Route_Moscow_Sviblovo_Fili);
+        await _routeRepository.AddAsync(clientId1, ChartMoscowId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Moscow_Izmaylovskaya_Baumanskaya)));
+        await _routeRepository.AddAsync(clientId1, ChartMoscowId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Moscow_Sviblovo_Fili)));
 
-        await _routeRepository.AddAsync(clientId2, ChartAdanaId, Route_Adana_Bolnitsa_Akindjilar);
+        await _routeRepository.AddAsync(clientId2, ChartAdanaId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Adana_Bolnitsa_Akindjilar)));
 
-        await _routeRepository.AddAsync(clientId3, ChartAdanaId, Route_Adana_Bolnitsa_Akindjilar);
-        await _routeRepository.AddAsync(clientId3, ChartMoscowId, Route_Moscow_Izmaylovskaya_Baumanskaya);
-        await _routeRepository.AddAsync(clientId3, ChartMoscowId, Route_Moscow_Nahabino_Ipodrom);
-        await _routeRepository.AddAsync(clientId3, ChartMoscowId, Route_Moscow_Sviblovo_Fili);
-        await _routeRepository.AddAsync(clientId3, ChartSanktPeterburgId, Route_Sankt_Peterburg_Begovaya_Kupchino);
+        await _routeRepository.AddAsync(clientId3, ChartAdanaId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Adana_Bolnitsa_Akindjilar)));
+        await _routeRepository.AddAsync(clientId3, ChartMoscowId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Moscow_Izmaylovskaya_Baumanskaya)));
+        await _routeRepository.AddAsync(clientId3, ChartMoscowId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Moscow_Nahabino_Ipodrom)));
+        await _routeRepository.AddAsync(clientId3, ChartMoscowId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Moscow_Sviblovo_Fili)));
+        await _routeRepository.AddAsync(clientId3, ChartSanktPeterburgId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Sankt_Peterburg_Begovaya_Kupchino)));
 
         await _context.SaveChangesAsync();
     }
