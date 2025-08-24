@@ -16,7 +16,7 @@ using MetroGid.Core.Models.Types;
 namespace MetroGid.Core.Services;
 
 public class RouteService(
-    IChartRepository chartRepo, IRouteRepository routeRepo,
+    IChartRepository chartRepo, IClientRepository clientRepo, IRouteRepository routeRepo,
     ThrowableDomainAttribsValidator domainAttribsValidator,
     ThrowableDomainReferentialityValidator domainReferentialityValidator,
     SuperExceptionHandler handler,
@@ -24,6 +24,7 @@ public class RouteService(
 ) : IRouteService
 {
     private readonly IChartRepository ChartRepo = chartRepo;
+    private readonly IClientRepository ClientRepo = clientRepo;
     private readonly IRouteRepository RouteRepo = routeRepo;
 
     private readonly ThrowableDomainAttribsValidator DomainAttribsValidator = domainAttribsValidator;
@@ -31,6 +32,23 @@ public class RouteService(
 
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
+
+    private async Task<int> GetClientIdAsync(string login, string password, string mail) =>
+        await Handler.SnapAsync(
+            async () =>
+            {
+                int clientId = await ClientRepo.GetIdByCredentialsAsync(login, password, mail);
+
+                if (clientId == 0)
+                    throw new DataBaseException(
+                        $"Пользователь '{login}' с почтой '{mail}' не найден",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+                
+                return clientId;
+            }, Logger
+        );
 
     private async Task<Chart?> LoadChartAsync(string city, string chartTitle)
     {
@@ -120,21 +138,27 @@ public class RouteService(
         return routeDTO;
     }
 
-    public async Task<int> SaveRouteAsync(RoleTypeDTO role, int clientId, RouteDTO route, int chartId)
+    public async Task<int> SaveRouteAsync(ClientDTO client, RouteDTO route, int chartId)
     {
-        RoleType roleType = DtoDomainConverter.Convert(role);
+        RoleType role = DtoDomainConverter.Convert(client.Role);
 
-        return (roleType == RoleType.SIGNED || roleType == RoleType.DUTY) ?
-        await RouteRepo.AddAsync(clientId, chartId, DtoRouteJsonConverter.Convert(route)) :
-        0;
+        if (role == RoleType.SIGNED || role == RoleType.DUTY)
+            return 0;
+
+        int clientId = await GetClientIdAsync(client.Login, client.Password, client.Mail);
+
+        return await RouteRepo.AddAsync(clientId, chartId, DtoRouteJsonConverter.Convert(route));
     }
 
-    public async Task<List<string>> LookForSavedRoutesInChartAsync(RoleTypeDTO role, int clientId, int chartId)
+    public async Task<List<string>> LookForSavedRoutesInChartAsync(ClientDTO client, int chartId)
     {
-        RoleType roleType = DtoDomainConverter.Convert(role);
+        RoleType role = DtoDomainConverter.Convert(client.Role);
 
-        return (roleType == RoleType.SIGNED || roleType == RoleType.DUTY) ?
-        await RouteRepo.GetAllForClientOfChartIdAsync(clientId, chartId) :
-        new List<string>();
+        if (role == RoleType.SIGNED || role == RoleType.DUTY)
+            return new List<string>();
+
+        int clientId = await GetClientIdAsync(client.Login, client.Password, client.Mail);
+
+        return await RouteRepo.GetAllForClientOfChartIdAsync(clientId, chartId);
     }
 }

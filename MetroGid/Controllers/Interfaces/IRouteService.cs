@@ -10,6 +10,6 @@ public interface IRouteService
         string branchDstTitle, string stationDstTitle,
         TimeOnly startTime);
 
-    Task<int> SaveRouteAsync(RoleTypeDTO role, int clientId, RouteDTO route, int chartId);
-    Task<List<string>> LookForSavedRoutesInChartAsync(RoleTypeDTO role, int clientId, int chartId); // просмотр сохраненных маршрутов в конкретной схеме метро, у конктретного пользователя
+    Task<int> SaveRouteAsync(ClientDTO client, RouteDTO route, int chartId);
+    Task<List<string>> LookForSavedRoutesInChartAsync(ClientDTO client, int chartId); // просмотр сохраненных маршрутов в конкретной схеме метро, у конктретного пользователя
 }
