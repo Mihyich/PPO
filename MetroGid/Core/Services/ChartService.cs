@@ -96,23 +96,93 @@ public class ChartService(
 
 
 
-    public async Task<int> UpdateChart(RoleTypeDTO role, int chartId, ChartDTO chart) =>
-        DtoDomainConverter.Convert(role) == RoleType.DUTY ?
-        await ChartRepo.UpdateChartByIdAsync(chartId, DtoDomainConverter.Convert(chart)) :
-        0;
+    public async Task<int> UpdateChart(
+        RoleTypeDTO role,
+        string chartCity, string chartTitle,
+        ChartDTO chart
+    )
+    {
+        if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
+            return 0;
 
-    public async Task<int> UpdateBranch(RoleTypeDTO role, int branchId, BranchDTO branch) =>
-        DtoDomainConverter.Convert(role) == RoleType.DUTY ?
-        await ChartRepo.UpdateBranchByIdAsync(branchId, DtoDomainConverter.Convert(branch)) :
-        0;
+        int chartId = await ChartRepo.GetChartIdAsync(chartCity, chartTitle);
 
-    public async Task<int> UpdateStation(RoleTypeDTO role, int stationId, StationDTO station) =>
-        DtoDomainConverter.Convert(role) == RoleType.DUTY ?
-        await ChartRepo.UpdateStationByIdAsync(stationId, DtoDomainConverter.Convert(station)) :
-        0;
+        return await ChartRepo.UpdateChartByIdAsync(chartId, DtoDomainConverter.Convert(chart));
+    }
 
-    public async Task<int> UpdateTransition(RoleTypeDTO role, int transitionId, TransitionDTO transition) =>
-        DtoDomainConverter.Convert(role) == RoleType.DUTY ?
-        await ChartRepo.UpdateTransitionByIdAsync(transitionId, DtoDomainConverter.Convert(transition)) :
-        0;
+    public async Task<int> UpdateBranch(
+        RoleTypeDTO role,
+        string chartCity, string chartTitle,
+        string branchTitle,
+        BranchDTO branch
+    )
+    {
+        if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
+            return 0;
+
+        int chartId = await ChartRepo.GetChartIdAsync(chartCity, chartTitle);
+        int branchId = await ChartRepo.GetBranchIdAsync(branchTitle, chartId);
+
+        return await ChartRepo.UpdateBranchByIdAsync(branchId, DtoDomainConverter.Convert(branch));
+    }
+
+    public async Task<int> UpdateStation(
+        RoleTypeDTO role,
+        string chartCity, string chartTitle,
+        string branchTitle, string stationTitle,
+        StationDTO station)
+    {
+        if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
+            return 0;
+
+        int chartId = await ChartRepo.GetChartIdAsync(chartCity, chartTitle);
+        int branchId = await ChartRepo.GetBranchIdAsync(branchTitle, chartId);
+        int stationId = await ChartRepo.GetStationIdAsync(stationTitle, branchId);
+
+        return await ChartRepo.UpdateStationByIdAsync(stationId, DtoDomainConverter.Convert(station));
+    }
+
+    public async Task<int> UpdateRailway(
+        RoleTypeDTO role,
+        string chartCity, string chartTitle,
+        string BranchTitle,
+        string fromStationTitle, string toStationTitle,
+        RailwayDTO railway)
+    {
+        if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
+            return 0;
+
+        int chartId = await ChartRepo.GetChartIdAsync(chartCity, chartTitle);
+
+        int branchId = await ChartRepo.GetBranchIdAsync(BranchTitle, chartId);
+        int stationId1 = await ChartRepo.GetStationIdAsync(fromStationTitle, branchId);
+        int stationId2 = await ChartRepo.GetStationIdAsync(toStationTitle, branchId);
+
+        int railwayId = await ChartRepo.GetRailwayIdAsync(stationId1, stationId2);
+
+        return await ChartRepo.UpdateRailwayByIdAsync(railwayId, DtoDomainConverter.Convert(railway));
+    }
+
+    public async Task<int> UpdateTransition(
+        RoleTypeDTO role,
+        string chartCity, string chartTitle,
+        string fromBranchTitle, string fromStationTitle,
+        string toBranchTitle, string toStationTitle,
+        TransitionDTO transition)
+    {
+        if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
+            return 0;
+
+        int chartId = await ChartRepo.GetChartIdAsync(chartCity, chartTitle);
+
+        int branchId1 = await ChartRepo.GetBranchIdAsync(fromBranchTitle, chartId);
+        int stationId1 = await ChartRepo.GetStationIdAsync(fromStationTitle, branchId1);
+
+        int branchId2 = await ChartRepo.GetBranchIdAsync(toBranchTitle, chartId);
+        int stationId2 = await ChartRepo.GetStationIdAsync(toStationTitle, branchId2);
+
+        int transitionId = await ChartRepo.GetTransitionIdAsync(stationId1, stationId2);
+
+        return await ChartRepo.UpdateTransitionByIdAsync(transitionId, DtoDomainConverter.Convert(transition));
+    }
 }
