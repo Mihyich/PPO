@@ -70,14 +70,14 @@ public class ChartService(
             {
                 int stationId = await ChartRepo.GetStationIdAsync(stationTitle, branchId);
 
-                if (branchId == 0)
+                if (stationId == 0)
                     throw new DataBaseException(
                         $"Станция '{stationTitle}' не найдена",
                         ExceptionType.Warning,
                         ExceptionReason.NotFound
                     );
 
-                return branchId;
+                return stationId;
             }, Logger
         );
     }
