@@ -15,6 +15,16 @@ public interface IChartService
         string branchTitle, string stationTitle);
     Task<List<string>> GetBranchStationTitlesAsync(string cityTitle, string chartTitle, string branchTitle);
 
+    Task<TransitionDTO?> GetTransitionAsync(
+        string cityTitle, string chartTitle,
+        string fromBranchTitle, string fromStationTitle,
+        string toBranchTitle, string toStationTitle);
+
+    Task<RailwayDTO?> GetRailwayAsync(
+        string cityTitle, string chartTitle,
+        string branchTitle,
+        string fromStationTitle, string toStationTitle);
+
     // Изменение атрибутов таблиц
     Task<int> UpdateChartAsync(
         RoleTypeDTO role,

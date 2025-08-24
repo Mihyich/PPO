@@ -222,6 +222,57 @@ public class ChartService(
         return await ChartRepo.GetAllBranchStationTitleAsync(branchId);
     }
 
+    public async Task<TransitionDTO?> GetTransitionAsync(
+        string cityTitle, string chartTitle,
+        string fromBranchTitle, string fromStationTitle,
+        string toBranchTitle, string toStationTitle)
+    {
+        int transitionId = await GetTransitionIdAsync(
+            cityTitle, chartTitle,
+            fromBranchTitle, fromStationTitle,
+            toBranchTitle, toStationTitle
+        );
+
+        Transition? transition = await Handler.SnapAsync(
+            async () =>
+            {
+                return await ChartRepo.GetTransitionByIdAsync(transitionId) ??
+                    throw new DataBaseException(
+                        $"Переход с айди {transitionId} не найден",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+            }, Logger
+        );
+
+        return transition != null ? DomainDtoConverter.Convert(transition) : null;
+    }
+
+    public async Task<RailwayDTO?> GetRailwayAsync(
+        string cityTitle, string chartTitle,
+        string branchTitle,
+        string fromStationTitle, string toStationTitle)
+    {
+        int railwayId = await GetRailwayIdAsync(
+            cityTitle, chartTitle,
+            branchTitle,
+            fromStationTitle, toStationTitle
+        );
+
+        Railway? railway = await Handler.SnapAsync(
+            async () =>
+            {
+                return await ChartRepo.GetRailwayByIdAsync(railwayId) ??
+                    throw new DataBaseException(
+                        $"Переезд с айди {railwayId} не найден",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+            }, Logger
+        );
+
+        return railway != null ? DomainDtoConverter.Convert(railway) : null;
+    }
 
     public async Task<int> UpdateChartAsync(
         RoleTypeDTO role,
