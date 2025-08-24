@@ -82,6 +82,70 @@ public class ChartService(
         );
     }
 
+    private async Task<int> GetRailwayIdAsync(
+        string cityTitle, string chartTitle,
+        string branchTitle,
+        string fromStationTitle, string toStationTitle)
+    {
+        int fromStationId = await GetStationIdAsync(
+            cityTitle, chartTitle,
+            branchTitle, fromStationTitle
+        );
+
+        int toStationId = await GetStationIdAsync(
+            cityTitle, chartTitle,
+            branchTitle, toStationTitle
+        );
+
+        return await Handler.SnapAsync(
+            async () =>
+            {
+                int railwayId = await ChartRepo.GetRailwayIdAsync(fromStationId, toStationId);
+
+                if (railwayId == 0)
+                    throw new DataBaseException(
+                        $"Переезд с айди '{railwayId}' не найден",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+
+                return railwayId;
+            }, Logger
+        );
+    }
+
+    private async Task<int> GetTransitionIdAsync(
+        string cityTitle, string chartTitle,
+        string fromBranchTitle, string fromStationTitle,
+        string toBranchTitle, string toStationTitle)
+    {
+        int fromStationId = await GetStationIdAsync(
+            cityTitle, chartTitle,
+            fromBranchTitle, fromStationTitle
+        );
+
+        int toStationId = await GetStationIdAsync(
+            cityTitle, chartTitle,
+            toBranchTitle, toStationTitle
+        );
+
+        return await Handler.SnapAsync(
+            async () =>
+            {
+                int transitionId = await ChartRepo.GetTransitionIdAsync(fromStationId, toStationId);
+
+                if (transitionId == 0)
+                    throw new DataBaseException(
+                        $"Переход с айди '{transitionId}' не найден",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+
+                return transitionId;
+            }, Logger
+        );
+    }
+
 
     public async Task<ChartDTO?> GetChartAsync(string cityTitle, string chartTitle)
     {
@@ -132,7 +196,10 @@ public class ChartService(
         string cityTitle, string chartTitle,
         string branchTitle, string stationTitle)
     {
-        int stationId = await GetStationIdAsync(cityTitle, chartTitle, branchTitle, stationTitle);
+        int stationId = await GetStationIdAsync(
+            cityTitle, chartTitle,
+            branchTitle, stationTitle
+        );
 
         Station? station = await Handler.SnapAsync(
             async () =>
@@ -180,8 +247,7 @@ public class ChartService(
         if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
             return 0;
 
-        int chartId = await ChartRepo.GetChartIdAsync(chartCity, chartTitle);
-        int branchId = await ChartRepo.GetBranchIdAsync(branchTitle, chartId);
+        int branchId = await GetBranchIdAsync(chartCity, chartTitle, branchTitle);
 
         return await ChartRepo.UpdateBranchByIdAsync(branchId, DtoDomainConverter.Convert(branch));
     }
@@ -195,9 +261,10 @@ public class ChartService(
         if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
             return 0;
 
-        int chartId = await ChartRepo.GetChartIdAsync(chartCity, chartTitle);
-        int branchId = await ChartRepo.GetBranchIdAsync(branchTitle, chartId);
-        int stationId = await ChartRepo.GetStationIdAsync(stationTitle, branchId);
+        int stationId = await GetStationIdAsync(
+            chartCity, chartTitle,
+            branchTitle, stationTitle
+        );
 
         return await ChartRepo.UpdateStationByIdAsync(stationId, DtoDomainConverter.Convert(station));
     }
@@ -212,13 +279,11 @@ public class ChartService(
         if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
             return 0;
 
-        int chartId = await ChartRepo.GetChartIdAsync(chartCity, chartTitle);
-
-        int branchId = await ChartRepo.GetBranchIdAsync(BranchTitle, chartId);
-        int stationId1 = await ChartRepo.GetStationIdAsync(fromStationTitle, branchId);
-        int stationId2 = await ChartRepo.GetStationIdAsync(toStationTitle, branchId);
-
-        int railwayId = await ChartRepo.GetRailwayIdAsync(stationId1, stationId2);
+        int railwayId = await GetRailwayIdAsync(
+            chartCity, chartTitle,
+            BranchTitle,
+            fromStationTitle, toStationTitle
+        );
 
         return await ChartRepo.UpdateRailwayByIdAsync(railwayId, DtoDomainConverter.Convert(railway));
     }
@@ -233,15 +298,11 @@ public class ChartService(
         if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
             return 0;
 
-        int chartId = await ChartRepo.GetChartIdAsync(chartCity, chartTitle);
-
-        int branchId1 = await ChartRepo.GetBranchIdAsync(fromBranchTitle, chartId);
-        int stationId1 = await ChartRepo.GetStationIdAsync(fromStationTitle, branchId1);
-
-        int branchId2 = await ChartRepo.GetBranchIdAsync(toBranchTitle, chartId);
-        int stationId2 = await ChartRepo.GetStationIdAsync(toStationTitle, branchId2);
-
-        int transitionId = await ChartRepo.GetTransitionIdAsync(stationId1, stationId2);
+        int transitionId = await GetTransitionIdAsync(
+            chartCity, chartTitle,
+            fromBranchTitle, fromStationTitle,
+            toBranchTitle, toStationTitle
+        );
 
         return await ChartRepo.UpdateTransitionByIdAsync(transitionId, DtoDomainConverter.Convert(transition));
     }
