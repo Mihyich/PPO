@@ -21,8 +21,72 @@ public class ChartService(
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
-    public async Task<ChartDTO?> GetChart(int chartId)
+    private async Task<int> GetChartIdAsync(string cityTitle, string chartTitle) =>
+        await Handler.SnapAsync(
+            async () =>
+            {
+                int chartId = await ChartRepo.GetChartIdAsync(cityTitle, chartTitle);
+
+                if (chartId == 0)
+                    throw new DataBaseException(
+                        $"Схема '{chartTitle}' в городе '{cityTitle}' не найдена",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+
+                return chartId;
+            }, Logger
+        );
+
+    private async Task<int> GetBranchIdAsync(string cityTitle, string chartTitle, string branchTitle)
     {
+        int chartId = await GetChartIdAsync(cityTitle, chartTitle);
+
+        return await Handler.SnapAsync(
+            async () =>
+            {
+                int branchId = await ChartRepo.GetBranchIdAsync(branchTitle, chartId);
+
+                if (branchId == 0)
+                    throw new DataBaseException(
+                        $"Ветка '{branchTitle}' не найдена",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+
+                return branchId;
+            }, Logger
+        );
+    }
+
+    private async Task<int> GetStationIdAsync(
+        string cityTitle, string chartTitle,
+        string branchTitle, string stationTitle)
+    {
+        int branchId = await GetBranchIdAsync(cityTitle, chartTitle, branchTitle);
+
+        return await Handler.SnapAsync(
+            async () =>
+            {
+                int stationId = await ChartRepo.GetStationIdAsync(stationTitle, branchId);
+
+                if (branchId == 0)
+                    throw new DataBaseException(
+                        $"Станция '{stationTitle}' не найдена",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+
+                return branchId;
+            }, Logger
+        );
+    }
+
+
+    public async Task<ChartDTO?> GetChartAsync(string cityTitle, string chartTitle)
+    {
+        int chartId = await GetChartIdAsync(cityTitle, chartTitle);
+
         Chart? chart = await Handler.SnapAsync(
             async () =>
             {
@@ -38,16 +102,14 @@ public class ChartService(
         return chart != null ? DomainDtoConverter.Convert(chart) : null;
     }
 
-    public async Task<int> GetChartId(string city, string title) =>
-        await ChartRepo.GetChartIdAsync(city, title);
-
-    public async Task<List<ValueTuple<string, string>>> GetChartsCitiesTitles() =>
+    public async Task<List<ValueTuple<string, string>>> GetChartsCitiesTitlesAsync() =>
         await ChartRepo.GetAllChartCityTitleAsync();
 
 
-
-    public async Task<BranchDTO?> GetBranch(int branchId)
+    public async Task<BranchDTO?> GetBranchAsync(string cityTitle, string chartTitle, string branchTitle)
     {
+        int branchId = await GetBranchIdAsync(cityTitle, chartTitle, branchTitle);
+
         Branch? branch = await Handler.SnapAsync(
             async () =>
             {
@@ -63,16 +125,15 @@ public class ChartService(
         return branch != null ? DomainDtoConverter.Convert(branch) : null;
     }
 
-    public async Task<int> GetChartBranchId(string title, int chartId) =>
-        await ChartRepo.GetBranchIdAsync(title, chartId);
-
-    public async Task<List<string>> GetChartBranchTitles(int chartId) =>
+    public async Task<List<string>> GetChartBranchTitlesAsync(int chartId) =>
         await ChartRepo.GetAllChartBranchTitleAsync(chartId);
 
-
-
-    public async Task<StationDTO?> GetStation(int stationId)
+    public async Task<StationDTO?> GetStationAsync(
+        string cityTitle, string chartTitle,
+        string branchTitle, string stationTitle)
     {
+        int stationId = await GetStationIdAsync(cityTitle, chartTitle, branchTitle, stationTitle);
+
         Station? station = await Handler.SnapAsync(
             async () =>
             {
@@ -88,15 +149,14 @@ public class ChartService(
         return station != null ? DomainDtoConverter.Convert(station) : null;
     }
 
-    public async Task<int> GetBranchStationId(string title, int branchId) =>
-        await ChartRepo.GetStationIdAsync(title, branchId);
+    public async Task<List<string>> GetBranchStationTitlesAsync(string cityTitle, string chartTitle, string branchTitle)
+    {
+        int branchId = await GetBranchIdAsync(cityTitle, chartTitle, branchTitle);
+        return await ChartRepo.GetAllBranchStationTitleAsync(branchId);
+    }
 
-    public async Task<List<string>> GetBranchStationTitles(int branchId) =>
-        await ChartRepo.GetAllBranchStationTitleAsync(branchId);
 
-
-
-    public async Task<int> UpdateChart(
+    public async Task<int> UpdateChartAsync(
         RoleTypeDTO role,
         string chartCity, string chartTitle,
         ChartDTO chart
@@ -110,7 +170,7 @@ public class ChartService(
         return await ChartRepo.UpdateChartByIdAsync(chartId, DtoDomainConverter.Convert(chart));
     }
 
-    public async Task<int> UpdateBranch(
+    public async Task<int> UpdateBranchAsync(
         RoleTypeDTO role,
         string chartCity, string chartTitle,
         string branchTitle,
@@ -126,7 +186,7 @@ public class ChartService(
         return await ChartRepo.UpdateBranchByIdAsync(branchId, DtoDomainConverter.Convert(branch));
     }
 
-    public async Task<int> UpdateStation(
+    public async Task<int> UpdateStationAsync(
         RoleTypeDTO role,
         string chartCity, string chartTitle,
         string branchTitle, string stationTitle,
@@ -142,7 +202,7 @@ public class ChartService(
         return await ChartRepo.UpdateStationByIdAsync(stationId, DtoDomainConverter.Convert(station));
     }
 
-    public async Task<int> UpdateRailway(
+    public async Task<int> UpdateRailwayAsync(
         RoleTypeDTO role,
         string chartCity, string chartTitle,
         string BranchTitle,
@@ -163,7 +223,7 @@ public class ChartService(
         return await ChartRepo.UpdateRailwayByIdAsync(railwayId, DtoDomainConverter.Convert(railway));
     }
 
-    public async Task<int> UpdateTransition(
+    public async Task<int> UpdateTransitionAsync(
         RoleTypeDTO role,
         string chartCity, string chartTitle,
         string fromBranchTitle, string fromStationTitle,

@@ -4,40 +4,39 @@ namespace MetroGid.Controllers.Interfaces;
 
 public interface IChartService
 {
-    Task<ChartDTO?> GetChart(int chartId);
-    Task<int> GetChartId(string city, string title);
-    Task<List<ValueTuple<string, string>>> GetChartsCitiesTitles();
+    Task<ChartDTO?> GetChartAsync(string cityTitle, string chartTitle);
+    Task<List<ValueTuple<string, string>>> GetChartsCitiesTitlesAsync();
 
-    Task<BranchDTO?> GetBranch(int branchId);
-    Task<int> GetChartBranchId(string title, int chartId);
-    Task<List<string>> GetChartBranchTitles(int chartId);
+    Task<BranchDTO?> GetBranchAsync(string cityTitle, string chartTitle, string branchTitle);
+    Task<List<string>> GetChartBranchTitlesAsync(int chartId);
 
-    Task<StationDTO?> GetStation(int stationId);
-    Task<int> GetBranchStationId(string title, int branchId);
-    Task<List<string>> GetBranchStationTitles(int branchId);
+    Task<StationDTO?> GetStationAsync(
+        string cityTitle, string chartTitle,
+        string branchTitle, string stationTitle);
+    Task<List<string>> GetBranchStationTitlesAsync(string cityTitle, string chartTitle, string branchTitle);
 
     // Изменение атрибутов таблиц
-    Task<int> UpdateChart(
+    Task<int> UpdateChartAsync(
         RoleTypeDTO role,
         string chartCity, string chartTitle,
         ChartDTO chart);
-    Task<int> UpdateBranch(
+    Task<int> UpdateBranchAsync(
         RoleTypeDTO role,
         string chartCity, string chartTitle,
         string branchTitle,
         BranchDTO branch);
-    Task<int> UpdateStation(
+    Task<int> UpdateStationAsync(
         RoleTypeDTO role,
         string chartCity, string chartTitle,
         string branchTitle, string stationTitle,
         StationDTO station);
-    Task<int> UpdateRailway(
+    Task<int> UpdateRailwayAsync(
         RoleTypeDTO role,
         string chartCity, string chartTitle,
         string BranchTitle,
         string fromStationTitle, string toStationTitle,
         RailwayDTO railway);
-    Task<int> UpdateTransition(
+    Task<int> UpdateTransitionAsync(
         RoleTypeDTO role,
         string chartCity, string chartTitle,
         string fromBranchTitle, string fromStationTitle,
