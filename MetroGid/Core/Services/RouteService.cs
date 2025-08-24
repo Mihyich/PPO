@@ -50,7 +50,7 @@ public class RouteService(
             }, Logger
         );
 
-    private async Task<Chart?> LoadChartAsync(string city, string chartTitle)
+    private async Task<Chart?> GetChartAsync(string city, string chartTitle)
     {
         string? jsonContent = await Handler.SnapAsync(
             async () =>
@@ -79,7 +79,7 @@ public class RouteService(
         return chart;
     }
 
-    private Station? FindStation(Chart chart, string branchTitle, string stationTitle)
+    private Station? FindStationAsync(Chart chart, string branchTitle, string stationTitle)
     {
         Station? station = Handler.Snap(
             () =>
@@ -120,15 +120,15 @@ public class RouteService(
         string branchDstTitle, string stationDstTitle,
         TimeOnly startTime)
     {
-        Chart? chart = await LoadChartAsync(city, chartTitle);
+        Chart? chart = await GetChartAsync(city, chartTitle);
         Station? src = null;
         Station? dst = null;
         RouteDTO? routeDTO = null;
         Route? route = null;
 
         if (chart != null &&
-            (src = FindStation(chart, branchSrcTitle, stationSrcTitle)) != null &&
-            (dst = FindStation(chart, branchDstTitle, stationDstTitle)) != null &&
+            (src = FindStationAsync(chart, branchSrcTitle, stationSrcTitle)) != null &&
+            (dst = FindStationAsync(chart, branchDstTitle, stationDstTitle)) != null &&
             (route = SearchRouteProcess(chart, src, dst, startTime)) != null
         )
         {
