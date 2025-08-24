@@ -32,7 +32,7 @@ public abstract class EFServiceFixture : IDisposable
 
         chartService = new ChartService(dataBaseFixture.chartRepository, exceptionHandler);
         clientService = new ClientService(dataBaseFixture.clientRepository, domainAttribsValidator, exceptionHandler);
-        routeService = new RouteService(dataBaseFixture.chartRepository, dataBaseFixture.routeRepository, domainAttribsValidator, domainReferentialityValidator, exceptionHandler);
+        routeService = new RouteService(dataBaseFixture.chartRepository, dataBaseFixture.clientRepository, dataBaseFixture.routeRepository, domainAttribsValidator, domainReferentialityValidator, exceptionHandler);
     }
 
     public void Dispose()
