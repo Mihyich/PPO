@@ -23,7 +23,7 @@ public class ClientServiceTests
         ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ReturnsAsync(1);
-        var ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await clientService.Reg(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await clientService.RegAsync(login, password, mail); });
 
         mockClientRepo.Verify(x => x.AddAsync(It.IsAny<Client>()), Times.Never);
         Assert.Equal(exMessege, ex.Message);
@@ -50,7 +50,7 @@ public class ClientServiceTests
         ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.Reg(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.RegAsync(login, password, mail); });
 
         mockClientRepo.Verify(x => x.AddAsync(It.IsAny<Client>()), Times.Once);
         Assert.Equal(exMessege, ex.Message);
@@ -77,7 +77,7 @@ public class ClientServiceTests
         ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.Reg(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.RegAsync(login, password, mail); });
 
         mockClientRepo.Verify(x => x.AddAsync(It.IsAny<Client>()), Times.Once);
         Assert.Equal(exMessege, ex.Message);
@@ -104,7 +104,7 @@ public class ClientServiceTests
         ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.GetIdByCredentialsAsync(login, password, mail)).ThrowsAsync(expectedEx);
-        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.UnReg(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.UnRegAsync(login, password, mail); });
 
         mockClientRepo.Verify(x => x.GetIdByCredentialsAsync(login, password, mail), Times.Once);
         Assert.Equal(exMessege, ex.Message);
@@ -131,7 +131,7 @@ public class ClientServiceTests
         ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.GetIdByCredentialsAsync(login, password, mail)).ReturnsAsync(0);
-        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.SignIn(login, password, mail); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.SignInAsync(login, password, mail); });
 
         mockClientRepo.Verify(x => x.GetIdByCredentialsAsync(login, password, mail), Times.Once);
         Assert.Equal(exMessege, ex.Message);

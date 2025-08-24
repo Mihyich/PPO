@@ -23,7 +23,7 @@ public class ClientService(
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
-    public async Task<int> Reg(string login, string password, string mail)
+    public async Task<int> RegAsync(string login, string password, string mail)
     {
         Client client = new(login, password, mail);
         client.Validate(DomainAttribsValidator);
@@ -50,17 +50,17 @@ public class ClientService(
         return await ClientRepo.AddAsync(client);
     }
 
-    public async Task<int> UnReg(string login, string password, string mail) =>
+    public async Task<int> UnRegAsync(string login, string password, string mail) =>
         await ClientRepo.DeleteAsync(
             await ClientRepo.GetIdByCredentialsAsync(login, password, mail));
 
-    public async Task<RoleTypeDTO> SignIn(string login, string password, string mail) =>
-        await GetRole(login, password, mail);
+    public async Task<RoleTypeDTO> SignInAsync(string login, string password, string mail) =>
+        await GetRoleAsync(login, password, mail);
 
-    public async Task<int> SignOut(string login, string password, string mail) =>
+    public async Task<int> SignOutAsync(string login, string password, string mail) =>
         await ClientRepo.GetIdByCredentialsAsync(login, password, mail);
 
-    public async Task<RoleTypeDTO> GetRole(string login, string password, string mail)
+    public async Task<RoleTypeDTO> GetRoleAsync(string login, string password, string mail)
     {
         int clientId = await Handler.SnapAsync(
             async () =>

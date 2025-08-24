@@ -96,7 +96,7 @@ public class RouteService(
         return route;
     }
     
-    public async Task<RouteDTO?> SearchRoute(
+    public async Task<RouteDTO?> SearchRouteAsync(
         string city, string chartTitle,
         string branchSrcTitle, string stationSrcTitle,
         string branchDstTitle, string stationDstTitle,
@@ -120,7 +120,7 @@ public class RouteService(
         return routeDTO;
     }
 
-    public async Task<int> SaveRoute(RoleTypeDTO role, int clientId, RouteDTO route, int chartId)
+    public async Task<int> SaveRouteAsync(RoleTypeDTO role, int clientId, RouteDTO route, int chartId)
     {
         RoleType roleType = DtoDomainConverter.Convert(role);
 
@@ -129,7 +129,7 @@ public class RouteService(
         0;
     }
 
-    public async Task<List<string>> LookForSavedRoutesInChart(RoleTypeDTO role, int clientId, int chartId)
+    public async Task<List<string>> LookForSavedRoutesInChartAsync(RoleTypeDTO role, int clientId, int chartId)
     {
         RoleType roleType = DtoDomainConverter.Convert(role);
 
