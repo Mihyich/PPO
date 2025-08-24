@@ -42,30 +42,4 @@ public static class DtoDomainConverter
 
     public static Client Convert(ClientDTO client) =>
         new(client.Login, client.Password, client.Mail, Convert(client.Role));
-
-    public static Route Convert(RouteDTO route)
-    {
-        List<RouteItem> ConPath = [];
-
-        foreach (var item in route.Path)
-        {
-            if (item is RouteStationItemDTO { Station: var station })
-            {
-                ConPath.Add(new RouteStationItem(Convert(station)));
-            }
-            else if (item is RouteConnectionItemDTO { Connection: var connection })
-            {
-                if (connection is RailwayConnectionDTO { Railway: var railway })
-                {
-                    ConPath.Add(new RouteConnectionItem(new RailwayConnection(Convert(railway))));
-                }
-                else if (connection is TransitionConnectionDTO { Transition: var transition })
-                {
-                    ConPath.Add(new RouteConnectionItem(new TransitionConnection(Convert(transition))));
-                }
-            }
-        }
-
-        return new(route.Title, ConPath, route.Duration);
-    }
 }
