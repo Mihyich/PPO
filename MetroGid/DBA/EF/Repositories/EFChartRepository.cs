@@ -47,6 +47,29 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             .Select(s => s.Id)
             .FirstOrDefaultAsync();
 
+    public async Task<int> GetRailwayIdAsync(int stationId1, int stationId2)
+    {
+        ValueTuple<int, int>? neighborTransitionIds1 = await GetNeighborStationRailwayIdAsync(stationId1);
+        ValueTuple<int, int>? neighborTransitionIds2 = await GetNeighborStationRailwayIdAsync(stationId2);
+
+        if (neighborTransitionIds1 != null && neighborTransitionIds2 != null)
+        {
+            List<int> Ids1 = [neighborTransitionIds1.Value.Item1, neighborTransitionIds1.Value.Item2];
+            List<int> Ids2 = [neighborTransitionIds2.Value.Item1, neighborTransitionIds2.Value.Item2];
+
+            return Ids1.Intersect(Ids2).Where(id => id > 0).FirstOrDefault();
+        }
+
+        return 0;
+    }
+
+    public async Task<int> GetTransitionIdAsync(int stationId1, int stationId2)
+    {
+        List<int> neighborTransitionIds1 = await GetNeighborStationTransitionIdAsync(stationId1);
+        List<int> neighborTransitionIds2 = await GetNeighborStationTransitionIdAsync(stationId2);
+        return neighborTransitionIds1.Intersect(neighborTransitionIds2).FirstOrDefault();
+    }
+
     public async Task<List<int>> GetAllChartIdAsync() =>
         await _context.Charts
             .AsNoTracking()
