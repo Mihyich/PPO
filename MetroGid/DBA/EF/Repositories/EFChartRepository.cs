@@ -229,7 +229,12 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         MDEMT.Chart? trackEntity = await _context.Charts.FirstOrDefaultAsync(c => c.Id == chartId);
 
         if (trackEntity != null)
-            _context.Entry(trackEntity).CurrentValues.SetValues(DomainModelConverter.Convert(chart));
+        {
+            MDEMT.Chart updChart = DomainModelConverter.Convert(chart);
+
+            trackEntity.City = updChart.City;
+            trackEntity.Title = updChart.Title;
+        }
 
         return await _context.SaveChangesAsync();
     }
@@ -239,7 +244,13 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         MDEMT.Branch? trackEntity = await _context.Branches.FirstOrDefaultAsync(b => b.Id == branchId);
 
         if (trackEntity != null)
-            _context.Entry(trackEntity).CurrentValues.SetValues(DomainModelConverter.Convert(branch));
+        {
+            MDEMT.Branch updBranch = DomainModelConverter.Convert(branch);
+
+            trackEntity.Title = updBranch.Title;
+            trackEntity.Color = updBranch.Color;
+            trackEntity.Access = updBranch.Access;
+        }
 
         return await _context.SaveChangesAsync();
     }
@@ -249,7 +260,15 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         MDEMT.Station? trackEntity = await _context.Stations.FirstOrDefaultAsync(s => s.Id == stationId);
 
         if (trackEntity != null)
-            _context.Entry(trackEntity).CurrentValues.SetValues(DomainModelConverter.Convert(station));
+        {
+            MDEMT.Station updStation = DomainModelConverter.Convert(station);
+
+            trackEntity.Title = updStation.Title;
+            trackEntity.Occupancy = updStation.Occupancy;
+            trackEntity.Access = updStation.Access;
+            trackEntity.OpenTime = updStation.OpenTime;
+            trackEntity.CloseTime = updStation.CloseTime;
+        }
 
         return await _context.SaveChangesAsync();
     }
@@ -259,7 +278,11 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         MDEMT.Railway? trackEntity = await _context.Railways.FirstOrDefaultAsync(r => r.Id == railwayId);
 
         if (trackEntity != null)
-            _context.Entry(trackEntity).CurrentValues.SetValues(DomainModelConverter.Convert(railway));
+        {
+            MDEMT.Railway updRailway = DomainModelConverter.Convert(railway);
+
+            trackEntity.Duration = updRailway.Duration;
+        }
 
         return await _context.SaveChangesAsync();
     }
@@ -269,7 +292,15 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         MDEMT.Transition? trackEntity = await _context.Transitions.FirstOrDefaultAsync(t => t.Id == transitionId);
 
         if (trackEntity != null)
-            _context.Entry(trackEntity).CurrentValues.SetValues(DomainModelConverter.Convert(transition));
+        {
+            MDEMT.Transition updTransition = DomainModelConverter.Convert(transition);
+
+            trackEntity.Occupancy = updTransition.Occupancy;
+            trackEntity.Access = updTransition.Access;
+            trackEntity.Duration = updTransition.Duration;
+            trackEntity.OpenTime = updTransition.OpenTime;
+            trackEntity.CloseTime = updTransition.CloseTime;
+        }
 
         return await _context.SaveChangesAsync();
     }
