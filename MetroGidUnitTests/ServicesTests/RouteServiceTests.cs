@@ -4,9 +4,9 @@ using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Handlers;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Services;
-using MetroGid.Core.Utilities;
+using MetroGid.Core.Utility;
 using MetroGid.Core.Interfaces;
-using MetroGid.Core.Utilities.Validators.Handlers;
+using MetroGid.Core.Utility.Validators.Handlers;
 using Moq;
 
 namespace MetroGidUnitTests.ServicesTests;

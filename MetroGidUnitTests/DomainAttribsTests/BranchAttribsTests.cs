@@ -4,8 +4,8 @@ using MetroGid.Core.Exceptions.Handlers;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Models.Types;
-using MetroGid.Core.Utilities.Validators.Handlers;
-using MetroGid.Core.Utilities.Validators.Interfaces;
+using MetroGid.Core.Utility.Validators.Handlers;
+using MetroGid.Core.Utility.Validators.Interfaces;
 
 namespace MetroGidUnitTests.DomainAttribsTests;
 

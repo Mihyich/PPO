@@ -6,7 +6,7 @@ using MetroGid.Core.Interfaces;
 using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Services;
 using Moq;
-using MetroGid.Core.Utilities.Validators.Handlers;
+using MetroGid.Core.Utility.Validators.Handlers;
 
 namespace MetroGidUnitTests.ServicesTests;
 

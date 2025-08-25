@@ -6,10 +6,10 @@ using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Models.Concrete;
-using MetroGid.Core.Utilities.Builders;
-using MetroGid.Core.Utilities.Directors;
-using MetroGid.Core.Utilities.Strategies;
-using MetroGid.Core.Utilities.Validators.Handlers;
+using MetroGid.Core.Utility.Builders;
+using MetroGid.Core.Utility.Directors;
+using MetroGid.Core.Utility.Strategies;
+using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.Core.Interfaces;
 using MetroGid.Core.Models.Types;
 

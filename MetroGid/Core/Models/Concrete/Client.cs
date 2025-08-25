@@ -1,5 +1,5 @@
 using MetroGid.Core.Models.Types;
-using MetroGid.Core.Utilities.Validators.Interfaces;
+using MetroGid.Core.Utility.Validators.Interfaces;
 
 namespace MetroGid.Core.Models.Concrete;
 

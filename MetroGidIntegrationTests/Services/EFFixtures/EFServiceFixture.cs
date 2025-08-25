@@ -1,7 +1,7 @@
 using MetroGid.Controllers.Interfaces;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Services;
-using MetroGid.Core.Utilities.Validators.Handlers;
+using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGidIntegrationTests.DBA.EFFixtures;
 
 namespace MetroGidIntegrationTests.Services.EFFixtures;

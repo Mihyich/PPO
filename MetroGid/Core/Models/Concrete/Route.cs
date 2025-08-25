@@ -1,6 +1,6 @@
-using MetroGid.Core.Utilities.TimeMeter.Concrete;
-using MetroGid.Core.Utilities.TimeMeter.Super;
-using MetroGid.Core.Utilities.Validators.Interfaces;
+using MetroGid.Core.Utility.TimeMeter.Concrete;
+using MetroGid.Core.Utility.TimeMeter.Super;
+using MetroGid.Core.Utility.Validators.Interfaces;
 
 namespace MetroGid.Core.Models.Concrete;
 
