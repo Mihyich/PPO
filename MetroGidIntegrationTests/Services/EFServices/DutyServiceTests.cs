@@ -1,5 +1,5 @@
 using System.Data;
-using MetroGid.Controllers.Interfaces;
+using MetroGid.Controllers.Utility.Interfaces;
 using MCMC = MetroGid.Core.Models.Concrete;
 using MCMT = MetroGid.Core.Models.Types;
 using MetroGid.Core.Interfaces;
@@ -18,7 +18,7 @@ using MetroGid.Core.Exceptions.Handlers;
 using MetroGid.Core.Exceptions.Loggers;
 using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.Core.Utility.Directors;
-using MetroGid.Controllers.DTO;
+using MetroGid.Controllers.Utility.DTO;
 using MetroGid.Core.Utility.Strategies;
 using MetroGid.Core.Converters;
 using Newtonsoft.Json.Linq;

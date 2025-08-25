@@ -1,5 +1,5 @@
-using MetroGid.Controllers.DTO;
-using MetroGid.Controllers.Interfaces;
+using MetroGid.Controllers.Utility.DTO;
+using MetroGid.Controllers.Utility.Interfaces;
 using MetroGid.Core.Converters;
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;

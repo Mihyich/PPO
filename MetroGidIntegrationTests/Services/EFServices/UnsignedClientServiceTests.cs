@@ -1,5 +1,5 @@
 using System.Data;
-using MetroGid.Controllers.Interfaces;
+using MetroGid.Controllers.Utility.Interfaces;
 using MetroGid.Core.Interfaces;
 using MetroGid.DBA.EF.Context;
 using MetroGidIntegrationTests.Services.EFFixtures;
@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utility;
-using MetroGid.Controllers.DTO;
+using MetroGid.Controllers.Utility.DTO;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Utility.Validators.Interfaces;
 using MetroGid.Core.Utility.Builders;

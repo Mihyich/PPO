@@ -1,6 +1,6 @@
-using MetroGid.Controllers.DTO;
+using MetroGid.Controllers.Utility.DTO;
 
-namespace MetroGid.Controllers.Interfaces;
+namespace MetroGid.Controllers.Utility.Interfaces;
 
 public interface IRouteService
 {

@@ -1,7 +1,7 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using MetroGid.Controllers.DTO;
+using MetroGid.Controllers.Utility.DTO;
 
 namespace MetroGid.Core.Converters;
 

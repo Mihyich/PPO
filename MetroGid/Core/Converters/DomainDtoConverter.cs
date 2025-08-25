@@ -1,4 +1,4 @@
-using MetroGid.Controllers.DTO;
+using MetroGid.Controllers.Utility.DTO;
 using MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Models.Types;
 

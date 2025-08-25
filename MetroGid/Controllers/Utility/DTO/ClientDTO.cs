@@ -1,4 +1,4 @@
-namespace MetroGid.Controllers.DTO;
+namespace MetroGid.Controllers.Utility.DTO;
 
 public record ClientDTO(
     string Login,

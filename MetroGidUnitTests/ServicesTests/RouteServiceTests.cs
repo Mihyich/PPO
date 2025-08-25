@@ -1,4 +1,4 @@
-using MetroGid.Controllers.DTO;
+using MetroGid.Controllers.Utility.DTO;
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Handlers;
