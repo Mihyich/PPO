@@ -23,6 +23,40 @@ public class ClientService(
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
+    public async Task<ClientDTO?> GetClientByIdAsync(int clientId) =>
+        await Handler.SnapAsync(
+            async () =>
+            {
+                Client? client = await ClientRepo.GetByIdAsync(clientId);
+
+                if (client == null)
+                    throw new DataBaseException(
+                        $"Пользователь с айди \"{clientId}\" не найден",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+
+                return client != null ? DomainDtoConverter.Convert(client) : null;
+            }, Logger
+        );
+
+    public async Task<int> GetClientIdAsync(string login, string password) =>
+        await Handler.SnapAsync(
+            async () =>
+            {
+                int clientId = await ClientRepo.GetIdByCredentialsAsync(login, password);
+
+                if (clientId == 0)
+                    throw new DataBaseException(
+                        $"Пользователь с логином \"{login}\" не найден",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
+
+                return clientId;
+            }, Logger
+        );
+
     public async Task<int> RegAsync(string login, string password, string mail)
     {
         Client client = new(login, password, mail);
@@ -50,26 +84,43 @@ public class ClientService(
         return await ClientRepo.AddAsync(client);
     }
 
-    public async Task<int> UnRegAsync(string login, string password, string mail) =>
-        await ClientRepo.DeleteAsync(
-            await ClientRepo.GetIdByCredentialsAsync(login, password, mail));
+    public async Task<int> UnRegAsync(int clientId) =>
+        await ClientRepo.DeleteAsync(clientId);
 
-    public async Task<RoleTypeDTO> SignInAsync(string login, string password, string mail) =>
-        await GetRoleAsync(login, password, mail);
+    public async Task<ClientDTO?> SignInAsync(string login, string password)
+    {
+        Client? client = await Handler.SnapAsync(
+            async () =>
+            {
+                Client? c = await ClientRepo.GetByCredentialsAsync(login, password);
 
-    public async Task<int> SignOutAsync(string login, string password, string mail) =>
-        await ClientRepo.GetIdByCredentialsAsync(login, password, mail);
+                if (c == null)
+                    throw new DataBaseException(
+                        $"Пользователь с логином \"{login}\" не найден",
+                        ExceptionType.Warning,
+                        ExceptionReason.NotFound
+                    );
 
-    public async Task<RoleTypeDTO> GetRoleAsync(string login, string password, string mail)
+                return c;
+            }, Logger
+        );
+
+        return client != null ? DomainDtoConverter.Convert(client) : null;
+    }
+
+    public async Task<int> SignOutAsync(string login, string password) =>
+        await ClientRepo.GetIdByCredentialsAsync(login, password);
+
+    public async Task<RoleTypeDTO> GetRoleAsync(string login, string password)
     {
         int clientId = await Handler.SnapAsync(
             async () =>
             {
-                int id = await ClientRepo.GetIdByCredentialsAsync(login, password, mail);
+                int id = await ClientRepo.GetIdByCredentialsAsync(login, password);
 
                 if (id == 0)
                     throw new DataBaseException(
-                        $"Пользователь с логином \"{login}\" и почтой \"{mail}\" не найден",
+                        $"Пользователь с логином \"{login}\" не найден",
                         ExceptionType.Warning,
                         ExceptionReason.NotFound
                     );
@@ -79,5 +130,11 @@ public class ClientService(
         );
 
         return DomainDtoConverter.Convert(await ClientRepo.GetRoleByIdAsync(clientId));
+    }
+
+    public async Task<bool> VerifyPasswordAsync(int clientId, string password)
+    {
+        ClientDTO? client = await GetClientByIdAsync(clientId);
+        return client != null ? client.Password == password : false;
     }
 }
