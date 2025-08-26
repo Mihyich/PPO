@@ -2,7 +2,7 @@ using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Super;
-using MetroGid.Core.Models.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utility.Validators.Interfaces;
 using MetroGid.Core.Utility.Validators.Predicators;
 
@@ -16,7 +16,7 @@ public class ThrowableDomainAttribsValidator(
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
-    public void Visit(Client client)
+    public void Visit(MCMC.Client client)
     {
         Handler.Snap(
             () =>
@@ -99,7 +99,7 @@ public class ThrowableDomainAttribsValidator(
         );
     }
 
-    public void Visit(Chart chart)
+    public void Visit(MCMC.Chart chart)
     {
         Handler.Snap(
             () =>
@@ -176,7 +176,7 @@ public class ThrowableDomainAttribsValidator(
         // Что делать с svgInst???
     }
 
-    public void Visit(Branch branch)
+    public void Visit(MCMC.Branch branch)
     {
         Handler.Snap(
             () =>
@@ -251,7 +251,7 @@ public class ThrowableDomainAttribsValidator(
         );
     }
 
-    public void Visit(Station station)
+    public void Visit(MCMC.Station station)
     {
         Handler.Snap(
             () =>
@@ -344,7 +344,7 @@ public class ThrowableDomainAttribsValidator(
         );
     }
 
-    public void Visit(Railway railway)
+    public void Visit(MCMC.Railway railway)
     {
         Handler.Snap(
             () =>
@@ -365,7 +365,7 @@ public class ThrowableDomainAttribsValidator(
         );
     }
 
-    public void Visit(Transition transition)
+    public void Visit(MCMC.Transition transition)
     {
         Handler.Snap(
             () =>
@@ -440,7 +440,7 @@ public class ThrowableDomainAttribsValidator(
         );
     }
 
-    public void Visit(Route route)
+    public void Visit(MCMC.Route route)
     {
         Handler.Snap(
             () =>
@@ -520,7 +520,7 @@ public class ThrowableDomainAttribsValidator(
         for (int i = 0; i < route.Path.Count; ++i)
         {
             shouldBeStation = i % 2 == 0;
-            isStation = route.Path[i] is RouteStationItem;
+            isStation = route.Path[i] is MCMC.RouteStationItem;
 
             Handler.Snap(
                 () =>

@@ -1,14 +1,14 @@
-using MetroGid.Core.Models.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
 
 namespace MetroGid.Core.Utility.Validators.Interfaces;
 
 public interface IDomainValidatorVisitor
 {
-    void Visit(Client client);
-    void Visit(Chart chart);
-    void Visit(Branch branch);
-    void Visit(Station station);
-    void Visit(Railway railway);
-    void Visit(Transition transition);
-    void Visit(Route route);
+    void Visit(MCMC.Client client);
+    void Visit(MCMC.Chart chart);
+    void Visit(MCMC.Branch branch);
+    void Visit(MCMC.Station station);
+    void Visit(MCMC.Railway railway);
+    void Visit(MCMC.Transition transition);
+    void Visit(MCMC.Route route);
 }

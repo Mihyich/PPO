@@ -1,4 +1,4 @@
-using MetroGid.Core.Models.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
 
 namespace MetroGid.Core.Interfaces;
 
@@ -16,7 +16,7 @@ public interface IRouteRepository
     Task<List<string>> GetAllForClientIdAsync(int clientId);
     Task<List<string>> GetAllForClientOfChartIdAsync(int clientId, int chartId);
 
-    Task<int> UpdateAsync(int clientId, int chartId, Route route);
+    Task<int> UpdateAsync(int clientId, int chartId, MCMC.Route route);
 
     Task<int> DeleteAsync(int id);
 

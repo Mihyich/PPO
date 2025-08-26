@@ -1,46 +1,46 @@
-using MetroGid.Controllers.Utility.DTO;
-using MetroGid.Core.Models.Concrete;
-using MetroGid.Core.Models.Types;
+using MCUD = MetroGid.Controllers.Utility.DTO;
+using MCMC = MetroGid.Core.Models.Concrete;
+using MCMT = MetroGid.Core.Models.Types;
 
 namespace MetroGid.Core.Converters;
 
 public static class DomainDtoConverter
 {
-    public static AccessTypeDTO Convert(AccessType type) =>
+    public static MCUD.AccessTypeDTO Convert(MCMT.AccessType type) =>
         type switch
         {
-            AccessType.ACCESSIBLE => AccessTypeDTO.ACCESSIBLE,
-            AccessType.INACCESSIBLE => AccessTypeDTO.INACCESSIBLE,
-            _ => AccessTypeDTO.INACCESSIBLE
+            MCMT.AccessType.ACCESSIBLE => MCUD.AccessTypeDTO.ACCESSIBLE,
+            MCMT.AccessType.INACCESSIBLE => MCUD.AccessTypeDTO.INACCESSIBLE,
+            _ => MCUD.AccessTypeDTO.INACCESSIBLE
         };
 
-    public static RoleTypeDTO Convert(RoleType type) =>
+    public static MCUD.RoleTypeDTO Convert(MCMT.RoleType type) =>
         type switch
         {
-            RoleType.UNSIGNED => RoleTypeDTO.UNSIGNED,
-            RoleType.SIGNED => RoleTypeDTO.SIGNED,
-            RoleType.DUTY => RoleTypeDTO.DUTY,
-            _ => RoleTypeDTO.UNSIGNED
+            MCMT.RoleType.UNSIGNED => MCUD.RoleTypeDTO.UNSIGNED,
+            MCMT.RoleType.SIGNED => MCUD.RoleTypeDTO.SIGNED,
+            MCMT.RoleType.DUTY => MCUD.RoleTypeDTO.DUTY,
+            _ => MCUD.RoleTypeDTO.UNSIGNED
         };
 
-    public static ChartDTO Convert(Chart chart) =>
+    public static MCUD.ChartDTO Convert(MCMC.Chart chart) =>
         new(chart.City, chart.Title, chart.SvgInst);
 
-    public static BranchDTO Convert(Branch branch) =>
+    public static MCUD.BranchDTO Convert(MCMC.Branch branch) =>
         new(branch.Title, branch.Color, Convert(branch.Type));
 
-    public static StationDTO Convert(Station station) =>
+    public static MCUD.StationDTO Convert(MCMC.Station station) =>
         new(station.Title, station.Branch?.Title ?? string.Empty,
             station.Occupancy, Convert(station.Type),
             station.OpenTime, station.CloseTime);
 
-    public static RailwayDTO Convert(Railway railway) =>
+    public static MCUD.RailwayDTO Convert(MCMC.Railway railway) =>
         new(railway.Prev?.Branch?.Title ?? railway.Next?.Branch?.Title ?? string.Empty,
             railway.Prev?.Title ?? string.Empty,
             railway.Next?.Title ?? string.Empty,
             railway.Duration);
 
-    public static TransitionDTO Convert(Transition transition) =>
+    public static MCUD.TransitionDTO Convert(MCMC.Transition transition) =>
         new(transition.Occupancy, Convert(transition.Type),
             transition.Duration, transition.OpenTime, transition.CloseTime,
             transition.From?.Title ?? string.Empty,
@@ -48,23 +48,23 @@ public static class DomainDtoConverter
             transition.To?.Title ?? string.Empty,
             transition.To?.Branch?.Title ?? string.Empty);
 
-    public static ClientDTO Convert(Client client) =>
+    public static MCUD.ClientDTO Convert(MCMC.Client client) =>
         new(client.Login, client.Password, client.Mail, Convert(client.Role));
 
-    public static RouteDTO Convert(Route route)
+    public static MCUD.RouteDTO Convert(MCMC.Route route)
     {
-        List<RouteItemDTO> CntPath = [];
+        List<MCUD.RouteItemDTO> CntPath = [];
 
         foreach (var item in route.Path)
         {
-            if (item is RouteStationItem { Station: var station })
-                CntPath.Add(new RouteStationItemDTO(Convert(station)));
-            else if (item is RouteConnectionItem { Connection: var connection })
+            if (item is MCMC.RouteStationItem { Station: var station })
+                CntPath.Add(new MCUD.RouteStationItemDTO(Convert(station)));
+            else if (item is MCMC.RouteConnectionItem { Connection: var connection })
             {
-                if (connection is RailwayConnection { Railway: var railway })
-                    CntPath.Add(new RouteConnectionItemDTO(new RailwayConnectionDTO(Convert(railway))));
-                else if (connection is TransitionConnection { Transition: var transition })
-                    CntPath.Add(new RouteConnectionItemDTO(new TransitionConnectionDTO(Convert(transition))));
+                if (connection is MCMC.RailwayConnection { Railway: var railway })
+                    CntPath.Add(new MCUD.RouteConnectionItemDTO(new MCUD.RailwayConnectionDTO(Convert(railway))));
+                else if (connection is MCMC.TransitionConnection { Transition: var transition })
+                    CntPath.Add(new MCUD.RouteConnectionItemDTO(new MCUD.TransitionConnectionDTO(Convert(transition))));
             }
         }
 

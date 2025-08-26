@@ -1,13 +1,13 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using MetroGid.Controllers.Utility.DTO;
+using MCUD = MetroGid.Controllers.Utility.DTO;
 
 namespace MetroGid.Core.Converters;
 
 public static class DtoRouteJsonConverter
 {
-    public static string Convert(RouteDTO route)
+    public static string Convert(MCUD.RouteDTO route)
     {
         List<RouteItemJsonDTO> routeItems = [];
 
@@ -15,27 +15,27 @@ public static class DtoRouteJsonConverter
         {
             switch (item)
             {
-                case RouteStationItemDTO routeStationItem:
+                case MCUD.RouteStationItemDTO routeStationItem:
                 {
-                    StationDTO s = routeStationItem.Station;
+                    MCUD.StationDTO s = routeStationItem.Station;
                     StationRouteItemDTO sri = new(s.Title, s.BranchTitle);
                     routeItems.Add(sri);
                     break;
                 }
-                case RouteConnectionItemDTO routeConnectionItem:
+                case MCUD.RouteConnectionItemDTO routeConnectionItem:
                 {
                     switch (routeConnectionItem.Connection)
                     {
-                        case RailwayConnectionDTO railwayConnection:
+                        case MCUD.RailwayConnectionDTO railwayConnection:
                         {
-                            RailwayDTO r = railwayConnection.Railway;
+                            MCUD.RailwayDTO r = railwayConnection.Railway;
                             RailwayRouteItemDTO rri = new(r.PrevStationTitle, r.NextStationTitle);
                             routeItems.Add(rri);
                             break;
                         }
-                        case TransitionConnectionDTO transitionConnection:
+                        case MCUD.TransitionConnectionDTO transitionConnection:
                         {
-                            TransitionDTO t = transitionConnection.Transition;
+                            MCUD.TransitionDTO t = transitionConnection.Transition;
                             TransitionRouteItemDTO tri = new(t.FromBranchTitle, t.FromStationTitle, t.ToBranchTitle, t.ToStationTitle);
                             routeItems.Add(tri);
                             break;

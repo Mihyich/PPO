@@ -1,10 +1,10 @@
-using MetroGid.Controllers.Utility.DTO;
+using MCUD = MetroGid.Controllers.Utility.DTO;
 using MetroGid.Controllers.Utility.Interfaces;
 using MetroGid.Core.Converters;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Interfaces;
-using MetroGid.Core.Models.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Classification;
@@ -23,11 +23,11 @@ public class ClientService(
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
-    public async Task<ClientDTO?> GetClientByIdAsync(int clientId) =>
+    public async Task<MCUD.ClientDTO?> GetClientByIdAsync(int clientId) =>
         await Handler.SnapAsync(
             async () =>
             {
-                Client? client = await ClientRepo.GetByIdAsync(clientId);
+                MCMC.Client? client = await ClientRepo.GetByIdAsync(clientId);
 
                 if (client == null)
                     throw new DataBaseException(
@@ -59,7 +59,7 @@ public class ClientService(
 
     public async Task<int> RegAsync(string login, string password, string mail)
     {
-        Client client = new(login, password, mail);
+        MCMC.Client client = new(login, password, mail);
         client.Validate(DomainAttribsValidator);
 
         await Handler.SnapAsync(
@@ -87,12 +87,12 @@ public class ClientService(
     public async Task<int> UnRegAsync(int clientId) =>
         await ClientRepo.DeleteAsync(clientId);
 
-    public async Task<ClientDTO?> SignInAsync(string login, string password)
+    public async Task<MCUD.ClientDTO?> SignInAsync(string login, string password)
     {
-        Client? client = await Handler.SnapAsync(
+        MCMC.Client? client = await Handler.SnapAsync(
             async () =>
             {
-                Client? c = await ClientRepo.GetByCredentialsAsync(login, password);
+                MCMC.Client? c = await ClientRepo.GetByCredentialsAsync(login, password);
 
                 if (c == null)
                     throw new DataBaseException(
@@ -111,7 +111,7 @@ public class ClientService(
     public async Task<int> SignOutAsync(string login, string password) =>
         await ClientRepo.GetIdByCredentialsAsync(login, password);
 
-    public async Task<RoleTypeDTO> GetRoleAsync(string login, string password)
+    public async Task<MCUD.RoleTypeDTO> GetRoleAsync(string login, string password)
     {
         int clientId = await Handler.SnapAsync(
             async () =>
@@ -134,7 +134,7 @@ public class ClientService(
 
     public async Task<bool> VerifyPasswordAsync(int clientId, string password)
     {
-        ClientDTO? client = await GetClientByIdAsync(clientId);
+        MCUD.ClientDTO? client = await GetClientByIdAsync(clientId);
         return client != null ? client.Password == password : false;
     }
 }

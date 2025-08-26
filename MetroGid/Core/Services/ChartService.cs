@@ -1,13 +1,13 @@
-using MetroGid.Controllers.Utility.DTO;
+using MCUD = MetroGid.Controllers.Utility.DTO;
 using MetroGid.Controllers.Utility.Interfaces;
 using MetroGid.Core.Converters;
 using MetroGid.Core.Interfaces;
-using MetroGid.Core.Models.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Classification;
-using MetroGid.Core.Models.Types;
+using MCMT = MetroGid.Core.Models.Types;
 
 namespace MetroGid.Core.Services;
 
@@ -147,11 +147,11 @@ public class ChartService(
     }
 
 
-    public async Task<ChartDTO?> GetChartAsync(string cityTitle, string chartTitle)
+    public async Task<MCUD.ChartDTO?> GetChartAsync(string cityTitle, string chartTitle)
     {
         int chartId = await GetChartIdAsync(cityTitle, chartTitle);
 
-        Chart? chart = await Handler.SnapAsync(
+        MCMC.Chart? chart = await Handler.SnapAsync(
             async () =>
             {
                 return await ChartRepo.GetChartWeakByIdAsync(chartId) ??
@@ -170,11 +170,11 @@ public class ChartService(
         await ChartRepo.GetAllChartCityTitleAsync();
 
 
-    public async Task<BranchDTO?> GetBranchAsync(string cityTitle, string chartTitle, string branchTitle)
+    public async Task<MCUD.BranchDTO?> GetBranchAsync(string cityTitle, string chartTitle, string branchTitle)
     {
         int branchId = await GetBranchIdAsync(cityTitle, chartTitle, branchTitle);
 
-        Branch? branch = await Handler.SnapAsync(
+        MCMC.Branch? branch = await Handler.SnapAsync(
             async () =>
             {
                 return await ChartRepo.GetBranchWeakByIdAsync(branchId) ??
@@ -192,7 +192,7 @@ public class ChartService(
     public async Task<List<string>> GetChartBranchTitlesAsync(int chartId) =>
         await ChartRepo.GetAllChartBranchTitleAsync(chartId);
 
-    public async Task<StationDTO?> GetStationAsync(
+    public async Task<MCUD.StationDTO?> GetStationAsync(
         string cityTitle, string chartTitle,
         string branchTitle, string stationTitle)
     {
@@ -201,7 +201,7 @@ public class ChartService(
             branchTitle, stationTitle
         );
 
-        Station? station = await Handler.SnapAsync(
+        MCMC.Station? station = await Handler.SnapAsync(
             async () =>
             {
                 return await ChartRepo.GetStationWeakByIdAsync(stationId) ??
@@ -222,7 +222,7 @@ public class ChartService(
         return await ChartRepo.GetAllBranchStationTitleAsync(branchId);
     }
 
-    public async Task<TransitionDTO?> GetTransitionAsync(
+    public async Task<MCUD.TransitionDTO?> GetTransitionAsync(
         string cityTitle, string chartTitle,
         string fromBranchTitle, string fromStationTitle,
         string toBranchTitle, string toStationTitle)
@@ -233,7 +233,7 @@ public class ChartService(
             toBranchTitle, toStationTitle
         );
 
-        Transition? transition = await Handler.SnapAsync(
+        MCMC.Transition? transition = await Handler.SnapAsync(
             async () =>
             {
                 return await ChartRepo.GetTransitionByIdAsync(transitionId) ??
@@ -248,7 +248,7 @@ public class ChartService(
         return transition != null ? DomainDtoConverter.Convert(transition) : null;
     }
 
-    public async Task<RailwayDTO?> GetRailwayAsync(
+    public async Task<MCUD.RailwayDTO?> GetRailwayAsync(
         string cityTitle, string chartTitle,
         string branchTitle,
         string fromStationTitle, string toStationTitle)
@@ -259,7 +259,7 @@ public class ChartService(
             fromStationTitle, toStationTitle
         );
 
-        Railway? railway = await Handler.SnapAsync(
+        MCMC.Railway? railway = await Handler.SnapAsync(
             async () =>
             {
                 return await ChartRepo.GetRailwayByIdAsync(railwayId) ??
@@ -275,12 +275,12 @@ public class ChartService(
     }
 
     public async Task<int> UpdateChartAsync(
-        RoleTypeDTO role,
+        MCUD.RoleTypeDTO role,
         string chartCity, string chartTitle,
-        ChartDTO chart
+        MCUD.ChartDTO chart
     )
     {
-        if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
+        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
             return 0;
 
         int chartId = await ChartRepo.GetChartIdAsync(chartCity, chartTitle);
@@ -289,13 +289,13 @@ public class ChartService(
     }
 
     public async Task<int> UpdateBranchAsync(
-        RoleTypeDTO role,
+        MCUD.RoleTypeDTO role,
         string chartCity, string chartTitle,
         string branchTitle,
-        BranchDTO branch
+        MCUD.BranchDTO branch
     )
     {
-        if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
+        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
             return 0;
 
         int branchId = await GetBranchIdAsync(chartCity, chartTitle, branchTitle);
@@ -304,12 +304,12 @@ public class ChartService(
     }
 
     public async Task<int> UpdateStationAsync(
-        RoleTypeDTO role,
+        MCUD.RoleTypeDTO role,
         string chartCity, string chartTitle,
         string branchTitle, string stationTitle,
-        StationDTO station)
+        MCUD.StationDTO station)
     {
-        if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
+        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
             return 0;
 
         int stationId = await GetStationIdAsync(
@@ -321,13 +321,13 @@ public class ChartService(
     }
 
     public async Task<int> UpdateRailwayAsync(
-        RoleTypeDTO role,
+        MCUD.RoleTypeDTO role,
         string chartCity, string chartTitle,
         string BranchTitle,
         string fromStationTitle, string toStationTitle,
-        RailwayDTO railway)
+        MCUD.RailwayDTO railway)
     {
-        if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
+        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
             return 0;
 
         int railwayId = await GetRailwayIdAsync(
@@ -340,13 +340,13 @@ public class ChartService(
     }
 
     public async Task<int> UpdateTransitionAsync(
-        RoleTypeDTO role,
+        MCUD.RoleTypeDTO role,
         string chartCity, string chartTitle,
         string fromBranchTitle, string fromStationTitle,
         string toBranchTitle, string toStationTitle,
-        TransitionDTO transition)
+        MCUD.TransitionDTO transition)
     {
-        if (DtoDomainConverter.Convert(role) != RoleType.DUTY)
+        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
             return 0;
 
         int transitionId = await GetTransitionIdAsync(

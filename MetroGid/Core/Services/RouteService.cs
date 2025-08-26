@@ -1,17 +1,17 @@
-using MetroGid.Controllers.Utility.DTO;
+using MCUD = MetroGid.Controllers.Utility.DTO;
 using MetroGid.Controllers.Utility.Interfaces;
 using MetroGid.Core.Converters;
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Super;
-using MetroGid.Core.Models.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utility.Builders;
 using MetroGid.Core.Utility.Directors;
 using MetroGid.Core.Utility.Strategies;
 using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.Core.Interfaces;
-using MetroGid.Core.Models.Types;
+using MCMT = MetroGid.Core.Models.Types;
 
 namespace MetroGid.Core.Services;
 
@@ -50,7 +50,7 @@ public class RouteService(
             }, Logger
         );
 
-    private async Task<Chart?> GetChartAsync(string city, string chartTitle)
+    private async Task<MCMC.Chart?> GetChartAsync(string city, string chartTitle)
     {
         string? jsonContent = await Handler.SnapAsync(
             async () =>
@@ -67,7 +67,7 @@ public class RouteService(
             }, Logger
         );
 
-        Chart? chart = null;
+        MCMC.Chart? chart = null;
 
         if (jsonContent != null)
         {
@@ -79,12 +79,12 @@ public class RouteService(
         return chart;
     }
 
-    private Station? FindStationAsync(Chart chart, string branchTitle, string stationTitle)
+    private MCMC.Station? FindStationAsync(MCMC.Chart chart, string branchTitle, string stationTitle)
     {
-        Station? station = Handler.Snap(
+        MCMC.Station? station = Handler.Snap(
             () =>
             {
-                Station? s = chart.GetStation(branchTitle, stationTitle);
+                MCMC.Station? s = chart.GetStation(branchTitle, stationTitle);
 
                 if (s == null)
                     throw new ServiceRouteException(
@@ -100,10 +100,10 @@ public class RouteService(
         return station;
     }
 
-    private Route? SearchRouteProcess(Chart chart, Station src, Station dst, TimeOnly startTime)
+    private MCMC.Route? SearchRouteProcess(MCMC.Chart chart, MCMC.Station src, MCMC.Station dst, TimeOnly startTime)
     {
         StrategySearchRouteBase searcher = new StrategySearchRouteBFS();
-        Route? route = chart.Search(src, dst, startTime, searcher);
+        MCMC.Route? route = chart.Search(src, dst, startTime, searcher);
 
         if (route != null)
         {
@@ -114,17 +114,17 @@ public class RouteService(
         return route;
     }
     
-    public async Task<RouteDTO?> SearchRouteAsync(
+    public async Task<MCUD.RouteDTO?> SearchRouteAsync(
         string city, string chartTitle,
         string branchSrcTitle, string stationSrcTitle,
         string branchDstTitle, string stationDstTitle,
         TimeOnly startTime)
     {
-        Chart? chart = await GetChartAsync(city, chartTitle);
-        Station? src = null;
-        Station? dst = null;
-        RouteDTO? routeDTO = null;
-        Route? route = null;
+        MCMC.Chart? chart = await GetChartAsync(city, chartTitle);
+        MCMC.Station? src = null;
+        MCMC.Station? dst = null;
+        MCUD.RouteDTO? routeDTO = null;
+        MCMC.Route? route = null;
 
         if (chart != null &&
             (src = FindStationAsync(chart, branchSrcTitle, stationSrcTitle)) != null &&
@@ -138,11 +138,11 @@ public class RouteService(
         return routeDTO;
     }
 
-    public async Task<int> SaveRouteAsync(ClientDTO client, RouteDTO route, int chartId)
+    public async Task<int> SaveRouteAsync(MCUD.ClientDTO client, MCUD.RouteDTO route, int chartId)
     {
-        RoleType role = DtoDomainConverter.Convert(client.Role);
+        MCMT.RoleType role = DtoDomainConverter.Convert(client.Role);
 
-        if (role != RoleType.SIGNED && role != RoleType.DUTY)
+        if (role != MCMT.RoleType.SIGNED && role != MCMT.RoleType.DUTY)
             return 0;
 
         int clientId = await GetClientIdAsync(client.Login, client.Password, client.Mail);
@@ -150,11 +150,11 @@ public class RouteService(
         return await RouteRepo.AddAsync(clientId, chartId, DtoRouteJsonConverter.Convert(route));
     }
 
-    public async Task<List<string>> LookForSavedRoutesInChartAsync(ClientDTO client, int chartId)
+    public async Task<List<string>> LookForSavedRoutesInChartAsync(MCUD.ClientDTO client, int chartId)
     {
-        RoleType role = DtoDomainConverter.Convert(client.Role);
+        MCMT.RoleType role = DtoDomainConverter.Convert(client.Role);
 
-        if (role != RoleType.SIGNED && role != RoleType.DUTY)
+        if (role != MCMT.RoleType.SIGNED && role != MCMT.RoleType.DUTY)
             return new List<string>();
 
         int clientId = await GetClientIdAsync(client.Login, client.Password, client.Mail);

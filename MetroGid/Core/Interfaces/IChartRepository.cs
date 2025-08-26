@@ -1,4 +1,4 @@
-using MetroGid.Core.Models.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
 
 namespace MetroGid.Core.Interfaces;
 
@@ -17,11 +17,11 @@ public interface IChartRepository
     Task<List<int>> GetAllBranchStationIdAsync(int branchId);
 
     Task<string?> GetChartJsonByIdAsync(int chartId);
-    Task<Chart?> GetChartWeakByIdAsync(int chartId);
-    Task<Branch?> GetBranchWeakByIdAsync(int branchId);
-    Task<Station?> GetStationWeakByIdAsync(int stationId);
-    Task<Railway?> GetRailwayByIdAsync(int railwayId);
-    Task<Transition?> GetTransitionByIdAsync(int transitionId);
+    Task<MCMC.Chart?> GetChartWeakByIdAsync(int chartId);
+    Task<MCMC.Branch?> GetBranchWeakByIdAsync(int branchId);
+    Task<MCMC.Station?> GetStationWeakByIdAsync(int stationId);
+    Task<MCMC.Railway?> GetRailwayByIdAsync(int railwayId);
+    Task<MCMC.Transition?> GetTransitionByIdAsync(int transitionId);
 
     Task<string?> GetChartJsonByCredentialsAsync(string city, string title);
 
@@ -35,11 +35,11 @@ public interface IChartRepository
     Task<(int, int)?> GetFromToStationIdByRailwayIdAsync(int railwayId);
     Task<(int, int)?> GetFromToStationIdByTransitionIdAsync(int transitionId);
 
-    Task<int> UpdateChartByIdAsync(int chartId, Chart chart);
-    Task<int> UpdateBranchByIdAsync(int branchId, Branch branch);
-    Task<int> UpdateStationByIdAsync(int stationId, Station station);
-    Task<int> UpdateRailwayByIdAsync(int railwayId, Railway railway);
-    Task<int> UpdateTransitionByIdAsync(int stationId, Transition transition);
+    Task<int> UpdateChartByIdAsync(int chartId, MCMC.Chart chart);
+    Task<int> UpdateBranchByIdAsync(int branchId, MCMC.Branch branch);
+    Task<int> UpdateStationByIdAsync(int stationId, MCMC.Station station);
+    Task<int> UpdateRailwayByIdAsync(int railwayId, MCMC.Railway railway);
+    Task<int> UpdateTransitionByIdAsync(int stationId, MCMC.Transition transition);
 
     Task<int> DeleteChartByIdAsync(int id);
 

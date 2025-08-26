@@ -1,21 +1,21 @@
-using MetroGid.Core.Models.Concrete;
-using MetroGid.Core.Models.Types;
+using MCMC = MetroGid.Core.Models.Concrete;
+using MCMT = MetroGid.Core.Models.Types;
 
 namespace MetroGid.Core.Interfaces;
 
 public interface IClientRepository
 {
-    Task<int> AddAsync(Client client);
+    Task<int> AddAsync(MCMC.Client client);
 
-    Task<int> GetIdAsync(Client client);
+    Task<int> GetIdAsync(MCMC.Client client);
     Task<int> GetIdByCredentialsAsync(string login, string password);
 
-    Task<Client?> GetByIdAsync(int id);
-    Task<Client?> GetByCredentialsAsync(string login, string password);
+    Task<MCMC.Client?> GetByIdAsync(int id);
+    Task<MCMC.Client?> GetByCredentialsAsync(string login, string password);
 
-    Task<RoleType> GetRoleByIdAsync(int id);
+    Task<MCMT.RoleType> GetRoleByIdAsync(int id);
 
-    Task<int> UpdateAsync(int id, Client client);
+    Task<int> UpdateAsync(int id, MCMC.Client client);
 
     Task<int> DeleteAsync(int id);
 

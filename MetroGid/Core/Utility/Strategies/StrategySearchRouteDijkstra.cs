@@ -1,4 +1,4 @@
-using MetroGid.Core.Models.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utility.TimeMeter.Concrete;
 using MetroGid.Core.Utility.TimeMeter.Super;
 
@@ -33,20 +33,20 @@ namespace MetroGid.Core.Utility.Strategies;
 
 public class StrategySearchRouteDijkstra(TimeSuper? timerSuper = null) : StrategySearchRouteBase(timerSuper ?? new TimeFast())
 {
-    public override Route? Search(Chart chart, Station src, Station dst, TimeOnly timeStart)
+    public override MCMC.Route? Search(MCMC.Chart chart, MCMC.Station src, MCMC.Station dst, TimeOnly timeStart)
     {
         if ((!src.Branch?.IsAccessible() ?? true) || !src.IsAccessible() || !src.IsOpenAt(timeStart) ||
             (!dst.Branch?.IsAccessible() ?? true) || !dst.IsAccessible())
             return null;
 
-        Dictionary<Station, List<Route>> Adj = GenAdj(chart.Branches); // Аналог матрицы смежностей
-        Dictionary<Station, Route> dist = GenDist(chart.Branches); // Поиск маршрутов к каждому из узлов графа
-        HashSet<Station> visited = []; // Посещенные станции
-        PriorityQueue<Route, TimeSpan> pq = new(); // Приоритетная очередь по времени маршрутов
-        Station? lstation;
+        Dictionary<MCMC.Station, List<MCMC.Route>> Adj = GenAdj(chart.Branches); // Аналог матрицы смежностей
+        Dictionary<MCMC.Station, MCMC.Route> dist = GenDist(chart.Branches); // Поиск маршрутов к каждому из узлов графа
+        HashSet<MCMC.Station> visited = []; // Посещенные станции
+        PriorityQueue<MCMC.Route, TimeSpan> pq = new(); // Приоритетная очередь по времени маршрутов
+        MCMC.Station? lstation;
 
         // Создание отправной точки
-        Route route = new Route(string.Empty, [], TimeSpan.Zero, ts).Append(src);
+        MCMC.Route route = new MCMC.Route(string.Empty, [], TimeSpan.Zero, ts).Append(src);
 
         // По умолчанию минимальный способ добраться до src это route.
         dist[src] = route;
@@ -63,11 +63,11 @@ public class StrategySearchRouteDijkstra(TimeSuper? timerSuper = null) : Strateg
             if (lstation == null || route.Duration > dist[lstation].Duration)
                 continue;
 
-            foreach (Route r in Adj[lstation])
+            foreach (MCMC.Route r in Adj[lstation])
             {
-                Station? neighbor = r.GetLastStation();
+                MCMC.Station? neighbor = r.GetLastStation();
                 TimeSpan newTime = dist[lstation].PredictDurationAfterAddAsOrphan(r);
-                Route newRoute;
+                MCMC.Route newRoute;
 
                 if (neighbor != null &&
                     neighbor.IsAccessible() &&
@@ -88,30 +88,30 @@ public class StrategySearchRouteDijkstra(TimeSuper? timerSuper = null) : Strateg
         return dist[dst].Duration == TimeSpan.MaxValue ? null : dist[dst];
     }
 
-    private Dictionary<Station, List<Route>> GenAdj(List<Branch> branches)
+    private Dictionary<MCMC.Station, List<MCMC.Route>> GenAdj(List<MCMC.Branch> branches)
     {
-        Dictionary<Station, List<Route>> Adj = [];
+        Dictionary<MCMC.Station, List<MCMC.Route>> Adj = [];
 
         foreach (var branch in branches)
         {
             foreach (var station in branch.Stations)
             {
-                Route route;
-                List<Route> routes = [];
+                MCMC.Route route;
+                List<MCMC.Route> routes = [];
 
-                Station? neighbor;
-                Railway? railPrev = station.Prev;
-                Railway? railNext = station.Next;
+                MCMC.Station? neighbor;
+                MCMC.Railway? railPrev = station.Prev;
+                MCMC.Railway? railNext = station.Next;
 
                 if (railPrev != null && (neighbor = railPrev.Prev) != null)
                 {
-                    route = new Route(string.Empty, [], TimeSpan.Zero, ts).Append(station).Append(railPrev).Append(neighbor);
+                    route = new MCMC.Route(string.Empty, [], TimeSpan.Zero, ts).Append(station).Append(railPrev).Append(neighbor);
                     routes.Add(route);
                 }
 
                 if (railNext != null && (neighbor = railNext.Next) != null)
                 {
-                    route = new Route(string.Empty, [], TimeSpan.Zero, ts).Append(station).Append(railNext).Append(neighbor);
+                    route = new MCMC.Route(string.Empty, [], TimeSpan.Zero, ts).Append(station).Append(railNext).Append(neighbor);
                     routes.Add(route);
                 }
 
@@ -119,7 +119,7 @@ public class StrategySearchRouteDijkstra(TimeSuper? timerSuper = null) : Strateg
                 {
                     if ((neighbor = transition.ToFrom(station)) != null)
                     {
-                        route = new Route(string.Empty, [], TimeSpan.Zero, ts).Append(station).Append(transition).Append(neighbor);
+                        route = new MCMC.Route(string.Empty, [], TimeSpan.Zero, ts).Append(station).Append(transition).Append(neighbor);
                         routes.Add(route);
                     }
                 }
@@ -131,13 +131,13 @@ public class StrategySearchRouteDijkstra(TimeSuper? timerSuper = null) : Strateg
         return Adj;
     }
 
-    private Dictionary<Station, Route> GenDist(List<Branch> branches)
+    private Dictionary<MCMC.Station, MCMC.Route> GenDist(List<MCMC.Branch> branches)
     {
-        Dictionary<Station, Route> dist = [];
+        Dictionary<MCMC.Station, MCMC.Route> dist = [];
 
         foreach (var branch in branches)
             foreach (var station in branch.Stations)
-                dist[station] = new Route(string.Empty, [], TimeSpan.MaxValue, ts);
+                dist[station] = new MCMC.Route(string.Empty, [], TimeSpan.MaxValue, ts);
 
         return dist;
     }

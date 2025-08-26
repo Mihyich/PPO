@@ -1,4 +1,4 @@
-using MetroGid.Core.Models.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utility.TimeMeter.Concrete;
 using MetroGid.Core.Utility.TimeMeter.Super;
 
@@ -6,11 +6,11 @@ namespace MetroGid.Core.Utility.Strategies;
 
 public class StrategySearchRouteBFS(TimeSuper? timerSuper = null) : StrategySearchRouteBase(timerSuper ?? new TimeFast())
 {
-    public override Route? Search(Chart chart, Station src, Station dst, TimeOnly timeStart)
+    public override MCMC.Route? Search(MCMC.Chart chart, MCMC.Station src, MCMC.Station dst, TimeOnly timeStart)
     {
-        Queue<Route> queue = new();
-        HashSet<Station> visited = [];
-        Route initialRoute = new(string.Empty, [], TimeSpan.Zero, ts);
+        Queue<MCMC.Route> queue = new();
+        HashSet<MCMC.Station> visited = [];
+        MCMC.Route initialRoute = new(string.Empty, [], TimeSpan.Zero, ts);
 
         if ((!src.Branch?.IsAccessible() ?? true) || !src.IsAccessible() || !src.IsOpenAt(timeStart) ||
             (!dst.Branch?.IsAccessible() ?? true) || !dst.IsAccessible())
@@ -21,8 +21,8 @@ public class StrategySearchRouteBFS(TimeSuper? timerSuper = null) : StrategySear
 
         while (queue.Count > 0)
         {
-            Route curRoute = queue.Dequeue();
-            Station? lastStation = curRoute.GetLastStation();
+            MCMC.Route curRoute = queue.Dequeue();
+            MCMC.Station? lastStation = curRoute.GetLastStation();
 
             if (lastStation != null)
             {
@@ -37,10 +37,10 @@ public class StrategySearchRouteBFS(TimeSuper? timerSuper = null) : StrategySear
         return null;
     }
 
-    private static void SearchRailwayNeighbors(Station curStation, Route curRoute, Queue<Route> queue, HashSet<Station> visited)
+    private static void SearchRailwayNeighbors(MCMC.Station curStation, MCMC.Route curRoute, Queue<MCMC.Route> queue, HashSet<MCMC.Station> visited)
     {
-        Railway? railwayNeigbor = curStation.Next;
-        Station? stationNeighbor;
+        MCMC.Railway? railwayNeigbor = curStation.Next;
+        MCMC.Station? stationNeighbor;
 
         if (railwayNeigbor != null)
         {
@@ -57,10 +57,10 @@ public class StrategySearchRouteBFS(TimeSuper? timerSuper = null) : StrategySear
         }
     }
 
-    private void SearchTransitionNeighbors(Station curStation, Route curRoute, Queue<Route> queue, HashSet<Station> visited, TimeOnly timeStart)
+    private void SearchTransitionNeighbors(MCMC.Station curStation, MCMC.Route curRoute, Queue<MCMC.Route> queue, HashSet<MCMC.Station> visited, TimeOnly timeStart)
     {
         TimeOnly curTime = TimeOnly.FromTimeSpan(TimeSpan.FromTicks(curRoute.Duration.Ticks) + TimeSpan.FromTicks(timeStart.Ticks));
-        Station? stationNeighbor;
+        MCMC.Station? stationNeighbor;
 
         foreach (var transitionNeighbor in curStation.Transitions)
             if (transitionNeighbor.IsAccessible() && transitionNeighbor.IsOpenAt(curTime) && (stationNeighbor = transitionNeighbor.ToFrom(curStation)) != null)
@@ -68,21 +68,21 @@ public class StrategySearchRouteBFS(TimeSuper? timerSuper = null) : StrategySear
                     TimeOnly.FromTimeSpan(TimeSpan.FromTicks(curTime.Ticks) + ts.Measure(curStation, transitionNeighbor, stationNeighbor)));
     }
 
-    private static void UpdateProcess(Route curRoute, Railway railwayNeigbor, Station? stationNeighbor, Queue<Route> queue, HashSet<Station> visited)
+    private static void UpdateProcess(MCMC.Route curRoute, MCMC.Railway railwayNeigbor, MCMC.Station? stationNeighbor, Queue<MCMC.Route> queue, HashSet<MCMC.Station> visited)
     {
         if (stationNeighbor != null && !visited.Contains(stationNeighbor))
         {
-            Route newRoute = curRoute.SemiShallowClone().Append(railwayNeigbor).Append(stationNeighbor);
+            MCMC.Route newRoute = curRoute.SemiShallowClone().Append(railwayNeigbor).Append(stationNeighbor);
             queue.Enqueue(newRoute);
             visited.Add(stationNeighbor);
         }
     }
 
-    private static void UpdateProcess(Route curRoute, Transition transitionNeigbor, Station? stationNeighbor, Queue<Route> queue, HashSet<Station> visited, TimeOnly curTime)
+    private static void UpdateProcess(MCMC.Route curRoute, MCMC.Transition transitionNeigbor, MCMC.Station? stationNeighbor, Queue<MCMC.Route> queue, HashSet<MCMC.Station> visited, TimeOnly curTime)
     {
         if (stationNeighbor != null && stationNeighbor.IsAccessible() && stationNeighbor.IsOpenAt(curTime) && (stationNeighbor?.Branch?.IsAccessible() ?? false) && !visited.Contains(stationNeighbor))
         {
-            Route newRoute = curRoute.SemiShallowClone().Append(transitionNeigbor).Append(stationNeighbor);
+            MCMC.Route newRoute = curRoute.SemiShallowClone().Append(transitionNeigbor).Append(stationNeighbor);
             queue.Enqueue(newRoute);
             visited.Add(stationNeighbor);
         }

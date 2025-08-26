@@ -2,7 +2,7 @@ using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Super;
-using MetroGid.Core.Models.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utility.Validators.Interfaces;
 
 namespace MetroGid.Core.Utility.Validators.Handlers;
@@ -15,9 +15,9 @@ public class ThrowableDomainReferentialityValidator(
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
-    public void Visit(Client client) {}
+    public void Visit(MCMC.Client client) {}
 
-    public void Visit(Chart chart)
+    public void Visit(MCMC.Chart chart)
     {
         Handler.Snap(
             () =>
@@ -66,7 +66,7 @@ public class ThrowableDomainReferentialityValidator(
 
                 if (chart.Branches.Count > 0)
                 {
-                    foreach (Branch branch in chart.Branches)
+                    foreach (MCMC.Branch branch in chart.Branches)
                     {
                         if (branch.Chart == null)
                         {
@@ -96,11 +96,11 @@ public class ThrowableDomainReferentialityValidator(
             }, Logger
         );
 
-        foreach (Branch branch in chart.Branches)
+        foreach (MCMC.Branch branch in chart.Branches)
             branch.Validate(this);
     }
 
-    public void Visit(Branch branch)
+    public void Visit(MCMC.Branch branch)
     {
         Handler.Snap(
             () =>
@@ -149,7 +149,7 @@ public class ThrowableDomainReferentialityValidator(
 
                 if (branch.Stations.Count > 0)
                 {
-                    foreach (Station station in branch.Stations)
+                    foreach (MCMC.Station station in branch.Stations)
                     {
                         if (station.Branch == null)
                         {
@@ -179,24 +179,24 @@ public class ThrowableDomainReferentialityValidator(
             }, Logger
         );
 
-        foreach (Station station in branch.Stations)
+        foreach (MCMC.Station station in branch.Stations)
             station.Validate(this);
     }
 
-    public void Visit(Station station)
+    public void Visit(MCMC.Station station)
     {
         Handler.Snap(
             () =>
             {
                 bool thrown = false;
 
-                Station? prevStation = station.Prev?.Prev ?? null;
-                Station? nextStation = station.Next?.Next ?? null;
+                MCMC.Station? prevStation = station.Prev?.Prev ?? null;
+                MCMC.Station? nextStation = station.Next?.Next ?? null;
 
-                Branch? prevBranchHead = prevStation?.Branch ?? null;
-                Branch? nextBranchHead = nextStation?.Branch ?? null;
+                MCMC.Branch? prevBranchHead = prevStation?.Branch ?? null;
+                MCMC.Branch? nextBranchHead = nextStation?.Branch ?? null;
 
-                Branch? curBranchHead = station.Branch;
+                MCMC.Branch? curBranchHead = station.Branch;
 
                 if (thrown = curBranchHead == null)
                     throw new DomainValidationException(
@@ -246,11 +246,11 @@ public class ThrowableDomainReferentialityValidator(
         station.Prev?.Validate(this);
         station.Next?.Validate(this);
 
-        foreach (Transition transition in station.Transitions)
+        foreach (MCMC.Transition transition in station.Transitions)
             transition.Validate(this);
     }
 
-    public void Visit(Railway railway)
+    public void Visit(MCMC.Railway railway)
     {
         Handler.Snap(
             () =>
@@ -276,7 +276,7 @@ public class ThrowableDomainReferentialityValidator(
         );
     }
 
-    public void Visit(Transition transition)
+    public void Visit(MCMC.Transition transition)
     {
         Handler.Snap(
             () =>
@@ -302,7 +302,7 @@ public class ThrowableDomainReferentialityValidator(
         );
     }
 
-    public void Visit(Route route)
+    public void Visit(MCMC.Route route)
     {
         Handler.Snap(
             () =>
@@ -322,7 +322,7 @@ public class ThrowableDomainReferentialityValidator(
 
         foreach (var item in route.Path)
         {
-            if (item is RouteStationItem { Station: var station })
+            if (item is MCMC.RouteStationItem { Station: var station })
             {
                 Handler.Snap(
                     () =>
@@ -340,9 +340,9 @@ public class ThrowableDomainReferentialityValidator(
                     }, Logger
                 );
             }
-            else if (item is RouteConnectionItem { Connection: var connection })
+            else if (item is MCMC.RouteConnectionItem { Connection: var connection })
             {
-                if (connection is RailwayConnection { Railway: var railway })
+                if (connection is MCMC.RailwayConnection { Railway: var railway })
                 {
                     Handler.Snap(
                         () =>
@@ -376,7 +376,7 @@ public class ThrowableDomainReferentialityValidator(
                         }, Logger
                     );
                 }
-                else if (connection is TransitionConnection { Transition: var transition })
+                else if (connection is MCMC.TransitionConnection { Transition: var transition })
                 {
                     Handler.Snap(
                         () =>
