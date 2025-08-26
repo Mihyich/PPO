@@ -23,15 +23,14 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
     public async Task<int> GetIdAsync(MCMC.Client client)
     {
         MDEMT.Client entity = DomainModelConverter.Convert(client);
-        return await GetIdByCredentialsAsync(entity.ClientLogin, entity.ClientPassword, entity.Mail);
+        return await GetIdByCredentialsAsync(entity.ClientLogin, entity.ClientPassword);
     }
 
-    public async Task<int> GetIdByCredentialsAsync(string login, string password, string mail) =>
+    public async Task<int> GetIdByCredentialsAsync(string login, string password) =>
         await _context.Clients
             .AsNoTracking()
             .Where(c => c.ClientLogin == login &&
-                    c.ClientPassword == password &&
-                    c.Mail == mail)
+                    c.ClientPassword == password)
             .Select(c => c.Id)
             .FirstOrDefaultAsync();
 
@@ -41,13 +40,12 @@ public class EFClientRepository(MetroDbContext context) : IClientRepository
         return entity != null ? ModelDomainConverter.Convert(entity) : null;
     }
 
-    public async Task<MCMC.Client?> GetByCredentialsAsync(string login, string password, string mail)
+    public async Task<MCMC.Client?> GetByCredentialsAsync(string login, string password)
     {
         MDEMT.Client? entity = await _context.Clients
             .AsNoTracking()
             .FirstOrDefaultAsync(c => c.ClientLogin == login &&
-                c.ClientPassword == password &&
-                c.Mail == mail);
+                c.ClientPassword == password);
 
         return entity != null ? ModelDomainConverter.Convert(entity) : null;
     }

@@ -8,10 +8,10 @@ public interface IClientRepository
     Task<int> AddAsync(Client client);
 
     Task<int> GetIdAsync(Client client);
-    Task<int> GetIdByCredentialsAsync(string login, string password, string mail);
+    Task<int> GetIdByCredentialsAsync(string login, string password);
 
     Task<Client?> GetByIdAsync(int id);
-    Task<Client?> GetByCredentialsAsync(string login, string password, string mail);
+    Task<Client?> GetByCredentialsAsync(string login, string password);
 
     Task<RoleType> GetRoleByIdAsync(int id);
 
