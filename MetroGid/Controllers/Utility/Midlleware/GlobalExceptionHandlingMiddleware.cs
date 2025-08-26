@@ -1,9 +1,7 @@
 using System.Text.Json;
 using MetroGid.Core.Exceptions.Concrete;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 
-namespace MetroGid.Controllers.Middleware;
+namespace MetroGid.Controllers.Utility.Middleware;
 
 public class GlobalExceptionHandlingMiddleware
 {
