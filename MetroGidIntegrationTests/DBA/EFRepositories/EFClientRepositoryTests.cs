@@ -92,7 +92,7 @@ public class EFClientRepositoryTests : IClassFixture<EFDataBasePostgresFixture>,
     {
         MCMC.Client client = new("Mohn", "Aa1234", "Mohn.Tomson@mail.ru", MCMT.RoleType.SIGNED);
         int savedId = await _repository.AddAsync(client);
-        int testId = await _repository.GetIdByCredentialsAsync(client.Login, client.Password, client.Mail);
+        int testId = await _repository.GetIdByCredentialsAsync(client.Login, client.Password);
         Assert.Equal(savedId, testId);
     }
 
@@ -104,7 +104,7 @@ public class EFClientRepositoryTests : IClassFixture<EFDataBasePostgresFixture>,
 
         int savedId = await _repository.AddAsync(client);
         int changes = await _repository.UpdateAsync(savedId, updClient);
-        int testId = await _repository.GetIdByCredentialsAsync(updClient.Login, updClient.Password, updClient.Mail);
+        int testId = await _repository.GetIdByCredentialsAsync(updClient.Login, updClient.Password);
         MCMC.Client? testClient = await _repository.GetByIdAsync(savedId);
 
         Assert.NotNull(testClient);

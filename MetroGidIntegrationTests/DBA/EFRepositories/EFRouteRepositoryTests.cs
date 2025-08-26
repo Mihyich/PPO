@@ -161,13 +161,13 @@ public class EFRouteRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, 
     }
 
     [Theory]
-    [InlineData("TestUser1", "Aa1234", "Test.User.1@test.ru")]
-    [InlineData("TestUser2", "Aa1234", "Test.User.2@test.ru")]
-    [InlineData("TestUser3", "Aa1234", "Test.User.3@test.ru")]
-    [InlineData("TestUser4", "Aa1234", "Test.User.4@test.ru")]
-    public async Task InitializeAsyncTest(string login, string password, string mail)
+    [InlineData("TestUser1", "Aa1234")]
+    [InlineData("TestUser2", "Aa1234")]
+    [InlineData("TestUser3", "Aa1234")]
+    [InlineData("TestUser4", "Aa1234")]
+    public async Task InitializeAsyncTest(string login, string password)
     {
-        Assert.NotNull(await _clientRepository.GetByCredentialsAsync(login, password, mail));
+        Assert.NotNull(await _clientRepository.GetByCredentialsAsync(login, password));
     }
 
     [Fact]
