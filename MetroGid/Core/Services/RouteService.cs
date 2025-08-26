@@ -37,7 +37,7 @@ public class RouteService(
         await Handler.SnapAsync(
             async () =>
             {
-                int clientId = await ClientRepo.GetIdByCredentialsAsync(login, password, mail);
+                int clientId = await ClientRepo.GetIdByCredentialsAsync(login, password);
 
                 if (clientId == 0)
                     throw new DataBaseException(
