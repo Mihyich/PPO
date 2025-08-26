@@ -34,11 +34,11 @@ public class AuthController : ControllerBase
         return Ok(authResponse);
     }
 
-    [HttpPost("signin")]
+    [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<IActionResult> SignIn([FromBody] LoginRequestDTO dto)
+    public async Task<IActionResult> LogIn([FromBody] LoginRequestDTO dto)
     {
-        ClientDTO? client = await _clientService.SignInAsync(dto.Login, dto.Password);
+        ClientDTO? client = await _clientService.LogInAsync(dto.Login, dto.Password);
 
         if (client == null)
             return StatusCode(401, new
@@ -57,9 +57,9 @@ public class AuthController : ControllerBase
         return Ok(authResponse);
     }
 
-    [HttpPost("signout")]
+    [HttpPost("logout")]
     [Authorize]
-    public IActionResult SignOut()
+    public IActionResult LogOut()
     {
         return Ok(new
         {

@@ -103,7 +103,7 @@ public class ClientServiceTests
         ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
 
         mockClientRepo.Setup(x => x.GetByCredentialsAsync(login, password)).ReturnsAsync((Client?)null);
-        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.SignInAsync(login, password); });
+        var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.LogInAsync(login, password); });
 
         mockClientRepo.Verify(x => x.GetByCredentialsAsync(login, password), Times.Once);
         Assert.Equal(exMessege, ex.Message);

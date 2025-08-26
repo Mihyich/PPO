@@ -87,7 +87,7 @@ public class ClientService(
     public async Task<int> UnRegAsync(int clientId) =>
         await ClientRepo.DeleteAsync(clientId);
 
-    public async Task<MCUD.ClientDTO?> SignInAsync(string login, string password)
+    public async Task<MCUD.ClientDTO?> LogInAsync(string login, string password)
     {
         MCMC.Client? client = await Handler.SnapAsync(
             async () =>
@@ -108,7 +108,7 @@ public class ClientService(
         return client != null ? DomainDtoConverter.Convert(client) : null;
     }
 
-    public async Task<int> SignOutAsync(string login, string password) =>
+    public async Task<int> LogOutAsync(string login, string password) =>
         await ClientRepo.GetIdByCredentialsAsync(login, password);
 
     public async Task<MCUD.RoleTypeDTO> GetRoleAsync(string login, string password)

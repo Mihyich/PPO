@@ -11,9 +11,9 @@ public interface IClientService
     // Удаление пользователя из БД
     Task<int> UnRegAsync(int clientId);
     // Вход
-    Task<ClientDTO?> SignInAsync(string login, string password);
+    Task<ClientDTO?> LogInAsync(string login, string password);
     // Выход
-    Task<int> SignOutAsync(string login, string password);
+    Task<int> LogOutAsync(string login, string password);
     // Получить роль пользователя
     Task<RoleTypeDTO> GetRoleAsync(string login, string password);
     // Верификация пароля
