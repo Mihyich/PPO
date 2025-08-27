@@ -1,3 +1,4 @@
+using System.Security;
 using System.Text.Json;
 using MetroGid.Core.Exceptions.Concrete;
 
@@ -31,6 +32,16 @@ public class GlobalExceptionHandlingMiddleware
             
             switch (ex)
             {
+                case SecurityException secEx:
+                {
+                    statusCode = 403;
+                    body = new
+                    {
+                        Error = "InvalidRole",
+                        Message = "Указанная роль недопустима или запрещена",
+                    };
+                    break;
+                }
                 case BuilderProccessException bpEx:
                 {
                     statusCode = 500;
