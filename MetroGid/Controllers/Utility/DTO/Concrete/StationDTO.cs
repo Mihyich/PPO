@@ -1,4 +1,4 @@
-namespace MetroGid.Controllers.Utility.DTO;
+namespace MetroGid.Controllers.Utility.DTO.Concrete;
 
 public record StationDTO(
     string Title,

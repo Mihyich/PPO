@@ -1,4 +1,4 @@
-using MetroGid.Controllers.Utility.DTO;
+using MetroGid.Controllers.Utility.DTO.Concrete;
 
 namespace MetroGid.Controllers.Utility.Interfaces;
 

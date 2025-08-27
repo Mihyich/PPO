@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using MetroGid.Controllers.Converters;
-using MetroGid.Controllers.Utility.DTO;
+using MetroGid.Controllers.Utility.DTO.Concrete;
 using MetroGid.Controllers.Utility.DTO.Auth;
 using MetroGid.Controllers.Utility.Interfaces;
 using Microsoft.AspNetCore.Authorization;

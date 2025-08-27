@@ -18,7 +18,7 @@ using MetroGid.Core.Exceptions.Handlers;
 using MetroGid.Core.Exceptions.Loggers;
 using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.Core.Utility.Directors;
-using MetroGid.Controllers.Utility.DTO;
+using MetroGid.Controllers.Utility.DTO.Concrete;
 using MetroGid.Core.Utility.Strategies;
 using MetroGid.Core.Converters;
 using Newtonsoft.Json.Linq;

@@ -1,4 +1,4 @@
-using MCUD = MetroGid.Controllers.Utility.DTO;
+using MCUD = MetroGid.Controllers.Utility.DTO.Concrete;
 using MetroGid.Controllers.Utility.Interfaces;
 using MetroGid.Core.Converters;
 using MetroGid.Core.Exceptions.Interfaces;

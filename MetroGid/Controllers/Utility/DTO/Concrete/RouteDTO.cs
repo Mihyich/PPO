@@ -1,4 +1,4 @@
-namespace MetroGid.Controllers.Utility.DTO;
+namespace MetroGid.Controllers.Utility.DTO.Concrete;
 
 public abstract record StationConnectionDTO;
 public record RailwayConnectionDTO(RailwayDTO Railway) : StationConnectionDTO;

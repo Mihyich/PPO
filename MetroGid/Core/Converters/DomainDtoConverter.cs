@@ -1,4 +1,4 @@
-using MCUD = MetroGid.Controllers.Utility.DTO;
+using MCUD = MetroGid.Controllers.Utility.DTO.Concrete;
 using MCMC = MetroGid.Core.Models.Concrete;
 using MCMT = MetroGid.Core.Models.Types;
 

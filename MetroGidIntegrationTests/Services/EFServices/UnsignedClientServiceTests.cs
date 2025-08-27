@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utility;
-using MetroGid.Controllers.Utility.DTO;
+using MetroGid.Controllers.Utility.DTO.Concrete;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Utility.Validators.Interfaces;
 using MetroGid.Core.Utility.Builders;
