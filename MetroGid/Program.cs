@@ -1,81 +1,136 @@
-﻿using MetroGid.Core.Exceptions.Handlers;
+﻿using System.Text;
+using MetroGid.Controllers.Utility.Configuration;
+using MetroGid.Controllers.Utility.Interfaces;
+using MetroGid.Controllers.Utility.Middleware;
+using MetroGid.Core.Exceptions.Handlers;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Loggers;
 using MetroGid.Core.Exceptions.Super;
-using MetroGid.Core.Models.Concrete;
-using MetroGid.Core.Utility;
-using MetroGid.Core.Utility.Builders;
-using MetroGid.Core.Utility.Directors;
-using MetroGid.Core.Utility.Strategies;
-using MetroGid.Core.Utility.Validators.Handlers;
-using MetroGid.Core.Utility.Validators.Interfaces;
-
-using MetroGid.Core.Services;
 using MetroGid.Core.Interfaces;
-using MetroGid.DBA.EF.Repositories;
+using MetroGid.Core.Services;
+using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.DBA.EF.Context;
-using MetroGid.DBA.EF.Converters;
+using MetroGid.DBA.EF.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 class Program
 {
     static void Main(string[] args)
     {
-        SuperExceptionHandler handler = new WarningHandlerException();
-        IExceptionVisitor logger = new ExceptionMessenger();
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-        IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler, logger);
-        IDomainValidatorVisitor domainReferentialityValidator = new ThrowableDomainReferentialityValidator(handler, logger);
+        builder.Services.Configure<AppRolesConfig>(
+            builder.Configuration.GetSection("AppRoles")
+        );
 
-        BuilderChart builder = new(domainAttribsValidator, domainReferentialityValidator);
-        // DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO_BACKUP/cities/Adana/chart.json"));
-        // DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO/temp_cities/Sankt-Peterburg/init.json"));
-        DirectorChartJson director = new(builder, FileReader.ReadAll("/home/mihail/Рабочий стол/BMSTU/PPO_BACKUP/cities/Moscow/chart.json"));
-        Chart chart = director.Construct();
+        builder.Services.Configure<JwtConfig>(
+            builder.Configuration.GetSection("Jwt")
+        );
 
-        // chart.Searcher = new StrategySearchRouteDijkstra();
-        // Station? stationA = chart.GetStation("Арбатско-Покровская линия", "Щёлковская");
-        // Station? stationB = chart.GetStation("Солнцевская линия", "Аэропорт Внуково");
-        // Station? stationA = chart.GetStation("Линия 1", "Больница");
-        // Station? stationB = chart.GetStation("Линия 1", "Акынджилар");
-        Station? stationA = chart.GetStation("МЦД-2", "Нахабино");
-        Station? stationB = chart.GetStation("Замоскворецкая линия", "Алма-Атинская");
-        TimeOnly timeStart = new(18, 30);
+        builder.Services.AddDbContext<MetroDbContext>(options =>
+            options.UseNpgsql(
+                builder.Configuration.GetConnectionString("DefaultConnection"),
+                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery).SetPostgresVersion(16, 9)
+            )
+        );
 
-        if (stationA != null && stationB != null)
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+            }
+        );
+
+        builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }
+        ).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+                    )
+                };
+            }
+        );
+
+        builder.Services.AddSingleton<SuperExceptionHandler, PassThroughHandlerException>();
+        builder.Services.AddSingleton<ThrowableDomainAttribsValidator>();
+        builder.Services.AddSingleton<ThrowableDomainReferentialityValidator>();
+        builder.Services.AddSingleton<IExceptionVisitor, ExceptionMessenger>();
+
+        builder.Services.AddScoped<ITokenService, JwtTokenService>();
+        builder.Services.AddScoped<IRoleSwitchingService, RoleSwitchingService>();
+        builder.Services.AddScoped<IClientService, ClientService>();
+        builder.Services.AddScoped<IChartService, ChartService>();
+        builder.Services.AddScoped<IRouteService, RouteService>();
+
+        builder.Services.AddScoped<IRoleSwitchingRepository, EFRoleSwitchingRepository>();
+        builder.Services.AddScoped<IClientRepository, EFClientRepository>();
+        builder.Services.AddScoped<IChartRepository, EFChartRepository>();
+        builder.Services.AddScoped<IRouteRepository, EFRouteRepository>();
+
+        builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Description = "Введите 'Bearer' + пробел + ваш JWT токен",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = "Bearer"
+                    }
+                );
+
+                options.AddSecurityRequirement(
+                    new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            Array.Empty<string>()
+                        }
+                    }
+                );
+            }
+        );
+
+        WebApplication app = builder.Build();
+
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
         {
-            Route? route = chart.Search(stationA, stationB, timeStart, new StrategySearchRouteBFS());
-            route?.Validate(domainAttribsValidator);
-            route?.Validate(domainReferentialityValidator);
-        }
-        else
-        {
-            Console.WriteLine($"Не все целевые станции были найдены");
-        }
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Metro API v1");
+            c.RoutePrefix = "swagger";
+        });
 
-
-
-        // MetroContext metroContext = new();
-        // IClientRepository clientRepository = new EFClientRepository(metroContext);
-        // ClientService clientService = new(clientRepository, handler, logger);
-
-        // int clientId1 = clientService.Reg("mihail", "qwerASDF1234", "michail.zevahin@gmail.com").GetAwaiter().GetResult();
-        // Console.WriteLine($"Айди нового пользователя {clientId1}");
-
-        // int clientId2 = clientService.Reg("GrizlyBear", "GrizlyBearGoyda2004", "berloga.taiga@gmail.com").GetAwaiter().GetResult();
-        // Console.WriteLine($"Айди нового пользователя {clientId2}");
-
-        // int clientId1 = 1;
-        // int clientId2 = 2;
-        // int stationId = 1;
-        // int transitionId = 1;
-
-        // int dutyId = clientRepository.GetStationDuty(stationId).GetAwaiter().GetResult();
-        // Console.WriteLine($"Айди дежурного у станции {stationId}: {dutyId}");
-
-        // int changes = clientRepository.MakeDuty(clientId1, stationId, transitionId).GetAwaiter().GetResult();
-        // Console.WriteLine($"Проделанные изменения: {changes}");
-
-        // dutyId = clientRepository.GetStationDuty(stationId).GetAwaiter().GetResult();
-        // Console.WriteLine($"Айди дежурного у станции {stationId}: {dutyId}");
+        app.UseHttpsRedirection();
+        app.UseRouting();
+        app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseMiddleware<RoleSwitchingMiddleware>();
+        app.MapControllers();
+        app.Run();
     }
 }
