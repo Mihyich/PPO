@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using MetroGid.Controllers.Utility.DTO;
 using MetroGid.Controllers.Utility.DTO.Auth;
 using MetroGid.Controllers.Utility.Interfaces;
@@ -71,7 +72,7 @@ public class AuthController : ControllerBase
     [Authorize]
     public async Task<IActionResult> Unregister([FromBody] UnregisterRequestDto dto)
     {
-        string? clientIdClaim = User.FindFirst("ClientId")?.Value;
+        string? clientIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (!int.TryParse(clientIdClaim, out int userId))
             return StatusCode(401, new
             {
