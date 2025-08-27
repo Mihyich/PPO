@@ -8,6 +8,7 @@ using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Classification;
+using MCMT = MetroGid.Core.Models.Types;
 
 namespace MetroGid.Core.Services;
 
@@ -59,7 +60,7 @@ public class ClientService(
 
     public async Task<int> RegAsync(string login, string password, string mail)
     {
-        MCMC.Client client = new(login, password, mail);
+        MCMC.Client client = new(login, password, mail, MCMT.RoleType.SIGNED);
         client.Validate(DomainAttribsValidator);
 
         await Handler.SnapAsync(
