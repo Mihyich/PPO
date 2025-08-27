@@ -12,7 +12,6 @@ using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.DBA.EF.Context;
 using MetroGid.DBA.EF.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
