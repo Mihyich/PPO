@@ -3,7 +3,6 @@ using MetroGid.Controllers.Converters;
 using MetroGid.Controllers.Utility.DTO;
 using MetroGid.Controllers.Utility.DTO.Auth;
 using MetroGid.Controllers.Utility.Interfaces;
-using MetroGid.Core.Exceptions.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
