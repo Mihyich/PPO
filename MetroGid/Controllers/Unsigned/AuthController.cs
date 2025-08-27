@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using MetroGid.Controllers.Converters;
 using MetroGid.Controllers.Utility.DTO;
 using MetroGid.Controllers.Utility.DTO.Auth;
 using MetroGid.Controllers.Utility.Interfaces;
@@ -26,12 +27,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Register([FromBody] RegisterRequestDTO dto)
     {
         int clientId = await _clientService.RegAsync(dto.Login, dto.Password, dto.Mail);
-
-        RoleTypeDTO role = await _clientService.GetRoleAsync(dto.Login, dto.Password);
-        TokenClientDTO tokenClient = new(clientId, dto.Login, role.ToString());
-        string token = _tokenService.GenerateToken(tokenClient);
-
-        AuthResponseDTO authResponse = new(clientId, token, tokenClient.Login, tokenClient.Role);
+        AuthResponseDTO authResponse = new(clientId, "", dto.Login, "");
         return Ok(authResponse);
     }
 
@@ -51,7 +47,7 @@ public class AuthController : ControllerBase
         int clientId = await _clientService.GetClientIdAsync(dto.Login, dto.Password);
         RoleTypeDTO role = await _clientService.GetRoleAsync(dto.Login, dto.Password);
 
-        TokenClientDTO tokenClient = new(clientId, dto.Login, role.ToString());
+        TokenClientDTO tokenClient = new(clientId, dto.Login, DTORoleToDBRoleConverter.Convert(role));
         string token = _tokenService.GenerateToken(tokenClient);
 
         AuthResponseDTO authResponse = new(clientId, token, tokenClient.Login, tokenClient.Role);
