@@ -10,16 +10,13 @@ namespace MetroGid.Controllers.Unsigned;
 
 [ApiController]
 [Route("api/auth")]
-public class AuthController : ControllerBase
+public class AuthController(
+    IClientService clientService,
+    ITokenService tokenService
+) : ControllerBase
 {
-    private readonly IClientService _clientService;
-    private readonly ITokenService _tokenService;
-
-    public AuthController(IClientService clientService, ITokenService tokenService)
-    {
-        _clientService = clientService;
-        _tokenService = tokenService;
-    }
+    private readonly IClientService _clientService = clientService;
+    private readonly ITokenService _tokenService = tokenService;
 
     [HttpPost("register")]
     [AllowAnonymous]
