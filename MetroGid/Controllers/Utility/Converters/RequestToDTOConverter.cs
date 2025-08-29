@@ -35,7 +35,7 @@ public static class RequestToDTOConverter
         new(
             ptr.NewOccupancy,
             ConvertAccessType(ptr.NewAccess),
-            TimeConverter.FromString(ptr.NewDuration),
+            TimeSpanConverter.FromString(ptr.NewDuration),
             TimeConverter.FromString(ptr.NewOpenTime),
             TimeConverter.FromString(ptr.NewCloseTime),
             ptr.FromStationTitle, ptr.FromBranchTitle,
@@ -47,6 +47,6 @@ public static class RequestToDTOConverter
             prr.BranchTitle,
             prr.DutyStationTitle,
             prr.ToStationTitle,
-            TimeConverter.FromString(prr.NewDuration)
+            TimeSpanConverter.FromString(prr.NewDuration)
         );
 }

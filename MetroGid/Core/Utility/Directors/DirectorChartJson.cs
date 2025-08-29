@@ -36,7 +36,7 @@ public class DirectorChartJson(BuilderChartBase builder, string jsonContent) : D
             foreach (var railway in branch.Railways)
             {
                 Builder.BuildRailway(
-                    branch.Title, railway.From, railway.To, TimeConverter.FromString(railway.Duration)
+                    branch.Title, railway.From, railway.To, TimeSpanConverter.FromString(railway.Duration)
                 );
             }
         }
@@ -47,7 +47,7 @@ public class DirectorChartJson(BuilderChartBase builder, string jsonContent) : D
                 transition.BranchSrc, transition.StationSrc,
                 transition.BranchDst, transition.StationDst,
                 transition.Occupancy, AccessTypeConverter.FromString(transition.AccessType),
-                TimeConverter.FromString(transition.Duration),
+                TimeSpanConverter.FromString(transition.Duration),
                 TimeConverter.FromString(transition.OpenTime),
                 TimeConverter.FromString(transition.CloseTime)
             );

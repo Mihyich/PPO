@@ -3,7 +3,7 @@ namespace MetroGid.Controllers.Utility.DTO.Concrete;
 public record TransitionDTO(
     int Occupancy,
     AccessTypeDTO Type,
-    TimeOnly Duration,
+    TimeSpan Duration,
     TimeOnly OpenTime,
     TimeOnly CloseTime,
     string FromStationTitle,

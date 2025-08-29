@@ -12,10 +12,10 @@ namespace MetroGidUnitTests.DomainAttribsTests;
 public class RailwayAttribsTests
 {
     [Theory]
-    [InlineData("00:30:01", "Среднее время переезда слишком велико: 00:30", ExceptionType.Warning, ExceptionReason.NotLogicValue)]
+    [InlineData("00:30:01", "Среднее время переезда слишком велико: 00:30:01", ExceptionType.Warning, ExceptionReason.NotLogicValue)]
     public void AttribsValidatorTest(string durationStr, string exMessege, ExceptionType exType, ExceptionReason exReason)
     {
-        TimeOnly duration = TimeConverter.FromString(durationStr);
+        TimeSpan duration = TimeSpanConverter.FromString(durationStr);
         Railway railway = new(duration);
 
         SuperExceptionHandler handler = new PassThroughHandlerException();

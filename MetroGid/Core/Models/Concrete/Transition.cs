@@ -6,12 +6,12 @@ using MetroGid.Core.Utility.Validators.Interfaces;
 namespace MetroGid.Core.Models.Concrete;
 
 public class Transition(
-    int occupancy, AccessType type, TimeOnly duration,
+    int occupancy, AccessType type, TimeSpan duration,
     TimeOnly opentime, TimeOnly closetime) : TemporaryAvailability(opentime, closetime), IAccessAvailability, IDomainValidatorAccepter
 {
     public int Occupancy { get; } = occupancy;
     public AccessType Type { get; } = type;
-    public TimeOnly Duration { get; } = duration;
+    public TimeSpan Duration { get; } = duration;
     public Station? From { get; set; }
     public Station? To { get; set; }
 

@@ -16,11 +16,11 @@ public class TransitionAttribsTests
     [InlineData(-1, 0, "00:03:00", "05:30", "01:30", "Уровень загруженности перехода -1 не принадлежит отрезку: [0, 10]", ExceptionType.Warning, ExceptionReason.ValueOutOfRange)]
     [InlineData(11, 0, "00:03:00", "05:30", "01:30", "Уровень загруженности перехода 11 не принадлежит отрезку: [0, 10]", ExceptionType.Warning, ExceptionReason.ValueOutOfRange)]
     [InlineData(5, 5, "00:03:00", "05:30", "01:30", "Тип доступа перехода 5 не принадлежит перечислению AccessType", ExceptionType.Warning, ExceptionReason.ValueOutOfRange)]
-    [InlineData(5, 0, "01:01:00", "01:30", "01:30", "Среднее время перехода слишком велико: 01:01", ExceptionType.Warning, ExceptionReason.NotLogicValue)]
+    [InlineData(5, 0, "01:01:00", "01:30", "01:30", "Среднее время перехода слишком велико: 01:01:00", ExceptionType.Warning, ExceptionReason.NotLogicValue)]
     [InlineData(5, 0, "00:03:00", "01:30", "01:30", "Время открытия и закрытия перехода совпадают: 01:30", ExceptionType.Warning, ExceptionReason.NotLogicValue)]
     public void AttribsValidatorTest(int occupancy, int type, string durationStr, string openTimeStr, string closeTimeStr, string exMessege, ExceptionType exType, ExceptionReason exReason)
     {
-        TimeOnly duration = TimeConverter.FromString(durationStr);
+        TimeSpan duration = TimeSpanConverter.FromString(durationStr);
         TimeOnly openTime = TimeConverter.FromString(openTimeStr);
         TimeOnly closeTime = TimeConverter.FromString(closeTimeStr);
         Transition transition = new(occupancy, (AccessType)type, duration, openTime, closeTime);

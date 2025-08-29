@@ -71,7 +71,7 @@ public static class DomainRouteJsonConverter
 
                 case RailwayRouteItemDTO railwayRouteItemDTO:
                 {
-                    MCMC.Railway railway = new(TimeOnly.MinValue);
+                    MCMC.Railway railway = new(TimeSpan.MinValue);
                     MCMC.StationConnection stationConnection = new MCMC.RailwayConnection(railway);
                     MCMC.RouteItem routeItem = new MCMC.RouteConnectionItem(stationConnection);
                     path.Add(routeItem);
@@ -80,7 +80,7 @@ public static class DomainRouteJsonConverter
 
                 case TransitionRouteItemDTO transitionRouteItemDTO:
                 {
-                    MCMC.Transition transition = new(0, 0, TimeOnly.MinValue, TimeOnly.MinValue,TimeOnly.MinValue);
+                    MCMC.Transition transition = new(0, 0, TimeSpan.MinValue, TimeOnly.MinValue,TimeOnly.MinValue);
                     MCMC.StationConnection stationConnection = new MCMC.TransitionConnection(transition);
                     MCMC.RouteItem routeItem = new MCMC.RouteConnectionItem(stationConnection);
                     path.Add(routeItem);

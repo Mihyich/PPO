@@ -49,10 +49,10 @@ public class TimeFast : TimeSuper
 
 
     public override TimeSpan Measure(Station s, Railway r) =>
-        WaitOnStation(s) + r.Duration.ToTimeSpan() / 2;
+        WaitOnStation(s) + r.Duration / 2;
 
     public override TimeSpan Measure(Railway r, Station s) => 
-        r.Duration.ToTimeSpan() / 2;
+        r.Duration / 2;
 
     public override TimeSpan Measure(Station s1, Railway r, Station s2) =>
         Measure(s1, r) + Measure(r, s2);
@@ -77,5 +77,5 @@ public class TimeFast : TimeSuper
         TimeSpan.FromSeconds(10 * Math.Max(s.Occupancy, 1));
 
     private static TimeSpan MoveOnTransition(Transition t) =>
-        TimeSpan.FromSeconds(t.Duration.ToTimeSpan().TotalSeconds * Math.Max(t.Occupancy / 2, 1));
+        TimeSpan.FromSeconds(t.Duration.TotalSeconds * Math.Max(t.Occupancy / 2.0, 1.0));
 }

@@ -46,7 +46,7 @@ public class BuilderChart(
 
     public override void BuildRailway(
         string branch_title, string station_title_src, string station_title_dst,
-        TimeOnly duration
+        TimeSpan duration
     )
     {
         Branch? branch;
@@ -121,7 +121,7 @@ public class BuilderChart(
 
     public override void BuildTransition(
         string branch_title_src, string station_title_src, string branch_title_dst, string station_title_dst,
-        int occupancy, AccessType type, TimeOnly duration, TimeOnly opentime, TimeOnly closetime
+        int occupancy, AccessType type, TimeSpan duration, TimeOnly opentime, TimeOnly closetime
     )
     {
         Branch? branch_src;

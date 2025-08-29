@@ -349,7 +349,7 @@ public class ThrowableDomainAttribsValidator(
         Handler.Snap(
             () =>
             {
-                bool thrown = railway.Duration > TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(30));
+                bool thrown = railway.Duration > TimeSpan.FromMinutes(30);
 
                 if (thrown)
                 {
@@ -406,7 +406,7 @@ public class ThrowableDomainAttribsValidator(
         Handler.Snap(
             () =>
             {
-                bool thrown = transition.Duration > TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(60));
+                bool thrown = transition.Duration > TimeSpan.FromMinutes(60);
 
                 if (thrown)
                 {

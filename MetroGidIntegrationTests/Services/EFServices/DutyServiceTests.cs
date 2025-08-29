@@ -228,7 +228,7 @@ public class DutyServiceTests : IClassFixture<EFServiceDutyFixture>, IAsyncLifet
         string chartCity, string chartTitle, string fromBranchTitle, string fromStationTitle, string toBranchTitle, string toStationTitle,
         int newOccupancy, AccessTypeDTO newType, string newDuration, string newOpenTime, string newCloseTime)
     {
-        TimeOnly _newDuration = TimeConverter.FromString(newDuration);
+        TimeSpan _newDuration = TimeSpanConverter.FromString(newDuration);
         TimeOnly _newOpenTime = TimeConverter.FromString(newOpenTime);
         TimeOnly _newCloseTime = TimeConverter.FromString(newCloseTime);
         TransitionDTO newTransitionDTO = new(newOccupancy, newType, _newDuration, _newOpenTime, _newCloseTime, fromStationTitle, fromBranchTitle, toStationTitle, toBranchTitle);
@@ -249,7 +249,7 @@ public class DutyServiceTests : IClassFixture<EFServiceDutyFixture>, IAsyncLifet
     [InlineData("Москва", "Московский метрополитен (Тестирование)", "Арбатско-Покровская линия", "Партизанская", "Семёновская", "05:30")]
     public async Task updateRailwayDutyTest(string chartCity, string chartTitle, string branchTitle, string fromStationTitle, string toStationTitle, string newDuration)
     {
-        TimeOnly _newDuration = TimeConverter.FromString(newDuration);
+        TimeSpan _newDuration = TimeSpanConverter.FromString(newDuration);
         RailwayDTO newRailwayDTO = new(branchTitle, fromStationTitle, toStationTitle, _newDuration);
         int changes = await _chartService.UpdateRailwayAsync(RoleTypeDTO.DUTY, chartCity, chartTitle, branchTitle, fromStationTitle, toStationTitle, newRailwayDTO);
         RailwayDTO? updRailwayDTO = await _chartService.GetRailwayAsync(chartCity, chartTitle, branchTitle, fromStationTitle, toStationTitle);
