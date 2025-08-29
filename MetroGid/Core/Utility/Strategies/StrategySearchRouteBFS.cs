@@ -1,6 +1,7 @@
 using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utility.TimeMeter.Concrete;
 using MetroGid.Core.Utility.TimeMeter.Super;
+using MetroGid.Core.Utility.TimeExtensions;
 
 namespace MetroGid.Core.Utility.Strategies;
 
@@ -59,13 +60,21 @@ public class StrategySearchRouteBFS(TimeSuper? timerSuper = null) : StrategySear
 
     private void SearchTransitionNeighbors(MCMC.Station curStation, MCMC.Route curRoute, Queue<MCMC.Route> queue, HashSet<MCMC.Station> visited, TimeOnly timeStart)
     {
-        TimeOnly curTime = TimeOnly.FromTimeSpan(TimeSpan.FromTicks(curRoute.Duration.Ticks) + TimeSpan.FromTicks(timeStart.Ticks));
+        TimeOnly curTime = TimeOnlyExtensions.Add(timeStart, curRoute.Duration);
+        // TimeOnly curTime = TimeOnly.FromTimeSpan(curRoute.Duration + timeStart.ToTimeSpan());
+
         MCMC.Station? stationNeighbor;
 
         foreach (var transitionNeighbor in curStation.Transitions)
             if (transitionNeighbor.IsAccessible() && transitionNeighbor.IsOpenAt(curTime) && (stationNeighbor = transitionNeighbor.ToFrom(curStation)) != null)
-                UpdateProcess(curRoute, transitionNeighbor, stationNeighbor, queue, visited,
-                    TimeOnly.FromTimeSpan(TimeSpan.FromTicks(curTime.Ticks) + ts.Measure(curStation, transitionNeighbor, stationNeighbor)));
+                UpdateProcess(
+                    curRoute,
+                    transitionNeighbor,
+                    stationNeighbor,
+                    queue,
+                    visited,
+                    TimeOnlyExtensions.Add(curTime, ts.Measure(curStation, transitionNeighbor, stationNeighbor))
+                );
     }
 
     private static void UpdateProcess(MCMC.Route curRoute, MCMC.Railway railwayNeigbor, MCMC.Station? stationNeighbor, Queue<MCMC.Route> queue, HashSet<MCMC.Station> visited)
