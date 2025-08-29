@@ -144,30 +144,4 @@ public class UnsignedClientServiceTests : IClassFixture<EFServiceUnsignedFixture
         Assert.NotNull(testRoute);
         Assert.True(testRoute?.Equals(serviceRoute) ?? false);
     }
-
-    [Theory]
-    [InlineData("Адана", "Схема метро (Тестирование)", "Линия 1", "Больница", "Линия 1", "Акынджилар", 9, 0)]
-    [InlineData("Москва", "Московский метрополитен (Тестирование)", "Арбатско-Покровская линия", "Измайловская", "Арбатско-Покровская линия", "Бауманская", 8, 30)]
-    [InlineData("Москва", "Московский метрополитен (Тестирование)", "МЦД-2", "Нахабино", "МЦД-3", "Ипподром", 10, 45)]
-    [InlineData("Москва", "Московский метрополитен (Тестирование)", "Калужско-Рижская линия", "Свиблово", "Филёвская линия", "Фили", 13, 15)]
-    [InlineData("Санкт-Петербург", "Схема метро (Тестирование)", "Невско-Василеостровская", "Беговая", "Московско-Петроградская", "Купчино", 6, 7)]
-    public async Task saveRouteUnsignedTest(string city, string chartTitle, string branchSrcTitle, string stationSrcTitle, string branchDstTitle, string stationDstTitle, int startHour, int startMinute)
-    {
-        TimeOnly timeStart = new(startHour, startMinute);
-        RouteDTO serviceRoute = await _routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart) ?? throw new OperationCanceledException();
-        int chartId = await _chartRepository.GetChartIdAsync(city, chartTitle);
-        ClientDTO client = new("John", "Aa1234", "John.Tompson@mail.ru", RoleTypeDTO.UNSIGNED);
-        int savedRouteId = await _routeService.SaveRouteAsync(client, serviceRoute, chartId);
-
-        MCMC.Chart[] charts = [ChartAdana, ChartMoscow, ChartSanktPeterburg];
-        MCMC.Chart testChart = charts.Where(c => c.City == city && c.Title == chartTitle).FirstOrDefault() ?? throw new OperationCanceledException();
-        MCMC.Station src = testChart.GetStation(branchSrcTitle, stationSrcTitle) ?? throw new OperationCanceledException();
-        MCMC.Station dst = testChart.GetStation(branchDstTitle, stationDstTitle) ?? throw new OperationCanceledException();
-        StrategySearchRouteBase searcher = new StrategySearchRouteBFS();
-        RouteDTO testRoute = DomainDtoConverter.Convert(testChart.Search(src, dst, timeStart, searcher) ?? throw new OperationCanceledException());
-
-        Assert.True(chartId > 0);
-        Assert.Equal(0, savedRouteId);
-        Assert.True(testRoute.Equals(serviceRoute));
-    }
 }

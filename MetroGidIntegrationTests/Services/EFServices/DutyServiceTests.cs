@@ -183,7 +183,8 @@ public class DutyServiceTests : IClassFixture<EFServiceDutyFixture>, IAsyncLifet
         RouteDTO serviceRoute = await _routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart) ?? throw new OperationCanceledException();
         int chartId = await _chartRepository.GetChartIdAsync(city, chartTitle);
         ClientDTO client = new("Jonh", "Aa1234", "John.Tompson@mail.ru", RoleTypeDTO.DUTY);
-        int savedRouteId = await _routeService.SaveRouteAsync(client, serviceRoute, chartId);
+        int clientId = await _clientService.GetClientIdAsync(client.Login, client.Password);
+        int savedRouteId = await _routeService.SaveRouteAsync(clientId, chartId, DtoRouteJsonConverter.Convert(serviceRoute));
         string? savedRouteJson = await _routeRepository.GetByIdAsync(savedRouteId);
 
         MCMC.Chart[] charts = [ChartAdana, ChartMoscow, ChartSanktPeterburg];
