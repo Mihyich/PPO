@@ -1,9 +1,17 @@
+using System.Text.Json.Serialization;
+
 namespace MetroGid.Controllers.Utility.DTO.Concrete;
 
+[JsonDerivedType(typeof(RailwayConnectionDTO), "railway")]
+[JsonDerivedType(typeof(TransitionConnectionDTO), "transition")]
+// [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
 public abstract record StationConnectionDTO;
 public record RailwayConnectionDTO(RailwayDTO Railway) : StationConnectionDTO;
 public record TransitionConnectionDTO(TransitionDTO Transition) : StationConnectionDTO;
 
+[JsonDerivedType(typeof(RouteStationItemDTO), "station")]
+[JsonDerivedType(typeof(RouteConnectionItemDTO), "connection")]
+// [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
 public abstract record RouteItemDTO;
 public record RouteStationItemDTO(StationDTO Station) : RouteItemDTO;
 public record RouteConnectionItemDTO(StationConnectionDTO Connection) : RouteItemDTO;
