@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS transition (
 	duty_id         INT,
 	occupancy       occupancy_level,
 	access          access_type,
-	duration        TIME,
+	duration        INTERVAL,
 	open_time       TIME,
 	close_time      TIME
 );
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS way (
 	client_id       INT,
 	chart_id        INT,
 	title           VARCHAR(255),
-	duration        TIME,
+	duration        INTERVAL,
 	init_date       TIMESTAMPTZ
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS railway (
 	id              SERIAL PRIMARY KEY,
 	from_id         INT,
 	to_id           INT,
-	duration        TIME
+	duration        INTERVAL
 );
 
 CREATE TABLE IF NOT EXISTS station_transition (

@@ -74,7 +74,7 @@ BEGIN
             VALUES(
                 get_station_id_by_branch_id_station_title(v_branch_id, (v_railway_item.value)->>'from'),
                 get_station_id_by_branch_id_station_title(v_branch_id, (v_railway_item.value)->>'to'),
-                ((v_railway_item.value)->>'duration')::TIME
+                ((v_railway_item.value)->>'duration')::INTERVAL
             );
 
         END LOOP;
@@ -89,7 +89,7 @@ BEGIN
         VALUES(
             ((v_transition_item.value)->>'occupancy')::SMALLINT,
             ((v_transition_item.value)->>'accesstype')::access_type,
-            ((v_transition_item.value)->>'duration')::TIME,
+            ((v_transition_item.value)->>'duration')::INTERVAL,
             ((v_transition_item.value)->>'opentime')::TIME,
             ((v_transition_item.value)->>'closetime')::TIME
         )

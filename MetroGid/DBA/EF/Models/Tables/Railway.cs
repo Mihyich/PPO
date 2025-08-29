@@ -8,7 +8,7 @@ public partial class Railway
 
     public int ToId { get; set; }
 
-    public TimeOnly Duration { get; set; }
+    public TimeSpan Duration { get; set; }
 
     public virtual Station From { get; set; } = null!;
 

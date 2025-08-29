@@ -166,6 +166,10 @@ public partial class MetroDbContext : DbContext
 
             entity.ToTable("client");
 
+            entity.HasIndex(e => e.ClientLogin, "uk_client_login").IsUnique();
+
+            entity.HasIndex(e => e.Mail, "uk_client_mail").IsUnique();
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ClientLogin)
                 .HasMaxLength(255)

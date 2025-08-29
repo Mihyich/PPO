@@ -29,7 +29,7 @@ BEGIN
         p_client_id,
         p_chart_id,
         v_json_data->>'Title',
-        (v_json_data->>'Duration')::TIME,
+        (v_json_data->>'Duration')::INTERVAL,
         date_trunc('second', NOW())::TIMESTAMPTZ
     )
     RETURNING id INTO v_way_id;

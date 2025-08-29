@@ -10,7 +10,7 @@ public partial class Way
 
     public string Title { get; set; } = null!;
 
-    public TimeOnly? Duration { get; set; }
+    public TimeSpan? Duration { get; set; }
 
     public DateTime InitDate { get; set; }
 

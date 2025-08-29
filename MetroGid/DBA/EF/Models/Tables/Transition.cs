@@ -12,7 +12,7 @@ public partial class Transition
 
     public string? Access { get; set; }
 
-    public TimeOnly Duration { get; set; }
+    public TimeSpan Duration { get; set; }
 
     public TimeOnly OpenTime { get; set; }
 
