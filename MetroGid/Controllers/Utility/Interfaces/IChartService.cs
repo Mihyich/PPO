@@ -4,6 +4,8 @@ namespace MetroGid.Controllers.Utility.Interfaces;
 
 public interface IChartService
 {
+    Task<int> AddChartAsync(string chartJson);
+
     Task<ChartDTO?> GetChartAsync(string cityTitle, string chartTitle);
     Task<List<ValueTuple<string, string>>> GetChartsCitiesTitlesAsync();
 

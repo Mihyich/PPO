@@ -21,6 +21,9 @@ public class ChartService(
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
+    public async Task<int> AddChartAsync(string chartJson) =>
+        await ChartRepo.AddAsync(chartJson);
+
     private async Task<int> GetChartIdAsync(string cityTitle, string chartTitle) =>
         await Handler.SnapAsync(
             async () =>
