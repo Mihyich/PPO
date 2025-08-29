@@ -7,6 +7,7 @@ public interface IChartService
     Task<int> AddChartAsync(string chartJson);
 
     Task<ChartDTO?> GetChartAsync(string cityTitle, string chartTitle);
+    Task<string?> GetChartSchemeAsync(string cityTitle, string chartTitle);
     Task<List<ValueTuple<string, string>>> GetChartsCitiesTitlesAsync();
 
     Task<BranchDTO?> GetBranchAsync(string cityTitle, string chartTitle, string branchTitle);
@@ -32,6 +33,11 @@ public interface IChartService
         RoleTypeDTO role,
         string chartCity, string chartTitle,
         ChartDTO chart);
+    Task<int> UpdateChartSchemeAsync(
+        RoleTypeDTO role,
+        string chartCity, string chartTitle,
+        string scheme
+    );
     Task<int> UpdateBranchAsync(
         RoleTypeDTO role,
         string chartCity, string chartTitle,

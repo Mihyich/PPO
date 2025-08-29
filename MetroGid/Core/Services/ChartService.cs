@@ -41,6 +41,12 @@ public class ChartService(
             }, Logger
         );
 
+    public async Task<string?> GetChartSchemeAsync(string cityTitle, string chartTitle)
+    {
+        int chartId = await GetChartIdAsync(cityTitle, chartTitle);
+        return await ChartRepo.GetChartSchemeByIdAsync(chartId);
+    }
+
     private async Task<int> GetBranchIdAsync(string cityTitle, string chartTitle, string branchTitle)
     {
         int chartId = await GetChartIdAsync(cityTitle, chartTitle);
@@ -290,6 +296,9 @@ public class ChartService(
 
         return await ChartRepo.UpdateChartByIdAsync(chartId, DtoDomainConverter.Convert(chart));
     }
+
+    public async Task<int> UpdateChartSchemeByIdAsync(int chartId, string scheme) =>
+        await ChartRepo.UpdateChartSchemeByIdAsync(chartId, scheme);
 
     public async Task<int> UpdateBranchAsync(
         MCUD.RoleTypeDTO role,

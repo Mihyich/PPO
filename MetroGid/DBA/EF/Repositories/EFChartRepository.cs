@@ -107,6 +107,13 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         return chart != null ? ModelDomainConverter.Convert(chart) : null;
     }
 
+    public async Task<string?> GetChartSchemeByIdAsync(int chartId) =>
+        await _context.Charts
+            .AsNoTracking()
+            .Where(c => c.Id == chartId)
+            .Select(c => c.SvgContent)
+            .FirstOrDefaultAsync();
+
     public async Task<MCMC.Branch?> GetBranchWeakByIdAsync(int branchId)
     {
         MDEMT.Branch? branch = await _context.Branches
@@ -235,6 +242,16 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             trackEntity.City = updChart.City;
             trackEntity.Title = updChart.Title;
         }
+
+        return await _context.SaveChangesAsync();
+    }
+
+    public async Task<int> UpdateChartSchemeByIdAsync(int chartId, string scheme)
+    {
+        MDEMT.Chart? trackEntity = await _context.Charts.FirstOrDefaultAsync(c => c.Id == chartId);
+
+        if (trackEntity != null)
+            trackEntity.SvgContent = scheme;
 
         return await _context.SaveChangesAsync();
     }
