@@ -8,6 +8,7 @@ using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Classification;
 using MCMT = MetroGid.Core.Models.Types;
+using MetroGid.Core.Models.Concrete;
 
 namespace MetroGid.Core.Services;
 
@@ -281,6 +282,68 @@ public class ChartService(
         );
 
         return railway != null ? DomainDtoConverter.Convert(railway) : null;
+    }
+
+    public async Task<int?> GetStationDutyIdAsync(
+        string cityTitle, string chartTitle,
+        string branchTitle, string stationTitle
+    )
+    {
+        int chartId = await ChartRepo.GetChartIdAsync(
+            cityTitle,
+            chartTitle
+        );
+
+        int branchId = await ChartRepo.GetBranchIdAsync(
+            branchTitle,
+            chartId
+        );
+
+        int stationId = await ChartRepo.GetStationIdAsync(
+            stationTitle,
+            branchId
+        );
+
+        return await ChartRepo.GetStationDutyIdAsync(stationId);
+    }
+
+    public async Task<int?> GetTransitionDutyIdAsync(
+        string cityTitle, string chartTitle,
+        string fromBranchTitle, string fromStationTitle,
+        string toBranchTitle, string toStationTitle
+    )
+    {
+        int chartId = await ChartRepo.GetChartIdAsync(
+            cityTitle,
+            chartTitle
+        );
+
+        int fromBranchId = await ChartRepo.GetBranchIdAsync(
+            fromBranchTitle,
+            chartId
+        );
+
+        int toBranchId = await ChartRepo.GetBranchIdAsync(
+            toBranchTitle,
+            chartId
+        );
+
+        int fromStationId = await ChartRepo.GetStationIdAsync(
+            fromStationTitle,
+            fromBranchId
+        );
+
+        int toStationId = await ChartRepo.GetStationIdAsync(
+            toStationTitle,
+            toBranchId
+        );
+
+        int transitionId = await ChartRepo.GetTransitionIdAsync(
+            fromStationId,
+            toStationId
+        );
+
+        return await ChartRepo.GetTransitionDutyIdAsync(transitionId);
     }
 
     public async Task<int> UpdateChartAsync(

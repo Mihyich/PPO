@@ -36,6 +36,9 @@ public interface IChartRepository
     Task<(int, int)?> GetFromToStationIdByRailwayIdAsync(int railwayId);
     Task<(int, int)?> GetFromToStationIdByTransitionIdAsync(int transitionId);
 
+    Task<int?> GetStationDutyIdAsync(int stationId);
+    Task<int?> GetTransitionDutyIdAsync(int transitionId);
+
     Task<int> UpdateChartByIdAsync(int chartId, MCMC.Chart chart);
     Task<int> UpdateChartSchemeByIdAsync(int chartId, string scheme);
     Task<int> UpdateBranchByIdAsync(int branchId, MCMC.Branch branch);

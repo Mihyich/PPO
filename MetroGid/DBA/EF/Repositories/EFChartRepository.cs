@@ -231,6 +231,20 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         return result.Count == 2 ? (result[0], result[1]) : null;
     }
 
+    public async Task<int?> GetStationDutyIdAsync(int stationId) =>
+        await _context.Stations
+            .AsNoTracking()
+            .Where(s => s.Id == stationId)
+            .Select(s => s.DutyId)
+            .FirstOrDefaultAsync();
+
+    public async Task<int?> GetTransitionDutyIdAsync(int transitionId) =>
+        await _context.Transitions
+            .AsNoTracking()
+            .Where(t => t.Id == transitionId)
+            .Select(t => t.DutyId)
+            .FirstOrDefaultAsync();
+
     public async Task<int> UpdateChartByIdAsync(int chartId, MCMC.Chart chart)
     {
         MDEMT.Chart? trackEntity = await _context.Charts.FirstOrDefaultAsync(c => c.Id == chartId);

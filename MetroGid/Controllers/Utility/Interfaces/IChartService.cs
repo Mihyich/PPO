@@ -28,6 +28,15 @@ public interface IChartService
         string branchTitle,
         string fromStationTitle, string toStationTitle);
 
+    Task<int?> GetStationDutyIdAsync(
+        string cityTitle, string chartTitle,
+        string branchTitle, string stationTitle);
+
+    Task<int?> GetTransitionDutyIdAsync(
+        string cityTitle, string chartTitle,
+        string fromBranchTitle, string fromStationTitle,
+        string toBranchTitle, string toStationTitle);
+
     // Изменение атрибутов таблиц
     Task<int> UpdateChartAsync(
         RoleTypeDTO role,
