@@ -297,8 +297,20 @@ public class ChartService(
         return await ChartRepo.UpdateChartByIdAsync(chartId, DtoDomainConverter.Convert(chart));
     }
 
-    public async Task<int> UpdateChartSchemeByIdAsync(int chartId, string scheme) =>
-        await ChartRepo.UpdateChartSchemeByIdAsync(chartId, scheme);
+    public async Task<int> UpdateChartSchemeAsync(
+        MCUD.RoleTypeDTO role,
+        string chartCity, string chartTitle,
+        string scheme
+    )
+    {
+        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
+            return 0;
+        
+        return await ChartRepo.UpdateChartSchemeByIdAsync(
+            await GetChartIdAsync(chartCity, chartTitle),
+            scheme
+        );
+    }
 
     public async Task<int> UpdateBranchAsync(
         MCUD.RoleTypeDTO role,
