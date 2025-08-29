@@ -18,8 +18,8 @@ public class AuthController(
     private readonly IClientService _clientService = clientService;
     private readonly ITokenService _tokenService = tokenService;
 
-    [HttpPost("register")]
     [AllowAnonymous]
+    [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequestDTO dto)
     {
         int clientId = await _clientService.RegAsync(dto.Login, dto.Password, dto.Mail);
@@ -27,8 +27,8 @@ public class AuthController(
         return Ok(authResponse);
     }
 
-    [HttpPost("login")]
     [AllowAnonymous]
+    [HttpPost("login")]
     public async Task<IActionResult> LogIn([FromBody] LoginRequestDTO dto)
     {
         ClientDTO? client = await _clientService.LogInAsync(dto.Login, dto.Password);
@@ -50,8 +50,8 @@ public class AuthController(
         return Ok(authResponse);
     }
 
-    [HttpPost("logout")]
     [Authorize]
+    [HttpPost("logout")]
     public IActionResult LogOut()
     {
         return Ok(new
@@ -60,8 +60,8 @@ public class AuthController(
         });
     }
 
-    [HttpDelete("unregister")]
     [Authorize]
+    [HttpDelete("unregister")]
     public async Task<IActionResult> Unregister([FromBody] UnregisterRequestDto dto)
     {
         string? clientIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
