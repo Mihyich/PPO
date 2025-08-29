@@ -1,6 +1,6 @@
 using MetroGid.Controllers.Utility.DTO.Concrete;
 
-namespace MetroGid.Controllers.Converters;
+namespace MetroGid.Controllers.Utility.Converters;
 
 public static class DBRoleToDTORoleConverter
 {
