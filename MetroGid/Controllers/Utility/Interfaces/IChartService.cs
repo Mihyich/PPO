@@ -6,6 +6,7 @@ public interface IChartService
 {
     Task<int> AddChartAsync(string chartJson);
 
+    Task<int> GetChartIdAsync(string cityTitle, string chartTitle);
     Task<ChartDTO?> GetChartAsync(string cityTitle, string chartTitle);
     Task<string?> GetChartSchemeAsync(string cityTitle, string chartTitle);
     Task<List<ValueTuple<string, string>>> GetChartsCitiesTitlesAsync();

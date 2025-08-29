@@ -138,27 +138,16 @@ public class RouteService(
         return routeDTO;
     }
 
-    public async Task<int> SaveRouteAsync(MCUD.ClientDTO client, MCUD.RouteDTO route, int chartId)
-    {
-        MCMT.RoleType role = DtoDomainConverter.Convert(client.Role);
+    public async Task<int> SaveRouteAsync(
+        int clientId,
+        int chartId,
+        string routeJson
+    ) =>
+        await RouteRepo.AddAsync(clientId, chartId, routeJson);
 
-        if (role != MCMT.RoleType.SIGNED && role != MCMT.RoleType.DUTY)
-            return 0;
-
-        int clientId = await GetClientIdAsync(client.Login, client.Password, client.Mail);
-
-        return await RouteRepo.AddAsync(clientId, chartId, DtoRouteJsonConverter.Convert(route));
-    }
-
-    public async Task<List<string>> LookForSavedRoutesInChartAsync(MCUD.ClientDTO client, int chartId)
-    {
-        MCMT.RoleType role = DtoDomainConverter.Convert(client.Role);
-
-        if (role != MCMT.RoleType.SIGNED && role != MCMT.RoleType.DUTY)
-            return new List<string>();
-
-        int clientId = await GetClientIdAsync(client.Login, client.Password, client.Mail);
-
-        return await RouteRepo.GetAllForClientOfChartIdAsync(clientId, chartId);
-    }
+    public async Task<List<string>> LookForSavedRoutesInChartAsync(
+        int clientId,
+        int chartId
+    ) =>
+        await RouteRepo.GetAllForClientOfChartIdAsync(clientId, chartId);
 }

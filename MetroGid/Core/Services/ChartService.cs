@@ -25,7 +25,7 @@ public class ChartService(
     public async Task<int> AddChartAsync(string chartJson) =>
         await ChartRepo.AddAsync(chartJson);
 
-    private async Task<int> GetChartIdAsync(string cityTitle, string chartTitle) =>
+    public async Task<int> GetChartIdAsync(string cityTitle, string chartTitle) =>
         await Handler.SnapAsync(
             async () =>
             {

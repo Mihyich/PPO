@@ -11,6 +11,14 @@ public interface IRouteService
         TimeOnly startTime
     );
 
-    Task<int> SaveRouteAsync(ClientDTO client, RouteDTO route, int chartId);
-    Task<List<string>> LookForSavedRoutesInChartAsync(ClientDTO client, int chartId); // просмотр сохраненных маршрутов в конкретной схеме метро, у конктретного пользователя
+    Task<int> SaveRouteAsync(
+        int clientId,
+        int chartId,
+        string routeJson
+    );
+
+    Task<List<string>> LookForSavedRoutesInChartAsync(
+        int clientId,
+        int chartId
+    ); // просмотр сохраненных маршрутов в конкретной схеме метро, у конктретного пользователя
 }
