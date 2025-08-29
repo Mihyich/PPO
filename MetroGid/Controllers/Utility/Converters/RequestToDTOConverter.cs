@@ -41,4 +41,12 @@ public static class RequestToDTOConverter
             ptr.FromStationTitle, ptr.FromBranchTitle,
             ptr.ToStationTitle, ptr.ToBranchTitle
         );
+
+    public static RailwayDTO Convert(PatchRailwayRequest prr) =>
+        new(
+            prr.BranchTitle,
+            prr.DutyStationTitle,
+            prr.ToStationTitle,
+            TimeConverter.FromString(prr.NewDuration)
+        );
 }
