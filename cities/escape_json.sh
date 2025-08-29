@@ -5,7 +5,7 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 if [ -z "$1" ]; then
-  echo "${RED}[ОШИБКА]${NC}: не указан путь к JSON-файлу"
+  printf "${RED}[ОШИБКА]${NC}: не указан путь к JSON-файлу"
   echo "Использование: $0 <путь/к/файлу.json>"
   exit 1
 fi
@@ -13,12 +13,12 @@ fi
 input_file="$1"
 
 if [ ! -f "$input_file" ]; then
-  echo "${RED}[ОШИБКА]${NC}: файл \"${input_file}\" не найден"
+  printf "${RED}[ОШИБКА]${NC}: файл \"%s\" не найден\n" "$input_file"
   exit 1
 fi
 
 if ! jq -e . "$input_file" >/dev/null 2>&1; then
-  echo "${RED}[ОШИБКА]${NC}: файл \"${input_file}\" содержит некорректный JSON"
+  printf "${RED}[ОШИБКА]${NC}: файл \"$%s\" содержит некорректный JSON\n" "$input_file"
   exit 1
 fi
 
@@ -33,4 +33,4 @@ final_json="\"$escaped_content\""
 
 echo "$final_json" > "$output_file"
 
-echo "${GREEN}[УСПЕХ]:${NC} выходной файл - \"${output_file}\""
+printf "${GREEN}[УСПЕХ]${NC}: выходной файл - \"%s\"\n" "$output_file"
