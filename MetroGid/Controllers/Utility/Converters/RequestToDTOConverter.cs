@@ -30,4 +30,15 @@ public static class RequestToDTOConverter
             TimeConverter.FromString(psr.NewOpenTime),
             TimeConverter.FromString(psr.NewCloseTime)
         );
+
+    public static TransitionDTO Convert(PatchTransitionRequest ptr) =>
+        new(
+            ptr.NewOccupancy,
+            ConvertAccessType(ptr.NewAccess),
+            TimeConverter.FromString(ptr.NewDuration),
+            TimeConverter.FromString(ptr.NewOpenTime),
+            TimeConverter.FromString(ptr.NewCloseTime),
+            ptr.FromStationTitle, ptr.FromBranchTitle,
+            ptr.ToStationTitle, ptr.ToBranchTitle
+        );
 }
