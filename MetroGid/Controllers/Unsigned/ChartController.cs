@@ -11,7 +11,9 @@ namespace MetroGid.Controllers.Unsigned;
 
 [ApiController]
 [Route("api/chart")]
-public class ChartController(IChartService chartService) : ControllerBase
+public class ChartController(
+    IChartService chartService
+) : ControllerBase
 {
     private readonly IChartService _chartService = chartService;
 
