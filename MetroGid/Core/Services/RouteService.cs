@@ -11,8 +11,6 @@ using MetroGid.Core.Utility.Directors;
 using MetroGid.Core.Utility.Strategies;
 using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.Core.Interfaces;
-using MCMT = MetroGid.Core.Models.Types;
-using static MetroGid.Core.Converters.DtoRouteJsonConverter;
 
 namespace MetroGid.Core.Services;
 
@@ -251,4 +249,15 @@ public class RouteService(
             route.Title, chart.City, chart.Title, path, route.Duration
         ) : null;
     }
+
+    public async Task<int> DeleteAsync(
+        int clientId,
+        string title
+    ) =>
+        await RouteRepo.DeleteAsync(
+            await RouteRepo.GetIdAsync(
+                title,
+                clientId
+            )
+        );
 }

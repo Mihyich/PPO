@@ -27,4 +27,9 @@ public interface IRouteService
         int chartId,
         string title
     );
+
+    Task<int> DeleteAsync(
+        int clientId,
+        string title
+    );
 }
