@@ -55,6 +55,55 @@ public static class DtoRouteJsonConverter
         return JsonSerializer.Serialize(routeJsonDTO, JsonOptions);
     }
 
+    public static MCUD.RouteDTO Convert(string json)
+    {
+        RouteJsonDTO routeJsonDto = JsonSerializer.Deserialize<RouteJsonDTO>(json, JsonOptions)
+            ?? throw new JsonException("Не удалось десериализовать JSON в RouteJsonDTO.");
+
+        MCUD.StationDTO? psd = null;
+        List<MCUD.RouteItemDTO> path = [];
+
+        foreach (var item in routeJsonDto.RouteItems)
+        {
+            switch (item)
+            {
+                case StationRouteItemDTO sri:
+                {
+                    MCUD.StationDTO station = new(sri.Title, sri.BranchTitle, 0, MCUD.AccessTypeDTO.INACCESSIBLE, TimeOnly.MinValue, TimeOnly.MinValue);
+                    MCUD.RouteStationItemDTO stationItem = new(station);
+                    path.Add(stationItem);
+                    psd = station;
+                    break;
+                }
+                case RailwayRouteItemDTO rri:
+                {
+                    MCUD.RailwayDTO railway = new(psd?.BranchTitle ?? throw new JsonException($"Некорректный маршрут"), rri.FromStationTitle, rri.ToStationTitle, TimeSpan.MinValue);
+                    MCUD.RailwayConnectionDTO connection = new(railway);
+                    MCUD.RouteConnectionItemDTO connectionItem = new(connection);
+                    path.Add(connectionItem);
+                    break;
+                }
+                case TransitionRouteItemDTO tri:
+                {
+                    MCUD.TransitionDTO transition = new(
+                        0, MCUD.AccessTypeDTO.INACCESSIBLE, TimeSpan.MinValue,
+                        TimeOnly.MinValue, TimeOnly.MinValue,
+                        tri.FromStationTitle, tri.FromBranchTitle,
+                        tri.ToStationTitle, tri.ToBranchTitle
+                    );
+                    MCUD.TransitionConnectionDTO connection = new(transition);
+                    MCUD.RouteConnectionItemDTO connectionItem = new(connection);
+                    path.Add(connectionItem);
+                    break;
+                }
+                default:
+                    throw new JsonException($"Неизвестный тип элемента маршрута: {item.GetType()}");
+            }
+        }
+
+        return new MCUD.RouteDTO(routeJsonDto.Title, "", "", path, routeJsonDto.Duration);
+    }
+
     private record RouteJsonDTO(
         string Title,
         TimeSpan Duration,
