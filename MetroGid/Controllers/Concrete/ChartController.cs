@@ -7,7 +7,7 @@ using MetroGid.Controllers.Utility.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MetroGid.Controllers.Unsigned;
+namespace MetroGid.Controllers.Concrete;
 
 [ApiController]
 [Route("api/chart")]

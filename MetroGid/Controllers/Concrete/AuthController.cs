@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MetroGid.Controllers.Utility.Converters;
 
-namespace MetroGid.Controllers.Unsigned;
+namespace MetroGid.Controllers.Concrete;
 
 [ApiController]
 [Route("api/auth")]

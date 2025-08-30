@@ -7,10 +7,10 @@ using MetroGid.Core.Converters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MetroGid.Controllers.Unsigned;
+namespace MetroGid.Controllers.Concrete;
 
 [ApiController]
-[Route("api/route")]
+[Route("api/routes")]
 public class RouteController(
     IRouteService routeService,
     IChartService chartService
@@ -51,7 +51,7 @@ public class RouteController(
         );
 
     [RequireAnyRole(RoleTypeDTO.SIGNED, RoleTypeDTO.DUTY)]
-    [HttpPost("Save")]
+    [HttpPost("save")]
     public async Task<IActionResult> SaveRoute([FromBody] RouteDTO dto)
     {
         ActionResult<ValueTuple<int, int>> result = await GetClientAndChartIdAsync(dto.City, dto.ChartTitle);
@@ -70,7 +70,7 @@ public class RouteController(
     }
 
     [RequireAnyRole(RoleTypeDTO.SIGNED, RoleTypeDTO.DUTY)]
-    [HttpPost("route_titles")]
+    [HttpPost("get/titles")]
     public async Task<IActionResult> GetRouteTitles([FromBody] GetRouteCredentialsRequest dto)
     {
         ActionResult<ValueTuple<int, int>> result = await GetClientAndChartIdAsync(dto.CityTitle, dto.ChartTitle);
@@ -88,7 +88,7 @@ public class RouteController(
     }
 
     [RequireAnyRole(RoleTypeDTO.SIGNED, RoleTypeDTO.DUTY)]
-    [HttpPost("get")]
+    [HttpPost("get/saved")]
     public async Task<IActionResult> GetSavedRoute([FromBody] GetSavedRouteRequest dto)
     {
         ActionResult<ValueTuple<int, int>> result = await GetClientAndChartIdAsync(dto.CityTitle, dto.ChartTitle);
@@ -107,7 +107,7 @@ public class RouteController(
     }
 
     [RequireAnyRole(RoleTypeDTO.SIGNED, RoleTypeDTO.DUTY)]
-    [HttpDelete("route")]
+    [HttpDelete("delete")]
     public async Task<IActionResult> DeleteRoute([FromBody] DeleteRouteRequest dto)
     {
         var result = await GetClientAndChartIdAsync(dto.CityTitle, dto.ChartTitle);
