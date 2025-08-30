@@ -16,6 +16,8 @@ public interface IRouteRepository
     Task<List<string>> GetAllForClientIdAsync(int clientId);
     Task<List<string>> GetAllForClientOfChartIdAsync(int clientId, int chartId);
 
+    Task<string?> GetChartRouteOfClient(int clientId, int chartId, string title);
+
     Task<int> UpdateAsync(int clientId, int chartId, MCMC.Route route);
 
     Task<int> DeleteAsync(int id);

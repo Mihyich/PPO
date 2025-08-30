@@ -17,8 +17,14 @@ public interface IRouteService
         string routeJson
     );
 
-    Task<List<string>> LookForSavedRoutesInChartAsync(
+    Task<List<string>> GetSavedChartRoutesTitles(
         int clientId,
         int chartId
-    ); // просмотр сохраненных маршрутов в конкретной схеме метро, у конктретного пользователя
+    ); // просмотр сохраненных маршрутов в конкретной схеме метро, у конктретного пользователя (получить все названия)
+
+    Task<RouteDTO?> GetSavedChart(
+        int clientId,
+        int chartId,
+        string title
+    );
 }

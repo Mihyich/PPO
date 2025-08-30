@@ -56,8 +56,18 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
         await _context.Ways
             .AsNoTracking()
             .Where(w => w.ChartId == chartId && w.ClientId == clientId)
-            .Select(w => _context.GetRouteJsonById(w.Id))
+            .Select(w => w.Title)
             .ToListAsync();
+
+    public async Task<string?> GetChartRouteOfClient(
+        int clientId,
+        int chartId,
+        string title
+    ) =>
+        await _context.Ways
+            .Where(w => w.ChartId == chartId && w.ClientId == clientId && w.Title == title)
+            .Select(w => _context.GetRouteJsonById(w.Id))
+            .FirstOrDefaultAsync();
 
     public Task<int> UpdateAsync(int clientId, int chartId, MCMC.Route route)
     {
