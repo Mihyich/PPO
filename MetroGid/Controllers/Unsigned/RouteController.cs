@@ -22,7 +22,7 @@ public class RouteController(
 
     [AllowAnonymous]
     [HttpPost("search")]
-    public async Task<IActionResult> Search([FromBody] SearchRouteRequest dto) =>
+    public async Task<IActionResult> SearchRoute([FromBody] SearchRouteRequest dto) =>
         Ok(
             await _routeService.SearchRouteAsync(
                 dto.CityTitle, dto.ChartTitle,
@@ -34,7 +34,7 @@ public class RouteController(
 
     [RequireAnyRole(RoleTypeDTO.SIGNED, RoleTypeDTO.DUTY)]
     [HttpPost("Save")]
-    public async Task<IActionResult> Save([FromBody] RouteDTO dto)
+    public async Task<IActionResult> SaveRoute([FromBody] RouteDTO dto)
     {
         string? clientIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (!int.TryParse(clientIdClaim, out int clientId))
@@ -113,6 +113,29 @@ public class RouteController(
             await _routeService.GetSavedChart(
                 clientId,
                 chartId,
+                dto.RouteTitle
+            )
+        );
+    }
+
+    [RequireAnyRole(RoleTypeDTO.SIGNED, RoleTypeDTO.DUTY)]
+    [HttpDelete("route")]
+    public async Task<IActionResult> DeleteRoute([FromBody] DeleteRouteRequest dto)
+    {
+        string? clientIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (!int.TryParse(clientIdClaim, out int clientId))
+            return StatusCode(
+                StatusCodes.Status401Unauthorized,
+                new
+                {
+                    Error = "InvalidCredentials",
+                    Message = "Не удалось определить пользователя"
+                }
+            );
+
+        return Ok(
+            await _routeService.DeleteAsync(
+                clientId,
                 dto.RouteTitle
             )
         );
