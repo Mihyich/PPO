@@ -1,0 +1,9 @@
+DROP DOMAIN IF EXISTS role_type;
+DROP DOMAIN IF EXISTS access_type;
+DROP DOMAIN IF EXISTS nexus_type;
+
+DROP DOMAIN IF EXISTS login_inst;
+DROP DOMAIN IF EXISTS password_inst;
+DROP DOMAIN IF EXISTS mail_inst;
+DROP DOMAIN IF EXISTS occupancy_level;
+DROP DOMAIN IF EXISTS decimal_hexcolor;

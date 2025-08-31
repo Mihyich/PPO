@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS way_item_transition;
+DROP TABLE IF EXISTS way_item_railway;
+DROP TABLE IF EXISTS way_item_station;
+DROP TABLE IF EXISTS station_transition;
+DROP TABLE IF EXISTS railway;
+DROP TABLE IF EXISTS branch_station;
+DROP TABLE IF EXISTS chart_branch;
+DROP TABLE IF EXISTS way_item;
+DROP TABLE IF EXISTS way;
+DROP TABLE IF EXISTS transition;
+DROP TABLE IF EXISTS station;
+DROP TABLE IF EXISTS branch;
+DROP TABLE IF EXISTS chart;
+DROP TABLE IF EXISTS client;

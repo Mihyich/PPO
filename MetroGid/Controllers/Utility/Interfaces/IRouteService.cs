@@ -1,0 +1,35 @@
+using MetroGid.Controllers.Utility.DTO.Concrete;
+
+namespace MetroGid.Controllers.Utility.Interfaces;
+
+public interface IRouteService
+{
+    Task<RouteDTO?> SearchRouteAsync(
+        string city, string chartTitle,
+        string branchSrcTitle, string stationSrcTitle,
+        string branchDstTitle, string stationDstTitle,
+        TimeOnly startTime
+    );
+
+    Task<int> SaveRouteAsync(
+        int clientId,
+        int chartId,
+        string routeJson
+    );
+
+    Task<List<string>> GetSavedChartRoutesTitles(
+        int clientId,
+        int chartId
+    ); // просмотр сохраненных маршрутов в конкретной схеме метро, у конктретного пользователя (получить все названия)
+
+    Task<RouteDTO?> GetSavedChart(
+        int clientId,
+        int chartId,
+        string title
+    );
+
+    Task<int> DeleteAsync(
+        int clientId,
+        string title
+    );
+}

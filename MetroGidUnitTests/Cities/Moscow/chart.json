@@ -1,0 +1,7503 @@
+{
+	"title": "Московский метрополитен",
+	"city": "Москва",
+	"branches": [
+		{
+			"title": "Сокольническая линия",
+			"color": "#DA2128",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Бульвар Рокоссовского",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Черкизовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Преображенская площадь",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Сокольники",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Красносельская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Комсомольская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Красные Ворота",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Чистые пруды",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Лубянка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Охотный Ряд",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Библиотека имени Ленина",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кропотнинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Парк культуры",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Фрунзенская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Спортивная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Воробьёвы горы",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Университет",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Проспект Вернадского",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Юго-Западная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тропарёво",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Румянцево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Саларьево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Филатов Луг",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Прокшино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ольховая",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новомосковская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Потапово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Бульвар Рокоссовского",
+					"to": "Черкизовская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Черкизовская",
+					"to": "Преображенская площадь",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Преображенская площадь",
+					"to": "Сокольники",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Сокольники",
+					"to": "Красносельская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Красносельская",
+					"to": "Комсомольская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Комсомольская",
+					"to": "Красные Ворота",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Красные Ворота",
+					"to": "Чистые пруды",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Чистые пруды",
+					"to": "Лубянка",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Лубянка",
+					"to": "Охотный Ряд",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Охотный Ряд",
+					"to": "Библиотека имени Ленина",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Библиотека имени Ленина",
+					"to": "Кропотнинская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Кропотнинская",
+					"to": "Парк культуры",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Парк культуры",
+					"to": "Фрунзенская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Фрунзенская",
+					"to": "Спортивная",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Спортивная",
+					"to": "Воробьёвы горы",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Воробьёвы горы",
+					"to": "Университет",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Университет",
+					"to": "Проспект Вернадского",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Проспект Вернадского",
+					"to": "Юго-Западная",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Юго-Западная",
+					"to": "Тропарёво",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Тропарёво",
+					"to": "Румянцево",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Румянцево",
+					"to": "Саларьево",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Саларьево",
+					"to": "Филатов Луг",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Филатов Луг",
+					"to": "Прокшино",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Прокшино",
+					"to": "Ольховая",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Ольховая",
+					"to": "Новомосковская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Новомосковская",
+					"to": "Потапово",
+					"duration": "00:05:00"
+				}
+			]
+		},
+		{
+			"title": "Замоскворецкая линия",
+			"color": "#48B85E",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Ховрино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Беломорская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Речной вокзал",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Водный стадион",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Войковская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Сокол",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Аэропорт",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Динамо",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Белорусская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Маяковская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тверская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Театральная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новокузнецкая",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Павелецкая",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Автозаводская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Технопарк",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Коломенская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Каширская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кантемировская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Царицыно",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Орехово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Домодедовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Красногвардейская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Алма-Атинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Ховрино",
+					"to": "Беломорская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Беломорская",
+					"to": "Речной вокзал",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Речной вокзал",
+					"to": "Водный стадион",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Водный стадион",
+					"to": "Войковская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Войковская",
+					"to": "Сокол",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Сокол",
+					"to": "Аэропорт",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Аэропорт",
+					"to": "Динамо",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Динамо",
+					"to": "Белорусская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Белорусская",
+					"to": "Маяковская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Маяковская",
+					"to": "Тверская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Тверская",
+					"to": "Театральная",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Театральная",
+					"to": "Новокузнецкая",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Новокузнецкая",
+					"to": "Павелецкая",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Павелецкая",
+					"to": "Автозаводская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Автозаводская",
+					"to": "Технопарк",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Технопарк",
+					"to": "Коломенская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Коломенская",
+					"to": "Каширская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Каширская",
+					"to": "Кантемировская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Кантемировская",
+					"to": "Царицыно",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Царицыно",
+					"to": "Орехово",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Орехово",
+					"to": "Домодедовская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Домодедовская",
+					"to": "Красногвардейская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Красногвардейская",
+					"to": "Алма-Атинская",
+					"duration": "00:05:00"
+				}
+			]
+		},
+		{
+			"title": "Арбатско-Покровская линия",
+			"color": "#0078BF",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Щёлковская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Первомайская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Измайловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Партизанская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Семёновская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Электрозаводская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Бауманская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Курская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Площадь Революции",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Арбатская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Смоленская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Киевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Парк Победы",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Славянский бульвар",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кунцевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Молодёжная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Крылатское",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Строгино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Мякинино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Волоколамская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Митино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Пятницкое шоссе",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Щёлковская",
+					"to": "Первомайская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Первомайская",
+					"to": "Измайловская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Измайловская",
+					"to": "Партизанская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Партизанская",
+					"to": "Семёновская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Семёновская",
+					"to": "Электрозаводская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Электрозаводская",
+					"to": "Бауманская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Бауманская",
+					"to": "Курская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Курская",
+					"to": "Площадь Революции",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Площадь Революции",
+					"to": "Арбатская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Арбатская",
+					"to": "Смоленская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Смоленская",
+					"to": "Киевская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Киевская",
+					"to": "Парк Победы",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Парк Победы",
+					"to": "Славянский бульвар",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Славянский бульвар",
+					"to": "Кунцевская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Кунцевская",
+					"to": "Молодёжная",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Молодёжная",
+					"to": "Крылатское",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Крылатское",
+					"to": "Строгино",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Строгино",
+					"to": "Мякинино",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Мякинино",
+					"to": "Волоколамская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Волоколамская",
+					"to": "Митино",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Митино",
+					"to": "Пятницкое шоссе",
+					"duration": "00:02:00"
+				}
+			]
+		},
+		{
+			"title": "Филёвская линия",
+			"color": "#00C1F3",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Александровский сад",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Арбатская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Смоленская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Киевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Студенческая",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кутузовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Фили",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Багратионовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Филёвский парк",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Пионерская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кунцевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Александровский сад",
+					"to": "Арбатская",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Арбатская",
+					"to": "Смоленская",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Смоленская",
+					"to": "Киевская",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Киевская",
+					"to": "Студенческая",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Студенческая",
+					"to": "Кутузовская",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Кутузовская",
+					"to": "Фили",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Фили",
+					"to": "Багратионовская",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Багратионовская",
+					"to": "Филёвский парк",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Филёвский парк",
+					"to": "Пионерская",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Пионерская",
+					"to": "Кунцевская",
+					"duration": "00:04:00"
+				}
+			]
+		},
+		{
+			"title": "Филёвская линия-2",
+			"color": "#00C1F3",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Киевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Деловой центр",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Москва-Сити",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Киевская",
+					"to": "Деловой центр",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Деловой центр",
+					"to": "Москва-Сити",
+					"duration": "00:04:00"
+				}
+			]
+		},
+		{
+			"title": "Кольцевая линия",
+			"color": "#894E35",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Курская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Комсомольская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Проспект Мира",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новослободская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Белорусская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Краснопресенская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Киевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Парк культуры",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Октябрьская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Добрынинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Павелецкая",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Таганская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Курская",
+					"to": "Комсомольская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Комсомольская",
+					"to": "Проспект Мира",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Проспект Мира",
+					"to": "Новослободская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Новослободская",
+					"to": "Белорусская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Белорусская",
+					"to": "Краснопресенская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Краснопресенская",
+					"to": "Киевская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Киевская",
+					"to": "Парк культуры",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Парк культуры",
+					"to": "Октябрьская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Октябрьская",
+					"to": "Добрынинская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Добрынинская",
+					"to": "Павелецкая",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Павелецкая",
+					"to": "Таганская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Таганская",
+					"to": "Курская",
+					"duration": "00:02:00"
+				}
+			]
+		},
+		{
+			"title": "Калужско-Рижская линия",
+			"color": "#F58220",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Медведково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Бабушкинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Свиблово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ботанический сад",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "ВДНХ",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Алексеевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Рижская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Проспект Мира",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Сухаревская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тургеневская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Китай-город",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Третьяковская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Октябрьская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Шаболовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ленинский проспект",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Академическая",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Профсоюзная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новые Черёмушки",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Калужская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Беляево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Коньково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тёплый Стан",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ясенево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новоясеневская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Медведково",
+					"to": "Бабушкинская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Бабушкинская",
+					"to": "Свиблово",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Свиблово",
+					"to": "Ботанический сад",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Ботанический сад",
+					"to": "ВДНХ",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "ВДНХ",
+					"to": "Алексеевская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Алексеевская",
+					"to": "Рижская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Рижская",
+					"to": "Проспект Мира",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Проспект Мира",
+					"to": "Сухаревская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Сухаревская",
+					"to": "Тургеневская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Тургеневская",
+					"to": "Китай-город",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Китай-город",
+					"to": "Третьяковская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Третьяковская",
+					"to": "Октябрьская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Октябрьская",
+					"to": "Шаболовская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Шаболовская",
+					"to": "Ленинский проспект",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Ленинский проспект",
+					"to": "Академическая",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Академическая",
+					"to": "Профсоюзная",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Профсоюзная",
+					"to": "Новые Черёмушки",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Новые Черёмушки",
+					"to": "Калужская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Калужская",
+					"to": "Беляево",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Беляево",
+					"to": "Коньково",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Коньково",
+					"to": "Тёплый Стан",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Тёплый Стан",
+					"to": "Ясенево",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Ясенево",
+					"to": "Новоясеневская",
+					"duration": "00:02:00"
+				}
+			]
+		},
+		{
+			"title": "Таганско-Краснопресненская линия",
+			"color": "#8E479B",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Планерная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Сходненская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тушинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Спартак",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Щукинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Октябрьское Поле",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Полежаевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Беговая",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Улица 1905 года",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Баррикадная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Пушкинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кузнецкий Мост",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Китай-город",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Таганская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Пролетарская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Волгоградский проспект",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Текстильщики",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кузьминки",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Рязанский проспект",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Выхино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Лермонтовский проспект",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Жулебино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Котельники",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Планерная",
+					"to": "Сходненская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Сходненская",
+					"to": "Тушинская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Тушинская",
+					"to": "Спартак",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Спартак",
+					"to": "Щукинская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Щукинская",
+					"to": "Октябрьское Поле",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Октябрьское Поле",
+					"to": "Полежаевская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Полежаевская",
+					"to": "Беговая",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Беговая",
+					"to": "Улица 1905 года",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Улица 1905 года",
+					"to": "Баррикадная",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Баррикадная",
+					"to": "Пушкинская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Пушкинская",
+					"to": "Кузнецкий Мост",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Кузнецкий Мост",
+					"to": "Китай-город",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Китай-город",
+					"to": "Таганская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Таганская",
+					"to": "Пролетарская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Пролетарская",
+					"to": "Волгоградский проспект",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Волгоградский проспект",
+					"to": "Текстильщики",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Текстильщики",
+					"to": "Кузьминки",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Кузьминки",
+					"to": "Рязанский проспект",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Рязанский проспект",
+					"to": "Выхино",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Выхино",
+					"to": "Лермонтовский проспект",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Лермонтовский проспект",
+					"to": "Жулебино",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Жулебино",
+					"to": "Котельники",
+					"duration": "00:02:00"
+				}
+			]
+		},
+		{
+			"title": "Калининская линия",
+			"color": "#FFC61A",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Новокосино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новогиреево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Перово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Шоссе Энтузиастов",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Авиамоторная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Площадь Ильича",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Марксистская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Третьяковская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Новокосино",
+					"to": "Новогиреево",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Новогиреево",
+					"to": "Перово",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Перово",
+					"to": "Шоссе Энтузиастов",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Шоссе Энтузиастов",
+					"to": "Авиамоторная",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Авиамоторная",
+					"to": "Площадь Ильича",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Площадь Ильича",
+					"to": "Марксистская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Марксистская",
+					"to": "Третьяковская",
+					"duration": "00:02:00"
+				}
+			]
+		},
+		{
+			"title": "Солнцевская линия",
+			"color": "#FFC61A",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Деловой центр",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Парк Победы",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Минская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ломоносовский проспект",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Раменки",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Мичуринский проспект",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Озёрная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Говорово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Солнцево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Боровское шоссе",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новопеределкино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Рассказовка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Пыхтино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Аэропорт Внуково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Деловой центр",
+					"to": "Парк Победы",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Парк Победы",
+					"to": "Минская",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Минская",
+					"to": "Ломоносовский проспект",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Ломоносовский проспект",
+					"to": "Раменки",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Раменки",
+					"to": "Мичуринский проспект",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Мичуринский проспект",
+					"to": "Озёрная",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Озёрная",
+					"to": "Говорово",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Говорово",
+					"to": "Солнцево",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Солнцево",
+					"to": "Боровское шоссе",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Боровское шоссе",
+					"to": "Новопеределкино",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Новопеределкино",
+					"to": "Рассказовка",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Рассказовка",
+					"to": "Пыхтино",
+					"duration": "00:03:00"
+				},
+				{
+					"from": "Пыхтино",
+					"to": "Аэропорт Внуково",
+					"duration": "00:03:00"
+				}
+			]
+		},
+		{
+			"title": "Серпуховско-Тимирязевская линия",
+			"color": "#A1A2A3",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Алтуфьево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Бибирево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Отрадное",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Владыкино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Петровско-Разумовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тимирязевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Дмитровская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Савёловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Менделеевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Цветной бульвар",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Чеховская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Боровицкая",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Полянка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Серпуховская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тульская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Нагатинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Нагорная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Нахимовский проспект",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Севастопольская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Чертановская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Южная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Пражская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Улица Академика Янгеля",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Аннино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Бульвар Дмитрия Донского",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Алтуфьево",
+					"to": "Бибирево",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Бибирево",
+					"to": "Отрадное",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Отрадное",
+					"to": "Владыкино",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Владыкино",
+					"to": "Петровско-Разумовская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Петровско-Разумовская",
+					"to": "Тимирязевская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Тимирязевская",
+					"to": "Дмитровская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Дмитровская",
+					"to": "Савёловская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Савёловская",
+					"to": "Менделеевская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Менделеевская",
+					"to": "Цветной бульвар",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Цветной бульвар",
+					"to": "Чеховская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Чеховская",
+					"to": "Боровицкая",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Боровицкая",
+					"to": "Полянка",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Полянка",
+					"to": "Серпуховская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Серпуховская",
+					"to": "Тульская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Тульская",
+					"to": "Нагатинская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Нагатинская",
+					"to": "Нагорная",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Нагорная",
+					"to": "Нахимовский проспект",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Нахимовский проспект",
+					"to": "Севастопольская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Севастопольская",
+					"to": "Чертановская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Чертановская",
+					"to": "Южная",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Южная",
+					"to": "Пражская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Пражская",
+					"to": "Улица Академика Янгеля",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Улица Академика Янгеля",
+					"to": "Аннино",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Аннино",
+					"to": "Бульвар Дмитрия Донского",
+					"duration": "00:02:00"
+				}
+			]
+		},
+		{
+			"title": "Люблинско-Дмитрия линия",
+			"color": "#B4D445",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Физтех",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Лианозово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Яхромская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Селигерская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Верхния Лихоборы",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Окружная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Петровско-Разумовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Фонвизинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Бутырская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Марьина Роща",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Достоевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Трубная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Сретенский бульвар",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Чкаловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Римская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Крестьянская Застава",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Дубровка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кожуховская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Печатники",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Волжская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Люблино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Братиславская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Марьино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Борисово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Шипиловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Зябликово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Физтех",
+					"to": "Лианозово",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Лианозово",
+					"to": "Яхромская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Яхромская",
+					"to": "Селигерская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Селигерская",
+					"to": "Верхния Лихоборы",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Верхния Лихоборы",
+					"to": "Окружная",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Окружная",
+					"to": "Петровско-Разумовская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Петровско-Разумовская",
+					"to": "Фонвизинская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Фонвизинская",
+					"to": "Бутырская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Бутырская",
+					"to": "Марьина Роща",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Марьина Роща",
+					"to": "Достоевская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Достоевская",
+					"to": "Трубная",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Трубная",
+					"to": "Сретенский бульвар",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Сретенский бульвар",
+					"to": "Чкаловская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Чкаловская",
+					"to": "Римская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Римская",
+					"to": "Крестьянская Застава",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Крестьянская Застава",
+					"to": "Дубровка",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Дубровка",
+					"to": "Кожуховская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Кожуховская",
+					"to": "Печатники",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Печатники",
+					"to": "Волжская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Волжская",
+					"to": "Люблино",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Люблино",
+					"to": "Братиславская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Братиславская",
+					"to": "Марьино",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Марьино",
+					"to": "Борисово",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Борисово",
+					"to": "Шипиловская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Шипиловская",
+					"to": "Зябликово",
+					"duration": "00:02:00"
+				}
+			]
+		},
+		{
+			"title": "Большая кольцевая линия",
+			"color": "#6AC9C8",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Электрозаводская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Сокольники",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Рижская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Марьина Роща",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Савёловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Петровский парк",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "ЦСКА",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Хорошёвская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Народное Ополчение",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Мнёвники",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Терехово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кунцевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Давыдково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Аминьевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Мичуринский проспект",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Проспект Вернадского",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новаторская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Воронцовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Зюзино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Каховская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Варшавская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Каширская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кленовый бульвар",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Нагатинский Затон",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Печатники",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Текстильщики",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Нижегородская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Авиамоторная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Лефортово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Электрозаводская",
+					"to": "Сокольники",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Сокольники",
+					"to": "Рижская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Рижская",
+					"to": "Марьина Роща",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Марьина Роща",
+					"to": "Савёловская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Савёловская",
+					"to": "Петровский парк",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Петровский парк",
+					"to": "ЦСКА",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "ЦСКА",
+					"to": "Хорошёвская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Хорошёвская",
+					"to": "Народное Ополчение",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Народное Ополчение",
+					"to": "Мнёвники",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Мнёвники",
+					"to": "Терехово",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Терехово",
+					"to": "Кунцевская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Кунцевская",
+					"to": "Давыдково",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Давыдково",
+					"to": "Аминьевская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Аминьевская",
+					"to": "Мичуринский проспект",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Мичуринский проспект",
+					"to": "Проспект Вернадского",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Проспект Вернадского",
+					"to": "Новаторская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Новаторская",
+					"to": "Воронцовская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Воронцовская",
+					"to": "Зюзино",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Зюзино",
+					"to": "Каховская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Каховская",
+					"to": "Варшавская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Варшавская",
+					"to": "Каширская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Каширская",
+					"to": "Кленовый бульвар",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Кленовый бульвар",
+					"to": "Нагатинский Затон",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Нагатинский Затон",
+					"to": "Печатники",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Печатники",
+					"to": "Текстильщики",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Текстильщики",
+					"to": "Нижегородская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Нижегородская",
+					"to": "Авиамоторная",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Авиамоторная",
+					"to": "Лефортово",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Лефортово",
+					"to": "Электрозаводская",
+					"duration": "00:05:00"
+				}
+			]
+		},
+		{
+			"title": "Бутовская линия",
+			"color": "#ACBFE3",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Битцевский парк",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Лесопарковая",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Улица Старокачаловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Улица Скобелевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Бульвар Адмирала Ушакова",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Улица Горчакова",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Бунинская Аллея",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Битцевский парк",
+					"to": "Лесопарковая",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Лесопарковая",
+					"to": "Улица Старокачаловская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Улица Старокачаловская",
+					"to": "Улица Скобелевская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Улица Скобелевская",
+					"to": "Бульвар Адмирала Ушакова",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Бульвар Адмирала Ушакова",
+					"to": "Улица Горчакова",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Улица Горчакова",
+					"to": "Бунинская Аллея",
+					"duration": "00:05:00"
+				}
+			]
+		},
+		{
+			"title": "Московское центральное кольцо",
+			"color": "#FFA8AF",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Измайлово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Локомотив",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Бульвар Рокоссовского",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Белокаменная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ростокино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ботанический сад",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Владыкино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Окружная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Лихоборы",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Коптево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Балтийская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Стрешнево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Панфиловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Зорге",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Хорошёво",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Шелепиха",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Москва-Сити",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кутузовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Лужники",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Площадь Гагарина",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Крымская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Верхние Котлы",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "ЗИЛ",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Автозаводская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Дубровка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Угрешская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новохохловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Нижегородская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Андроновка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Шоссе Энтузиастов",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Соколиная Гора",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Измайлово",
+					"to": "Локомотив",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Локомотив",
+					"to": "Бульвар Рокоссовского",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Бульвар Рокоссовского",
+					"to": "Белокаменная",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Белокаменная",
+					"to": "Ростокино",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Ростокино",
+					"to": "Ботанический сад",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Ботанический сад",
+					"to": "Владыкино",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Владыкино",
+					"to": "Окружная",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Окружная",
+					"to": "Лихоборы",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Лихоборы",
+					"to": "Коптево",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Коптево",
+					"to": "Балтийская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Балтийская",
+					"to": "Стрешнево",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Стрешнево",
+					"to": "Панфиловская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Панфиловская",
+					"to": "Зорге",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Зорге",
+					"to": "Хорошёво",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Хорошёво",
+					"to": "Шелепиха",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Шелепиха",
+					"to": "Москва-Сити",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Москва-Сити",
+					"to": "Кутузовская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Кутузовская",
+					"to": "Лужники",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Лужники",
+					"to": "Площадь Гагарина",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Площадь Гагарина",
+					"to": "Крымская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Крымская",
+					"to": "Верхние Котлы",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Верхние Котлы",
+					"to": "ЗИЛ",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "ЗИЛ",
+					"to": "Автозаводская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Автозаводская",
+					"to": "Дубровка",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Дубровка",
+					"to": "Угрешская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Угрешская",
+					"to": "Новохохловская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Новохохловская",
+					"to": "Нижегородская",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Нижегородская",
+					"to": "Андроновка",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Андроновка",
+					"to": "Шоссе Энтузиастов",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Шоссе Энтузиастов",
+					"to": "Соколиная Гора",
+					"duration": "00:05:00"
+				},
+				{
+					"from": "Соколиная Гора",
+					"to": "Измайлово",
+					"duration": "00:05:00"
+				}
+			]
+		},
+		{
+			"title": "Некрасовская линия",
+			"color": "#E66AC0",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Нижегородская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Стахановская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Окская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Юго-Восточная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Косино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Улица Дмитриевского",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Лухманоская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Некрасовка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Нижегородская",
+					"to": "Стахановская",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Стахановская",
+					"to": "Окская",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Окская",
+					"to": "Юго-Восточная",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Юго-Восточная",
+					"to": "Косино",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Косино",
+					"to": "Улица Дмитриевского",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Улица Дмитриевского",
+					"to": "Лухманоская",
+					"duration": "00:04:00"
+				},
+				{
+					"from": "Лухманоская",
+					"to": "Некрасовка",
+					"duration": "00:04:00"
+				}
+			]
+		},
+		{
+			"title": "Троицкая линия",
+			"color": "#177245",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Новаторская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Университет дружбы народов",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Генерала Тюленева",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тютчевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Корниловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Коммунарка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новомосковская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Новаторская",
+					"to": "Университет дружбы народов",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Университет дружбы народов",
+					"to": "Генерала Тюленева",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Генерала Тюленева",
+					"to": "Тютчевская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Тютчевская",
+					"to": "Корниловская",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Корниловская",
+					"to": "Коммунарка",
+					"duration": "00:02:00"
+				},
+				{
+					"from": "Коммунарка",
+					"to": "Новомосковская",
+					"duration": "00:02:00"
+				}
+			]
+		},
+		{
+			"title": "МЦД-1",
+			"color": "#FAA400",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Лобня",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Шереметьевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Хлебниково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Водники",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Долгопрудная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новодачная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Марк",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Лианозово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Бескудниково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Дегунино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Окружная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тимирязевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Савёловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Белорусская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Беговая",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тестовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Фили",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Славянский бульвар",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кунцевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Рабочий Посёлок",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Сетунь",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Немчиновка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Сколково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Баковка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Одинцово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Лобня",
+					"to": "Шереметьевская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Шереметьевская",
+					"to": "Хлебниково",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Хлебниково",
+					"to": "Водники",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Водники",
+					"to": "Долгопрудная",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Долгопрудная",
+					"to": "Новодачная",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Новодачная",
+					"to": "Марк",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Марк",
+					"to": "Лианозово",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Лианозово",
+					"to": "Бескудниково",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Бескудниково",
+					"to": "Дегунино",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Дегунино",
+					"to": "Окружная",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Окружная",
+					"to": "Тимирязевская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Тимирязевская",
+					"to": "Савёловская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Савёловская",
+					"to": "Белорусская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Белорусская",
+					"to": "Беговая",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Беговая",
+					"to": "Тестовская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Тестовская",
+					"to": "Фили",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Фили",
+					"to": "Славянский бульвар",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Славянский бульвар",
+					"to": "Кунцевская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Кунцевская",
+					"to": "Рабочий Посёлок",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Рабочий Посёлок",
+					"to": "Сетунь",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Сетунь",
+					"to": "Немчиновка",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Немчиновка",
+					"to": "Сколково",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Сколково",
+					"to": "Баковка",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Баковка",
+					"to": "Одинцово",
+					"duration": "00:09:00"
+				}
+			]
+		},
+		{
+			"title": "МЦД-2",
+			"color": "#EA4184",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Нахабино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Аникеевка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Опалиха",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Красногорская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Павшино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Пенягино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Волоколамская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Трикотажная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Тушинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Щукинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Стрешнево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Красный Балтиец",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Гражданская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Дмитровская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Марьина Роща",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Рижская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Площадь трёх вокзалов",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Курская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Москва-Товарная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Калитники",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новохохловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Текстильщики",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Печатники",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Люблино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Депо",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Перерва",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Курьяново",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Москворечье",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Царицыно",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Покровское",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Красный Строитель",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Битца",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Бутово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Щербинка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Остафьево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Силикатная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Подольск",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Нахабино",
+					"to": "Аникеевка",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Аникеевка",
+					"to": "Опалиха",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Опалиха",
+					"to": "Красногорская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Красногорская",
+					"to": "Павшино",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Павшино",
+					"to": "Пенягино",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Пенягино",
+					"to": "Волоколамская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Волоколамская",
+					"to": "Трикотажная",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Трикотажная",
+					"to": "Тушинская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Тушинская",
+					"to": "Щукинская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Щукинская",
+					"to": "Стрешнево",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Стрешнево",
+					"to": "Красный Балтиец",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Красный Балтиец",
+					"to": "Гражданская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Гражданская",
+					"to": "Дмитровская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Дмитровская",
+					"to": "Марьина Роща",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Марьина Роща",
+					"to": "Рижская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Рижская",
+					"to": "Площадь трёх вокзалов",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Площадь трёх вокзалов",
+					"to": "Курская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Курская",
+					"to": "Москва-Товарная",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Москва-Товарная",
+					"to": "Калитники",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Калитники",
+					"to": "Новохохловская",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Новохохловская",
+					"to": "Текстильщики",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Текстильщики",
+					"to": "Печатники",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Печатники",
+					"to": "Люблино",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Люблино",
+					"to": "Депо",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Депо",
+					"to": "Перерва",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Перерва",
+					"to": "Курьяново",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Курьяново",
+					"to": "Москворечье",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Москворечье",
+					"to": "Царицыно",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Царицыно",
+					"to": "Покровское",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Покровское",
+					"to": "Красный Строитель",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Красный Строитель",
+					"to": "Битца",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Битца",
+					"to": "Бутово",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Бутово",
+					"to": "Щербинка",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Щербинка",
+					"to": "Остафьево",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Остафьево",
+					"to": "Силикатная",
+					"duration": "00:09:00"
+				},
+				{
+					"from": "Силикатная",
+					"to": "Подольск",
+					"duration": "00:09:00"
+				}
+			]
+		},
+		{
+			"title": "МЦД-3",
+			"color": "#E15D29",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Зеленоград - Крюково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Фирсановская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Сходня",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Подрезково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новоподрезково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Молжаниново",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Химки",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Левобережная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ховрино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Грачёвская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Моссельмаш",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Лихоборы",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Петровско-Разумовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Останкино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Митьково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Электрозаводская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Сортировочная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Авиамоторная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Андроновка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Перово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Плющево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Вешняки",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Выхино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Косино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ухтомская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Люберцы",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Панки",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Томилино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Красково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Малаховка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Удельная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Быково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ильинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Отдых",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кратово",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Есенинская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Фабричная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Раменское",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ипподром",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Зеленоград - Крюково",
+					"to": "Фирсановская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Фирсановская",
+					"to": "Сходня",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Сходня",
+					"to": "Подрезково",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Подрезково",
+					"to": "Новоподрезково",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Новоподрезково",
+					"to": "Молжаниново",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Молжаниново",
+					"to": "Химки",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Химки",
+					"to": "Левобережная",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Левобережная",
+					"to": "Ховрино",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Ховрино",
+					"to": "Грачёвская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Грачёвская",
+					"to": "Моссельмаш",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Моссельмаш",
+					"to": "Лихоборы",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Лихоборы",
+					"to": "Петровско-Разумовская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Петровско-Разумовская",
+					"to": "Останкино",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Останкино",
+					"to": "Митьково",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Митьково",
+					"to": "Электрозаводская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Электрозаводская",
+					"to": "Сортировочная",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Сортировочная",
+					"to": "Авиамоторная",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Авиамоторная",
+					"to": "Андроновка",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Андроновка",
+					"to": "Перово",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Перово",
+					"to": "Плющево",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Плющево",
+					"to": "Вешняки",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Вешняки",
+					"to": "Выхино",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Выхино",
+					"to": "Косино",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Косино",
+					"to": "Ухтомская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Ухтомская",
+					"to": "Люберцы",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Люберцы",
+					"to": "Панки",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Панки",
+					"to": "Томилино",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Томилино",
+					"to": "Красково",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Красково",
+					"to": "Малаховка",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Малаховка",
+					"to": "Удельная",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Удельная",
+					"to": "Быково",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Быково",
+					"to": "Ильинская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Ильинская",
+					"to": "Отдых",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Отдых",
+					"to": "Кратово",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Кратово",
+					"to": "Есенинская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Есенинская",
+					"to": "Фабричная",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Фабричная",
+					"to": "Раменское",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Раменское",
+					"to": "Ипподром",
+					"duration": "00:10:00"
+				}
+			]
+		},
+		{
+			"title": "МЦД-3-2",
+			"color": "#E15D29",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Останкино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ленинградский вокзал",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Останкино",
+					"to": "Ленинградский вокзал",
+					"duration": "00:10:00"
+				}
+			]
+		},
+		{
+			"title": "МЦД-3-3",
+			"color": "#E15D29",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Электрозаводская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Казанский вокзал",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Электрозаводская",
+					"to": "Казанский вокзал",
+					"duration": "00:10:00"
+				}
+			]
+		},
+		{
+			"title": "МЦД-4",
+			"color": "#3CB183",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Железнодорожная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Ольгино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кучино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Салтыковская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Никольская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Реутов",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новогиреево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кусково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Чухлинка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Нижегородская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Серп и Молот",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Курская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Площадь трёх вокзалов",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Марьина Роща",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Савёловская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Белорусская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Москва-Сити",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кутузовская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Поклонная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Минская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Матвеевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Аминьевская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Очаково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Мещерская",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Солнечная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Переделкино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Мичуринец",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Внуково",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Лесной Городок",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Толстопальцево",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Кокошкино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Санино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Крёкшино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Победа",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Апрелевка",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Железнодорожная",
+					"to": "Ольгино",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Ольгино",
+					"to": "Кучино",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Кучино",
+					"to": "Салтыковская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Салтыковская",
+					"to": "Никольская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Никольская",
+					"to": "Реутов",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Реутов",
+					"to": "Новогиреево",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Новогиреево",
+					"to": "Кусково",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Кусково",
+					"to": "Чухлинка",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Чухлинка",
+					"to": "Нижегородская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Нижегородская",
+					"to": "Серп и Молот",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Серп и Молот",
+					"to": "Курская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Курская",
+					"to": "Площадь трёх вокзалов",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Площадь трёх вокзалов",
+					"to": "Марьина Роща",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Марьина Роща",
+					"to": "Савёловская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Савёловская",
+					"to": "Белорусская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Белорусская",
+					"to": "Москва-Сити",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Москва-Сити",
+					"to": "Кутузовская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Кутузовская",
+					"to": "Поклонная",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Поклонная",
+					"to": "Минская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Минская",
+					"to": "Матвеевская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Матвеевская",
+					"to": "Аминьевская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Аминьевская",
+					"to": "Очаково",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Очаково",
+					"to": "Мещерская",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Мещерская",
+					"to": "Солнечная",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Солнечная",
+					"to": "Переделкино",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Переделкино",
+					"to": "Мичуринец",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Мичуринец",
+					"to": "Внуково",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Внуково",
+					"to": "Лесной Городок",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Лесной Городок",
+					"to": "Толстопальцево",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Толстопальцево",
+					"to": "Кокошкино",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Кокошкино",
+					"to": "Санино",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Санино",
+					"to": "Крёкшино",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Крёкшино",
+					"to": "Победа",
+					"duration": "00:10:00"
+				},
+				{
+					"from": "Победа",
+					"to": "Апрелевка",
+					"duration": "00:10:00"
+				}
+			]
+		},
+		{
+			"title": "МЦД-4А",
+			"color": "#3CB183",
+			"accesstype": "ACCESSIBLE",
+			"stations": [
+				{
+					"title": "Солнечная",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				},
+				{
+					"title": "Новопеределкино",
+					"occupancy": 5,
+					"accesstype": "ACCESSIBLE",
+					"opentime": "05:30",
+					"closetime": "01:30"
+				}
+			],
+			"railways": [
+				{
+					"from": "Солнечная",
+					"to": "Новопеределкино",
+					"duration": "00:10:00"
+				}
+			]
+		}
+	],
+	"transitions": [
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Бульвар Рокоссовского",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Бульвар Рокоссовского"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Черкизовская",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Локомотив"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Сокольники",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Сокольники"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Сокольники",
+			"branchdst": "МЦД-3",
+			"stationdst": "Митьково"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:07:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Комсомольская",
+			"branchdst": "МЦД-3-3",
+			"stationdst": "Казанский вокзал"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Комсомольская",
+			"branchdst": "МЦД-3-2",
+			"stationdst": "Ленинградский вокзал"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Комсомольская",
+			"branchdst": "Кольцевая линия",
+			"stationdst": "Комсомольская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Комсомольская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Площадь трёх вокзалов"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Чистые пруды",
+			"branchdst": "Калужско-Рижская линия",
+			"stationdst": "Тургеневская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Чистые пруды",
+			"branchdst": "Люблинско-Дмитрия линия",
+			"stationdst": "Сретенский бульвар"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Лубянка",
+			"branchdst": "Таганско-Краснопресненская линия",
+			"stationdst": "Кузнецкий Мост"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Охотный Ряд",
+			"branchdst": "Замоскворецкая линия",
+			"stationdst": "Театральная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Библиотека имени Ленина",
+			"branchdst": "Филёвская линия",
+			"stationdst": "Александровский сад"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Библиотека имени Ленина",
+			"branchdst": "Серпуховско-Тимирязевская линия",
+			"stationdst": "Боровицкая"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Библиотека имени Ленина",
+			"branchdst": "Арбатско-Покровская линия",
+			"stationdst": "Арбатская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Парк культуры",
+			"branchdst": "Кольцевая линия",
+			"stationdst": "Парк культуры"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Спортивная",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Лужники"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Проспект Вернадского",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Проспект Вернадского"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:02:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Сокольническая линия",
+			"stationsrc": "Новомосковская",
+			"branchdst": "Троицкая линия",
+			"stationdst": "Новомосковская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Ховрино",
+			"branchdst": "МЦД-3",
+			"stationdst": "Ховрино"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:14:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Войковская",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Балтийская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:14:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Войковская",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Стрешнево"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:14:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Войковская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Стрешнево"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Динамо",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Петровский парк"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Белорусская",
+			"branchdst": "Кольцевая линия",
+			"stationdst": "Белорусская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Белорусская",
+			"branchdst": "МЦД-1",
+			"stationdst": "Белорусская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Белорусская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Белорусская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Тверская",
+			"branchdst": "Серпуховско-Тимирязевская линия",
+			"stationdst": "Чеховская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Тверская",
+			"branchdst": "Таганско-Краснопресненская линия",
+			"stationdst": "Пушкинская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Театральная",
+			"branchdst": "Арбатско-Покровская линия",
+			"stationdst": "Площадь Революции"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Новокузнецкая",
+			"branchdst": "Калужско-Рижская линия",
+			"stationdst": "Третьяковская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Новокузнецкая",
+			"branchdst": "Калининская линия",
+			"stationdst": "Третьяковская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Павелецкая",
+			"branchdst": "Кольцевая линия",
+			"stationdst": "Павелецкая"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:11:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Автозаводская",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Автозаводская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:02:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Каширская",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Каширская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Царицыно",
+			"branchdst": "МЦД-2",
+			"stationdst": "Царицыно"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Замоскворецкая линия",
+			"stationsrc": "Красногвардейская",
+			"branchdst": "Люблинско-Дмитрия линия",
+			"stationdst": "Зябликово"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Партизанская",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Измайлово"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Электрозаводская",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Электрозаводская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Электрозаводская",
+			"branchdst": "МЦД-3",
+			"stationdst": "Электрозаводская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Курская",
+			"branchdst": "Кольцевая линия",
+			"stationdst": "Курская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Курская",
+			"branchdst": "Люблинско-Дмитрия линия",
+			"stationdst": "Чкаловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Курская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Курская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Курская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Курская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Арбатская",
+			"branchdst": "Филёвская линия",
+			"stationdst": "Александровский сад"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Арбатская",
+			"branchdst": "Серпуховско-Тимирязевская линия",
+			"stationdst": "Боровицкая"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Киевская",
+			"branchdst": "Кольцевая линия",
+			"stationdst": "Киевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Киевская",
+			"branchdst": "Филёвская линия",
+			"stationdst": "Киевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:02:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Парк Победы",
+			"branchdst": "Солнцевская линия",
+			"stationdst": "Парк Победы"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:18:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Парк Победы",
+			"branchdst": "МЦД-4",
+			"stationdst": "Поклонная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Славянский бульвар",
+			"branchdst": "МЦД-1",
+			"stationdst": "Славянский бульвар"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Кунцевская",
+			"branchdst": "Филёвская линия",
+			"stationdst": "Кунцевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Кунцевская",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Кунцевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Кунцевская",
+			"branchdst": "МЦД-1",
+			"stationdst": "Кунцевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:07:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Арбатско-Покровская линия",
+			"stationsrc": "Волоколамская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Волоколамская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия",
+			"stationsrc": "Киевская",
+			"branchdst": "Кольцевая линия",
+			"stationdst": "Киевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:01:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия",
+			"stationsrc": "Киевская",
+			"branchdst": "Филёвская линия-2",
+			"stationdst": "Киевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия",
+			"stationsrc": "Кутузовская",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Кутузовская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия",
+			"stationsrc": "Кутузовская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Кутузовская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия",
+			"stationsrc": "Фили",
+			"branchdst": "МЦД-1",
+			"stationdst": "Фили"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия",
+			"stationsrc": "Кунцевская",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Кунцевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия",
+			"stationsrc": "Кунцевская",
+			"branchdst": "МЦД-1",
+			"stationdst": "Кунцевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия-2",
+			"stationsrc": "Деловой центр",
+			"branchdst": "Солнцевская линия",
+			"stationdst": "Деловой центр"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия-2",
+			"stationsrc": "Москва-Сити",
+			"branchdst": "МЦД-4",
+			"stationdst": "Москва-Сити"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:07:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Филёвская линия-2",
+			"stationsrc": "Москва-Сити",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Москва-Сити"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Курская",
+			"branchdst": "Люблинско-Дмитрия линия",
+			"stationdst": "Чкаловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Курская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Курская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Курская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Курская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Комсомольская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Площадь трёх вокзалов"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Комсомольская",
+			"branchdst": "МЦД-3-3",
+			"stationdst": "Казанский вокзал"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:11:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Комсомольская",
+			"branchdst": "МЦД-3-2",
+			"stationdst": "Ленинградский вокзал"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Комсомольская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Площадь трёх вокзалов"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Проспект Мира",
+			"branchdst": "Калужско-Рижская линия",
+			"stationdst": "Проспект Мира"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Новослободская",
+			"branchdst": "Серпуховско-Тимирязевская линия",
+			"stationdst": "Менделеевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Белорусская",
+			"branchdst": "МЦД-1",
+			"stationdst": "Белорусская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Белорусская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Белорусская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Краснопресенская",
+			"branchdst": "Таганско-Краснопресненская линия",
+			"stationdst": "Баррикадная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Октябрьская",
+			"branchdst": "Калужско-Рижская линия",
+			"stationdst": "Октябрьская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Добрынинская",
+			"branchdst": "Серпуховско-Тимирязевская линия",
+			"stationdst": "Серпуховская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Таганская",
+			"branchdst": "Калининская линия",
+			"stationdst": "Марксистская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Кольцевая линия",
+			"stationsrc": "Таганская",
+			"branchdst": "Таганско-Краснопресненская линия",
+			"stationdst": "Таганская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калужско-Рижская линия",
+			"stationsrc": "Ботанический сад",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Ботанический сад"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калужско-Рижская линия",
+			"stationsrc": "Рижская",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Рижская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калужско-Рижская линия",
+			"stationsrc": "Рижская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Рижская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калужско-Рижская линия",
+			"stationsrc": "Тургеневская",
+			"branchdst": "Люблинско-Дмитрия линия",
+			"stationdst": "Сретенский бульвар"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:02:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калужско-Рижская линия",
+			"stationsrc": "Китай-город",
+			"branchdst": "Таганско-Краснопресненская линия",
+			"stationdst": "Китай-город"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:02:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калужско-Рижская линия",
+			"stationsrc": "Третьяковская",
+			"branchdst": "Калининская линия",
+			"stationdst": "Третьяковская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калужско-Рижская линия",
+			"stationsrc": "Ленинский проспект",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Площадь Гагарина"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калужско-Рижская линия",
+			"stationsrc": "Калужская",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Воронцовская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калужско-Рижская линия",
+			"stationsrc": "Новоясеневская",
+			"branchdst": "Бутовская линия",
+			"stationdst": "Битцевский парк"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Тушинская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Тушинская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:07:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Щукинская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Щукинская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:14:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Октябрьское Поле",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Зорге"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:13:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Октябрьское Поле",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Панфиловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Полежаевская",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Хорошёвская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:14:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Полежаевская",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Хорошёво"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Беговая",
+			"branchdst": "МЦД-1",
+			"stationdst": "Беговая"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Пушкинская",
+			"branchdst": "Серпуховско-Тимирязевская линия",
+			"stationdst": "Чеховская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Таганская",
+			"branchdst": "Калининская линия",
+			"stationdst": "Марксистская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Пролетарская",
+			"branchdst": "Люблинско-Дмитрия линия",
+			"stationdst": "Крестьянская Застава"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:07:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Текстильщики",
+			"branchdst": "МЦД-2",
+			"stationdst": "Текстильщики"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Текстильщики",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Текстильщики"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Выхино",
+			"branchdst": "МЦД-3",
+			"stationdst": "Выхино"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Лермонтовский проспект",
+			"branchdst": "Некрасовская линия",
+			"stationdst": "Косино"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Таганско-Краснопресненская линия",
+			"stationsrc": "Лермонтовский проспект",
+			"branchdst": "МЦД-3",
+			"stationdst": "Косино"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:15:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калининская линия",
+			"stationsrc": "Новокосино",
+			"branchdst": "МЦД-4",
+			"stationdst": "Реутов"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:15:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калининская линия",
+			"stationsrc": "Новогиреево",
+			"branchdst": "МЦД-4",
+			"stationdst": "Новогиреево"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калининская линия",
+			"stationsrc": "Шоссе Энтузиастов",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Шоссе Энтузиастов"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калининская линия",
+			"stationsrc": "Авиамоторная",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Авиамоторная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:11:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калининская линия",
+			"stationsrc": "Авиамоторная",
+			"branchdst": "МЦД-3",
+			"stationdst": "Авиамоторная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калининская линия",
+			"stationsrc": "Площадь Ильича",
+			"branchdst": "Люблинско-Дмитрия линия",
+			"stationdst": "Римская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:07:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калининская линия",
+			"stationsrc": "Площадь Ильича",
+			"branchdst": "МЦД-4",
+			"stationdst": "Серп и Молот"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:14:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Калининская линия",
+			"stationsrc": "Площадь Ильича",
+			"branchdst": "МЦД-2",
+			"stationdst": "Москва-Товарная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Солнцевская линия",
+			"stationsrc": "Деловой центр",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Москва-Сити"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:18:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Солнцевская линия",
+			"stationsrc": "Парк Победы",
+			"branchdst": "МЦД-4",
+			"stationdst": "Поклонная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Солнцевская линия",
+			"stationsrc": "Минская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Минская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Солнцевская линия",
+			"stationsrc": "Мичуринский проспект",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Мичуринский проспект"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Владыкино",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Владыкино"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:02:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Петровско-Разумовская",
+			"branchdst": "Люблинско-Дмитрия линия",
+			"stationdst": "Петровско-Разумовская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:13:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Петровско-Разумовская",
+			"branchdst": "МЦД-3",
+			"stationdst": "Петровско-Разумовская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:07:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Тимирязевская",
+			"branchdst": "МЦД-1",
+			"stationdst": "Тимирязевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Дмитровская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Дмитровская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Савёловская",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Савёловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Савёловская",
+			"branchdst": "МЦД-1",
+			"stationdst": "Савёловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Савёловская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Савёловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Цветной бульвар",
+			"branchdst": "Люблинско-Дмитрия линия",
+			"stationdst": "Трубная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:15:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Нагатинская",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Верхние Котлы"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Севастопольская",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Каховская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Серпуховско-Тимирязевская линия",
+			"stationsrc": "Бульвар Дмитрия Донского",
+			"branchdst": "Бутовская линия",
+			"stationdst": "Улица Старокачаловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Лианозово",
+			"branchdst": "МЦД-1",
+			"stationdst": "Лианозово"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Окружная",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Окружная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Окружная",
+			"branchdst": "МЦД-1",
+			"stationdst": "Окружная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:13:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Петровско-Разумовская",
+			"branchdst": "МЦД-3",
+			"stationdst": "Петровско-Разумовская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Бутырская",
+			"branchdst": "МЦД-3",
+			"stationdst": "Останкино"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Марьина Роща",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Марьина Роща"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Марьина Роща",
+			"branchdst": "МЦД-2",
+			"stationdst": "Марьина Роща"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Марьина Роща",
+			"branchdst": "МЦД-4",
+			"stationdst": "Марьина Роща"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Чкаловская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Курская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Чкаловская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Курская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:14:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Римская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Москва-Товарная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Римская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Серп и Молот"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:14:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Дубровка",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Дубровка"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Печатники",
+			"branchdst": "Большая кольцевая линия",
+			"stationdst": "Печатники"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Люблинско-Дмитрия линия",
+			"stationsrc": "Печатники",
+			"branchdst": "МЦД-2",
+			"stationdst": "Печатники"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Электрозаводская",
+			"branchdst": "МЦД-3",
+			"stationdst": "Электрозаводская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Сокольники",
+			"branchdst": "МЦД-3",
+			"stationdst": "Митьково"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:14:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Рижская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Рижская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Марьина Роща",
+			"branchdst": "МЦД-2",
+			"stationdst": "Марьина Роща"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Марьина Роща",
+			"branchdst": "МЦД-4",
+			"stationdst": "Марьина Роща"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Савёловская",
+			"branchdst": "МЦД-1",
+			"stationdst": "Савёловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Савёловская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Савёловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:14:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Хорошёвская",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Хорошёво"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:09:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Кунцевская",
+			"branchdst": "МЦД-1",
+			"stationdst": "Кунцевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Аминьевская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Аминьевская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Новаторская",
+			"branchdst": "Троицкая линия",
+			"stationdst": "Новаторская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Печатники",
+			"branchdst": "МЦД-2",
+			"stationdst": "Печатники"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Текстильщики",
+			"branchdst": "МЦД-2",
+			"stationdst": "Текстильщики"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Нижегородская",
+			"branchdst": "Московское центральное кольцо",
+			"stationdst": "Нижегородская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:03:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Нижегородская",
+			"branchdst": "Некрасовская линия",
+			"stationdst": "Нижегородская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Нижегородская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Нижегородская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:13:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Большая кольцевая линия",
+			"stationsrc": "Авиамоторная",
+			"branchdst": "МЦД-3",
+			"stationdst": "Авиамоторная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московское центральное кольцо",
+			"stationsrc": "Окружная",
+			"branchdst": "МЦД-1",
+			"stationdst": "Окружная"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московское центральное кольцо",
+			"stationsrc": "Лихоборы",
+			"branchdst": "МЦД-3",
+			"stationdst": "Лихоборы"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московское центральное кольцо",
+			"stationsrc": "Стрешнево",
+			"branchdst": "МЦД-2",
+			"stationdst": "Стрешнево"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:13:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московское центральное кольцо",
+			"stationsrc": "Шелепиха",
+			"branchdst": "МЦД-1",
+			"stationdst": "Тестовская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московское центральное кольцо",
+			"stationsrc": "Москва-Сити",
+			"branchdst": "МЦД-4",
+			"stationdst": "Москва-Сити"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:04:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московское центральное кольцо",
+			"stationsrc": "Кутузовская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Кутузовская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:07:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московское центральное кольцо",
+			"stationsrc": "Новохохловская",
+			"branchdst": "МЦД-2",
+			"stationdst": "Новохохловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московское центральное кольцо",
+			"stationsrc": "Нижегородская",
+			"branchdst": "Некрасовская линия",
+			"stationdst": "Нижегородская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московское центральное кольцо",
+			"stationsrc": "Нижегородская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Нижегородская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:08:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Московское центральное кольцо",
+			"stationsrc": "Андроновка",
+			"branchdst": "МЦД-3",
+			"stationdst": "Андроновка"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:06:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Некрасовская линия",
+			"stationsrc": "Нижегородская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Нижегородская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:07:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "Некрасовская линия",
+			"stationsrc": "Косино",
+			"branchdst": "МЦД-3",
+			"stationdst": "Косино"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-1",
+			"stationsrc": "Савёловская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Савёловская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:01:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-1",
+			"stationsrc": "Белорусская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Белорусская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:01:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-2",
+			"stationsrc": "Марьина Роща",
+			"branchdst": "МЦД-4",
+			"stationdst": "Марьина Роща"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:01:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-2",
+			"stationsrc": "Площадь трёх вокзалов",
+			"branchdst": "МЦД-4",
+			"stationdst": "Площадь трёх вокзалов"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-2",
+			"stationsrc": "Площадь трёх вокзалов",
+			"branchdst": "МЦД-3-2",
+			"stationdst": "Ленинградский вокзал"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-2",
+			"stationsrc": "Площадь трёх вокзалов",
+			"branchdst": "МЦД-3-3",
+			"stationdst": "Казанский вокзал"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:01:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-2",
+			"stationsrc": "Курская",
+			"branchdst": "МЦД-4",
+			"stationdst": "Курская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:17:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-2",
+			"stationsrc": "Москва-Товарная",
+			"branchdst": "МЦД-4",
+			"stationdst": "Серп и Молот"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:01:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-3",
+			"stationsrc": "Останкино",
+			"branchdst": "МЦД-3-2",
+			"stationdst": "Останкино"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:01:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-3",
+			"stationsrc": "Электрозаводская",
+			"branchdst": "МЦД-3-3",
+			"stationdst": "Электрозаводская"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:10:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-3",
+			"stationsrc": "Перово",
+			"branchdst": "МЦД-4",
+			"stationdst": "Чухлинка"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-3-2",
+			"stationsrc": "Ленинградский вокзал",
+			"branchdst": "МЦД-4",
+			"stationdst": "Площадь трёх вокзалов"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-3-2",
+			"stationsrc": "Ленинградский вокзал",
+			"branchdst": "МЦД-3-3",
+			"stationdst": "Казанский вокзал"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:12:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-3-3",
+			"stationsrc": "Казанский вокзал",
+			"branchdst": "МЦД-4",
+			"stationdst": "Площадь трёх вокзалов"
+		},
+		{
+			"occupancy": 5,
+			"accesstype": "ACCESSIBLE",
+			"duration": "00:05:00",
+			"opentime": "05:30",
+			"closetime": "01:30",
+			"branchsrc": "МЦД-4",
+			"stationsrc": "Солнечная",
+			"branchdst": "МЦД-4А",
+			"stationdst": "Солнечная"
+		}
+	]
+}
