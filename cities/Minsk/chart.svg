@@ -1,0 +1,310 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 1150">
+  <g id="branch_railways" stroke="#48b85e" stroke-width="8" fill="none">
+    <line x1="539" x2="539" y1="502" y2="565"/>
+    <path d="M 539, 565 L 539, 618 Q 539 638 553.14 652.14 L 588, 687"/>
+    <path d="M 588, 687 L 628.16, 727.16 Q 637 736 637 748.5 L 637, 761"/>
+    <line x1="637" x2="637" y1="761" y2="835"/>
+    <line x1="637" x2="637" y1="835" y2="918"/>
+    <line x1="637" x2="637" y1="918" y2="992"/>
+  </g>
+  <g id="branch_railways" stroke="#0078bf" stroke-width="8" fill="none">
+    <line x1="1179" x2="1115" y1="96" y2="160"/>
+    <line x1="1115" x2="1051" y1="160" y2="224"/>
+    <line x1="1051" x2="987" y1="224" y2="288"/>
+    <line x1="987" x2="923" y1="288" y2="352"/>
+    <line x1="923" x2="859" y1="352" y2="416"/>
+    <line x1="859" x2="795" y1="416" y2="480"/>
+    <line x1="795" x2="731" y1="480" y2="544"/>
+    <line x1="731" x2="682" y1="544" y2="593"/>
+    <line x1="682" x2="603" y1="593" y2="672"/>
+    <line x1="603" x2="539" y1="672" y2="736"/>
+    <line x1="539" x2="475" y1="736" y2="800"/>
+    <line x1="475" x2="411" y1="800" y2="864"/>
+    <line x1="411" x2="347" y1="864" y2="928"/>
+    <line x1="347" x2="283" y1="928" y2="992"/>
+  </g>
+  <g id="branch_railways" stroke="#da2128" stroke-width="8" fill="none">
+    <line x1="219" x2="283" y1="160" y2="224"/>
+    <line x1="283" x2="347" y1="224" y2="288"/>
+    <line x1="347" x2="411" y1="288" y2="352"/>
+    <line x1="411" x2="475" y1="352" y2="416"/>
+    <line x1="475" x2="539" y1="416" y2="480"/>
+    <line x1="539" x2="603" y1="480" y2="544"/>
+    <line x1="603" x2="667" y1="544" y2="608"/>
+    <line x1="667" x2="731" y1="608" y2="672"/>
+    <line x1="731" x2="795" y1="672" y2="736"/>
+    <line x1="795" x2="859" y1="736" y2="800"/>
+    <line x1="859" x2="923" y1="800" y2="864"/>
+    <line x1="923" x2="987" y1="864" y2="928"/>
+    <line x1="987" x2="1051" y1="928" y2="992"/>
+  </g>
+  <g id="transitions">
+    <path stroke-width="2" fill="#ffffff" stroke="#000000" d="M 672.66, 613.66 L 687.66, 598.66 A 8, 8 0 0 0 676.34, 587.34 L 661.34, 602.34 A 8, 8 0 0 0 672.66, 613.66"/>
+    <path stroke-width="2" fill="none" stroke="#aaaaaa" d="M 667, 608 L 682, 593"/>
+    <path stroke-width="2" fill="#ffffff" stroke="#000000" d="M 593.66, 692.66 L 608.66, 677.66 A 8, 8 0 0 0 597.34, 666.34 L 582.34, 681.34 A 8, 8 0 0 0 593.66, 692.66"/>
+    <path stroke-width="2" fill="none" stroke="#aaaaaa" d="M 588, 687 L 603, 672"/>
+    <path stroke-width="2" fill="#ffffff" stroke="#000000" d="M 531, 480 L 531, 502 A 8, 8 0 0 0 547, 502 L 547, 480 A 8, 8 0 0 0 531, 480"/>
+    <path stroke-width="2" fill="none" stroke="#aaaaaa" d="M 539, 480 L 539, 502"/>
+  </g>
+  <g id="Название ветки">
+    <g id="Юбилейная площадь">
+      <circle x="539" y="502" cx="539" cy="502" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="539" y="502" cx="539" cy="502" r="5" fill="#48b85e"/>
+      <text x="523" y="502" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.35em" x="523">Юбилейная площадь</tspan>
+      </text>
+    </g>
+    <g id="Площадь Франтишка Богушевича">
+      <circle x="539" y="565" cx="539" cy="565" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="539" y="565" cx="539" cy="565" r="5" fill="#48b85e"/>
+      <text x="527" y="565" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.35em" x="527">Площадь</tspan>
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="19" x="527">Франтишка Богушевича</tspan>
+      </text>
+    </g>
+    <g id="Вокзальная">
+      <circle x="588" y="687" cx="588" cy="687" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="588" y="687" cx="588" cy="687" r="5" fill="#48b85e"/>
+      <text x="572" y="687" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.35em" x="572">Вокзальная</tspan>
+      </text>
+    </g>
+    <g id="Ковальская Слобода">
+      <circle x="637" y="761" cx="637" cy="761" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="637" y="761" cx="637" cy="761" r="5" fill="#48b85e"/>
+      <text x="649" y="761" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.35em" x="649">Ковальская</tspan>
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="19" x="649">Слобода</tspan>
+      </text>
+    </g>
+    <g id="Аэродромная">
+      <circle x="637" y="835" cx="637" cy="835" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="637" y="835" cx="637" cy="835" r="5" fill="#48b85e"/>
+      <text x="649" y="835" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.35em" x="649">Аэродромная</tspan>
+      </text>
+    </g>
+    <g id="Неморшанский Сад">
+      <circle x="637" y="918" cx="637" cy="918" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="637" y="918" cx="637" cy="918" r="5" fill="#48b85e"/>
+      <text x="649" y="918" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.35em" x="649">Неморшанский Сад</tspan>
+      </text>
+    </g>
+    <g id="Слуцкий Гостинец">
+      <circle x="637" y="992" cx="637" cy="992" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="637" y="992" cx="637" cy="992" r="5" fill="#48b85e"/>
+      <text x="649" y="992" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="649">Слуцкий Гостинец</tspan>
+      </text>
+    </g>
+  </g>
+  <g id="Название ветки">
+    <g id="Уручье">
+      <circle x="1179" y="96" cx="1179" cy="96" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="1179" y="96" cx="1179" cy="96" r="5" fill="#0078bf"/>
+      <text x="1164" y="85" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="1164">Уручье</tspan>
+      </text>
+    </g>
+    <g id="Борисовский тракт">
+      <circle x="1115" y="160" cx="1115" cy="160" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="1115" y="160" cx="1115" cy="160" r="5" fill="#0078bf"/>
+      <text x="1103" y="140" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="1103">Борисовский тракт</tspan>
+      </text>
+    </g>
+    <g id="Восток">
+      <circle x="1051" y="224" cx="1051" cy="224" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="1051" y="224" cx="1051" cy="224" r="5" fill="#0078bf"/>
+      <text x="1039" y="204" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="1039">Восток</tspan>
+      </text>
+    </g>
+    <g id="Московская">
+      <circle x="987" y="288" cx="987" cy="288" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="987" y="288" cx="987" cy="288" r="5" fill="#0078bf"/>
+      <text x="975" y="268" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="975">Московская</tspan>
+      </text>
+    </g>
+    <g id="Парк Челюскинцев">
+      <circle x="923" y="352" cx="923" cy="352" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="923" y="352" cx="923" cy="352" r="5" fill="#0078bf"/>
+      <text x="911" y="332" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="911">Парк Челюскинцев</tspan>
+      </text>
+    </g>
+    <g id="Академия наук">
+      <circle x="859" y="416" cx="859" cy="416" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="859" y="416" cx="859" cy="416" r="5" fill="#0078bf"/>
+      <text x="871" y="416" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="871">Академия наук</tspan>
+      </text>
+    </g>
+    <g id="Площадь Якуба Коласа">
+      <circle x="795" y="480" cx="795" cy="480" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="795" y="480" cx="795" cy="480" r="5" fill="#0078bf"/>
+      <text x="807" y="480" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="807">Площадь Якуба Коласа</tspan>
+      </text>
+    </g>
+    <g id="Площадь Победы">
+      <circle x="731" y="544" cx="731" cy="544" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="731" y="544" cx="731" cy="544" r="5" fill="#0078bf"/>
+      <text x="743" y="544" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="743">Площадь Победы</tspan>
+      </text>
+    </g>
+    <g id="Октябрьская">
+      <circle x="682" y="593" cx="682" cy="593" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="682" y="593" cx="682" cy="593" r="5" fill="#0078bf"/>
+      <text x="694" y="594" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="694">Октябрьская</tspan>
+      </text>
+    </g>
+    <g id="Площадь Ленина">
+      <circle x="603" y="672" cx="603" cy="672" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="603" y="672" cx="603" cy="672" r="5" fill="#0078bf"/>
+      <text x="595" y="648" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="595">Площадь Ленина</tspan>
+      </text>
+    </g>
+    <g id="Институт культуры">
+      <circle x="539" y="736" cx="539" cy="736" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="539" y="736" cx="539" cy="736" r="5" fill="#0078bf"/>
+      <text x="527" y="716" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="527">Институт культуры</tspan>
+      </text>
+    </g>
+    <g id="Грушевка">
+      <circle x="475" y="800" cx="475" cy="800" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="475" y="800" cx="475" cy="800" r="5" fill="#0078bf"/>
+      <text x="487" y="800" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="487">Грушевка</tspan>
+      </text>
+    </g>
+    <g id="Михалово">
+      <circle x="411" y="864" cx="411" cy="864" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="411" y="864" cx="411" cy="864" r="5" fill="#0078bf"/>
+      <text x="423" y="864" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="423">Михалово</tspan>
+      </text>
+    </g>
+    <g id="Петровщина">
+      <circle x="347" y="928" cx="347" cy="928" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="347" y="928" cx="347" cy="928" r="5" fill="#0078bf"/>
+      <text x="359" y="928" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="359">Петровщина</tspan>
+      </text>
+    </g>
+    <g id="Малиновка">
+      <circle x="283" y="992" cx="283" cy="992" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="283" y="992" cx="283" cy="992" r="5" fill="#0078bf"/>
+      <text x="295" y="992" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="295">Малиновка</tspan>
+      </text>
+    </g>
+  </g>
+  <g id="Название ветки">
+    <g id="Каменная горка">
+      <circle x="219" y="160" cx="219" cy="160" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="219" y="160" cx="219" cy="160" r="5" fill="#da2128"/>
+      <text x="231" y="136" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="231">Каменная горка</tspan>
+      </text>
+    </g>
+    <g id="Кунцевщина">
+      <circle x="283" y="224" cx="283" cy="224" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="283" y="224" cx="283" cy="224" r="5" fill="#da2128"/>
+      <text x="295" y="204" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="295">Кунцевщина</tspan>
+      </text>
+    </g>
+    <g id="Спортивная">
+      <circle x="347" y="288" cx="347" cy="288" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="347" y="288" cx="347" cy="288" r="5" fill="#da2128"/>
+      <text x="359" y="268" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="359">Спортивная</tspan>
+      </text>
+    </g>
+    <g id="Пушкинская">
+      <circle x="411" y="352" cx="411" cy="352" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="411" y="352" cx="411" cy="352" r="5" fill="#da2128"/>
+      <text x="423" y="332" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="423">Пушкинская</tspan>
+      </text>
+    </g>
+    <g id="Молодёжная">
+      <circle x="475" y="416" cx="475" cy="416" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="475" y="416" cx="475" cy="416" r="5" fill="#da2128"/>
+      <text x="489" y="400" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="489">Молодёжная</tspan>
+      </text>
+    </g>
+    <g id="Фрунзенская">
+      <circle x="539" y="480" cx="539" cy="480" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="539" y="480" cx="539" cy="480" r="5" fill="#da2128"/>
+      <text x="551" y="467" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="551">Фрунзенская</tspan>
+      </text>
+    </g>
+    <g id="Немига">
+      <circle x="603" y="544" cx="603" cy="544" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="603" y="544" cx="603" cy="544" r="5" fill="#da2128"/>
+      <text x="613" y="524" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="613">Немига</tspan>
+      </text>
+    </g>
+    <g id="Купаловская">
+      <circle x="667" y="608" cx="667" cy="608" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="667" y="608" cx="667" cy="608" r="5" fill="#da2128"/>
+      <text x="651" y="600" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="651">Купаловская</tspan>
+      </text>
+    </g>
+    <g id="Первомайская">
+      <circle x="731" y="672" cx="731" cy="672" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="731" y="672" cx="731" cy="672" r="5" fill="#da2128"/>
+      <text x="743" y="652" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="743">Первомайская</tspan>
+      </text>
+    </g>
+    <g id="Пролетарская">
+      <circle x="795" y="736" cx="795" cy="736" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="795" y="736" cx="795" cy="736" r="5" fill="#da2128"/>
+      <text x="807" y="716" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="807">Пролетарская</tspan>
+      </text>
+    </g>
+    <g id="Тракторный завод">
+      <circle x="859" y="800" cx="859" cy="800" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="859" y="800" cx="859" cy="800" r="5" fill="#da2128"/>
+      <text x="871" y="780" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="871">Тракторный завод</tspan>
+      </text>
+    </g>
+    <g id="Партизанская">
+      <circle x="923" y="864" cx="923" cy="864" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="923" y="864" cx="923" cy="864" r="5" fill="#da2128"/>
+      <text x="935" y="846" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="935">Партизанская</tspan>
+      </text>
+    </g>
+    <g id="Автозаводская">
+      <circle x="987" y="928" cx="987" cy="928" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="987" y="928" cx="987" cy="928" r="5" fill="#da2128"/>
+      <text x="999" y="908" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="999">Автозаводская</tspan>
+      </text>
+    </g>
+    <g id="Могилёвская">
+      <circle x="1051" y="992" cx="1051" cy="992" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="1051" y="992" cx="1051" cy="992" r="5" fill="#da2128"/>
+      <text x="1070" y="992" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="1070">Могилёвская</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

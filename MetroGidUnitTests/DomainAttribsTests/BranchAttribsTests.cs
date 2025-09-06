@@ -23,9 +23,9 @@ public class BranchAttribsTests
     public void AttribsValidatorTest(string title, int color, int type, string exMessege, ExceptionType exType, ExceptionReason exReason)
     {
         Branch branch = new(title, color, (AccessType)type);
-
         SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
+
         var ex = Assert.Throws<DomainValidationException>(() => { branch.Validate(domainAttribsValidator); });
 
         Assert.Equal(exMessege, ex.Message);

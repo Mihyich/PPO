@@ -346,27 +346,13 @@ public class ChartService(
         return await ChartRepo.GetTransitionDutyIdAsync(transitionId);
     }
 
-    public async Task<int> UpdateChartAsync(
-        MCUD.RoleTypeDTO role,
-        string chartCity, string chartTitle,
-        MCUD.ChartDTO chart
-    )
-    {
-        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
-            return 0;
-
-        int chartId = await ChartRepo.GetChartIdAsync(chartCity, chartTitle);
-
-        return await ChartRepo.UpdateChartByIdAsync(chartId, DtoDomainConverter.Convert(chart));
-    }
-
     public async Task<int> UpdateChartSchemeAsync(
-        MCUD.RoleTypeDTO role,
+        MCMT.RoleType role,
         string chartCity, string chartTitle,
         string scheme
     )
     {
-        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
+        if (role != MCMT.RoleType.DUTY)
             return 0;
         
         return await ChartRepo.UpdateChartSchemeByIdAsync(
@@ -376,27 +362,27 @@ public class ChartService(
     }
 
     public async Task<int> UpdateBranchAsync(
-        MCUD.RoleTypeDTO role,
+        MCMT.RoleType role,
         string chartCity, string chartTitle,
         string branchTitle,
-        MCUD.BranchDTO branch
+        MCMC.Branch branch
     )
     {
-        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
+        if (role != MCMT.RoleType.DUTY)
             return 0;
 
         int branchId = await GetBranchIdAsync(chartCity, chartTitle, branchTitle);
 
-        return await ChartRepo.UpdateBranchByIdAsync(branchId, DtoDomainConverter.Convert(branch));
+        return await ChartRepo.UpdateBranchByIdAsync(branchId, branch);
     }
 
     public async Task<int> UpdateStationAsync(
-        MCUD.RoleTypeDTO role,
+        MCMT.RoleType role,
         string chartCity, string chartTitle,
         string branchTitle, string stationTitle,
-        MCUD.StationDTO station)
+        MCMC.Station station)
     {
-        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
+        if (role != MCMT.RoleType.DUTY)
             return 0;
 
         int stationId = await GetStationIdAsync(
@@ -404,17 +390,17 @@ public class ChartService(
             branchTitle, stationTitle
         );
 
-        return await ChartRepo.UpdateStationByIdAsync(stationId, DtoDomainConverter.Convert(station));
+        return await ChartRepo.UpdateStationByIdAsync(stationId, station);
     }
 
     public async Task<int> UpdateRailwayAsync(
-        MCUD.RoleTypeDTO role,
+        MCMT.RoleType role,
         string chartCity, string chartTitle,
         string BranchTitle,
         string fromStationTitle, string toStationTitle,
-        MCUD.RailwayDTO railway)
+        MCMC.Railway railway)
     {
-        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
+        if (role != MCMT.RoleType.DUTY)
             return 0;
 
         int railwayId = await GetRailwayIdAsync(
@@ -423,17 +409,17 @@ public class ChartService(
             fromStationTitle, toStationTitle
         );
 
-        return await ChartRepo.UpdateRailwayByIdAsync(railwayId, DtoDomainConverter.Convert(railway));
+        return await ChartRepo.UpdateRailwayByIdAsync(railwayId, railway);
     }
 
     public async Task<int> UpdateTransitionAsync(
-        MCUD.RoleTypeDTO role,
+        MCMT.RoleType role,
         string chartCity, string chartTitle,
         string fromBranchTitle, string fromStationTitle,
         string toBranchTitle, string toStationTitle,
-        MCUD.TransitionDTO transition)
+        MCMC.Transition transition)
     {
-        if (DtoDomainConverter.Convert(role) != MCMT.RoleType.DUTY)
+        if (role != MCMT.RoleType.DUTY)
             return 0;
 
         int transitionId = await GetTransitionIdAsync(
@@ -442,6 +428,6 @@ public class ChartService(
             toBranchTitle, toStationTitle
         );
 
-        return await ChartRepo.UpdateTransitionByIdAsync(transitionId, DtoDomainConverter.Convert(transition));
+        return await ChartRepo.UpdateTransitionByIdAsync(transitionId, transition);
     }
 }

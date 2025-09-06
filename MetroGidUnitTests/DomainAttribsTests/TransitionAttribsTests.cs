@@ -24,9 +24,9 @@ public class TransitionAttribsTests
         TimeOnly openTime = TimeConverter.FromString(openTimeStr);
         TimeOnly closeTime = TimeConverter.FromString(closeTimeStr);
         Transition transition = new(occupancy, (AccessType)type, duration, openTime, closeTime);
-
         SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
+
         var ex = Assert.Throws<DomainValidationException>(() => { transition.Validate(domainAttribsValidator); });
 
         Assert.Equal(exMessege, ex.Message);

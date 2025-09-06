@@ -10,11 +10,11 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
 {
     private readonly MetroDbContext _context = context;
 
-    public async Task<int> AddAsync(int clientId, int chartId, string routeJson) =>
+    public async Task<int> AddAsync(int clientId, int chartId, MCMC.Route route) =>
         await _context.Clients
             .AsNoTracking()
             .Where(c => c.Id == clientId)
-            .Select(c => _context.AddRouteJson(c.Id, chartId, routeJson))
+            .Select(c => _context.AddRouteJson(c.Id, chartId, DomainRouteJsonConverter.Convert(route)))
             .FirstOrDefaultAsync();
 
     public async Task<int> GetIdAsync(string title, int clientId) =>
@@ -24,12 +24,16 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
             .Select(w => w.Id)
             .FirstOrDefaultAsync();
 
-    public async Task<string?> GetByIdAsync(int id) =>
-        await _context.Ways
+    public async Task<MCMC.Route?> GetByIdAsync(int id)
+    {
+        string? routeJson = await _context.Ways
             .AsNoTracking()
             .Where(w => w.Id == id)
             .Select(w => _context.GetRouteJsonById(w.Id))
             .FirstOrDefaultAsync();
+
+        return routeJson != null ? DomainRouteJsonConverter.Convert(routeJson) : null;
+    }
 
     public async Task<List<string>> GetAllTitlesForClientAsync(int clientId) =>
         await _context.Ways
@@ -59,15 +63,19 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
             .Select(w => w.Title)
             .ToListAsync();
 
-    public async Task<string?> GetChartRouteOfClient(
+    public async Task<MCMC.Route?> GetChartRouteOfClient(
         int clientId,
         int chartId,
         string title
-    ) =>
-        await _context.Ways
+    )
+    {
+        string? routeJson = await _context.Ways
             .Where(w => w.ChartId == chartId && w.ClientId == clientId && w.Title == title)
             .Select(w => _context.GetRouteJsonById(w.Id))
             .FirstOrDefaultAsync();
+
+        return routeJson != null ? DomainRouteJsonConverter.Convert(routeJson) : null;
+    }
 
     public Task<int> UpdateAsync(int clientId, int chartId, MCMC.Route route)
     {

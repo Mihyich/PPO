@@ -11,6 +11,7 @@ using MetroGid.Core.Utility.Directors;
 using MetroGid.Core.Utility.Strategies;
 using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.Core.Interfaces;
+using MetroGid.DBA.EF.Converters;
 
 namespace MetroGid.Core.Services;
 
@@ -22,9 +23,9 @@ public class RouteService(
     IExceptionVisitor? logger = null
 ) : IRouteService
 {
-    private readonly IChartRepository ChartRepo = chartRepo;
-    private readonly IClientRepository ClientRepo = clientRepo;
-    private readonly IRouteRepository RouteRepo = routeRepo;
+    private readonly IChartRepository _chartRepo = chartRepo;
+    private readonly IClientRepository _clientRepo = clientRepo;
+    private readonly IRouteRepository _routeRepo = routeRepo;
 
     private readonly ThrowableDomainAttribsValidator DomainAttribsValidator = domainAttribsValidator;
     private readonly ThrowableDomainReferentialityValidator DomainReferentialityValidator = domainReferentialityValidator;
@@ -36,7 +37,7 @@ public class RouteService(
         await Handler.SnapAsync(
             async () =>
             {
-                int clientId = await ClientRepo.GetIdByCredentialsAsync(login, password);
+                int clientId = await _clientRepo.GetIdByCredentialsAsync(login, password);
 
                 if (clientId == 0)
                     throw new DataBaseException(
@@ -54,7 +55,7 @@ public class RouteService(
         string? jsonContent = await Handler.SnapAsync(
             async () =>
             {
-                string? json = await ChartRepo.GetChartJsonByCredentialsAsync(city, chartTitle);
+                string? json = await _chartRepo.GetChartJsonByCredentialsAsync(city, chartTitle);
 
                 if (json == null)
                     throw new DataBaseException(
@@ -113,7 +114,7 @@ public class RouteService(
         return route;
     }
 
-    public async Task<MCUD.RouteDTO?> SearchRouteAsync(
+    public async Task<MCMC.Route?> SearchRouteAsync(
         string city, string chartTitle,
         string branchSrcTitle, string stationSrcTitle,
         string branchDstTitle, string stationDstTitle,
@@ -122,140 +123,71 @@ public class RouteService(
         MCMC.Chart? chart = await GetChartAsync(city, chartTitle);
         MCMC.Station? src = null;
         MCMC.Station? dst = null;
-        MCUD.RouteDTO? routeDTO = null;
         MCMC.Route? route = null;
 
         if (chart != null &&
             (src = FindStationAsync(chart, branchSrcTitle, stationSrcTitle)) != null &&
-            (dst = FindStationAsync(chart, branchDstTitle, stationDstTitle)) != null &&
-            (route = SearchRouteProcess(chart, src, dst, startTime)) != null
+            (dst = FindStationAsync(chart, branchDstTitle, stationDstTitle)) != null
         )
         {
-            routeDTO = DomainDtoConverter.Convert(route);
+            route = SearchRouteProcess(chart, src, dst, startTime);
         }
 
-        return routeDTO;
+        return route;
     }
 
     public async Task<int> SaveRouteAsync(
         int clientId,
-        int chartId,
-        string routeJson
-    ) =>
-        await RouteRepo.AddAsync(clientId, chartId, routeJson);
+        MCMC.Route route
+    )
+    {
+        int chartId = await _chartRepo.GetChartIdAsync(
+            route.Chart?.City ?? "",
+            route.Chart?.Title ?? ""
+        );
+
+        return await _routeRepo.AddAsync(
+            clientId,
+            chartId,
+            route
+        );
+    }
 
     public async Task<List<string>> GetSavedChartRoutesTitles(
         int clientId,
-        int chartId
-    ) =>
-        await RouteRepo.GetAllForClientOfChartIdAsync(clientId, chartId);
+        string city,
+        string chartTitle
+    )
+    {
+        int chartId = await _chartRepo.GetChartIdAsync(
+            city,
+            chartTitle
+        );
 
-    public async Task<MCUD.RouteDTO?> GetSavedChart(
+        return await _routeRepo.GetAllForClientOfChartIdAsync(clientId, chartId);
+    }
+
+    public async Task<MCMC.Route?> GetSavedChart(
         int clientId,
-        int chartId,
+        string city,
+        string chartTitle,
         string title
     )
     {
-        string? routeJson = await RouteRepo.GetChartRouteOfClient(clientId, chartId, title);
-        MCUD.RouteDTO? route = routeJson != null ? DtoRouteJsonConverter.Convert(routeJson) : null;
-        List<MCUD.RouteItemDTO> path = [];
+        int chartId = await _chartRepo.GetChartIdAsync(
+            city,
+            chartTitle
+        );
 
-        int branchId = 0;
-        int prevStationId = 0;
-
-        if (route != null)
-            foreach (var item in route.Path)
-            {
-                switch (item)
-                {
-                    case MCUD.RouteStationItemDTO routeStationItem:
-                        {
-                            MCUD.StationDTO cutS = routeStationItem.Station;
-                            branchId = await ChartRepo.GetBranchIdAsync(cutS.BranchTitle, chartId);
-                            prevStationId = await ChartRepo.GetStationIdAsync(cutS.Title, branchId);
-                            MCMC.Station? ws = await ChartRepo.GetStationWeakByIdAsync(prevStationId);
-
-                            if (ws != null)
-                            {
-                                MCUD.StationDTO station = new(
-                                    ws.Title, cutS.BranchTitle, ws.Occupancy,
-                                    DomainDtoConverter.Convert(ws.Type),
-                                    ws.OpenTime, ws.CloseTime
-                                    );
-                                MCUD.RouteStationItemDTO stationItem = new(station);
-                                path.Add(stationItem);
-                            }
-
-                            break;
-                        }
-                    case MCUD.RouteConnectionItemDTO routeConnectionItem:
-                        {
-                            switch (routeConnectionItem.Connection)
-                            {
-                                case MCUD.RailwayConnectionDTO railwayConnection:
-                                    {
-                                        MCUD.RailwayDTO cutR = railwayConnection.Railway;
-                                        int nextStationId = await ChartRepo.GetStationIdAsync(cutR.NextStationTitle, branchId);
-                                        int railwayId = await ChartRepo.GetRailwayIdAsync(prevStationId, nextStationId);
-                                        MCMC.Railway? wr = await ChartRepo.GetRailwayByIdAsync(railwayId);
-
-                                        if (wr != null)
-                                        {
-                                            MCUD.RailwayDTO railway = new(
-                                                cutR.BranchTitle, cutR.PrevStationTitle,
-                                                cutR.NextStationTitle, wr.Duration);
-                                            MCUD.RailwayConnectionDTO railwayItem = new(railway);
-                                            MCUD.RouteConnectionItemDTO routeCon = new(railwayItem);
-                                            path.Add(routeCon);
-                                        }
-
-                                        break;
-                                    }
-                                case MCUD.TransitionConnectionDTO transitionConnection:
-                                    {
-                                        MCUD.TransitionDTO cutT = transitionConnection.Transition;
-                                        branchId = await ChartRepo.GetBranchIdAsync(cutT.ToBranchTitle, chartId);
-                                        int nextStationId = await ChartRepo.GetStationIdAsync(cutT.ToStationTitle, branchId);
-                                        int transitionId = await ChartRepo.GetTransitionIdAsync(prevStationId, nextStationId);
-                                        MCMC.Transition? wt = await ChartRepo.GetTransitionByIdAsync(transitionId);
-
-                                        if (wt != null)
-                                        {
-                                            MCUD.TransitionDTO transition = new(
-                                                wt.Occupancy, DomainDtoConverter.Convert(wt.Type),
-                                                wt.Duration, wt.OpenTime, wt.CloseTime,
-                                                cutT.FromStationTitle, cutT.FromBranchTitle,
-                                                cutT.ToStationTitle, cutT.ToBranchTitle
-                                            );
-                                            MCUD.TransitionConnectionDTO transitionItem = new(transition);
-                                            MCUD.RouteConnectionItemDTO routeCon = new(transitionItem);
-                                            path.Add(routeCon);
-                                        }
-
-                                        break;
-                                    }
-                                default:
-                                    throw new NotSupportedException($"Тип связи маршрута не поддерживается: {routeConnectionItem.GetType()}");
-                            }
-
-                            break;
-                        }
-                }
-            }
-
-        MCMC.Chart? chart = await ChartRepo.GetChartWeakByIdAsync(chartId);
-
-        return chart != null && route != null ? new MCUD.RouteDTO(
-            route.Title, chart.City, chart.Title, path, route.Duration
-        ) : null;
+        return await _routeRepo.GetChartRouteOfClient(clientId, chartId, title);
     }
 
     public async Task<int> DeleteAsync(
         int clientId,
         string title
     ) =>
-        await RouteRepo.DeleteAsync(
-            await RouteRepo.GetIdAsync(
+        await _routeRepo.DeleteAsync(
+            await _routeRepo.GetIdAsync(
                 title,
                 clientId
             )

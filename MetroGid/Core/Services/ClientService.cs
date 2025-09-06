@@ -97,7 +97,7 @@ public class ClientService(
 
                 if (c == null)
                     throw new DataBaseException(
-                        $"Пользователь с логином \"{login}\" не найден",
+                        $"Неверный логин '{login}' или пароль '{password}'",
                         ExceptionType.Warning,
                         ExceptionReason.NotFound
                     );

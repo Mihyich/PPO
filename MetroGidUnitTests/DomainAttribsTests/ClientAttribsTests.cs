@@ -48,9 +48,9 @@ public class ClientAttribsTests
         string exMessege = $"Почта клиета '{client.Mail}' не валидна";
         ExceptionType exType = ExceptionType.Warning;
         ExceptionReason exReason = ExceptionReason.ValidationFailed;
-
         SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
+
         var ex = Assert.Throws<DomainValidationException>(() => { client.Validate(domainAttribsValidator); });
 
         Assert.Equal(exMessege, ex.Message);

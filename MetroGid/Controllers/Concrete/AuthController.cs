@@ -34,11 +34,14 @@ public class AuthController(
         ClientDTO? client = await _clientService.LogInAsync(dto.Login, dto.Password);
 
         if (client == null)
-            return StatusCode(401, new
-            {
-                Error = "InvalidCredentials",
-                Message = "Неверный логин или пароль"
-            });
+            return StatusCode(
+                StatusCodes.Status401Unauthorized,
+                new
+                {
+                    Error = "InvalidCredentials",
+                    Message = "Неверный логин или пароль"
+                }
+            );
 
         int clientId = await _clientService.GetClientIdAsync(dto.Login, dto.Password);
         RoleTypeDTO role = await _clientService.GetRoleAsync(dto.Login, dto.Password);
@@ -55,9 +58,10 @@ public class AuthController(
     public IActionResult LogOut()
     {
         return Ok(new
-        {
-            Message = "Вы успешно вышли."
-        });
+            {
+                Message = "Вы успешно вышли"
+            }
+        );
     }
 
     [Authorize]

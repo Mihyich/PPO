@@ -10,5 +10,6 @@
             "username": "postgres",
             "password": "1234"
         }
-    ]
+    ],
+    "svg.preview.background": "white"
 }

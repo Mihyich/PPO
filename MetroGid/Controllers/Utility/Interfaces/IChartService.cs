@@ -1,4 +1,6 @@
 using MetroGid.Controllers.Utility.DTO.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
+using MCMT = MetroGid.Core.Models.Types;
 
 namespace MetroGid.Controllers.Utility.Interfaces;
 
@@ -50,40 +52,35 @@ public interface IChartService
     );
 
     // Изменение атрибутов таблиц
-    Task<int> UpdateChartAsync(
-        RoleTypeDTO role,
-        string chartCity, string chartTitle,
-        ChartDTO chart
-    );
     Task<int> UpdateChartSchemeAsync(
-        RoleTypeDTO role,
+        MCMT.RoleType role,
         string chartCity, string chartTitle,
         string scheme
     );
     Task<int> UpdateBranchAsync(
-        RoleTypeDTO role,
+        MCMT.RoleType role,
         string chartCity, string chartTitle,
         string branchTitle,
-        BranchDTO branch
+        MCMC.Branch branch
     );
     Task<int> UpdateStationAsync(
-        RoleTypeDTO role,
+        MCMT.RoleType role,
         string chartCity, string chartTitle,
         string branchTitle, string stationTitle,
-        StationDTO station
+        MCMC.Station station
     );
     Task<int> UpdateRailwayAsync(
-        RoleTypeDTO role,
+        MCMT.RoleType role,
         string chartCity, string chartTitle,
         string BranchTitle,
         string fromStationTitle, string toStationTitle,
-        RailwayDTO railway
+        MCMC.Railway railway
     );
     Task<int> UpdateTransitionAsync(
-        RoleTypeDTO role,
+        MCMT.RoleType role,
         string chartCity, string chartTitle,
         string fromBranchTitle, string fromStationTitle,
         string toBranchTitle, string toStationTitle,
-        TransitionDTO transition
+        MCMC.Transition transition
     );
 }

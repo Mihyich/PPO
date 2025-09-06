@@ -84,6 +84,6 @@ public static class DomainModelConverter
             ClientLogin = client.Login,
             ClientPassword = client.Password,
             Mail = client.Mail,
-            Privilege = Convert(client.Role)  
+            Privilege = Convert(client.Role)
         };
 }

@@ -1,0 +1,213 @@
+{
+  "title": "[\"Минск\":\"Схема метро\"]:[\"Автозаводская линия\":\"Пушкинская\"]:[\"Московская линия\":\"Грушевка\"]",
+  "city": "Минск",
+  "chartTitle": "Схема метро",
+  "path": [
+    {
+      "$type": "station",
+      "station": {
+        "title": "Пушкинская",
+        "branchTitle": "Автозаводская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Автозаводская линия",
+          "prevStationTitle": "Пушкинская",
+          "nextStationTitle": "Молодёжная",
+          "duration": "00:03:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Молодёжная",
+        "branchTitle": "Автозаводская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Автозаводская линия",
+          "prevStationTitle": "Молодёжная",
+          "nextStationTitle": "Фрунзенская",
+          "duration": "00:03:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Фрунзенская",
+        "branchTitle": "Автозаводская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "transition",
+        "transition": {
+          "occupancy": 5,
+          "type": 0,
+          "duration": "00:03:00",
+          "openTime": "05:30:00",
+          "closeTime": "01:30:00",
+          "fromStationTitle": "Фрунзенская",
+          "fromBranchTitle": "Автозаводская линия",
+          "toStationTitle": "Юбилейная площадь",
+          "toBranchTitle": "Зеленолужская линия"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Юбилейная площадь",
+        "branchTitle": "Зеленолужская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Зеленолужская линия",
+          "prevStationTitle": "Юбилейная площадь",
+          "nextStationTitle": "Площадь Франтишка Богушевича",
+          "duration": "00:05:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Площадь Франтишка Богушевича",
+        "branchTitle": "Зеленолужская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Зеленолужская линия",
+          "prevStationTitle": "Площадь Франтишка Богушевича",
+          "nextStationTitle": "Вокзальная",
+          "duration": "00:05:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Вокзальная",
+        "branchTitle": "Зеленолужская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "transition",
+        "transition": {
+          "occupancy": 5,
+          "type": 0,
+          "duration": "00:05:00",
+          "openTime": "05:30:00",
+          "closeTime": "01:30:00",
+          "fromStationTitle": "Площадь Ленина",
+          "fromBranchTitle": "Московская линия",
+          "toStationTitle": "Вокзальная",
+          "toBranchTitle": "Зеленолужская линия"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Площадь Ленина",
+        "branchTitle": "Московская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Московская линия",
+          "prevStationTitle": "Площадь Ленина",
+          "nextStationTitle": "Институт культуры",
+          "duration": "00:03:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Институт культуры",
+        "branchTitle": "Московская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Московская линия",
+          "prevStationTitle": "Институт культуры",
+          "nextStationTitle": "Грушевка",
+          "duration": "00:03:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Грушевка",
+        "branchTitle": "Московская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    }
+  ],
+  "duration": "00:48:20"
+}

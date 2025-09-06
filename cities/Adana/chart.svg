@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 900">
+  <g id="branch_railways" stroke="#f58220" stroke-width="8" fill="none">
+    <path d="M 339, 322.5 L 369, 352.5"/>
+    <line x1="369" x2="399" y1="352.5" y2="382.5"/>
+    <line x1="399" x2="429" y1="382.5" y2="412.5"/>
+    <line x1="429" x2="459" y1="412.5" y2="442.5"/>
+    <path d="M 459, 442.5 L 466.93, 450.43 Q 474 457.5 474 467.5 L 474, 477.5"/>
+    <line x1="474" x2="474" y1="477.5" y2="517.5"/>
+    <path d="M 474, 517.5 L 474, 527.5 Q 474 537.5 481.07 544.57 L 489, 552.5"/>
+    <line x1="489" x2="519" y1="552.5" y2="582.5"/>
+    <line x1="519" x2="549" y1="582.5" y2="612.5"/>
+    <path d="M 549, 612.5 L 556.93, 620.43 Q 564 627.5 574 627.5 L 584, 627.5"/>
+    <line x1="584" x2="624" y1="627.5" y2="627.5"/>
+    <path d="M 624, 627.5 L 634, 627.5 Q 644 627.5 651.07 620.43 L 659, 612.5"/>
+  </g>
+  <g id="transitions"/>
+  <g id="Название ветки">
+    <g id="Больница">
+      <circle x="339" y="322.5" cx="339" cy="322.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="339" y="322.5" cx="339" cy="322.5" r="5" fill="#f58220"/>
+      <text x="333" y="322.5" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.35em" x="333">Больница</tspan>
+      </text>
+    </g>
+    <g id="Анатолийский лицей">
+      <circle x="369" y="352.5" cx="369" cy="352.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="369" y="352.5" cx="369" cy="352.5" r="5" fill="#f58220"/>
+      <text x="363" y="352.5" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="363">Анатолийский лицей</tspan>
+      </text>
+    </g>
+    <g id="Хузуреви">
+      <circle x="399" y="382.5" cx="399" cy="382.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="399" y="382.5" cx="399" cy="382.5" r="5" fill="#f58220"/>
+      <text x="393" y="382.5" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="393">Хузуреви</tspan>
+      </text>
+    </g>
+    <g id="Бульвар Мави">
+      <circle x="429" y="412.5" cx="429" cy="412.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="429" y="412.5" cx="429" cy="412.5" r="5" fill="#f58220"/>
+      <text x="423" y="412.5" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="423">Бульвар Мави</tspan>
+      </text>
+    </g>
+    <g id="Юрт">
+      <circle x="459" y="442.5" cx="459" cy="442.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="459" y="442.5" cx="459" cy="442.5" r="5" fill="#f58220"/>
+      <text x="453" y="442.5" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="453">Юрт</tspan>
+      </text>
+    </g>
+    <g id="Ешильюрт">
+      <circle x="474" y="477.5" cx="474" cy="477.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="474" y="477.5" cx="474" cy="477.5" r="5" fill="#f58220"/>
+      <text x="468" y="477.5" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.35em" x="468">Ешильюрт</tspan>
+      </text>
+    </g>
+    <g id="Фатих">
+      <circle x="474" y="517.5" cx="474" cy="517.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="474" y="517.5" cx="474" cy="517.5" r="5" fill="#f58220"/>
+      <text x="468" y="517.5" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.35em" x="468">Фатих</tspan>
+      </text>
+    </g>
+    <g id="Вилайет">
+      <circle x="489" y="552.5" cx="489" cy="552.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="489" y="552.5" cx="489" cy="552.5" r="5" fill="#f58220"/>
+      <text x="483" y="552.5" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="483">Вилайет</tspan>
+      </text>
+    </g>
+    <g id="Истикляль">
+      <circle x="519" y="582.5" cx="519" cy="582.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="519" y="582.5" cx="519" cy="582.5" r="5" fill="#f58220"/>
+      <text x="513" y="582.5" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="513">Истикляль</tspan>
+      </text>
+    </g>
+    <g id="Коджавезир">
+      <circle x="549" y="612.5" cx="549" cy="612.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="549" y="612.5" cx="549" cy="612.5" r="5" fill="#f58220"/>
+      <text x="543" y="612.5" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="543">Коджавезир</tspan>
+      </text>
+    </g>
+    <g id="Хюрриет">
+      <circle x="584" y="627.5" cx="584" cy="627.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="584" y="627.5" cx="584" cy="627.5" r="5" fill="#f58220"/>
+      <text x="594" y="634.5" font-size="20" font-weight="normal" text-anchor="end" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="594">Хюрриет</tspan>
+      </text>
+    </g>
+    <g id="Джумхуриет">
+      <circle x="624" y="627.5" cx="624" cy="627.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="624" y="627.5" cx="624" cy="627.5" r="5" fill="#f58220"/>
+      <text x="614" y="634.5" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.75em" x="614">Джумхуриет</tspan>
+      </text>
+    </g>
+    <g id="Акынджилар">
+      <circle x="659" y="612.5" cx="659" cy="612.5" r="8" fill="#ffffff" opacity="1"/>
+      <circle x="659" y="612.5" cx="659" cy="612.5" r="5" fill="#f58220"/>
+      <text x="665" y="612.5" font-size="20" font-weight="normal" text-anchor="start" opacity="unset">
+        <tspan dominant-baseline="inherit" text-anchor="inherit" dy="0.35em" x="665">Акынджилар</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

@@ -17,9 +17,9 @@ public class RailwayAttribsTests
     {
         TimeSpan duration = TimeSpanConverter.FromString(durationStr);
         Railway railway = new(duration);
-
         SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
+        
         var ex = Assert.Throws<DomainValidationException>(() => { railway.Validate(domainAttribsValidator); });
 
         Assert.Equal(exMessege, ex.Message);

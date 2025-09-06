@@ -7,53 +7,53 @@ namespace MetroGid.Core.Converters;
 
 public static class DtoRouteJsonConverter
 {
-    public static string Convert(MCUD.RouteDTO route)
-    {
-        List<RouteItemJsonDTO> routeItems = [];
+    // public static string Convert(MCUD.RouteDTO route)
+    // {
+    //     List<RouteItemJsonDTO> routeItems = [];
 
-        foreach (var item in route.Path)
-        {
-            switch (item)
-            {
-                case MCUD.RouteStationItemDTO routeStationItem:
-                {
-                    MCUD.StationDTO s = routeStationItem.Station;
-                    StationRouteItemDTO sri = new(s.Title, s.BranchTitle);
-                    routeItems.Add(sri);
-                    break;
-                }
-                case MCUD.RouteConnectionItemDTO routeConnectionItem:
-                {
-                    switch (routeConnectionItem.Connection)
-                    {
-                        case MCUD.RailwayConnectionDTO railwayConnection:
-                        {
-                            MCUD.RailwayDTO r = railwayConnection.Railway;
-                            RailwayRouteItemDTO rri = new(r.PrevStationTitle, r.NextStationTitle);
-                            routeItems.Add(rri);
-                            break;
-                        }
-                        case MCUD.TransitionConnectionDTO transitionConnection:
-                        {
-                            MCUD.TransitionDTO t = transitionConnection.Transition;
-                            TransitionRouteItemDTO tri = new(t.FromBranchTitle, t.FromStationTitle, t.ToBranchTitle, t.ToStationTitle);
-                            routeItems.Add(tri);
-                            break;
-                        }
-                        default:
-                            throw new NotSupportedException($"Тип связи маршрута не поддерживается: {routeConnectionItem.GetType()}");
-                    }
+    //     foreach (var item in route.Path)
+    //     {
+    //         switch (item)
+    //         {
+    //             case MCUD.RouteStationItemDTO routeStationItem:
+    //             {
+    //                 MCUD.StationDTO s = routeStationItem.Station;
+    //                 StationRouteItemDTO sri = new(s.Title, s.BranchTitle);
+    //                 routeItems.Add(sri);
+    //                 break;
+    //             }
+    //             case MCUD.RouteConnectionItemDTO routeConnectionItem:
+    //             {
+    //                 switch (routeConnectionItem.Connection)
+    //                 {
+    //                     case MCUD.RailwayConnectionDTO railwayConnection:
+    //                     {
+    //                         MCUD.RailwayDTO r = railwayConnection.Railway;
+    //                         RailwayRouteItemDTO rri = new(r.PrevStationTitle, r.NextStationTitle);
+    //                         routeItems.Add(rri);
+    //                         break;
+    //                     }
+    //                     case MCUD.TransitionConnectionDTO transitionConnection:
+    //                     {
+    //                         MCUD.TransitionDTO t = transitionConnection.Transition;
+    //                         TransitionRouteItemDTO tri = new(t.FromBranchTitle, t.FromStationTitle, t.ToBranchTitle, t.ToStationTitle);
+    //                         routeItems.Add(tri);
+    //                         break;
+    //                     }
+    //                     default:
+    //                         throw new NotSupportedException($"Тип связи маршрута не поддерживается: {routeConnectionItem.GetType()}");
+    //                 }
                     
-                    break;
-                }
-                default:
-                    throw new NotSupportedException($"Тип маршрута не поддерживается: {item.GetType()}");
-            }
-        }
+    //                 break;
+    //             }
+    //             default:
+    //                 throw new NotSupportedException($"Тип маршрута не поддерживается: {item.GetType()}");
+    //         }
+    //     }
 
-        RouteJsonDTO routeJsonDTO = new(route.Title, route.Duration, routeItems);
-        return JsonSerializer.Serialize(routeJsonDTO, JsonOptions);
-    }
+    //     RouteJsonDTO routeJsonDTO = new(route.Title, route.Duration, routeItems);
+    //     return JsonSerializer.Serialize(routeJsonDTO, JsonOptions);
+    // }
 
     public static MCUD.RouteDTO Convert(string json)
     {

@@ -4,6 +4,7 @@ using MetroGid.Controllers.Utility.Converters;
 using MetroGid.Controllers.Utility.DTO.Chart;
 using MetroGid.Controllers.Utility.DTO.Concrete;
 using MetroGid.Controllers.Utility.Interfaces;
+using MetroGid.Core.Converters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +28,7 @@ public class ChartController(
     public async Task<IActionResult> PatchChartScheme([FromBody] PatchChartSchemeRequest dto) =>
         Ok(
             await _chartService.UpdateChartSchemeAsync(
-                RoleTypeDTO.DUTY,
+                DtoDomainConverter.Convert(RoleTypeDTO.DUTY),
                 dto.CityTitle,
                 dto.ChartTitle,
                 dto.Scheme
@@ -39,9 +40,9 @@ public class ChartController(
     public async Task<IActionResult> PatchBranch([FromBody] PatchBranchRequest dto) =>
         Ok(
             await _chartService.UpdateBranchAsync(
-                RoleTypeDTO.DUTY,
+                DtoDomainConverter.Convert(RoleTypeDTO.DUTY),
                 dto.CityTitle, dto.ChartTitle, dto.BranchTitle,
-                RequestToDTOConverter.Convert(dto)
+                DtoDomainConverter.Convert(RequestToDTOConverter.Convert(dto))
             )
         );
 
@@ -86,9 +87,9 @@ public class ChartController(
 
         return Ok(
             await _chartService.UpdateStationAsync(
-                RoleTypeDTO.DUTY,
+                DtoDomainConverter.Convert(RoleTypeDTO.DUTY),
                 dto.CityTitle, dto.ChartTitle, dto.BranchTitle, dto.StationTitle,
-                RequestToDTOConverter.Convert(dto)
+                DtoDomainConverter.Convert(RequestToDTOConverter.Convert(dto))
             )
         );
     }
@@ -136,11 +137,11 @@ public class ChartController(
 
         return Ok(
             await _chartService.UpdateTransitionAsync(
-                RoleTypeDTO.DUTY,
+                DtoDomainConverter.Convert(RoleTypeDTO.DUTY),
                 dto.CityTitle, dto.ChartTitle,
                 dto.FromBranchTitle, dto.FromStationTitle,
                 dto.ToBranchTitle, dto.ToStationTitle,
-                RequestToDTOConverter.Convert(dto)
+                DtoDomainConverter.Convert(RequestToDTOConverter.Convert(dto))
             )
         );
     }
@@ -186,11 +187,11 @@ public class ChartController(
 
         return Ok(
             await _chartService.UpdateRailwayAsync(
-                RoleTypeDTO.DUTY,
+                DtoDomainConverter.Convert(RoleTypeDTO.DUTY),
                 dto.CityTitle, dto.ChartTitle,
                 dto.BranchTitle,
                 dto.DutyStationTitle, dto.ToStationTitle,
-                RequestToDTOConverter.Convert(dto)
+                DtoDomainConverter.Convert(RequestToDTOConverter.Convert(dto))
             )
         );
     }

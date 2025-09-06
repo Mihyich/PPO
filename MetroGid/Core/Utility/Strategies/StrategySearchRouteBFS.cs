@@ -2,6 +2,7 @@ using MCMC = MetroGid.Core.Models.Concrete;
 using MetroGid.Core.Utility.TimeMeter.Concrete;
 using MetroGid.Core.Utility.TimeMeter.Super;
 using MetroGid.Core.Utility.TimeExtensions;
+using MetroGid.Core.Models.Concrete;
 
 namespace MetroGid.Core.Utility.Strategies;
 
@@ -91,7 +92,26 @@ public class StrategySearchRouteBFS(TimeSuper? timerSuper = null) : StrategySear
     {
         if (stationNeighbor != null && stationNeighbor.IsAccessible() && stationNeighbor.IsOpenAt(curTime) && (stationNeighbor?.Branch?.IsAccessible() ?? false) && !visited.Contains(stationNeighbor))
         {
-            MCMC.Route newRoute = curRoute.SemiShallowClone().Append(transitionNeigbor).Append(stationNeighbor);
+            Transition newTransition = new(
+                transitionNeigbor.Occupancy,
+                transitionNeigbor.Type,
+                transitionNeigbor.Duration,
+                transitionNeigbor.OpenTime,
+                transitionNeigbor.CloseTime
+            );
+
+            if (transitionNeigbor.From == stationNeighbor)
+            {
+                newTransition.To = transitionNeigbor.From;
+                newTransition.From = transitionNeigbor.To;
+            }
+            else
+            {
+                newTransition.To = transitionNeigbor.To;
+                newTransition.From = transitionNeigbor.From;
+            }
+
+            MCMC.Route newRoute = curRoute.SemiShallowClone().Append(newTransition).Append(stationNeighbor);
             queue.Enqueue(newRoute);
             visited.Add(stationNeighbor);
         }

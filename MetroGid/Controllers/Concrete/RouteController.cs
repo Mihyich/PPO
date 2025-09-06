@@ -6,117 +6,91 @@ using MetroGid.Controllers.Utility.Interfaces;
 using MetroGid.Core.Converters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MCMC = MetroGid.Core.Models.Concrete;
 
 namespace MetroGid.Controllers.Concrete;
 
 [ApiController]
 [Route("api/routes")]
 public class RouteController(
-    IRouteService routeService,
-    IChartService chartService
+    IRouteService routeService
 ) : ControllerBase
 {
     private readonly IRouteService _routeService = routeService;
-    private readonly IChartService _chartService = chartService;
 
-    private async Task<ActionResult<(int ClientId, int ChartId)>> GetClientAndChartIdAsync(string city, string chartTitle)
+    private int GetClientAndChartIdAsync()
     {
         string? clientIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         if (!int.TryParse(clientIdClaim, out int clientId))
-            return StatusCode(
-                StatusCodes.Status401Unauthorized,
-                new
-                {
-                    Error = "InvalidCredentials",
-                    Message = "Не удалось определить пользователя"
-                }
-            );
+            return 0; // Нужно исключение
 
-        int chartId = await _chartService.GetChartIdAsync(city, chartTitle);
-
-        return (clientId, chartId);
+        return clientId;
     }
 
     [AllowAnonymous]
     [HttpPost("search")]
-    public async Task<IActionResult> SearchRoute([FromBody] SearchRouteRequest dto) =>
-        Ok(
-            await _routeService.SearchRouteAsync(
-                dto.CityTitle, dto.ChartTitle,
-                dto.FromBranchTitle, dto.FromStationTitle,
-                dto.ToBranchTitle, dto.ToStationTitle,
-                TimeConverter.FromString(dto.CurTime)
-            )
+    public async Task<RouteDTO> SearchRoute([FromBody] SearchRouteRequest dto)
+    {
+        MCMC.Route? route = await _routeService.SearchRouteAsync(
+            dto.CityTitle, dto.ChartTitle,
+            dto.FromBranchTitle, dto.FromStationTitle,
+            dto.ToBranchTitle, dto.ToStationTitle,
+            TimeConverter.FromString(dto.CurTime)
         );
+
+        return DomainDtoConverter.Convert(route);
+    }
 
     [RequireAnyRole(RoleTypeDTO.SIGNED, RoleTypeDTO.DUTY)]
     [HttpPost("save")]
-    public async Task<IActionResult> SaveRoute([FromBody] RouteDTO dto)
+    public async Task<int> SaveRoute([FromBody] RouteDTO dto)
     {
-        ActionResult<ValueTuple<int, int>> result = await GetClientAndChartIdAsync(dto.City, dto.ChartTitle);
-        if (result.Result is not null)
-            return result.Result;
-
-        var (clientId, chartId) = result.Value;
-
-        return Ok(
-                await _routeService.SaveRouteAsync(
-                    clientId,
-                    chartId,
-                    DtoRouteJsonConverter.Convert(dto)
-                )
-            );
+        int clientId = GetClientAndChartIdAsync();
+        MCMC.Route route = DtoDomainConverter.Convert(dto);
+        return await _routeService.SaveRouteAsync(clientId, route);
     }
 
     [RequireAnyRole(RoleTypeDTO.SIGNED, RoleTypeDTO.DUTY)]
     [HttpPost("get/titles")]
     public async Task<IActionResult> GetRouteTitles([FromBody] GetRouteCredentialsRequest dto)
     {
-        ActionResult<ValueTuple<int, int>> result = await GetClientAndChartIdAsync(dto.CityTitle, dto.ChartTitle);
-        if (result.Result is not null)
-            return result.Result;
-
-        var (clientId, chartId) = result.Value;
+        int clientId = GetClientAndChartIdAsync();
 
         return Ok(
             await _routeService.GetSavedChartRoutesTitles(
                 clientId,
-                chartId
+                dto.CityTitle,
+                dto.ChartTitle
             )
         );
     }
 
     [RequireAnyRole(RoleTypeDTO.SIGNED, RoleTypeDTO.DUTY)]
     [HttpPost("get/saved")]
-    public async Task<IActionResult> GetSavedRoute([FromBody] GetSavedRouteRequest dto)
+    public async Task<RouteDTO> GetSavedRoute([FromBody] GetSavedRouteRequest dto)
     {
-        ActionResult<ValueTuple<int, int>> result = await GetClientAndChartIdAsync(dto.CityTitle, dto.ChartTitle);
-        if (result.Result is not null)
-            return result.Result;
+        int clientId = GetClientAndChartIdAsync();
 
-        var (clientId, chartId) = result.Value;
-
-        return Ok(
-            await _routeService.GetSavedChart(
-                clientId,
-                chartId,
-                dto.RouteTitle
-            )
+        MCMC.Route? route = await _routeService.GetSavedChart(
+            clientId,
+            dto.CityTitle,
+            dto.ChartTitle,
+            dto.RouteTitle
         );
+
+        return DomainDtoConverter.Convert(route);
     }
 
     [RequireAnyRole(RoleTypeDTO.SIGNED, RoleTypeDTO.DUTY)]
     [HttpDelete("delete")]
     public async Task<IActionResult> DeleteRoute([FromBody] DeleteRouteRequest dto)
     {
-        var result = await GetClientAndChartIdAsync(dto.CityTitle, dto.ChartTitle);
-        if (result.Result is not null)
-            return result.Result;
+        int clientId = GetClientAndChartIdAsync();
 
         return Ok(
             await _routeService.DeleteAsync(
-                result.Value.ClientId,
+                clientId,
                 dto.RouteTitle
             )
         );

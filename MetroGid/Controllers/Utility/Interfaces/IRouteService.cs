@@ -1,10 +1,11 @@
 using MetroGid.Controllers.Utility.DTO.Concrete;
+using MCMC = MetroGid.Core.Models.Concrete;
 
 namespace MetroGid.Controllers.Utility.Interfaces;
 
 public interface IRouteService
 {
-    Task<RouteDTO?> SearchRouteAsync(
+    Task<MCMC.Route?> SearchRouteAsync(
         string city, string chartTitle,
         string branchSrcTitle, string stationSrcTitle,
         string branchDstTitle, string stationDstTitle,
@@ -13,18 +14,19 @@ public interface IRouteService
 
     Task<int> SaveRouteAsync(
         int clientId,
-        int chartId,
-        string routeJson
+        MCMC.Route route
     );
 
     Task<List<string>> GetSavedChartRoutesTitles(
         int clientId,
-        int chartId
+        string city,
+        string chartTitle
     ); // просмотр сохраненных маршрутов в конкретной схеме метро, у конктретного пользователя (получить все названия)
 
-    Task<RouteDTO?> GetSavedChart(
+    Task<MCMC.Route?> GetSavedChart(
         int clientId,
-        int chartId,
+        string city,
+        string chartTitle,
         string title
     );
 

@@ -21,8 +21,8 @@ public class ClientServiceTests
         SuperExceptionHandler handler = new PassThroughHandlerException();
         ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
         ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
-
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ReturnsAsync(1);
+
         var ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await clientService.RegAsync(login, password, mail); });
 
         mockClientRepo.Verify(x => x.AddAsync(It.IsAny<Client>()), Times.Never);
@@ -37,19 +37,16 @@ public class ClientServiceTests
         string login = "abcd";
         string password = "Aa1234";
         string mail = "abc@mail.ru";
-
         string exMessege = $"Логин '{login}' уже занят";
         ExceptionType exType = ExceptionType.Quiet;
         ExceptionReason exReason = ExceptionReason.ItemAlreadyInUse;
-
         DataBaseException expectedEx = new(exMessege, exType, exReason);
-
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
         ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
         ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
-
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
+
         var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.RegAsync(login, password, mail); });
 
         mockClientRepo.Verify(x => x.AddAsync(It.IsAny<Client>()), Times.Once);
@@ -64,19 +61,16 @@ public class ClientServiceTests
         string login = "abcd";
         string password = "Aa1234";
         string mail = "abc@mail.ru";
-
         string exMessege = $"Почта '{mail}' уже занята";
         ExceptionType exType = ExceptionType.Quiet;
         ExceptionReason exReason = ExceptionReason.ItemAlreadyInUse;
-
         DataBaseException expectedEx = new(exMessege, exType, exReason);
-
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
         ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
         ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
-
         mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ThrowsAsync(expectedEx);
+
         var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.RegAsync(login, password, mail); });
 
         mockClientRepo.Verify(x => x.AddAsync(It.IsAny<Client>()), Times.Once);
@@ -90,19 +84,16 @@ public class ClientServiceTests
     {
         string login = "abcd";
         string password = "1234";
-
-        string exMessege = $"Пользователь с логином \"{login}\" не найден";
+        string exMessege = $"Неверный логин '{login}' или пароль '{password}'";
         ExceptionType exType = ExceptionType.Warning;
         ExceptionReason exReason = ExceptionReason.NotFound;
-
         DataBaseException expectedEx = new(exMessege, exType, exReason);
-
         Mock<IClientRepository> mockClientRepo = new();
         SuperExceptionHandler handler = new PassThroughHandlerException();
         ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
         ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
-
         mockClientRepo.Setup(x => x.GetByCredentialsAsync(login, password)).ReturnsAsync((Client?)null);
+        
         var ex = await Assert.ThrowsAsync<DataBaseException>(async () => { await clientService.LogInAsync(login, password); });
 
         mockClientRepo.Verify(x => x.GetByCredentialsAsync(login, password), Times.Once);

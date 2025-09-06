@@ -15,13 +15,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Events;
 
 class Program
 {
     static void Main(string[] args)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
+        
         builder.Services.Configure<AppRolesConfig>(
             builder.Configuration.GetSection("AppRoles")
         );
@@ -37,12 +39,20 @@ class Program
             )
         );
 
-        builder.Services.AddControllers()
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
-            }
-        );
+        // builder.Host.UseSerilog((context, services, configuration) => configuration
+        //     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+        //     .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
+        //     .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Fatal)
+        //     .WriteTo.File(
+        //         path: "logs/log-.txt",
+        //         rollingInterval: RollingInterval.Day,
+        //         fileSizeLimitBytes: 10_000_000,
+        //         rollOnFileSizeLimit: true,
+        //         shared: true,
+        //         flushToDiskInterval: TimeSpan.FromSeconds(1),
+        //         outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+        //     .Enrich.FromLogContext()
+        // );
 
         builder.Services.AddAuthentication(options =>
             {
@@ -111,6 +121,13 @@ class Program
                         }
                     }
                 );
+            }
+        );
+
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
             }
         );
 

@@ -25,7 +25,7 @@ public class GlobalExceptionHandlingMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Необработанное исключение: {Message}", ex.Message);
+           _logger.LogError(ex, "Необработанная ошибка в {Path}", context.Request.Path);
 
             int statusCode;
             object body;

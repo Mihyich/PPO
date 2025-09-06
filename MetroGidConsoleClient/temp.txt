@@ -1,0 +1,2 @@
+patch_transition --city "Минск" --chart "Схема метро" --from-branch "Московская линия" --from-station "Октябрьская" --to-branch "Автозаводская линия" --to-station "Купаловская" --new-occupancy "5" --new-access "INACCESSIBLE" --new-duration "00:02:30" --new-opentime "05:30:00" --new-closetime "01:30:00"
+search_route --city "Минск" --chart "Схема метро" --from-branch "Автозаводская линия" --from-station "Пушкинская" --to-branch "Московская линия" --to-station "Грушевка" --time "12:12"

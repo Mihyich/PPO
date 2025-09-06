@@ -39,7 +39,9 @@ public class StationAttribsTests
         TimeOnly closeTime = TimeConverter.FromString(closeTimeStr);
         TimeOnly curTime = TimeConverter.FromString(curTimeStr);
         Station station = new("abc", 5, AccessType.ACCESSIBLE, openTime, closeTime);
+
         bool res = station.IsOpenAt(curTime);
+
         Assert.Equal(res, opened);
     }
 
@@ -53,7 +55,9 @@ public class StationAttribsTests
     public void IsAccessibleTest(AccessType type, bool accessible)
     {
         Station station = new("abc", 5, type, new TimeOnly(1, 30), new TimeOnly(23, 30));
+
         bool res = station.IsAccessible();
+
         Assert.Equal(res, accessible);
     }
 
@@ -76,9 +80,9 @@ public class StationAttribsTests
         TimeOnly openTime = TimeConverter.FromString(openTimeStr);
         TimeOnly closeTime = TimeConverter.FromString(closeTimeStr);
         Station station = new(title, occupancy, (AccessType)type, openTime, closeTime);
-
         SuperExceptionHandler handler = new PassThroughHandlerException();
         IDomainValidatorVisitor domainAttribsValidator = new ThrowableDomainAttribsValidator(handler);
+
         var ex = Assert.Throws<DomainValidationException>(() => { station.Validate(domainAttribsValidator); });
 
         Assert.Equal(exMessege, ex.Message);

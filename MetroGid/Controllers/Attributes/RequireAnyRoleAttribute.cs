@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text.Json.Serialization;
 using MetroGid.Controllers.Utility.Converters;
 using MetroGid.Controllers.Utility.DTO.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ public class RequireAnyRoleAttribute : Attribute, IAuthorizationFilter
                 nameof(roles)
             );
     }
-
+    
     public void OnAuthorization(AuthorizationFilterContext context)
     {
         ClaimsPrincipal? user = context.HttpContext.User;

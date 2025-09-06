@@ -53,21 +53,55 @@ public static class DomainDtoConverter
 
     public static MCUD.RouteDTO Convert(MCMC.Route route)
     {
-        List<MCUD.RouteItemDTO> CntPath = [];
+        List<MCUD.RouteItemDTO> path = [];
 
         foreach (var item in route.Path)
         {
-            if (item is MCMC.RouteStationItem { Station: var station })
-                CntPath.Add(new MCUD.RouteStationItemDTO(Convert(station)));
-            else if (item is MCMC.RouteConnectionItem { Connection: var connection })
+            switch (item)
             {
-                if (connection is MCMC.RailwayConnection { Railway: var railway })
-                    CntPath.Add(new MCUD.RouteConnectionItemDTO(new MCUD.RailwayConnectionDTO(Convert(railway))));
-                else if (connection is MCMC.TransitionConnection { Transition: var transition })
-                    CntPath.Add(new MCUD.RouteConnectionItemDTO(new MCUD.TransitionConnectionDTO(Convert(transition))));
+                case MCMC.RouteStationItem rsi:
+                    {
+                        MCMC.Station mcmcS = rsi.Station;
+                        MCUD.StationDTO mcudS = Convert(mcmcS);
+                        MCUD.RouteStationItemDTO mcudRsi = new(mcudS);
+                        path.Add(mcudRsi);
+                        break;
+                    }
+                case MCMC.RouteConnectionItem rci:
+                    {
+                        switch (rci.Connection)
+                        {
+                            case MCMC.RailwayConnection rc:
+                                {
+                                    MCMC.Railway mcmcR = rc.Railway;
+                                    MCUD.RailwayDTO mcudR = Convert(mcmcR);
+                                    MCUD.RailwayConnectionDTO mcudRc = new(mcudR);
+                                    MCUD.RouteConnectionItemDTO mcudRci = new(mcudRc);
+                                    path.Add(mcudRci);
+                                    break;
+                                }
+                            case MCMC.TransitionConnection tc:
+                                {
+                                    MCMC.Transition mcmcT = tc.Transition;
+                                    MCUD.TransitionDTO mcudT = Convert(mcmcT);
+                                    MCUD.TransitionConnectionDTO mcudRc = new(mcudT);
+                                    MCUD.RouteConnectionItemDTO mcudRci = new(mcudRc);
+                                    path.Add(mcudRci);
+                                    break;
+                                }
+                        }
+
+                        break;
+                    }
             }
         }
 
-        return new(route.Title, route.Chart?.City ?? string.Empty, route.Chart?.Title ?? string.Empty, CntPath, route.Duration);
+        return new(
+            route.Title,
+            route.Chart?.City ?? string.Empty,
+            route.Chart?.Title ?? string.Empty,
+            path,
+            route.Duration
+        );
     }
 }

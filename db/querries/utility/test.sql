@@ -33,8 +33,16 @@ WHERE r.Id IS NOT NULL;
 
 
 UPDATE station SET duty_id = 189
-WHERE id BETWEEN 46073 AND 46108;
+WHERE id BETWEEN 75769 AND 75804;
 
 UPDATE transition SET duty_id = 189
-WHERE id BETWEEN 17143 AND 17145;
+WHERE id BETWEEN 28181 AND 28183;
 
+SELECT s.title FROM station AS s
+INNER JOIN branch_station AS bs ON bs.station_id = s.id
+INNER JOIN chart_branch AS cb ON cb.branch_id = bs.branch_id
+INNER JOIN branch AS b ON b.Id = cb.branch_id
+INNER JOIN chart AS c ON c.Id = cb.chart_id
+WHERE c.city = 'Минск' AND b.title = 'Московская линия';
+
+SELECT * FROM get_route_json_by_id(259);
