@@ -1,0 +1,177 @@
+\ProvidesPackage{settings}[22/09/2024]
+
+\RequirePackage[T2A]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[english,russian]{babel}
+\RequirePackage[a4paper, left=3cm, right=1cm, top=2cm, bottom=2cm]{geometry}
+\RequirePackage{amsmath}
+\RequirePackage{placeins}
+\RequirePackage{float}
+\RequirePackage{threeparttable}
+\RequirePackage[justification=centering]{caption}
+\RequirePackage{graphicx}
+\RequirePackage{svg}
+\RequirePackage{enumitem}
+\RequirePackage{indentfirst}
+\RequirePackage[hyphens]{url}
+\RequirePackage{hyperref}
+\RequirePackage{titlesec}
+\RequirePackage{microtype}
+\RequirePackage{listings}
+\RequirePackage{listingsutf8}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\usetikzlibrary{fit}
+\usetikzlibrary{matrix, shapes.geometric}
+\RequirePackage{csquotes}
+\RequirePackage{array}
+\RequirePackage{longtable}
+
+\setcounter{secnumdepth}{3}
+
+\hypersetup
+{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=blue,
+	citecolor=red,
+	filecolor=magenta,
+	pdftitle={},
+	pdfauthor={},
+	pdfsubject={},
+	pdfkeywords={}
+}
+
+\lstset
+{
+	language=C,
+	basicstyle=\small\sffamily,          % Font size and family for the code
+	keywordstyle=\color{blue},           % Keywords will be in blue
+	commentstyle=\color{green!60!black}, % Comments will be in greenish-black
+	stringstyle=\color{orange},             % Strings will be in red
+	numbers=left,                        % Line numbers on the left
+	stepnumber=1,                        % Number every line
+	numbersep=5pt,                       % Space between numbers and code
+	frame=single,                        % Single frame around the code
+	tabsize=4,                           % Tabs will be 4 spaces wide
+	captionpos=t,                        % Caption will appear at the top
+	breaklines=true,                     % Break long lines
+	breakatwhitespace=true,              % Only break lines at whitespace
+	backgroundcolor=\color{white},       % Background color of the code
+	morekeywords={size_t, uint16_t, gl_Position, location},     % Add custom keywords
+	emph={                               % Add macro names here
+		GL_FRAMEBUFFER, GL_DEPTH_BUFFER_BIT, GL_COLOR_BUFFER_BIT,
+		GL_TRIANGLES, GL_UNSIGNED_INT, GL_TEXTURE0, GL_TEXTURE_2D
+	},
+    emphstyle=\color{purple},            % Set the color for macros
+	emph=[2]{                            % Custom struct types here
+		ShadowMapMainRenderData, Light, vec3,
+		DepthBuffer, GLsizei, Shader, mat4,
+		GLfloat, GLuint, vec4
+	},
+    emphstyle=[2]\color{ForestGreen},    % Set color for struct types
+	emph=[3]{                            % Custom struct types here
+		glViewport, glClear, uniform_matrix4f,
+		glDrawElement, version, layout, uniform
+	},
+    emphstyle=[3]\color{cyan},           % Set color for struct types
+	literate=
+		{а}{{\selectfont\char224}}1
+		{б}{{\selectfont\char225}}1
+		{в}{{\selectfont\char226}}1
+		{г}{{\selectfont\char227}}1
+		{д}{{\selectfont\char228}}1
+		{е}{{\selectfont\char229}}1
+		{ё}{{\"e}}1
+		{ж}{{\selectfont\char230}}1
+		{з}{{\selectfont\char231}}1
+		{и}{{\selectfont\char232}}1
+		{й}{{\selectfont\char233}}1
+		{к}{{\selectfont\char234}}1
+		{л}{{\selectfont\char235}}1
+		{м}{{\selectfont\char236}}1
+		{н}{{\selectfont\char237}}1
+		{о}{{\selectfont\char238}}1
+		{п}{{\selectfont\char239}}1
+		{р}{{\selectfont\char240}}1
+		{с}{{\selectfont\char241}}1
+		{т}{{\selectfont\char242}}1
+		{у}{{\selectfont\char243}}1
+		{ф}{{\selectfont\char244}}1
+		{х}{{\selectfont\char245}}1
+		{ц}{{\selectfont\char246}}1
+		{ч}{{\selectfont\char247}}1
+		{ш}{{\selectfont\char248}}1
+		{щ}{{\selectfont\char249}}1
+		{ъ}{{\selectfont\char250}}1
+		{ы}{{\selectfont\char251}}1
+		{ь}{{\selectfont\char252}}1
+		{э}{{\selectfont\char253}}1
+		{ю}{{\selectfont\char254}}1
+		{я}{{\selectfont\char255}}1
+		{А}{{\selectfont\char192}}1
+		{Б}{{\selectfont\char193}}1
+		{В}{{\selectfont\char194}}1
+		{Г}{{\selectfont\char195}}1
+		{Д}{{\selectfont\char196}}1
+		{Е}{{\selectfont\char197}}1
+		{Ё}{{\"E}}1
+		{Ж}{{\selectfont\char198}}1
+		{З}{{\selectfont\char199}}1
+		{И}{{\selectfont\char200}}1
+		{Й}{{\selectfont\char201}}1
+		{К}{{\selectfont\char202}}1
+		{Л}{{\selectfont\char203}}1
+		{М}{{\selectfont\char204}}2
+		{Н}{{\selectfont\char205}}1
+		{О}{{\selectfont\char206}}1
+		{П}{{\selectfont\char207}}1
+		{Р}{{\selectfont\char208}}1
+		{С}{{\selectfont\char209}}1
+		{Т}{{\selectfont\char210}}1
+		{У}{{\selectfont\char211}}1
+		{Ф}{{\selectfont\char212}}1
+		{Х}{{\selectfont\char213}}1
+		{Ц}{{\selectfont\char214}}1
+		{Ч}{{\selectfont\char215}}1
+		{Ш}{{\selectfont\char216}}2
+		{Щ}{{\selectfont\char217}}2
+		{Ъ}{{\selectfont\char218}}1
+		{Ы}{{\selectfont\char219}}1
+		{Ь}{{\selectfont\char220}}1
+		{Э}{{\selectfont\char221}}1
+		{Ю}{{\selectfont\char222}}1
+		{Я}{{\selectfont\char223}}1
+}
+
+\AtBeginDocument
+{
+	\fontsize{14}{21}\selectfont
+
+	\titleformat{name=\chapter,numberless}[block]{\normalfont\LARGE\bfseries\centering}{}{0pt}{}
+	\titleformat{\chapter}[block]{\normalfont\huge\bfseries}{}{0pt}{\thechapter\quad}
+
+	\titleformat{\section}{\LARGE\bfseries}{\thesection}{1em}{}
+	\titleformat{name=\section,numberless}{\LARGE\bfseries\centering}{}{0pt}{}
+
+	\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+	\titleformat{name=\subsection,numberless}{\large\bfseries\centering}{}{0pt}{}
+
+	\titleformat{\subsubsection}{\large\bfseries}{\thesubsection}{1em}{}
+	\titleformat{name=\subsubsection,numberless}{\large\bfseries\centering}{}{0pt}{}
+
+	\titlespacing*{\chapter}{0pt}{-30pt}{1em}
+	\titlespacing*{\section}{\parindent}{*4}{*4}
+	\titlespacing*{\subsection}{\parindent}{*3}{*3}
+	\titlespacing*{\subsubsection}{\parindent}{*3}{*3}
+
+	\setlength{\parindent}{1.25cm}
+	\captionsetup{labelsep=endash}
+	\captionsetup[figure]{name={Рисунок}}
+	\captionsetup{font=large}
+	\tikzset{every node/.append style={font=\fontsize{8pt}{10pt}\selectfont}}
+	\pgfplotsset{compat=1.18}
+	\sloppy
+}

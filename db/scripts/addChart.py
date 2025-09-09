@@ -20,7 +20,7 @@ station_transitionFileName = workTempDir / Path("station_transition.csv")
 # chartFile = "/home/mihail/Рабочий стол/BMSTU/PPO_BACKUP/cities/Moscow/chart.json"
 
 
-dbname = "metro"
+dbname = "metro_test"
 user = "postgres"
 password = "1234"
 host = "localhost"

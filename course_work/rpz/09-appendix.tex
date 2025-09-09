@@ -1,0 +1,1355 @@
+\chapter*{ПРИЛОЖЕНИЕ А}
+\addcontentsline{toc}{chapter}{ПРИЛОЖЕНИЕ А}
+
+\section*{Презентация к курсовой работе}
+Презентация содержит 12 слайдов.
+
+\chapter*{ПРИЛОЖЕНИЕ B}
+\addcontentsline{toc}{chapter}{ПРИЛОЖЕНИЕ B}
+
+\section*{Листинг к курсовой работе}
+
+\begin{lstlisting}[label=lst:cnst1,caption=Запросы для создания ограничений таблиц (часть 1)]
+ALTER TABLE client
+    ALTER COLUMN client_login SET NOT NULL,
+    ALTER COLUMN client_password SET NOT NULL,
+    ALTER COLUMN mail SET NOT NULL,
+    ALTER COLUMN privilege SET DEFAULT 'UNSIGNED',
+    ADD CONSTRAINT uk_client_login
+        UNIQUE (client_login),
+    ADD CONSTRAINT uk_client_mail
+        UNIQUE (mail);
+
+ALTER TABLE chart
+    ALTER COLUMN city SET NOT NULL,
+    ALTER COLUMN title SET NOT NULL,
+    ALTER COLUMN svg_content SET DEFAULT '<svg width="200" height="200"><text y="16">Пустая схема</text></svg>',
+    ADD CONSTRAINT ck_valid_svg
+        CHECK (svg_content::xml IS DOCUMENT),
+    ADD CONSTRAINT uk_chart_city_title
+        UNIQUE (city, title);
+
+ALTER TABLE branch
+    ALTER COLUMN title SET NOT NULL,
+    ALTER COLUMN color SET DEFAULT 0,
+    ALTER COLUMN access SET DEFAULT 'ACCESSIBLE';
+
+ALTER TABLE station
+    ALTER COLUMN duty_id DROP NOT NULL,
+    ALTER COLUMN title SET NOT NULL,
+    ALTER COLUMN occupancy SET DEFAULT 5,
+    ALTER COLUMN access SET DEFAULT 'ACCESSIBLE',
+    ALTER COLUMN open_time SET NOT NULL,
+    ALTER COLUMN close_time SET NOT NULL,
+    ADD CONSTRAINT ck_station_different_open_close_time
+        CHECK (open_time <> close_time),
+    ADD CONSTRAINT fk_station_duty_id
+        FOREIGN KEY (duty_id) REFERENCES client (id) ON DELETE SET NULL;
+
+ALTER TABLE transition
+    ALTER COLUMN duty_id DROP NOT NULL,
+    ALTER COLUMN occupancy SET DEFAULT 5,
+    ALTER COLUMN access SET DEFAULT 'ACCESSIBLE',
+    ALTER COLUMN duration SET NOT NULL,
+    ALTER COLUMN open_time SET NOT NULL,
+    ALTER COLUMN close_time SET NOT NULL,
+    ADD CONSTRAINT ck_transition_different_open_close_time
+        CHECK (open_time <> close_time),
+    ADD CONSTRAINT fk_transition_duty_id
+        FOREIGN KEY (duty_id) REFERENCES client (id) ON DELETE SET NULL;
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:cnst2,caption=Запросы для создания ограничений таблиц (часть 2)]
+ALTER TABLE way
+    ALTER COLUMN client_id SET NOT NULL,
+    ALTER COLUMN chart_id SET NOT NULL,
+    ALTER COLUMN title SET NOT NULL,
+    ALTER COLUMN init_date SET NOT NULL,
+    ADD CONSTRAINT uk_way_client_id_title
+        UNIQUE (client_id, title),
+    ADD CONSTRAINT fk_way_client_id
+        FOREIGN KEY (client_id) REFERENCES client (id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_way_chart_id
+        FOREIGN KEY (chart_id) REFERENCES chart (id) ON DELETE CASCADE;
+
+
+ALTER TABLE way_item
+    ALTER COLUMN way_id SET NOT NULL,
+    ALTER COLUMN nexus SET NOT NULL,
+    ALTER COLUMN step_nomer SET NOT NULL,
+    ADD CONSTRAINT uk_way_item_way_id_step_nomer
+        UNIQUE (way_id, step_nomer),
+    ADD CONSTRAINT fk_way_item_way_id
+        FOREIGN KEY (way_id) REFERENCES way (id) ON DELETE CASCADE;
+
+
+ALTER TABLE chart_branch
+    ALTER COLUMN chart_id SET NOT NULL,
+    ALTER COLUMN branch_id SET NOT NULL,
+    ADD CONSTRAINT uk_chart_branch_chart_id_branch_id
+        UNIQUE (chart_id, branch_id), -- Ни одна схема не имеет дубликатов веток
+    ADD CONSTRAINT uk_chart_branch_branch_id
+        UNIQUE (branch_id), -- Каждая ветка связывается со схемой только один раз
+    ADD CONSTRAINT fk_chart_branch_chart_id
+        FOREIGN KEY (chart_id) REFERENCES chart (id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_chart_branch_branch_id
+        FOREIGN KEY (branch_id) REFERENCES branch (id) ON DELETE CASCADE;
+
+
+ALTER TABLE branch_station
+    ALTER COLUMN branch_id SET NOT NULL,
+    ALTER COLUMN station_id SET NOT NULL,
+    ADD CONSTRAINT uk_branch_station_branch_id_station_id
+        UNIQUE (branch_id, station_id), -- Ни одна ветка не имеет дубликатов станций
+    ADD CONSTRAINT uk_branch_station_station_id
+        UNIQUE (station_id), -- Каждая станция связывается с веткой только один раз
+    ADD CONSTRAINT fk_branch_station_branch_id
+        FOREIGN KEY (branch_id) REFERENCES branch (id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_branch_station_station_id
+        FOREIGN KEY (station_id) REFERENCES station (id) ON DELETE CASCADE;
+
+
+ALTER TABLE railway
+    ALTER COLUMN from_id SET NOT NULL,
+    ALTER COLUMN to_id SET NOT NULL,
+    ALTER COLUMN duration SET NOT NULL,
+    ADD CONSTRAINT uk_railway_from_id_to_id
+        UNIQUE (from_id, to_id),
+    ADD CONSTRAINT ck_railway_different_stations
+        CHECK (from_id <> to_id),
+    ADD CONSTRAINT fk_railway_from_id
+        FOREIGN KEY (from_id) REFERENCES station (id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_railway_to_id
+        FOREIGN KEY (to_id) REFERENCES station (id) ON DELETE CASCADE;
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:cnst3,caption=Запросы для создания ограничений таблиц (часть 3)]
+ALTER TABLE station_transition
+    ALTER COLUMN station_id SET NOT NULL,
+    ALTER COLUMN transition_id SET NOT NULL,
+    ADD CONSTRAINT uk_station_transition_station_id_transition_id
+        UNIQUE (station_id, transition_id),
+    ADD CONSTRAINT fk_station_transition_station_id
+        FOREIGN KEY (station_id) REFERENCES station (id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_station_transition_transition_id
+        FOREIGN KEY (transition_id) REFERENCES transition (id) ON DELETE CASCADE;
+
+
+ALTER TABLE way_item_station
+    ALTER COLUMN way_item_id SET NOT NULL,
+    ALTER COLUMN station_id SET NOT NULL,
+    ADD CONSTRAINT uk_way_item_station_way_item_id_station_id
+        UNIQUE (way_item_id, station_id),
+    ADD CONSTRAINT uk_way_item_station_way_item_id
+        UNIQUE (way_item_id),
+    ADD CONSTRAINT fk_way_item_station_way_item_id
+        FOREIGN KEY (way_item_id) REFERENCES way_item (id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_way_item_station_station_id
+        FOREIGN KEY (station_id) REFERENCES station (id) ON DELETE CASCADE;
+
+
+ALTER TABLE way_item_railway
+    ALTER COLUMN way_item_id SET NOT NULL,
+    ALTER COLUMN railway_id SET NOT NULL,
+    ADD CONSTRAINT uk_way_item_railway_way_item_id_railway_id
+        UNIQUE (way_item_id, railway_id),
+    ADD CONSTRAINT uk_way_item_railway_way_item_id
+        UNIQUE (way_item_id),
+    ADD CONSTRAINT fk_way_item_railway_way_item_id
+        FOREIGN KEY (way_item_id) REFERENCES way_item (id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_way_item_railway_railway_id
+        FOREIGN KEY (railway_id) REFERENCES railway (id) ON DELETE CASCADE;
+
+
+ALTER TABLE way_item_transition
+    ALTER COLUMN way_item_id SET NOT NULL,
+    ALTER COLUMN transition_id SET NOT NULL,
+    ADD CONSTRAINT uk_way_item_transition_way_item_id_transition_id
+        UNIQUE (way_item_id, transition_id),
+    ADD CONSTRAINT uk_way_item_transition_way_item_id
+        UNIQUE (way_item_id),
+    ADD CONSTRAINT fk_way_item_transition_way_item_id
+        FOREIGN KEY (way_item_id) REFERENCES way_item (id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_way_item_transition_transition_id
+        FOREIGN KEY (transition_id) REFERENCES transition (id) ON DELETE CASCADE;
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:add_chart_json:1,caption=Реализация функции добавления схемы (часть 1)]
+CREATE OR REPLACE FUNCTION add_chart_json(
+    p_json_data TEXT
+) RETURNS INT AS $$
+DECLARE
+    v_json_data JSONB := p_json_data::JSONB;
+
+    v_chart_id      INT;   -- айди созданной записи схемы
+    v_branch_id     INT;   -- айди созданной записи ветки
+    v_station_id    INT;   -- айди созданной записи станции
+    v_transition_id INT;   -- айди созданной записи перехода
+
+    v_branch_item     RECORD;
+    v_station_item    RECORD;
+    v_railway_item    RECORD;
+    v_transition_item RECORD;
+BEGIN
+    IF p_json_data IS NULL OR NOT (p_json_data ~ '^[\s]*\{.*\}[\s]*$') THEN
+        RAISE EXCEPTION 'Некорректный JSON: входные данные пусты или не объект';
+    END IF;
+
+    INSERT INTO chart(city, title)
+    VALUES(
+        v_json_data->>'city',
+        v_json_data->>'title'
+    )
+    RETURNING id INTO v_chart_id;
+
+    FOR v_branch_item IN
+        SELECT * FROM jsonb_array_elements(v_json_data->'branches')
+    LOOP
+
+        INSERT INTO branch(title, color, access)
+        VALUES(
+            (v_branch_item.value)->>'title',
+            hex_color_to_int((v_branch_item.value)->>'color'),
+            ((v_branch_item.value)->>'accesstype')::access_type
+        )
+        RETURNING id INTO v_branch_id;
+
+        INSERT INTO chart_branch(chart_id, branch_id)
+        VALUES(
+            v_chart_id,
+            v_branch_id
+        );
+
+        FOR v_station_item IN
+            SELECT * FROM jsonb_array_elements((v_branch_item.value)->'stations')
+        LOOP
+
+            INSERT INTO station(title, occupancy, access, open_time, close_time)
+            VALUES(
+                (v_station_item.value)->>'title',
+                ((v_station_item.value)->>'occupancy')::SMALLINT,
+                ((v_station_item.value)->>'accesstype')::access_type,
+                ((v_station_item.value)->>'opentime')::TIME,
+                ((v_station_item.value)->>'closetime')::TIME
+            )
+            RETURNING id INTO v_station_id;
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:add_chart_json:2,caption=Реализация функции добавления схемы (часть 2),firstnumber=59]
+            INSERT INTO branch_station(branch_id, station_id)
+            VALUES(
+                v_branch_id,
+                v_station_id
+            );
+
+        END LOOP;
+
+        FOR v_railway_item IN
+            SELECT * FROM jsonb_array_elements((v_branch_item.value)->'railways')
+        LOOP
+
+            INSERT INTO railway(from_id, to_id, duration)
+            VALUES(
+                get_station_id_by_branch_id_station_title(v_branch_id, (v_railway_item.value)->>'from'),
+                get_station_id_by_branch_id_station_title(v_branch_id, (v_railway_item.value)->>'to'),
+                ((v_railway_item.value)->>'duration')::INTERVAL
+            );
+
+        END LOOP;
+
+    END LOOP;
+
+    FOR v_transition_item IN
+        SELECT * FROM jsonb_array_elements(v_json_data->'transitions')
+    LOOP
+
+        INSERT INTO transition(occupancy, access, duration, open_time, close_time)
+        VALUES(
+            ((v_transition_item.value)->>'occupancy')::SMALLINT,
+            ((v_transition_item.value)->>'accesstype')::access_type,
+            ((v_transition_item.value)->>'duration')::INTERVAL,
+            ((v_transition_item.value)->>'opentime')::TIME,
+            ((v_transition_item.value)->>'closetime')::TIME
+        )
+        RETURNING id INTO v_transition_id;
+
+        INSERT INTO station_transition(station_id, transition_id)
+        VALUES (
+            get_station_id_by_branch_title_station_title((v_transition_item.value)
+                ->>'branchsrc', (v_transition_item.value)->>'stationsrc'),
+            v_transition_id
+        );
+
+        INSERT INTO station_transition(station_id, transition_id)
+        VALUES (
+            get_station_id_by_branch_title_station_title((v_transition_item.value)
+                ->>'branchdst', (v_transition_item.value)->>'stationdst'),
+            v_transition_id
+        );
+
+    END LOOP;
+
+    RETURN v_chart_id;
+END;
+$$ LANGUAGE plpgsql;
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:add_route_json:1,caption=Реализация функции добавления маршрута (часть 1),firstnumber=1]
+CREATE OR REPLACE FUNCTION add_route_json(
+    p_client_id INT,
+    p_chart_id INT,
+    p_json_data TEXT
+) RETURNS INT AS $$
+DECLARE
+    v_json_data JSONB := p_json_data::JSONB;
+
+    v_way_id INT;          -- айди созданной записи маршрута
+    v_item RECORD;         -- обход массива звеньев маршрута  
+    v_way_item_id INT;     -- айди созданного звена
+    v_step_nomer INT := 1; -- номер звена маршрута
+    v_branch_id INT;       -- айди найденной ветки
+    v_station_id INT;      -- айди найденной станции
+    v_station_from_id INT; -- айди станции: <ОТ>
+    v_station_to_id INT;   -- айди станции: <НА>
+    v_railway_id INT;      -- айди найденного переезда
+    v_transition_id INT;   -- айди найденного перехода
+BEGIN
+    -- Проверка конвертации
+    IF p_json_data IS NULL OR NOT (p_json_data ~ '^[\s]*\{.*\}[\s]*$') THEN
+        RAISE EXCEPTION 'Некорректный JSON: входные данные пусты или не объект';
+    END IF;
+
+    -- Создать запись нового маршрута
+    INSERT INTO way (client_id, chart_id, title, duration, init_date)
+    VALUES (
+        p_client_id,
+        p_chart_id,
+        v_json_data->>'Title',
+        (v_json_data->>'Duration')::INTERVAL,
+        date_trunc('second', NOW())::TIMESTAMPTZ
+    )
+    RETURNING id INTO v_way_id;
+
+    -- Вставка звеньев маршрута
+    FOR v_item IN SELECT * FROM jsonb_array_elements(v_json_data->'RouteItems')
+    LOOP
+        -- Создать запись о звенье маршрута
+        INSERT INTO way_item (way_id, nexus, step_nomer)
+        VALUES (
+            v_way_id,
+            CASE 
+                WHEN (v_item.value)->>'$type' = 'station' THEN 'STATION'::nexus_type
+                WHEN (v_item.value)->>'$type' = 'railway' THEN 'RAILWAY'::nexus_type
+                WHEN (v_item.value)->>'$type' = 'transition' THEN 'TRANSITION'::nexus_type
+            END,
+            v_step_nomer
+        )
+        RETURNING id INTO v_way_item_id;
+
+        -- Конкретизация и связывание звяна с реальными станциями, переездами и перехода схемы
+        CASE
+            -- Станция
+            WHEN (v_item.value)->>'$type' = 'station' THEN
+                -- Поиск связываемой ветки (обновлять айди нужно только на каждую станцию и переход)
+                SELECT
+                    b.id INTO v_branch_id
+                FROM 
+                    branch AS b
+                WHERE
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:add_route_json:2,caption=Реализация функции добавления маршрута (часть 2),firstnumber=62]
+                    b.title = (v_item.value)->>'BranchTitle' AND
+                    EXISTS(
+                        SELECT
+                            1
+                        FROM
+                            chart_branch AS cb
+                        WHERE
+                            cb.chart_id = p_chart_id AND cb.branch_id = b.id
+                    );
+
+                -- Поиск связываемой станции
+                SELECT
+                    s.id INTO v_station_id
+                FROM
+                    station AS s
+                INNER JOIN
+                    branch_station AS bs ON s.id = bs.station_id
+                WHERE
+                    bs.branch_id = v_branch_id AND
+                    s.title = (v_item.value)->>'Title';
+
+                -- Вставка звена маршрута <Станция>
+                INSERT INTO way_item_station (way_item_id, station_id)
+                VALUES (v_way_item_id, v_station_id);
+
+            -- Переезд
+            WHEN (v_item.value)->>'$type' = 'railway' THEN
+                -- Поиск отправной станции
+                SELECT
+                    s.id INTO v_station_from_id
+                FROM
+                    station AS s
+                INNER JOIN
+                    branch_station AS bs ON s.id = bs.station_id
+                WHERE
+                    bs.branch_id = v_branch_id AND
+                    s.title = (v_item.value)->>'FromStationTitle';
+                
+                -- Поиск станции назначения
+                SELECT
+                    s.id INTO v_station_to_id
+                FROM
+                    station AS s
+                INNER JOIN
+                    branch_station AS bs ON s.id = bs.station_id
+                WHERE
+                    bs.branch_id = v_branch_id AND
+                    s.title = (v_item.value)->>'ToStationTitle';
+
+                -- Поиск связываемого переезда
+                SELECT
+                    r.id INTO v_railway_id
+                FROM
+                    railway AS r
+                WHERE
+                    (r.from_id = v_station_from_id AND r.to_id = v_station_to_id) OR
+                    (r.from_id = v_station_to_id AND r.to_id = v_station_from_id);
+
+                IF v_railway_id IS NULL THEN
+                    RAISE EXCEPTION 'На шаге % не найден переезд между станциями % и % на ветке %',
+                        v_step_nomer, v_station_from_id, v_station_to_id, v_branch_id;
+                END IF;
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:add_route_json:3,caption=Реализация функции добавления маршрута (часть 3),firstnumber=124]
+                -- Вставка звена маршрута <Переезд>
+                INSERT INTO way_item_railway (way_item_id, railway_id)
+                VALUES (v_way_item_id, v_railway_id);
+            
+            -- Переход
+            WHEN (v_item.value)->>'$type' = 'transition' THEN               
+                -- Поиск первой связанной станции
+                SELECT
+                    s.id INTO v_station_from_id
+                FROM
+                    station AS s
+                WHERE
+                    s.Title = (v_item.value)->>'FromStationTitle' AND
+                    EXISTS(
+                        SELECT
+                            1
+                        FROM
+                            branch AS b
+                        WHERE
+                            b.title = (v_item.value)->>'FromBranchTitle' AND
+                            EXISTS (
+                                SELECT
+                                    1
+                                FROM
+                                    branch_station AS bs
+                                WHERE
+                                    bs.branch_id = b.id AND bs.station_id = s.id
+                            )
+                    );
+                
+                -- Поиск второй связанной станции
+                SELECT
+                    s.id INTO v_station_to_id
+                FROM
+                    station AS s
+                WHERE
+                    s.Title = (v_item.value)->>'ToStationTitle' AND
+                    EXISTS(
+                        SELECT
+                            1
+                        FROM
+                            branch AS b
+                        WHERE
+                            b.title = (v_item.value)->>'ToBranchTitle' AND
+                            EXISTS (
+                                SELECT
+                                    1
+                                FROM
+                                    branch_station AS bs
+                                WHERE
+                                    bs.branch_id = b.id AND bs.station_id = s.id
+                            )
+                    );
+                
+                -- Поиск связываемого перехода
+                SELECT
+                    st.transition_id INTO v_transition_id
+                FROM
+                    station_transition AS st
+                WHERE
+                    st.station_id = v_station_from_id OR st.station_id = v_station_to_id
+                GROUP BY
+                    st.transition_id
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:add_route_json:4,caption=Реализация функции добавления маршрута (часть 4),firstnumber=187]
+                HAVING
+                    COUNT(*) = 2; -- Только у подходящего перехода количесво связей будет равно 2
+
+                -- Вставка звена маршрута <Переход>
+                INSERT INTO way_item_transition (way_item_id, transition_id)
+                VALUES (v_way_item_id, v_transition_id);
+
+        END CASE;
+
+        v_step_nomer := v_step_nomer + 1;
+    END LOOP;
+
+    RETURN v_way_id;
+END;
+$$ LANGUAGE plpgsql;
+\end{lstlisting}
+
+\begin{lstlisting}[label=lst:get_chart_json_by_id:1,caption=Реализация функции получения схемы (часть 1),firstnumber=1]
+CREATE OR REPLACE FUNCTION get_chart_json_by_id(chart_id INT)
+RETURNS JSONB AS $$
+DECLARE
+    result_json JSONB;
+BEGIN
+    SELECT
+        jsonb_build_object(
+            'city', c.city,
+            'title', c.title,
+            'branches', COALESCE((
+            SELECT
+                jsonb_agg(
+                    jsonb_build_object(
+                        'title', b.title,
+                        'color', UPPER((SELECT int_color_to_hex(b.color))),
+                        'accesstype', b.access,
+                        'stations', COALESCE((
+                        SELECT
+                            jsonb_agg(
+                                jsonb_build_object(
+                                    'title', s.title,
+                                    'occupancy', s.occupancy,
+                                    'accesstype', s.access,
+                                    'opentime', (SELECT TO_CHAR(s.open_time, 'HH24:MI')),
+                                    'closetime', (SELECT TO_CHAR(s.close_time, 'HH24:MI'))
+                                )
+                            )
+                        FROM
+                            station AS s
+                        WHERE
+                            EXISTS (
+                                SELECT
+                                    1
+                                FROM
+                                    branch_station AS bs
+                                WHERE
+                                    bs.station_id = s.id AND bs.branch_id = b.id
+                            )
+                        ), '[]'::JSONB),
+                        'railways', COALESCE((
+                        SELECT
+                            jsonb_agg(
+                                jsonb_build_object(
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:get_chart_json_by_id:2,caption=Реализация функции получения схемы (часть 2),firstnumber=44]
+                                    'from', (
+                                    SELECT
+                                        s.title
+                                    FROM
+                                        station AS s
+                                    WHERE
+                                        s.id = r.from_id
+                                    ),
+                                    'to', (
+                                    SELECT
+                                        s.title
+                                    FROM
+                                        station AS s
+                                    WHERE
+                                        s.id = r.to_id
+                                    ),
+                                    'duration', r.duration
+                                )
+                            )
+                        FROM
+                            railway AS r
+                        WHERE
+                            EXISTS (
+                                SELECT
+                                    1
+                                FROM
+                                    branch_station AS bs
+                                JOIN
+                                    station AS s ON b.id = bs.branch_id AND s.id = bs.station_id AND s.id = r.from_id
+                            )
+                        ), '[]'::JSONB)
+                    )
+                )
+            FROM
+                branch AS b
+            JOIN
+                chart_branch AS cb ON cb.chart_id = c.id AND cb.branch_id = b.id
+            ), '[]'::JSONB),
+            'transitions', COALESCE((
+            WITH
+                adj AS (
+                    SELECT
+                        bs.branch_id,
+                        bs.station_id,
+                        t.id AS transition_id,
+                        t.occupancy,
+                        t.access,
+                        t.duration,
+                        t.open_time,
+                        t.close_time
+                    FROM
+                        chart_branch AS cb
+                    JOIN
+                        branch_station AS bs ON cb.chart_id = c.id AND cb.branch_id = bs.branch_id
+                    JOIN
+                        station_transition AS st ON st.station_id = bs.station_id
+                    JOIN
+                        transition AS t ON t.id = st.transition_id
+                ),
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:get_chart_json_by_id:3,caption=Реализация функции получения схемы (часть 3),firstnumber=103]
+                r_adj AS (
+                    SELECT
+                        adj.branch_id,
+                        adj.station_id,
+                        adj.transition_id,
+                        rank() OVER (PARTITION BY transition_id ORDER BY branch_id, station_id)
+                    FROM
+                        adj
+                ),
+                d_adj AS (
+                    SELECT DISTINCT ON (adj.transition_id)
+                        *
+                    FROM
+                        adj
+                    ORDER BY
+                        adj.transition_id
+                )
+            SELECT
+                jsonb_agg(
+                    jsonb_build_object(
+                        'occupancy', d_adj.occupancy,
+                        'accesstype', d_adj.access,
+                        'duration', d_adj.duration,
+                        'opentime', (SELECT TO_CHAR(d_adj.open_time, 'HH24:MI')),
+                        'closetime', (SELECT TO_CHAR(d_adj.close_time, 'HH24:MI')),
+                        'branchsrc', (
+                            SELECT
+                                b.title 
+                            FROM
+                                r_adj
+                            JOIN
+                                branch AS b ON r_adj.transition_id = d_adj.transition_id AND b.id = r_adj.branch_id AND r_adj.rank = 1
+                        ),
+                        'stationsrc', (
+                            SELECT
+                                s.title 
+                            FROM
+                                r_adj
+                            JOIN
+                                station AS s ON r_adj.transition_id = d_adj.transition_id AND s.id = r_adj.station_id AND r_adj.rank = 1
+                        ),
+                        'branchdst', (
+                            SELECT
+                                b.title 
+                            FROM
+                                r_adj
+                            JOIN
+                                branch AS b ON r_adj.transition_id = d_adj.transition_id AND b.id = r_adj.branch_id AND r_adj.rank = 2
+                        ),
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:get_chart_json_by_id:4,caption=Реализация функции получения схемы (часть 4),firstnumber=152]
+                        'stationdst', (
+                            SELECT
+                                s.title 
+                            FROM
+                                r_adj
+                            JOIN
+                                station AS s ON r_adj.transition_id = d_adj.transition_id AND s.id = r_adj.station_id AND r_adj.rank = 2
+                        )
+                    )
+                )
+            FROM
+                d_adj
+            ), '[]'::JSONB)
+        ) INTO result_json
+    FROM
+        chart AS c
+    WHERE
+        c.id = chart_id;
+
+    RETURN result_json;
+END;
+$$ LANGUAGE plpgsql
+\end{lstlisting}
+
+\begin{lstlisting}[label=lst:get_route_json_by_id:1,caption=Реализация функции получения маршрута (часть 1),firstnumber=1]
+CREATE OR REPLACE FUNCTION get_route_json_by_id(way_id INT)
+RETURNS JSONB AS $$
+DECLARE
+    result_json JSONB;
+BEGIN
+    SELECT
+        jsonb_build_object(
+            'City', c.city,
+            'ChartTitle', c.title,
+            'Title', w.title,
+            'Duration', w.duration,
+            'RouteItems', COALESCE((
+                WITH
+                    wi AS (
+                        SELECT
+                            way_item.id,
+                            way_item.way_id,
+                            way_item.nexus,
+                            way_item.step_nomer
+                        FROM
+                            way_item
+                        WHERE
+                            way_item.way_id = w.id
+                    ),
+                    ris AS (
+                        SELECT
+                            wis.way_item_id,
+                            wis.station_id,
+                            bs.branch_id,
+                            s.title AS station_title,
+                            b.title AS branch_title,
+                            s.occupancy AS station_occupancy,
+                            s.access AS station_access,
+                            s.open_time AS station_open_time,
+                            s.close_time AS station_close_time,
+                            wi.step_nomer
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:get_route_json_by_id:2,caption=Реализация функции получения маршрута (часть 2),firstnumber=37]
+                        FROM
+                            wi
+                        INNER JOIN
+                            way_item_station AS wis ON wi.id = wis.way_item_id
+                        INNER JOIN
+                            station AS s ON s.id = wis.station_id
+                        INNER JOIN
+                            branch_station AS bs ON bs.station_id = s.id
+                        INNER JOIN
+                            branch AS b ON b.id = bs.branch_id
+                    ),
+                    rir AS (
+                        SELECT
+                            way_item_id,
+                            branch_title,
+                            from_station_title,
+                            to_station_title,
+                            railway_duration,
+                            step_nomer
+                        FROM (
+                            SELECT
+                                wir.way_item_id,
+                                wi.nexus,
+                                LAG(ris.branch_title) OVER (ORDER BY wi.step_nomer) AS branch_title,
+                                LAG(ris.station_title) OVER (ORDER BY wi.step_nomer) AS from_station_title,
+                                LEAD(ris.station_title) OVER (ORDER BY wi.step_nomer) AS to_station_title,
+                                r.duration AS railway_duration,
+                                wi.step_nomer
+                            FROM
+                                wi
+                            LEFT JOIN
+                                ris ON wi.id = ris.way_item_id
+                            LEFT JOIN
+                                way_item_railway AS wir ON wi.id = wir.way_item_id
+                            LEFT JOIN
+                                railway AS r ON wir.railway_id = r.id
+                        )
+                        WHERE
+                            nexus = 'RAILWAY'::nexus_type
+                    ),
+                    rit AS (
+                        SELECT
+                            way_item_id,
+                            from_station_title,
+                            from_branch_title,
+                            to_station_title,
+                            to_branch_title,
+                            transition_occupancy,
+                            transition_access,
+                            transition_duration,
+                            transition_open_time,
+                            transition_close_time,
+                            step_nomer
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:get_route_json_by_id:3,caption=Реализация функции получения маршрута (часть 3),firstnumber=90]
+                        FROM (
+                            SELECT
+                                wit.way_item_id,
+                                wi.nexus,
+                                LAG(ris.station_title) OVER (ORDER BY wi.step_nomer) AS from_station_title,
+                                LAG(ris.branch_title) OVER (ORDER BY wi.step_nomer) AS from_branch_title,
+                                LEAD(ris.station_title) OVER (ORDER BY wi.step_nomer) AS to_station_title,
+                                LEAD(ris.branch_title) OVER (ORDER BY wi.step_nomer) AS to_branch_title,
+                                t.occupancy AS transition_occupancy,
+                                t.access AS transition_access,
+                                t.duration AS transition_duration,
+                                t.open_time AS transition_open_time,
+                                t.close_time AS transition_close_time,
+                                wi.step_nomer
+                            FROM
+                                wi
+                            LEFT JOIN
+                                ris ON wi.id = ris.way_item_id
+                            LEFT JOIN
+                                way_item_transition AS wit ON wi.id = wit.way_item_id
+                            LEFT JOIN
+                                transition AS t ON wit.transition_id = t.id
+                            WHERE
+                                wi.nexus != 'RAILWAY'::nexus_type
+                        )
+                        WHERE
+                            nexus = 'TRANSITION'::nexus_type
+                    ),
+                    res AS (
+                        SELECT
+                            wi.step_nomer,
+                            wi.nexus,
+                            CASE wi.nexus
+                                WHEN 'STATION'::nexus_type THEN ris.station_title
+                                ELSE NULL
+                            END AS station_title,
+                            CASE wi.nexus
+                                WHEN 'STATION'::nexus_type THEN ris.branch_title
+                                WHEN 'RAILWAY'::nexus_type THEN rir.branch_title
+                                ELSE NULL
+                            END AS branch_title,
+                            CASE wi.nexus
+                                WHEN 'STATION'::nexus_type THEN ris.station_occupancy
+                                ELSE NULL
+                            END AS station_occupancy,
+                            CASE wi.nexus
+                                WHEN 'STATION'::nexus_type THEN ris.station_access
+                                ELSE NULL
+                            END AS station_access,
+                            CASE wi.nexus
+                                WHEN 'STATION'::nexus_type THEN ris.station_open_time
+                                ELSE NULL
+                            END AS station_open_time,
+                            CASE wi.nexus
+                                WHEN 'STATION'::nexus_type THEN ris.station_close_time
+                                ELSE NULL
+                            END AS station_close_time,
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:get_route_json_by_id:4,caption=Реализация функции получения маршрута (часть 4),firstnumber=147]
+                            CASE wi.nexus
+                                WHEN 'RAILWAY'::nexus_type THEN rir.from_station_title
+                                WHEN 'TRANSITION'::nexus_type THEN rit.from_station_title
+                                ELSE NULL
+                            END AS from_station_title,
+                            CASE wi.nexus
+                                WHEN 'RAILWAY'::nexus_type THEN rir.to_station_title
+                                WHEN 'TRANSITION'::nexus_type THEN rit.to_station_title
+                                ELSE NULL
+                            END AS to_station_title,
+                            CASE wi.nexus
+                                WHEN 'RAILWAY'::nexus_type THEN rir.railway_duration
+                                ELSE NULL
+                            END AS railway_duration,
+                            CASE wi.nexus
+                                WHEN 'TRANSITION'::nexus_type THEN rit.from_branch_title
+                                ELSE NULL
+                            END AS from_branch_title,
+                            CASE wi.nexus
+                                WHEN 'TRANSITION'::nexus_type THEN rit.to_branch_title
+                                ELSE NULL
+                            END AS to_branch_title,
+                            CASE wi.nexus
+                                WHEN 'TRANSITION'::nexus_type THEN rit.transition_occupancy
+                                ELSE NULL
+                            END AS transition_occupancy,
+                            CASE wi.nexus
+                                WHEN 'TRANSITION'::nexus_type THEN rit.transition_access
+                                ELSE NULL
+                            END AS transition_access,
+                            CASE wi.nexus
+                                WHEN 'TRANSITION'::nexus_type THEN rit.transition_duration
+                                ELSE NULL
+                            END AS transition_duration,
+                            CASE wi.nexus
+                                WHEN 'TRANSITION'::nexus_type THEN rit.transition_open_time
+                                ELSE NULL
+                            END AS transition_open_time,
+                            CASE wi.nexus
+                                WHEN 'TRANSITION'::nexus_type THEN rit.transition_close_time
+                                ELSE NULL
+                            END AS transition_close_time
+                        FROM
+                            wi
+                        LEFT JOIN
+                            ris ON wi.id = ris.way_item_id
+                        LEFT JOIN
+                            rir ON wi.id = rir.way_item_id
+                        LEFT JOIN
+                            rit ON wi.id = rit.way_item_id
+                        ORDER BY
+                            wi.step_nomer
+                    )
+                SELECT
+                    jsonb_agg(
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:get_route_json_by_id:5,caption=Реализация функции получения маршрута (часть 5),firstnumber=202]
+                        CASE res.nexus
+                            WHEN 'STATION'::nexus_type THEN
+                                jsonb_build_object(
+                                    '$type', 'station',
+                                    'Title', res.station_title,
+                                    'BranchTitle', res.branch_title,
+                                    'Occupancy', res.station_occupancy,
+                                    'Access', res.station_access,
+                                    'OpenTime', res.station_open_time,
+                                    'CloseTime', res.station_close_time
+                                )
+                            WHEN 'RAILWAY'::nexus_type THEN
+                                jsonb_build_object(
+                                    '$type', 'railway',
+                                    'BranchTitle', res.branch_title,
+                                    'FromStationTitle', res.from_station_title,
+                                    'ToStationTitle', res.to_station_title,
+                                    'Duration', res.railway_duration
+                                )
+                            WHEN 'TRANSITION'::nexus_type THEN
+                                jsonb_build_object(
+                                    '$type', 'transition',
+                                    'FromBranchTitle', res.from_branch_title,
+                                    'FromStationTitle', res.from_station_title,
+                                    'ToBranchTitle', res.to_branch_title,
+                                    'ToStationTitle', res.to_station_title,
+                                    'Occupancy', res.transition_occupancy,
+                                    'Access', res.transition_access,
+                                    'Duration', res.transition_duration,
+                                    'OpenTime', res.transition_open_time,
+                                    'CloseTime', res.transition_close_time
+                                )
+                            ELSE
+                                jsonb_build_object('$type', 'unknown')
+                        END
+                    )
+                FROM
+                    res
+            ), '[]'::JSONB)
+        ) INTO result_json
+    FROM
+        way AS w
+    INNER JOIN
+        chart AS c ON w.chart_id = c.id
+    WHERE
+        w.id = way_id;
+
+
+    RETURN result_json;
+END;
+$$ LANGUAGE plpgsql
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:color_convertors,caption=Реализация функций конвертации цвета,firstnumber=1]
+CREATE OR REPLACE FUNCTION hex_color_to_int(hex_color TEXT)
+RETURNS INT AS $$
+DECLARE
+    cleaned_hex TEXT;
+    full_hex TEXT;
+    color_int INT;
+BEGIN
+    cleaned_hex := UPPER(TRIM(BOTH '#' FROM hex_color));
+
+    IF LENGTH(cleaned_hex) = 3 THEN
+        full_hex := CONCAT(
+            SUBSTR(cleaned_hex, 1, 1), SUBSTR(cleaned_hex, 1, 1),
+            SUBSTR(cleaned_hex, 2, 1), SUBSTR(cleaned_hex, 2, 1),
+            SUBSTR(cleaned_hex, 3, 1), SUBSTR(cleaned_hex, 3, 1)
+        );
+    ELSIF LENGTH(cleaned_hex) = 6 THEN
+        full_hex := cleaned_hex;
+    ELSE
+        RAISE EXCEPTION 'Неверный формат hex-цвета: %', hex_color;
+    END IF;
+
+    EXECUTE 'SELECT ' || quote_literal('x' || full_hex) || '::bit(24)::int'
+    INTO color_int;
+
+    RETURN color_int;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+
+CREATE OR REPLACE FUNCTION int_color_to_hex(int_color INT)
+RETURNS TEXT AS $$
+DECLARE
+    hex_color TEXT;
+BEGIN
+    IF int_color IS NULL OR int_color < 0 OR int_color > 16777215 THEN
+        RAISE EXCEPTION 'Цвет должен быть в диапазоне от 0 до 16777215, получено: %', int_color;
+    END IF;
+
+    hex_color := LPAD(TO_HEX(int_color), 6, '0');
+
+    RETURN '#' || LOWER(hex_color);
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:nav_funcs,caption=Реализация навигационных функций,firstnumber=1]
+CREATE OR REPLACE FUNCTION get_station_id_by_branch_id_station_title(
+    p_branch_id INT,
+    station_title TEXT
+) RETURNS INT AS $$
+DECLARE
+    v_station_id INT;
+BEGIN
+    SELECT
+        s.id INTO v_station_id
+    FROM
+        branch_station AS bs
+    INNER JOIN
+        station AS s ON bs.station_id = s.id
+    WHERE
+        bs.branch_id = p_branch_id AND
+        s.title = station_title;
+    
+    RETURN v_station_id;
+END;
+$$ LANGUAGE plpgsql STABLE;
+
+
+CREATE OR REPLACE FUNCTION get_station_id_by_branch_title_station_title(
+    branch_title TEXT,
+    station_title TEXT
+) RETURNS INT AS $$
+DECLARE
+    v_station_id INT;
+BEGIN
+    SELECT
+        s.id INTO v_station_id
+    FROM
+        branch_station AS bs
+    INNER JOIN
+        branch AS b ON bs.branch_id = b.id
+    INNER JOIN
+        station AS s ON bs.station_id = s.id
+    WHERE
+        b.title = branch_title AND
+        s.title = station_title;
+    
+    RETURN v_station_id;
+END;
+$$ LANGUAGE plpgsql STABLE;
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:ck:tr:funcs:1,caption=Реализация проверяющий триггерных функций (часть 1),firstnumber=1]
+-- Проверка корректного добавления связи Схема--Ветка
+CREATE OR REPLACE FUNCTION ck_chart_branch_unique_ref() RETURNS TRIGGER
+AS $$
+BEGIN
+    IF EXISTS (
+        SELECT
+            1
+        FROM
+            chart_branch
+        WHERE
+            chart_id <> NEW.chart_id AND branch_id = NEW.branch_id
+    ) THEN
+        RAISE EXCEPTION
+            'Попытка связать ветку (%), уже связанную со схемой (%), со схемой (%).',
+            branch_id, chart_id, NEW.chart_id;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Проверка корректного добавления связи Ветка--Станция
+CREATE OR REPLACE FUNCTION ck_branch_station_unique_ref() RETURNS TRIGGER
+AS $$
+BEGIN
+    IF EXISTS (
+        SELECT
+            1
+        FROM
+            branch_station
+        WHERE
+            branch_id <> NEW.branch_id AND station_id = NEW.station_id
+    ) THEN
+        RAISE EXCEPTION
+            'Попытка связать станцию (%), уже связанную с веткой (%), с веткой (%).',
+            station_id, branch_id, NEW.branch_id;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Проверка дублирования переездов между станциями
+CREATE OR REPLACE FUNCTION ck_railway_unique_station_ref() RETURNS TRIGGER
+AS $$
+BEGIN
+    IF EXISTS (
+        SELECT
+            1
+        FROM
+            railway
+        WHERE
+            from_id = NEW.to_id AND to_id = NEW.from_id
+    ) THEN
+        RAISE EXCEPTION
+            'Дублирование переезда между станциями. Станции (%, %) уже соединены переездом: (%, %).',
+            NEW.from_id, NEW.to_id, from_id, to_id;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:ck:tr:funcs:2,caption=Реализация проверяющий триггерных функций (часть 2),firstnumber=61]
+-- Проверка связывания станций переездом в рамках одной ветки
+CREATE OR REPLACE FUNCTION ck_railway_same_branch_of_stations_ref() RETURNS TRIGGER
+AS $$
+DECLARE
+    branch1_id INT;
+    branch2_id INT;
+BEGIN
+    SELECT
+        branch_id INTO branch1_id
+    FROM
+        branch_station AS bs
+    WHERE
+        NEW.from_id = bs.station_id
+    LIMIT 1;
+
+    SELECT
+        branch_id INTO branch2_id
+    FROM
+        branch_station AS bs
+    WHERE
+        NEW.to_id = bs.station_id
+    LIMIT 1;
+
+    IF branch1_id IS NULL THEN
+        RAISE EXCEPTION
+            'Станция % не привязана ни к одной ветке',
+            NEW.from_id;
+    ELSIF branch2_id IS NULL THEN
+        RAISE EXCEPTION
+            'Станция % не привязана ни к одной ветке',
+            NEW.to_id;
+    ELSIF branch1_id <> branch2_id THEN
+        RAISE EXCEPTION
+            'Попытка соединения переездом станций (%, %), принадлежащие разным веткам: (%, %).',
+            NEW.from_id, NEW.to_id, branch1_id, branch2_id;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Проверка связывания станций переходом в рамках разных веток одной и той же схемы
+CREATE OR REPLACE FUNCTION ck_station_transition_different_branch_of_stations_ref() RETURNS TRIGGER
+AS $$
+DECLARE
+    transition_links INT;
+    station1_id INT;
+    station2_id INT;
+    branch1_id INT;
+    branch2_id INT;
+    chart1_id INT;
+    chart2_id INT;
+BEGIN
+    -- Подсчет количества станций ведущих на один и тот же переход
+    SELECT
+        count(st.transition_id) INTO transition_links
+    FROM
+        station_transition AS st
+    WHERE
+        st.transition_id = NEW.transition_id;
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:ck:tr:funcs:3,caption=Реализация проверяющий триггерных функций (часть 3),firstnumber=123]
+    -- Гарантия, что только две станции ведут на переход
+    IF transition_links < 2 THEN
+        RETURN NEW; -- переход еще не полностью установлен
+    ELSIF transition_links > 2 THEN
+        RAISE EXCEPTION
+            'Попытка связать переход (%) с больше чем 2-мя станциями',
+            NEW.transition_id;
+    END IF;
+
+    -- Первая станция уже имеется в новой записи NEW
+    SELECT
+        NEW.station_id INTO station1_id;
+
+    -- Вторая станция избирается с учетом того, что всего станций 2 и проверкой
+    -- на несовпадение с NEW.station_id
+    SELECT
+        st.station_id INTO station2_id
+    FROM
+        station_transition AS st
+    WHERE
+        st.transition_id = NEW.transition_id AND st.station_id <> NEW.station_id
+    LIMIT 1;
+
+    -- Вторая станция должна быть найдена
+    IF station2_id IS NULL THEN
+        RAISE EXCEPTION
+            'Не удалось определить вторую станцию для перехода %',
+            NEW.transition_id;
+    END IF;
+
+    -- Поиск ветки и схемы для первой станции
+    SELECT
+        bs.branch_id, cb.chart_id INTO branch1_id, chart1_id
+    FROM
+        branch_station bs
+    LEFT JOIN
+        chart_branch cb ON cb.branch_id = bs.branch_id
+    WHERE
+        bs.station_id = station1_id
+    LIMIT 1;
+    
+    -- Поиск ветки и схемы для второй станции
+    SELECT
+        bs.branch_id, cb.chart_id INTO branch2_id, chart2_id
+    FROM
+        branch_station bs
+    LEFT JOIN
+        chart_branch cb ON cb.branch_id = bs.branch_id
+    WHERE
+        bs.station_id = station2_id
+    LIMIT 1;
+
+    IF branch1_id IS NULL THEN
+        RAISE EXCEPTION
+            'Станция (%) не привязана к ветке',
+            station1_id;
+    ELSIF branch2_id IS NULL THEN
+        RAISE EXCEPTION
+            'Станция (%) не привязана к ветке',
+            station2_id;
+    ELSIF chart1_id IS NULL THEN
+        RAISE EXCEPTION
+            'Ветка (%) не привязана к схеме',
+            branch1_id;
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[label=lst:ck:tr:funcs:4,caption=Реализация проверяющий триггерных функций (часть 4),firstnumber=187]
+    ELSIF chart2_id IS NULL THEN
+        RAISE EXCEPTION
+            'Ветка (%) не привязана к схеме',
+            branch2_id;
+    ELSIF branch1_id = branch2_id THEN
+        RAISE EXCEPTION
+            'Попытка соединения переходом станций (%, %), принадлежащие одной и той же ветке: (%).',
+            statoin1_id, station2_id, branch1_id;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+\end{lstlisting}
+
+\begin{lstlisting}[label=lst:del:tr:funcs,caption=Реализация удаляющих триггерных функций,firstnumber=1]
+-- Удаление всех branch, которые были связаны с удаляемым chart
+CREATE OR REPLACE FUNCTION delete_orphaned_branches_before_chart_delete()
+RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM branch
+    WHERE id IN (
+        SELECT cb.branch_id
+        FROM chart_branch AS cb
+        WHERE cb.chart_id = OLD.id
+    );
+    
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Удаление всех Station, которые были связаны с удаляемым Branch
+CREATE OR REPLACE FUNCTION delete_orphaned_stations_before_branch_delete()
+RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM station
+    WHERE id IN (
+        SELECT bs.station_id
+        FROM branch_station AS bs
+        WHERE bs.branch_id = OLD.id
+    );
+    
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Удаление всех Transition, которые были связаны с удаляемым Station
+CREATE OR REPLACE FUNCTION delete_orphaned_transitions_before_station_delete()
+RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM transition
+    WHERE id IN (
+        SELECT st.transition_id
+        FROM station_transition AS st
+        WHERE st.station_id = OLD.id
+    );
+    
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+\end{lstlisting}
+
+\clearpage

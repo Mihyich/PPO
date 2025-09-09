@@ -46,3 +46,5 @@ INNER JOIN chart AS c ON c.Id = cb.chart_id
 WHERE c.city = 'Минск' AND b.title = 'Московская линия';
 
 SELECT * FROM get_route_json_by_id(259);
+
+DELETE FROM chart;

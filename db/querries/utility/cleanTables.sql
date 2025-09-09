@@ -13,6 +13,16 @@ DELETE FROM branch;
 DELETE FROM chart;
 DELETE FROM client;
 
+TRUNCATE TABLE 
+    station_transition,
+    railway,
+    branch_station,
+    chart_branch,
+    transition,
+    station,
+    branch,
+    chart;
+
 ALTER SEQUENCE public.client_id_seq RESTART WITH 1;
 ALTER SEQUENCE public.chart_id_seq RESTART WITH 1;
 ALTER SEQUENCE public.branch_id_seq RESTART WITH 1;
