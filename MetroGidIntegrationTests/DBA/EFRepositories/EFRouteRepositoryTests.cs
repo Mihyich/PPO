@@ -5,6 +5,7 @@ using MetroGidIntegrationTests.DBA.EFFixtures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 using MCMT = MetroGid.Core.Models.Types;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Exceptions.Handlers;
@@ -49,14 +50,14 @@ public class EFRouteRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, 
 
     private MCMC.Route Route_Sankt_Peterburg_Begovaya_Kupchino;
 
-    private int clientId1;
-    private int clientId2;
-    private int clientId3;
-    private int clientId4;
+    private MCMA.IdRow? clientId1Row;
+    private MCMA.IdRow? clientId2Row;
+    private MCMA.IdRow? clientId3Row;
+    private MCMA.IdRow? clientId4Row;
 
-    private int ChartAdanaId;
-    private int ChartMoscowId;
-    private int ChartSanktPeterburgId;
+    private MCMA.IdRow? ChartAdanaIdRow;
+    private MCMA.IdRow? ChartMoscowIdRow;
+    private MCMA.IdRow? ChartSanktPeterburgIdRow;
 
     public EFRouteRepositoryTests(EFDataBasePostgresFixture fixture)
     {
@@ -128,25 +129,25 @@ public class EFRouteRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, 
 
         _transaction = await _context.Database.BeginTransactionAsync();
 
-        clientId1 = await _clientRepository.AddAsync(new("TestUser1", "Aa1234", "Test.User.1@test.ru", MCMT.RoleType.SIGNED));
-        clientId2 = await _clientRepository.AddAsync(new("TestUser2", "Aa1234", "Test.User.2@test.ru", MCMT.RoleType.SIGNED));
-        clientId3 = await _clientRepository.AddAsync(new("TestUser3", "Aa1234", "Test.User.3@test.ru", MCMT.RoleType.SIGNED));
-        clientId4 = await _clientRepository.AddAsync(new("TestUser4", "Aa1234", "Test.User.4@test.ru", MCMT.RoleType.SIGNED));
+        clientId1Row = await _clientRepository.AddAsync(new("TestUser1", "Aa1234", "Test.User.1@test.ru", MCMT.RoleType.SIGNED));
+        clientId2Row = await _clientRepository.AddAsync(new("TestUser2", "Aa1234", "Test.User.2@test.ru", MCMT.RoleType.SIGNED));
+        clientId3Row = await _clientRepository.AddAsync(new("TestUser3", "Aa1234", "Test.User.3@test.ru", MCMT.RoleType.SIGNED));
+        clientId4Row = await _clientRepository.AddAsync(new("TestUser4", "Aa1234", "Test.User.4@test.ru", MCMT.RoleType.SIGNED));
 
-        ChartAdanaId = await _chartRepository.AddAsync(ChartJsonAdana);
-        ChartMoscowId = await _chartRepository.AddAsync(ChartJsonMoscow);
-        ChartSanktPeterburgId = await _chartRepository.AddAsync(ChartJsonSanktPeterburg);
+        ChartAdanaIdRow = await _chartRepository.AddAsync(ChartJsonAdana);
+        ChartMoscowIdRow = await _chartRepository.AddAsync(ChartJsonMoscow);
+        ChartSanktPeterburgIdRow = await _chartRepository.AddAsync(ChartJsonSanktPeterburg);
 
-        await _routeRepository.AddAsync(clientId1, ChartMoscowId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Moscow_Izmaylovskaya_Baumanskaya)));
-        await _routeRepository.AddAsync(clientId1, ChartMoscowId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Moscow_Sviblovo_Fili)));
+        await _routeRepository.AddAsync(clientId1Row.id, ChartMoscowIdRow.id, Route_Moscow_Izmaylovskaya_Baumanskaya);
+        await _routeRepository.AddAsync(clientId1Row.id, ChartMoscowIdRow.id, Route_Moscow_Sviblovo_Fili);
 
-        await _routeRepository.AddAsync(clientId2, ChartAdanaId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Adana_Bolnitsa_Akindjilar)));
+        await _routeRepository.AddAsync(clientId2Row.id, ChartAdanaIdRow.id, Route_Adana_Bolnitsa_Akindjilar);
 
-        await _routeRepository.AddAsync(clientId3, ChartAdanaId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Adana_Bolnitsa_Akindjilar)));
-        await _routeRepository.AddAsync(clientId3, ChartMoscowId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Moscow_Izmaylovskaya_Baumanskaya)));
-        await _routeRepository.AddAsync(clientId3, ChartMoscowId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Moscow_Nahabino_Ipodrom)));
-        await _routeRepository.AddAsync(clientId3, ChartMoscowId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Moscow_Sviblovo_Fili)));
-        await _routeRepository.AddAsync(clientId3, ChartSanktPeterburgId, DtoRouteJsonConverter.Convert(DomainDtoConverter.Convert(Route_Sankt_Peterburg_Begovaya_Kupchino)));
+        await _routeRepository.AddAsync(clientId3Row.id, ChartAdanaIdRow.id, Route_Adana_Bolnitsa_Akindjilar);
+        await _routeRepository.AddAsync(clientId3Row.id, ChartMoscowIdRow.id, Route_Moscow_Izmaylovskaya_Baumanskaya);
+        await _routeRepository.AddAsync(clientId3Row.id, ChartMoscowIdRow.id, Route_Moscow_Nahabino_Ipodrom);
+        await _routeRepository.AddAsync(clientId3Row.id, ChartMoscowIdRow.id, Route_Moscow_Sviblovo_Fili);
+        await _routeRepository.AddAsync(clientId3Row.id, ChartSanktPeterburgIdRow.id, Route_Sankt_Peterburg_Begovaya_Kupchino);
 
         await _context.SaveChangesAsync();
     }
@@ -175,28 +176,19 @@ public class EFRouteRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, 
     {
         var testData = new[]
         {
-            (Route_Moscow_Izmaylovskaya_Baumanskaya, clientId1),
-            (Route_Moscow_Sviblovo_Fili, clientId1),
-
-            (Route_Adana_Bolnitsa_Akindjilar, clientId2),
-
-            (Route_Adana_Bolnitsa_Akindjilar, clientId3),
-            (Route_Moscow_Izmaylovskaya_Baumanskaya, clientId3),
-            (Route_Moscow_Nahabino_Ipodrom, clientId3),
-            (Route_Moscow_Sviblovo_Fili, clientId3),
-            (Route_Sankt_Peterburg_Begovaya_Kupchino, clientId3)
+            (Route_Moscow_Izmaylovskaya_Baumanskaya, clientId1Row),
+            (Route_Adana_Bolnitsa_Akindjilar, clientId2Row),
+            (Route_Adana_Bolnitsa_Akindjilar, clientId3Row),
+            (Route_Moscow_Izmaylovskaya_Baumanskaya, clientId3Row)
         };
 
-        foreach (var (route, clientId) in testData)
+        foreach (var (route, clientIdRow) in testData)
         {
-            int routeId = await _routeRepository.GetIdAsync(route.Title, clientId);
-            string? routeJson = await _routeRepository.GetByIdAsync(routeId);
+            MCMA.IdRow routeIdRow = await _routeRepository.GetIdAsync(route.Title, clientIdRow!.id);
+            MCMC.Route? routeTest = await _routeRepository.GetByIdAsync(routeIdRow.id);
 
-            Assert.NotNull(routeJson);
-            Assert.True(JToken.DeepEquals(
-                JToken.Parse(routeJson),
-                JToken.Parse(DomainRouteJsonConverter.Convert(route))
-            ));
+            Assert.NotNull(routeTest);
+            Assert.True(DomainDtoConverter.Convert(routeTest).Equals(DomainDtoConverter.Convert(route)));
         }
     }
 }

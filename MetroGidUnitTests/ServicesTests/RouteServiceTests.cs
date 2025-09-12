@@ -1,4 +1,6 @@
 using MetroGid.Controllers.Utility.DTO.Concrete;
+using MetroGid.Core.Models.Concrete;
+using MetroGid.Core.Models.Advanced;
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Handlers;
@@ -8,6 +10,7 @@ using MetroGid.Core.Utility;
 using MetroGid.Core.Interfaces;
 using MetroGid.Core.Utility.Validators.Handlers;
 using Moq;
+using MetroGid.Core.Converters;
 
 namespace MetroGidUnitTests.ServicesTests;
 
@@ -35,7 +38,7 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "chart.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
         RouteDTO expectedRoute = new(
@@ -72,10 +75,11 @@ public class RouteServiceTests
             TimeSpan.FromMinutes(2 * 60 + 6)
         );
 
-        RouteDTO? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
+        Route? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         mockChartRepo.Verify(x => x.GetChartJsonByCredentialsAsync(city, chartTitle), Times.Once);
-        Assert.True(route?.Equals(expectedRoute) ?? false);
+        Assert.NotNull(route);
+        Assert.True(DomainDtoConverter.Convert(route)?.Equals(expectedRoute) ?? false);
     }
 
     [Fact]
@@ -100,13 +104,13 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "InaccessibleBranch.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        RouteDTO? routeDTO = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
+        Route? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         mockChartRepo.Verify(x => x.GetChartJsonByCredentialsAsync(city, chartTitle), Times.Once);
-        Assert.Null(routeDTO);
+        Assert.Null(route);
     }
 
     [Fact]
@@ -131,13 +135,13 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "InaccessibleFatih.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        RouteDTO? routeDTO = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
+        Route? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         mockChartRepo.Verify(x => x.GetChartJsonByCredentialsAsync(city, chartTitle), Times.Once);
-        Assert.Null(routeDTO);
+        Assert.Null(route);
     }
 
     [Fact]
@@ -162,13 +166,13 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "InaccessibleFatih.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        RouteDTO? routeDTO = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
+        Route? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         mockChartRepo.Verify(x => x.GetChartJsonByCredentialsAsync(city, chartTitle), Times.Once);
-        Assert.Null(routeDTO);
+        Assert.Null(route);
     }
 
     [Fact]
@@ -193,10 +197,10 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "InaccessibleFatih.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        RouteDTO? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
+        Route? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         RouteDTO expectedRoute = new(
             $"[\"{city}\":\"{chartTitle}\"]:[\"{branchSrcTitle}\":\"{stationSrcTitle}\"]:[\"{branchDstTitle}\":\"{stationDstTitle}\"]",
@@ -233,7 +237,8 @@ public class RouteServiceTests
         );
 
         mockChartRepo.Verify(x => x.GetChartJsonByCredentialsAsync(city, chartTitle), Times.Once);
-        Assert.True(route?.Equals(expectedRoute) ?? false);
+        Assert.NotNull(route);
+        Assert.True(DomainDtoConverter.Convert(route)?.Equals(expectedRoute) ?? false);
     }
 
     [Fact]
@@ -258,7 +263,7 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Adana", "chart.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
         ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
@@ -291,10 +296,10 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "chart.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        RouteDTO? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
+        Route? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         RouteDTO expectedRoute = new(
             $"[\"{city}\":\"{chartTitle}\"]:[\"{branchSrcTitle}\":\"{stationSrcTitle}\"]:[\"{branchDstTitle}\":\"{stationDstTitle}\"]",
@@ -323,7 +328,7 @@ public class RouteServiceTests
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("МЦД-2", "Щукинская", "Стрешнево", new TimeSpan(0, 9, 0)))),
                 new RouteStationItemDTO(new StationDTO("Стрешнево", "МЦД-2", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 // пересадка =======================================================================================================================================
-                new RouteConnectionItemDTO(new TransitionConnectionDTO(new TransitionDTO(5, AccessTypeDTO.ACCESSIBLE, new TimeSpan(0, 14, 0), new TimeOnly(5, 30), new TimeOnly(1, 30), "Войковская", "Замоскворецкая линия", "Стрешнево", "МЦД-2"))),
+                new RouteConnectionItemDTO(new TransitionConnectionDTO(new TransitionDTO(5, AccessTypeDTO.ACCESSIBLE, new TimeSpan(0, 14, 0), new TimeOnly(5, 30), new TimeOnly(1, 30), "Стрешнево", "МЦД-2", "Войковская", "Замоскворецкая линия"))),
                 // пересадка =======================================================================================================================================
                 new RouteStationItemDTO(new StationDTO("Войковская", "Замоскворецкая линия", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Замоскворецкая линия", "Войковская", "Сокол", new TimeSpan(0, 5, 0)))),
@@ -368,8 +373,11 @@ public class RouteServiceTests
             TimeSpan.FromHours(3) + TimeSpan.FromMinutes(56) + TimeSpan.FromSeconds(10)
         );
 
+        RouteDTO? routeDTO = route != null ? DomainDtoConverter.Convert(route) : null;
+
         mockChartRepo.Verify(x => x.GetChartJsonByCredentialsAsync(city, chartTitle), Times.Once);
-        Assert.True(route?.Equals(expectedRoute) ?? false);
+        Assert.NotNull(route);
+        Assert.True(routeDTO?.Equals(expectedRoute) ?? false);
     }
 
     [Fact]
@@ -394,10 +402,10 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        RouteDTO? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
+        Route? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         RouteDTO expectedRoute = new(
             $"[\"{city}\":\"{chartTitle}\"]:[\"{branchSrcTitle}\":\"{stationSrcTitle}\"]:[\"{branchDstTitle}\":\"{stationDstTitle}\"]",
@@ -426,7 +434,7 @@ public class RouteServiceTests
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("МЦД-2", "Щукинская", "Стрешнево", new TimeSpan(0, 9, 0)))),
                 new RouteStationItemDTO(new StationDTO("Стрешнево", "МЦД-2", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 // пересадка =======================================================================================================================================
-                new RouteConnectionItemDTO(new TransitionConnectionDTO(new TransitionDTO(5, AccessTypeDTO.ACCESSIBLE, new TimeSpan(0, 14, 0), new TimeOnly(5, 30), new TimeOnly(1, 30), "Войковская", "Замоскворецкая линия", "Стрешнево", "МЦД-2"))),
+                new RouteConnectionItemDTO(new TransitionConnectionDTO(new TransitionDTO(5, AccessTypeDTO.ACCESSIBLE, new TimeSpan(0, 14, 0), new TimeOnly(5, 30), new TimeOnly(1, 30), "Стрешнево", "МЦД-2", "Войковская", "Замоскворецкая линия"))),
                 // пересадка =======================================================================================================================================
                 new RouteStationItemDTO(new StationDTO("Войковская", "Замоскворецкая линия", 5, AccessTypeDTO.ACCESSIBLE, new TimeOnly(5, 30), new TimeOnly(1, 30))),
                 new RouteConnectionItemDTO(new RailwayConnectionDTO(new RailwayDTO("Замоскворецкая линия", "Войковская", "Сокол", new TimeSpan(0, 5, 0)))),
@@ -472,7 +480,8 @@ public class RouteServiceTests
         );
 
         mockChartRepo.Verify(x => x.GetChartJsonByCredentialsAsync(city, chartTitle), Times.Once);
-        Assert.True(route?.Equals(expectedRoute) ?? false);
+        Assert.NotNull(route);
+        Assert.True(DomainDtoConverter.Convert(route)?.Equals(expectedRoute) ?? false);
     }
 
     [Fact]
@@ -497,13 +506,13 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        RouteDTO? routeDTO = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
+        Route? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         mockChartRepo.Verify(x => x.GetChartJsonByCredentialsAsync(city, chartTitle), Times.Once);
-        Assert.Null(routeDTO);
+        Assert.Null(route);
     }
 
     [Fact]
@@ -528,13 +537,13 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
-        RouteDTO? routeDTO = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
+        Route? route = await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime);
 
         mockChartRepo.Verify(x => x.GetChartJsonByCredentialsAsync(city, chartTitle), Times.Once);
-        Assert.Null(routeDTO);
+        Assert.Null(route);
     }
 
     [Fact]
@@ -559,7 +568,7 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
         ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });
@@ -592,7 +601,7 @@ public class RouteServiceTests
         string currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? string.Empty;
         string filePath = Path.Combine(currentDirectory, "Cities", "Moscow", "InaccessibleStation.json");
 
-        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(FileReader.ReadAll(filePath));
+        mockChartRepo.Setup(x => x.GetChartJsonByCredentialsAsync(city, chartTitle)).ReturnsAsync(new FileRow(FileReader.ReadAll(filePath)));
         RouteService routeService = new(mockChartRepo.Object, mockClientRepo.Object, mockRouteRepo.Object, domainAttribsValidator, domainReferentialityValidator, handler);
 
         ServiceRouteException ex = await Assert.ThrowsAsync<ServiceRouteException>(async () => { await routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, startTime); });

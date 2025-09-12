@@ -5,6 +5,7 @@ using MetroGid.Controllers.Utility.DTO.Chart;
 using MetroGid.Controllers.Utility.DTO.Concrete;
 using MetroGid.Controllers.Utility.Interfaces;
 using MetroGid.Core.Converters;
+using MCMA = MetroGid.Core.Models.Advanced;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -61,11 +62,11 @@ public class ChartController(
                 }
             );
 
-        int? stationDutyId = await _chartService.GetStationDutyIdAsync(
+        MCMA.IdRow? stationDutyIdRow = await _chartService.GetStationDutyIdAsync(
             dto.CityTitle, dto.ChartTitle, dto.BranchTitle, dto.StationTitle
         );
 
-        if (stationDutyId == null)
+        if (stationDutyIdRow == null)
             return StatusCode(
                 StatusCodes.Status403Forbidden,
                 new
@@ -75,7 +76,7 @@ public class ChartController(
                 }
             );
 
-        if (dutyId != stationDutyId)
+        if (dutyId != stationDutyIdRow.id)
             return StatusCode(
                 StatusCodes.Status403Forbidden,
                 new
@@ -109,13 +110,13 @@ public class ChartController(
                 }
             );
 
-        int? transitionDutyId = await _chartService.GetTransitionDutyIdAsync(
+        MCMA.IdRow? transitionDutyIdRow = await _chartService.GetTransitionDutyIdAsync(
             dto.CityTitle, dto.ChartTitle,
             dto.FromBranchTitle, dto.FromStationTitle,
             dto.ToBranchTitle, dto.ToStationTitle
         );
 
-        if (transitionDutyId == null)
+        if (transitionDutyIdRow == null)
             return StatusCode(
                 StatusCodes.Status403Forbidden,
                 new
@@ -125,7 +126,7 @@ public class ChartController(
                 }
             );
 
-        if (dutyId != transitionDutyId)
+        if (dutyId != transitionDutyIdRow.id)
             return StatusCode(
                 StatusCodes.Status403Forbidden,
                 new
@@ -161,11 +162,11 @@ public class ChartController(
                 }
             );
 
-        int? stationDutyId = await _chartService.GetStationDutyIdAsync(
+        MCMA.IdRow? stationDutyIdRow = await _chartService.GetStationDutyIdAsync(
             dto.CityTitle, dto.ChartTitle, dto.BranchTitle, dto.DutyStationTitle
         );
 
-        if (stationDutyId == null)
+        if (stationDutyIdRow == null)
             return StatusCode(
                 StatusCodes.Status403Forbidden,
                 new
@@ -175,7 +176,7 @@ public class ChartController(
                 }
             );
 
-        if (dutyId != stationDutyId)
+        if (dutyId != stationDutyIdRow.id)
             return StatusCode(
                 StatusCodes.Status403Forbidden,
                 new
@@ -200,8 +201,8 @@ public class ChartController(
     [HttpPost("cities_titles")]
     public async Task<IActionResult> GetChartsCitiesTitles()
     {
-        List<(string, string)> ChartsCitiesTitles = await _chartService.GetChartsCitiesTitlesAsync();
-        List<ChartDTO> charts = ChartsCitiesTitles.Select(cct => new ChartDTO(cct.Item1, cct.Item2, "")).ToList();
+        MCMA.ChartIdentifiers ChartsCitiesTitles = await _chartService.GetChartsCitiesTitlesAsync();
+        List<ChartDTO> charts = ChartsCitiesTitles.Identifiers.Select(cct => new ChartDTO(cct.Title, cct.City, "")).ToList();
         return Ok(charts);
     }
 

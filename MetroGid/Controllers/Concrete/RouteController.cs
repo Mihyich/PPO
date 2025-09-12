@@ -4,6 +4,7 @@ using MetroGid.Controllers.Utility.DTO.Concrete;
 using MetroGid.Controllers.Utility.DTO.Route;
 using MetroGid.Controllers.Utility.Interfaces;
 using MetroGid.Core.Converters;
+using MCMA = MetroGid.Core.Models.Advanced;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MCMC = MetroGid.Core.Models.Concrete;
@@ -48,7 +49,8 @@ public class RouteController(
     {
         int clientId = GetClientAndChartIdAsync();
         MCMC.Route route = DtoDomainConverter.Convert(dto);
-        return await _routeService.SaveRouteAsync(clientId, route);
+        MCMA.IdRow routeIdRow = await _routeService.SaveRouteAsync(clientId, route);
+        return routeIdRow.id;
     }
 
     [RequireAnyRole(RoleTypeDTO.SIGNED, RoleTypeDTO.DUTY)]

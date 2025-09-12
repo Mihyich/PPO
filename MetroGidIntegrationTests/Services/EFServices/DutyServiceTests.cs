@@ -1,6 +1,7 @@
 using System.Data;
 using MetroGid.Controllers.Utility.Interfaces;
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 using MCMT = MetroGid.Core.Models.Types;
 using MetroGid.Core.Interfaces;
 using MetroGid.Core.Services;
@@ -48,25 +49,25 @@ public class DutyServiceTests : IClassFixture<EFServiceDutyFixture>, IAsyncLifet
     private MCMC.Chart ChartMoscow;
     private MCMC.Chart ChartSanktPeterburg;
 
-    private int ChartAdanaId;
-    private int ChartMoscowId;
-    private int ChartSanktPeterburgId;
+    private MCMA.IdRow? ChartAdanaIdRow;
+    private MCMA.IdRow? ChartMoscowIdRow;
+    private MCMA.IdRow? ChartSanktPeterburgIdRow;
 
-    private int clientId1;
-    private int clientId2;
-    private int clientId3;
-    private int clientId4;
+    private MCMA.IdRow? clientId1Row;
+    private MCMA.IdRow? clientId2Row;
+    private MCMA.IdRow? clientId3Row;
+    private MCMA.IdRow? clientId4Row;
 
-    private int MoscowBranchArbatPokrovId;
-    private int MoscowStationIzmaylovskayaId;
-    private int MoscowStationPartizanskayaId;
-    private int MoscowStationSemenovskayaId;
-    private int MoscowStationElectroZavodskayaId;
+    private MCMA.IdRow? MoscowBranchArbatPokrovIdRow;
+    private MCMA.IdRow? MoscowStationIzmaylovskayaIdRow;
+    private MCMA.IdRow? MoscowStationPartizanskayaIdRow;
+    private MCMA.IdRow? MoscowStationSemenovskayaIdRow;
+    private MCMA.IdRow? MoscowStationElectroZavodskayaIdRow;
 
-    private int MoscowBranchMoscowskoeCentralnoeKolcoId;
-    private int MoscowStationIzmaylovoId;
+    private MCMA.IdRow? MoscowBranchMoscowskoeCentralnoeKolcoIdRow;
+    private MCMA.IdRow? MoscowStationIzmaylovoIdRow;
 
-    private int MoscowTransitionPartizanskayaIzmaylovoId;
+    private MCMA.IdRow? MoscowTransitionPartizanskayaIzmaylovoIdRow;
 
     public DutyServiceTests(EFServiceDutyFixture fixture)
     {
@@ -119,29 +120,29 @@ public class DutyServiceTests : IClassFixture<EFServiceDutyFixture>, IAsyncLifet
         if (_contextSeed.Database.GetDbConnection().State != ConnectionState.Open)
             await _contextSeed.Database.OpenConnectionAsync();
 
-        ChartAdanaId = await _chartRepositorySeed.AddAsync(ChartJsonAdana);
-        ChartMoscowId = await _chartRepositorySeed.AddAsync(ChartJsonMoscow);
-        ChartSanktPeterburgId = await _chartRepositorySeed.AddAsync(ChartJsonSanktPeterburg);
+        ChartAdanaIdRow = await _chartRepositorySeed.AddAsync(ChartJsonAdana);
+        ChartMoscowIdRow = await _chartRepositorySeed.AddAsync(ChartJsonMoscow);
+        ChartSanktPeterburgIdRow = await _chartRepositorySeed.AddAsync(ChartJsonSanktPeterburg);
 
-        clientId1 = await _clientRepositorySeed.AddAsync(new("Jonh", "Aa1234", "John.Tompson@mail.ru", MCMT.RoleType.DUTY));
-        clientId2 = await _clientRepositorySeed.AddAsync(new("Jack", "Aa1234", "John.Vorobey@gmail.com", MCMT.RoleType.DUTY));
-        clientId3 = await _clientRepositorySeed.AddAsync(new("Anna", "Aa1234", "Anna.Pilson@yandex.ru", MCMT.RoleType.DUTY));
-        clientId4 = await _clientRepositorySeed.AddAsync(new("Rocky", "Aa1234", "YourBro@Boys.ru", MCMT.RoleType.DUTY));
+        clientId1Row = await _clientRepositorySeed.AddAsync(new("Jonh", "Aa1234", "John.Tompson@mail.ru", MCMT.RoleType.DUTY));
+        clientId2Row = await _clientRepositorySeed.AddAsync(new("Jack", "Aa1234", "John.Vorobey@gmail.com", MCMT.RoleType.DUTY));
+        clientId3Row = await _clientRepositorySeed.AddAsync(new("Anna", "Aa1234", "Anna.Pilson@yandex.ru", MCMT.RoleType.DUTY));
+        clientId4Row = await _clientRepositorySeed.AddAsync(new("Rocky", "Aa1234", "YourBro@Boys.ru", MCMT.RoleType.DUTY));
 
-        MoscowBranchArbatPokrovId = await _chartRepositorySeed.GetBranchIdAsync("Арбатско-Покровская линия", ChartMoscowId);
-        MoscowStationIzmaylovskayaId = await _chartRepositorySeed.GetStationIdAsync("Измайловская", MoscowBranchArbatPokrovId);
-        MoscowStationPartizanskayaId = await _chartRepositorySeed.GetStationIdAsync("Партизанская", MoscowBranchArbatPokrovId);
-        MoscowStationSemenovskayaId = await _chartRepositorySeed.GetStationIdAsync("Семёновская", MoscowBranchArbatPokrovId);
-        MoscowStationElectroZavodskayaId = await _chartRepositorySeed.GetStationIdAsync("Электрозаводская", MoscowBranchArbatPokrovId);
+        MoscowBranchArbatPokrovIdRow = await _chartRepositorySeed.GetBranchIdAsync("Арбатско-Покровская линия", ChartMoscowIdRow.id);
+        MoscowStationIzmaylovskayaIdRow = await _chartRepositorySeed.GetStationIdAsync("Измайловская", MoscowBranchArbatPokrovIdRow.id);
+        MoscowStationPartizanskayaIdRow = await _chartRepositorySeed.GetStationIdAsync("Партизанская", MoscowBranchArbatPokrovIdRow.id);
+        MoscowStationSemenovskayaIdRow = await _chartRepositorySeed.GetStationIdAsync("Семёновская", MoscowBranchArbatPokrovIdRow.id);
+        MoscowStationElectroZavodskayaIdRow = await _chartRepositorySeed.GetStationIdAsync("Электрозаводская", MoscowBranchArbatPokrovIdRow.id);
 
-        MoscowBranchMoscowskoeCentralnoeKolcoId = await _chartRepositorySeed.GetBranchIdAsync("Московское центральное кольцо", ChartMoscowId);
-        MoscowStationIzmaylovoId = await _chartRepositorySeed.GetStationIdAsync("Измайлово", MoscowBranchMoscowskoeCentralnoeKolcoId);
+        MoscowBranchMoscowskoeCentralnoeKolcoIdRow = await _chartRepositorySeed.GetBranchIdAsync("Московское центральное кольцо", ChartMoscowIdRow.id);
+        MoscowStationIzmaylovoIdRow = await _chartRepositorySeed.GetStationIdAsync("Измайлово", MoscowBranchMoscowskoeCentralnoeKolcoIdRow.id);
 
-        MoscowTransitionPartizanskayaIzmaylovoId = await _chartRepositorySeed.GetTransitionIdAsync(MoscowStationPartizanskayaId, MoscowStationIzmaylovoId);
+        MoscowTransitionPartizanskayaIzmaylovoIdRow = await _chartRepositorySeed.GetTransitionIdAsync(MoscowStationPartizanskayaIdRow.id, MoscowStationIzmaylovoIdRow.id);
 
-        await _clientRepositorySeed.MakeDutyOfStation(clientId1, MoscowStationIzmaylovskayaId);
-        await _clientRepositorySeed.MakeDuty(clientId2, MoscowStationPartizanskayaId, MoscowTransitionPartizanskayaIzmaylovoId);
-        await _clientRepositorySeed.MakeDutyOfStation(clientId1, MoscowStationSemenovskayaId);
+        await _clientRepositorySeed.MakeDutyOfStation(clientId1Row.id, MoscowStationIzmaylovskayaIdRow.id);
+        await _clientRepositorySeed.MakeDuty(clientId2Row.id, MoscowStationPartizanskayaIdRow.id, MoscowTransitionPartizanskayaIzmaylovoIdRow.id);
+        await _clientRepositorySeed.MakeDutyOfStation(clientId1Row.id, MoscowStationSemenovskayaIdRow.id);
 
         await _contextSeed.SaveChangesAsync();
 
@@ -161,14 +162,14 @@ public class DutyServiceTests : IClassFixture<EFServiceDutyFixture>, IAsyncLifet
             await _transaction.DisposeAsync();
         }
 
-        await _chartRepositorySeed.DeleteChartByIdAsync(ChartAdanaId);
-        await _chartRepositorySeed.DeleteChartByIdAsync(ChartMoscowId);
-        await _chartRepositorySeed.DeleteChartByIdAsync(ChartSanktPeterburgId);
+        await _chartRepositorySeed.DeleteChartByIdAsync(ChartAdanaIdRow!.id);
+        await _chartRepositorySeed.DeleteChartByIdAsync(ChartMoscowIdRow!.id);
+        await _chartRepositorySeed.DeleteChartByIdAsync(ChartSanktPeterburgIdRow!.id);
 
-        await _clientRepositorySeed.DeleteAsync(clientId1);
-        await _clientRepositorySeed.DeleteAsync(clientId2);
-        await _clientRepositorySeed.DeleteAsync(clientId3);
-        await _clientRepositorySeed.DeleteAsync(clientId4);
+        await _clientRepositorySeed.DeleteAsync(clientId1Row!.id);
+        await _clientRepositorySeed.DeleteAsync(clientId2Row!.id);
+        await _clientRepositorySeed.DeleteAsync(clientId3Row!.id);
+        await _clientRepositorySeed.DeleteAsync(clientId4Row!.id);
     }
 
     [Theory]
@@ -180,12 +181,12 @@ public class DutyServiceTests : IClassFixture<EFServiceDutyFixture>, IAsyncLifet
     public async Task saveRouteDutyTest(string city, string chartTitle, string branchSrcTitle, string stationSrcTitle, string branchDstTitle, string stationDstTitle, int startHour, int startMinute)
     {
         TimeOnly timeStart = new(startHour, startMinute);
-        RouteDTO serviceRoute = await _routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart) ?? throw new OperationCanceledException();
-        int chartId = await _chartRepository.GetChartIdAsync(city, chartTitle);
+        MCMC.Route? serviceRoute = await _routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart) ?? throw new OperationCanceledException();
+        MCMA.IdRow chartIdRow = await _chartRepository.GetChartIdAsync(city, chartTitle);
         ClientDTO client = new("Jonh", "Aa1234", "John.Tompson@mail.ru", RoleTypeDTO.DUTY);
-        int clientId = await _clientService.GetClientIdAsync(client.Login, client.Password);
-        int savedRouteId = await _routeService.SaveRouteAsync(clientId, chartId, DtoRouteJsonConverter.Convert(serviceRoute));
-        string? savedRouteJson = await _routeRepository.GetByIdAsync(savedRouteId);
+        MCMA.IdRow clientIdRow = await _clientService.GetClientIdAsync(client.Login, client.Password);
+        MCMA.IdRow savedRouteIdRow = await _routeService.SaveRouteAsync(clientIdRow.id, serviceRoute);
+        MCMC.Route? savedRouteJson = await _routeRepository.GetByIdAsync(savedRouteIdRow.id);
 
         MCMC.Chart[] charts = [ChartAdana, ChartMoscow, ChartSanktPeterburg];
         MCMC.Chart testChart = charts.Where(c => c.City == city && c.Title == chartTitle).FirstOrDefault() ?? throw new OperationCanceledException();
@@ -195,54 +196,38 @@ public class DutyServiceTests : IClassFixture<EFServiceDutyFixture>, IAsyncLifet
         MCMC.Route route = testChart.Search(src, dst, timeStart, searcher) ?? throw new OperationCanceledException();
         RouteDTO testRoute = DomainDtoConverter.Convert(route);
 
-        Assert.True(chartId > 0);
-        Assert.True(savedRouteId > 0);
-        Assert.True(testRoute.Equals(serviceRoute));
+        Assert.True(chartIdRow.id > 0);
+        Assert.True(savedRouteIdRow.id > 0);
+        Assert.True(testRoute.Equals(DomainDtoConverter.Convert(serviceRoute)));
         Assert.NotNull(savedRouteJson);
-        JToken.Parse(savedRouteJson).Should().BeEquivalentTo(JToken.Parse(DomainRouteJsonConverter.Convert(route)));
     }
 
     [Theory]
-    [InlineData("Москва", "Московский метрополитен (Тестирование)", "Арбатско-Покровская линия", "Измайловская", "Изипайловская", 10, AccessTypeDTO.INACCESSIBLE, "06:30", "01:15")]
-    [InlineData("Москва", "Московский метрополитен (Тестирование)", "Арбатско-Покровская линия", "Семёновская", "Серьёзная", 1, AccessTypeDTO.INACCESSIBLE, "06:30", "01:15")]
-    public async Task updateStationDutyTest(string chartCity, string chartTitle, string branchTitle, string stationTitle, string newTitle, int newOccupancy, AccessTypeDTO newType, string newOpenTime, string newCloseTime)
+    [InlineData("Москва", "Московский метрополитен (Тестирование)", "Арбатско-Покровская линия", "Измайловская", "Изипайловская", 10, MCMT.AccessType.INACCESSIBLE, "06:30", "01:15")]
+    [InlineData("Москва", "Московский метрополитен (Тестирование)", "Арбатско-Покровская линия", "Семёновская", "Серьёзная", 1, MCMT.AccessType.INACCESSIBLE, "06:30", "01:15")]
+    public async Task updateStationDutyTest(string chartCity, string chartTitle, string branchTitle, string stationTitle, string newTitle, int newOccupancy, MCMT.AccessType newType, string newOpenTime, string newCloseTime)
     {
         TimeOnly _newOpenTime = TimeConverter.FromString(newOpenTime);
         TimeOnly _newCloseTime = TimeConverter.FromString(newCloseTime);
-        StationDTO newStationDTO = new(newTitle, branchTitle, newOccupancy, newType, _newOpenTime, _newCloseTime);
-        int changes = await _chartService.UpdateStationAsync(RoleTypeDTO.DUTY, chartCity, chartTitle, branchTitle, stationTitle, newStationDTO);
-        StationDTO? updStationDTO = await _chartService.GetStationAsync(chartCity, chartTitle, branchTitle, newStationDTO.Title);
-
-        Assert.Equal(1, changes);
-        Assert.NotNull(updStationDTO);
-        Assert.Equal(newStationDTO.Title, updStationDTO.Title);
-        Assert.Equal(newStationDTO.Occupancy, updStationDTO.Occupancy);
-        Assert.Equal(newStationDTO.Type, updStationDTO.Type);
-        Assert.Equal(newStationDTO.OpenTime, updStationDTO.OpenTime);
-        Assert.Equal(newStationDTO.CloseTime, updStationDTO.CloseTime);
+        MCMC.Station newStation = new(newTitle, newOccupancy, newType, _newOpenTime, _newCloseTime);
+        MCMA.ChangedRowCount changesRow = await _chartService.UpdateStationAsync(MCMT.RoleType.DUTY, chartCity, chartTitle, branchTitle, stationTitle, newStation);
+        Assert.Equal(1, changesRow.count);
     }
 
     [Theory]
-    [InlineData("Москва", "Московский метрополитен (Тестирование)", "Арбатско-Покровская линия", "Партизанская", "Московское центральное кольцо", "Измайлово", 10, AccessTypeDTO.INACCESSIBLE, "05:30", "06:30", "01:15")]
-    [InlineData("Москва", "Московский метрополитен (Тестирование)", "Арбатско-Покровская линия", "Партизанская", "Московское центральное кольцо", "Измайлово", 1, AccessTypeDTO.INACCESSIBLE, "04:30", "07:30", "02:15")]
+    [InlineData("Москва", "Московский метрополитен (Тестирование)", "Арбатско-Покровская линия", "Партизанская", "Московское центральное кольцо", "Измайлово", 10, MCMT.AccessType.INACCESSIBLE, "05:30", "06:30", "01:15")]
+    [InlineData("Москва", "Московский метрополитен (Тестирование)", "Арбатско-Покровская линия", "Партизанская", "Московское центральное кольцо", "Измайлово", 1, MCMT.AccessType.INACCESSIBLE, "04:30", "07:30", "02:15")]
     public async Task updateTransitionDutyTest(
         string chartCity, string chartTitle, string fromBranchTitle, string fromStationTitle, string toBranchTitle, string toStationTitle,
-        int newOccupancy, AccessTypeDTO newType, string newDuration, string newOpenTime, string newCloseTime)
+        int newOccupancy, MCMT.AccessType newType, string newDuration, string newOpenTime, string newCloseTime)
     {
         TimeSpan _newDuration = TimeSpanConverter.FromString(newDuration);
         TimeOnly _newOpenTime = TimeConverter.FromString(newOpenTime);
         TimeOnly _newCloseTime = TimeConverter.FromString(newCloseTime);
-        TransitionDTO newTransitionDTO = new(newOccupancy, newType, _newDuration, _newOpenTime, _newCloseTime, fromStationTitle, fromBranchTitle, toStationTitle, toBranchTitle);
-        int changes = await _chartService.UpdateTransitionAsync(RoleTypeDTO.DUTY, chartCity, chartTitle, fromBranchTitle, fromStationTitle, toBranchTitle, toStationTitle, newTransitionDTO);
-        TransitionDTO? updTransitionDTO = await _chartService.GetTransitionAsync(chartCity, chartTitle, fromBranchTitle, fromStationTitle, toBranchTitle, toStationTitle);
+        MCMC.Transition newTransition = new(newOccupancy, newType, _newDuration, _newOpenTime, _newCloseTime);
+        MCMA.ChangedRowCount changesRow = await _chartService.UpdateTransitionAsync(MCMT.RoleType.DUTY, chartCity, chartTitle, fromBranchTitle, fromStationTitle, toBranchTitle, toStationTitle, newTransition);
 
-        Assert.Equal(1, changes);
-        Assert.NotNull(updTransitionDTO);
-        Assert.Equal(newTransitionDTO.CloseTime, updTransitionDTO.CloseTime);
-        Assert.Equal(newTransitionDTO.OpenTime, updTransitionDTO.OpenTime);
-        Assert.Equal(newTransitionDTO.Duration, updTransitionDTO.Duration);
-        Assert.Equal(newTransitionDTO.Type, updTransitionDTO.Type);
-        Assert.Equal(newTransitionDTO.Occupancy, updTransitionDTO.Occupancy);
+        Assert.Equal(1, changesRow.count);
     }
 
     [Theory]
@@ -251,12 +236,9 @@ public class DutyServiceTests : IClassFixture<EFServiceDutyFixture>, IAsyncLifet
     public async Task updateRailwayDutyTest(string chartCity, string chartTitle, string branchTitle, string fromStationTitle, string toStationTitle, string newDuration)
     {
         TimeSpan _newDuration = TimeSpanConverter.FromString(newDuration);
-        RailwayDTO newRailwayDTO = new(branchTitle, fromStationTitle, toStationTitle, _newDuration);
-        int changes = await _chartService.UpdateRailwayAsync(RoleTypeDTO.DUTY, chartCity, chartTitle, branchTitle, fromStationTitle, toStationTitle, newRailwayDTO);
-        RailwayDTO? updRailwayDTO = await _chartService.GetRailwayAsync(chartCity, chartTitle, branchTitle, fromStationTitle, toStationTitle);
+        MCMC.Railway newRailway = new(_newDuration);
+        MCMA.ChangedRowCount changesRow = await _chartService.UpdateRailwayAsync(MCMT.RoleType.DUTY, chartCity, chartTitle, branchTitle, fromStationTitle, toStationTitle, newRailway);
 
-        Assert.Equal(1, changes);
-        Assert.NotNull(updRailwayDTO);
-        Assert.Equal(newRailwayDTO.Duration, updRailwayDTO.Duration);
+        Assert.Equal(1, changesRow.count);
     }
 }

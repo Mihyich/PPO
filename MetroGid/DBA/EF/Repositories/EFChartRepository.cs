@@ -1,5 +1,6 @@
 using MetroGid.Core.Interfaces;
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 using MDEMT = MetroGid.DBA.EF.Models.Tables;
 using MetroGid.DBA.EF.Context;
 using Microsoft.EntityFrameworkCore;
@@ -12,90 +13,100 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
 {
     private readonly MetroDbContext _context = context;
 
-    public async Task<int> AddAsync(string chartJson)
+    public async Task<MCMA.IdRow> AddAsync(string chartJson)
     {
         var result = await _context.Set<ScalarResult>()
             .FromSqlRaw("SELECT public.add_chart_json({0}) AS \"Value\" FROM (VALUES (1)) AS fake", chartJson)
             .AsAsyncEnumerable()
             .FirstOrDefaultAsync();
 
-        return result?.Value ?? 0;
+        return new(result?.Value ?? 0);
     }
 
-    public async Task<int> GetChartIdAsync(string city, string title) =>
-        await _context.Charts
+    public async Task<MCMA.IdRow> GetChartIdAsync(string city, string title) =>
+        new (await _context.Charts
             .AsNoTracking()
             .Where(c => c.City == city && c.Title == title)
             .Select(c => c.Id)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync()
+        );
 
-    public async Task<int> GetBranchIdAsync(string title, int chartId) =>
-        await _context.ChartBranches
+    public async Task<MCMA.IdRow> GetBranchIdAsync(string title, int chartId) =>
+        new(await _context.ChartBranches
             .AsNoTracking()
             .Where(cb => cb.ChartId == chartId)
             .Select(cb => cb.Branch)
             .Where(b => b.Title == title)
             .Select(b => b.Id)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync()
+        );
 
-    public async Task<int> GetStationIdAsync(string title, int branchId) =>
-        await _context.BranchStations
+    public async Task<MCMA.IdRow> GetStationIdAsync(string title, int branchId) =>
+        new(await _context.BranchStations
             .AsNoTracking()
             .Where(bs => bs.BranchId == branchId)
             .Select(bs => bs.Station)
             .Where(s => s.Title == title)
             .Select(s => s.Id)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync()
+        );
 
-    public async Task<int> GetRailwayIdAsync(int stationId1, int stationId2)
+    public async Task<MCMA.IdRow> GetRailwayIdAsync(int stationId1, int stationId2)
     {
-        ValueTuple<int, int>? neighborTransitionIds1 = await GetNeighborStationRailwayIdAsync(stationId1);
-        ValueTuple<int, int>? neighborTransitionIds2 = await GetNeighborStationRailwayIdAsync(stationId2);
+        MCMA.IdNexusRow? neighborTransitionIds1 = await GetNeighborStationRailwayIdAsync(stationId1);
+        MCMA.IdNexusRow? neighborTransitionIds2 = await GetNeighborStationRailwayIdAsync(stationId2);
 
         if (neighborTransitionIds1 != null && neighborTransitionIds2 != null)
         {
-            List<int> Ids1 = [neighborTransitionIds1.Value.Item1, neighborTransitionIds1.Value.Item2];
-            List<int> Ids2 = [neighborTransitionIds2.Value.Item1, neighborTransitionIds2.Value.Item2];
+            List<int> Ids1 = [neighborTransitionIds1.FromId, neighborTransitionIds1.ToId];
+            List<int> Ids2 = [neighborTransitionIds2.FromId, neighborTransitionIds2.ToId];
 
-            return Ids1.Intersect(Ids2).Where(id => id > 0).FirstOrDefault();
+            return new (Ids1.Intersect(Ids2).Where(id => id > 0).FirstOrDefault());
         }
 
-        return 0;
+        return new (0);
     }
 
-    public async Task<int> GetTransitionIdAsync(int stationId1, int stationId2)
+    public async Task<MCMA.IdRow> GetTransitionIdAsync(int stationId1, int stationId2)
     {
-        List<int> neighborTransitionIds1 = await GetNeighborStationTransitionIdAsync(stationId1);
-        List<int> neighborTransitionIds2 = await GetNeighborStationTransitionIdAsync(stationId2);
-        return neighborTransitionIds1.Intersect(neighborTransitionIds2).FirstOrDefault();
+        MCMA.IdsRow neighborTransitionIds1 = await GetNeighborStationTransitionIdAsync(stationId1);
+        MCMA.IdsRow neighborTransitionIds2 = await GetNeighborStationTransitionIdAsync(stationId2);
+        return new (neighborTransitionIds1.ids.Intersect(neighborTransitionIds2.ids).FirstOrDefault());
     }
 
-    public async Task<List<int>> GetAllChartIdAsync() =>
-        await _context.Charts
+    public async Task<MCMA.IdsRow> GetAllChartIdAsync() =>
+        new (await _context.Charts
             .AsNoTracking()
             .Select(c => c.Id)
-            .ToListAsync();
+            .ToListAsync()
+        );
 
-    public async Task<List<int>> GetAllChartBranchIdAsync(int chartId) =>
-        await _context.ChartBranches
+    public async Task<MCMA.IdsRow> GetAllChartBranchIdAsync(int chartId) =>
+        new (await _context.ChartBranches
             .AsNoTracking()
             .Where(cb => cb.ChartId == chartId)
             .Select(cb => cb.BranchId)
-            .ToListAsync();
+            .ToListAsync()
+        );
 
-    public async Task<List<int>> GetAllBranchStationIdAsync(int branchId) =>
-        await _context.BranchStations
+    public async Task<MCMA.IdsRow> GetAllBranchStationIdAsync(int branchId) =>
+        new (await _context.BranchStations
             .AsNoTracking()
             .Where(bs => bs.BranchId == branchId)
             .Select(bs => bs.StationId)
-            .ToListAsync();
+            .ToListAsync()
+        );
 
-    public async Task<string?> GetChartJsonByIdAsync(int chartId) =>
-        await _context.Charts
+    public async Task<MCMA.FileRow?> GetChartJsonByIdAsync(int chartId)
+    {
+        string? content = await _context.Charts
             .AsNoTracking()
             .Where(c => c.Id == chartId)
             .Select(c => _context.GetChartJsonById(c.Id))
             .FirstOrDefaultAsync();
+
+        return content != null ? new(content) : null;
+    }
 
     public async Task<MCMC.Chart?> GetChartWeakByIdAsync(int chartId)
     {
@@ -107,12 +118,16 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         return chart != null ? ModelDomainConverter.Convert(chart) : null;
     }
 
-    public async Task<string?> GetChartSchemeByIdAsync(int chartId) =>
-        await _context.Charts
+    public async Task<MCMA.FileRow?> GetChartSchemeByIdAsync(int chartId)
+    {
+        string? content = await _context.Charts
             .AsNoTracking()
             .Where(c => c.Id == chartId)
             .Select(c => c.SvgContent)
             .FirstOrDefaultAsync();
+
+        return content != null ? new(content) : null;
+    }
 
     public async Task<MCMC.Branch?> GetBranchWeakByIdAsync(int branchId)
     {
@@ -154,38 +169,43 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
         return transition != null ? ModelDomainConverter.Convert(transition) : null;
     }
 
-    public async Task<string?> GetChartJsonByCredentialsAsync(string city, string title) =>
-        await _context.Charts
+    public async Task<MCMA.FileRow?> GetChartJsonByCredentialsAsync(string city, string title)
+    {
+        string? content = await _context.Charts
             .AsNoTracking()
             .Where(c => c.City == city && c.Title == title)
             .Select(c => _context.GetChartJsonById(c.Id))
             .FirstOrDefaultAsync();
+        
+        return content != null ? new(content) : null;
+    }
 
-    public async Task<List<(string, string)>> GetAllChartCityTitleAsync() =>
-        (await _context.Charts
+    public async Task<MCMA.ChartIdentifiers> GetAllChartCityTitleAsync() =>
+        new(await _context.Charts
             .AsNoTracking()
-            .Select(c => new { c.City, c.Title })
-            .ToListAsync())
-                .Select(x => (x.City, x.Title))
-                .ToList();
+            .Select(c => new MCMA.ChartIdentifier(c.City, c.Title))
+            .ToListAsync()
+        );
 
-    public async Task<List<string>> GetAllChartBranchTitleAsync(int chartId) =>
-        await _context.ChartBranches
+    public async Task<MCMA.TitlesRow> GetAllChartBranchTitleAsync(int chartId) =>
+        new(await _context.ChartBranches
             .AsNoTracking()
             .Where(cb => cb.ChartId == chartId)
             .Select(cb => cb.Branch)
             .Select(b => b.Title)
-            .ToListAsync();
+            .ToListAsync()
+        );
 
-    public async Task<List<string>> GetAllBranchStationTitleAsync(int branchId) =>
-        await _context.BranchStations
+    public async Task<MCMA.TitlesRow> GetAllBranchStationTitleAsync(int branchId) =>
+        new(await _context.BranchStations
             .AsNoTracking()
             .Where(bs => bs.BranchId == branchId)
             .Select(bs => bs.Station)
             .Select(s => s.Title)
-            .ToListAsync();
+            .ToListAsync()
+        );
 
-    public async Task<(int, int)?> GetNeighborStationRailwayIdAsync(int stationId)
+    public async Task<MCMA.IdNexusRow?> GetNeighborStationRailwayIdAsync(int stationId)
     {
         int fromId = await _context.Railways
             .AsNoTracking()
@@ -199,28 +219,25 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             .Select(r => r.Id)
             .FirstOrDefaultAsync();
 
-        return (fromId > 0 && toId > 0) ? (fromId, toId) : null;
+        return (fromId > 0 && toId > 0) ? new(fromId, toId) : null;
     }
 
-    public async Task<List<int>> GetNeighborStationTransitionIdAsync(int stationId) =>
-        await _context.StationTransitions
+    public async Task<MCMA.IdsRow> GetNeighborStationTransitionIdAsync(int stationId) =>
+        new (await _context.StationTransitions
             .AsNoTracking()
             .Where(st => st.StationId == stationId)
             .Select(st => st.TransitionId)
-            .ToListAsync();
+            .ToListAsync()
+        );
 
-    public async Task<(int, int)?> GetFromToStationIdByRailwayIdAsync(int railwayId)
-    {
-        var result = await _context.Railways
+    public async Task<MCMA.IdNexusRow?> GetFromToStationIdByRailwayIdAsync(int railwayId) =>
+        await _context.Railways
             .AsNoTracking()
             .Where(r => r.Id == railwayId)
-            .Select(r => new { r.FromId, r.ToId })
+            .Select(r => new MCMA.IdNexusRow(r.FromId, r.ToId))
             .FirstOrDefaultAsync();
 
-        return result != null ? (result.FromId, result.ToId) : null;
-    }
-
-    public async Task<(int, int)?> GetFromToStationIdByTransitionIdAsync(int transitionId)
+    public async Task<MCMA.IdNexusRow?> GetFromToStationIdByTransitionIdAsync(int transitionId)
     {
         var result = await _context.StationTransitions
             .AsNoTracking()
@@ -228,24 +245,32 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             .Select(st => st.StationId)
             .ToListAsync();
 
-        return result.Count == 2 ? (result[0], result[1]) : null;
+        return result.Count == 2 ? new(result[0], result[1]) : null;
     }
 
-    public async Task<int?> GetStationDutyIdAsync(int stationId) =>
-        await _context.Stations
+    public async Task<MCMA.IdRow?> GetStationDutyIdAsync(int stationId)
+    {
+        int? dutyId = await _context.Stations
             .AsNoTracking()
             .Where(s => s.Id == stationId)
             .Select(s => s.DutyId)
             .FirstOrDefaultAsync();
 
-    public async Task<int?> GetTransitionDutyIdAsync(int transitionId) =>
-        await _context.Transitions
+        return dutyId != null ? new(dutyId ?? 0) : null;
+    }
+
+    public async Task<MCMA.IdRow?> GetTransitionDutyIdAsync(int transitionId)
+    {
+        int? dutyId = await _context.Transitions
             .AsNoTracking()
             .Where(t => t.Id == transitionId)
             .Select(t => t.DutyId)
             .FirstOrDefaultAsync();
 
-    public async Task<int> UpdateChartByIdAsync(int chartId, MCMC.Chart chart)
+        return dutyId != null ? new(dutyId ?? 0) : null;
+    }
+
+    public async Task<MCMA.ChangedRowCount> UpdateChartByIdAsync(int chartId, MCMC.Chart chart)
     {
         MDEMT.Chart? trackEntity = await _context.Charts.FirstOrDefaultAsync(c => c.Id == chartId);
 
@@ -257,20 +282,20 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             trackEntity.Title = updChart.Title;
         }
 
-        return await _context.SaveChangesAsync();
+        return new(await _context.SaveChangesAsync());
     }
 
-    public async Task<int> UpdateChartSchemeByIdAsync(int chartId, string scheme)
+    public async Task<MCMA.ChangedRowCount> UpdateChartSchemeByIdAsync(int chartId, string scheme)
     {
         MDEMT.Chart? trackEntity = await _context.Charts.FirstOrDefaultAsync(c => c.Id == chartId);
 
         if (trackEntity != null)
             trackEntity.SvgContent = scheme;
 
-        return await _context.SaveChangesAsync();
+        return new(await _context.SaveChangesAsync());
     }
 
-    public async Task<int> UpdateBranchByIdAsync(int branchId, MCMC.Branch branch)
+    public async Task<MCMA.ChangedRowCount> UpdateBranchByIdAsync(int branchId, MCMC.Branch branch)
     {
         MDEMT.Branch? trackEntity = await _context.Branches.FirstOrDefaultAsync(b => b.Id == branchId);
 
@@ -283,10 +308,10 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             trackEntity.Access = updBranch.Access;
         }
 
-        return await _context.SaveChangesAsync();
+        return new(await _context.SaveChangesAsync());
     }
 
-    public async Task<int> UpdateStationByIdAsync(int stationId, MCMC.Station station)
+    public async Task<MCMA.ChangedRowCount> UpdateStationByIdAsync(int stationId, MCMC.Station station)
     {
         MDEMT.Station? trackEntity = await _context.Stations.FirstOrDefaultAsync(s => s.Id == stationId);
 
@@ -301,10 +326,10 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             trackEntity.CloseTime = updStation.CloseTime;
         }
 
-        return await _context.SaveChangesAsync();
+        return new(await _context.SaveChangesAsync());
     }
 
-    public async Task<int> UpdateRailwayByIdAsync(int railwayId, MCMC.Railway railway)
+    public async Task<MCMA.ChangedRowCount> UpdateRailwayByIdAsync(int railwayId, MCMC.Railway railway)
     {
         MDEMT.Railway? trackEntity = await _context.Railways.FirstOrDefaultAsync(r => r.Id == railwayId);
 
@@ -315,10 +340,10 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             trackEntity.Duration = updRailway.Duration;
         }
 
-        return await _context.SaveChangesAsync();
+        return new(await _context.SaveChangesAsync());
     }
 
-    public async Task<int> UpdateTransitionByIdAsync(int transitionId, MCMC.Transition transition)
+    public async Task<MCMA.ChangedRowCount> UpdateTransitionByIdAsync(int transitionId, MCMC.Transition transition)
     {
         MDEMT.Transition? trackEntity = await _context.Transitions.FirstOrDefaultAsync(t => t.Id == transitionId);
 
@@ -333,13 +358,14 @@ public class EFChartRepository(MetroDbContext context) : IChartRepository
             trackEntity.CloseTime = updTransition.CloseTime;
         }
 
-        return await _context.SaveChangesAsync();
+        return new(await _context.SaveChangesAsync());
     }
 
-    public async Task<int> DeleteChartByIdAsync(int id) =>
-        await _context.Charts
+    public async Task<MCMA.DeletedRowCount> DeleteChartByIdAsync(int id) =>
+        new (await _context.Charts
             .Where(c => c.Id == id)
-            .ExecuteDeleteAsync();
+            .ExecuteDeleteAsync()
+        );
 
     public async Task<bool> IsCityTitleUniqueAsync(string city, string title) =>
         !await _context.Charts

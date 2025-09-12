@@ -1,17 +1,15 @@
-using MCUD = MetroGid.Controllers.Utility.DTO.Concrete;
 using MetroGid.Controllers.Utility.Interfaces;
-using MetroGid.Core.Converters;
 using MetroGid.Core.Exceptions.Classification;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Super;
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 using MetroGid.Core.Utility.Builders;
 using MetroGid.Core.Utility.Directors;
 using MetroGid.Core.Utility.Strategies;
 using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.Core.Interfaces;
-using MetroGid.DBA.EF.Converters;
 
 namespace MetroGid.Core.Services;
 
@@ -33,20 +31,20 @@ public class RouteService(
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
-    private async Task<int> GetClientIdAsync(string login, string password, string mail) =>
+    private async Task<MCMA.IdRow> GetClientIdAsync(string login, string password, string mail) =>
         await Handler.SnapAsync(
             async () =>
             {
-                int clientId = await _clientRepo.GetIdByCredentialsAsync(login, password);
+                MCMA.IdRow clientIdRow = await _clientRepo.GetIdByCredentialsAsync(login, password);
 
-                if (clientId == 0)
+                if (clientIdRow.id == 0)
                     throw new DataBaseException(
                         $"Пользователь '{login}' с почтой '{mail}' не найден",
                         ExceptionType.Warning,
                         ExceptionReason.NotFound
                     );
 
-                return clientId;
+                return clientIdRow;
             }, Logger
         );
 
@@ -55,15 +53,15 @@ public class RouteService(
         string? jsonContent = await Handler.SnapAsync(
             async () =>
             {
-                string? json = await _chartRepo.GetChartJsonByCredentialsAsync(city, chartTitle);
+                MCMA.FileRow? jsonRow = await _chartRepo.GetChartJsonByCredentialsAsync(city, chartTitle);
 
-                if (json == null)
+                if (jsonRow == null)
                     throw new DataBaseException(
                         $"Json схема \"{chartTitle}\" для города \"{city}\" не найдена",
                         ExceptionType.Warning,
                         ExceptionReason.NotFound
                     );
-                return json;
+                return jsonRow.content;
             }, Logger
         );
 
@@ -136,35 +134,38 @@ public class RouteService(
         return route;
     }
 
-    public async Task<int> SaveRouteAsync(
+    public async Task<MCMA.IdRow> SaveRouteAsync(
         int clientId,
         MCMC.Route route
     )
     {
-        int chartId = await _chartRepo.GetChartIdAsync(
+        MCMA.IdRow chartIdRow = await _chartRepo.GetChartIdAsync(
             route.Chart?.City ?? "",
             route.Chart?.Title ?? ""
         );
 
         return await _routeRepo.AddAsync(
             clientId,
-            chartId,
+            chartIdRow.id,
             route
         );
     }
 
-    public async Task<List<string>> GetSavedChartRoutesTitles(
+    public async Task<MCMA.TitlesRow> GetSavedChartRoutesTitles(
         int clientId,
         string city,
         string chartTitle
     )
     {
-        int chartId = await _chartRepo.GetChartIdAsync(
+        MCMA.IdRow chartIdRow = await _chartRepo.GetChartIdAsync(
             city,
             chartTitle
         );
 
-        return await _routeRepo.GetAllForClientOfChartIdAsync(clientId, chartId);
+        return await _routeRepo.GetAllForClientOfChartIdAsync(
+            clientId,
+            chartIdRow.id
+        );
     }
 
     public async Task<MCMC.Route?> GetSavedChart(
@@ -174,22 +175,28 @@ public class RouteService(
         string title
     )
     {
-        int chartId = await _chartRepo.GetChartIdAsync(
+        MCMA.IdRow chartIdRow = await _chartRepo.GetChartIdAsync(
             city,
             chartTitle
         );
 
-        return await _routeRepo.GetChartRouteOfClient(clientId, chartId, title);
+        return await _routeRepo.GetChartRouteOfClient(
+            clientId,
+            chartIdRow.id,
+            title
+        );
     }
 
-    public async Task<int> DeleteAsync(
+    public async Task<MCMA.DeletedRowCount> DeleteAsync(
         int clientId,
         string title
-    ) =>
-        await _routeRepo.DeleteAsync(
-            await _routeRepo.GetIdAsync(
-                title,
-                clientId
-            )
+    )
+    {
+        MCMA.IdRow chartIdRow = await _routeRepo.GetIdAsync(
+            title,
+            clientId
         );
+
+        return await _routeRepo.DeleteAsync(chartIdRow.id);
+    }
 }

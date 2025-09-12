@@ -9,6 +9,7 @@ using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Classification;
 using MCMT = MetroGid.Core.Models.Types;
+using MCMA = MetroGid.Core.Models.Advanced;
 
 namespace MetroGid.Core.Services;
 
@@ -24,7 +25,7 @@ public class ClientService(
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
-    public async Task<MCUD.ClientDTO?> GetClientByIdAsync(int clientId) =>
+    public async Task<MCMC.Client?> GetClientByIdAsync(int clientId) =>
         await Handler.SnapAsync(
             async () =>
             {
@@ -37,28 +38,28 @@ public class ClientService(
                         ExceptionReason.NotFound
                     );
 
-                return client != null ? DomainDtoConverter.Convert(client) : null;
+                return client;
             }, Logger
         );
 
-    public async Task<int> GetClientIdAsync(string login, string password) =>
+    public async Task<MCMA.IdRow> GetClientIdAsync(string login, string password) =>
         await Handler.SnapAsync(
             async () =>
             {
-                int clientId = await ClientRepo.GetIdByCredentialsAsync(login, password);
+                MCMA.IdRow idRow = await ClientRepo.GetIdByCredentialsAsync(login, password);
 
-                if (clientId == 0)
+                if (idRow.id == 0)
                     throw new DataBaseException(
                         $"Пользователь с логином \"{login}\" не найден",
                         ExceptionType.Warning,
                         ExceptionReason.NotFound
                     );
 
-                return clientId;
+                return idRow;
             }, Logger
         );
 
-    public async Task<int> RegAsync(string login, string password, string mail)
+    public async Task<MCMA.IdRow> RegAsync(string login, string password, string mail)
     {
         MCMC.Client client = new(login, password, mail, MCMT.RoleType.SIGNED);
         client.Validate(DomainAttribsValidator);
@@ -85,10 +86,10 @@ public class ClientService(
         return await ClientRepo.AddAsync(client);
     }
 
-    public async Task<int> UnRegAsync(int clientId) =>
+    public async Task<MCMA.DeletedRowCount> UnRegAsync(int clientId) =>
         await ClientRepo.DeleteAsync(clientId);
 
-    public async Task<MCUD.ClientDTO?> LogInAsync(string login, string password)
+    public async Task<MCMC.Client?> LogInAsync(string login, string password)
     {
         MCMC.Client? client = await Handler.SnapAsync(
             async () =>
@@ -106,36 +107,33 @@ public class ClientService(
             }, Logger
         );
 
-        return client != null ? DomainDtoConverter.Convert(client) : null;
+        return client;
     }
 
-    public async Task<int> LogOutAsync(string login, string password) =>
-        await ClientRepo.GetIdByCredentialsAsync(login, password);
-
-    public async Task<MCUD.RoleTypeDTO> GetRoleAsync(string login, string password)
+    public async Task<MCMT.RoleType> GetRoleAsync(string login, string password)
     {
         int clientId = await Handler.SnapAsync(
             async () =>
             {
-                int id = await ClientRepo.GetIdByCredentialsAsync(login, password);
+                MCMA.IdRow idRow = await ClientRepo.GetIdByCredentialsAsync(login, password);
 
-                if (id == 0)
+                if (idRow.id == 0)
                     throw new DataBaseException(
                         $"Пользователь с логином \"{login}\" не найден",
                         ExceptionType.Warning,
                         ExceptionReason.NotFound
                     );
 
-                return id;
+                return idRow.id;
             }, Logger
         );
 
-        return DomainDtoConverter.Convert(await ClientRepo.GetRoleByIdAsync(clientId));
+        return await ClientRepo.GetRoleByIdAsync(clientId);
     }
 
     public async Task<bool> VerifyPasswordAsync(int clientId, string password)
     {
-        MCUD.ClientDTO? client = await GetClientByIdAsync(clientId);
+        MCMC.Client? client = await GetClientByIdAsync(clientId);
         return client != null ? client.Password == password : false;
     }
 }

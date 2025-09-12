@@ -1,5 +1,6 @@
 using MetroGid.Core.Interfaces;
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 using MetroGid.DBA.EF.Context;
 using Microsoft.EntityFrameworkCore;
 using MetroGid.DBA.EF.Converters;
@@ -10,19 +11,21 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
 {
     private readonly MetroDbContext _context = context;
 
-    public async Task<int> AddAsync(int clientId, int chartId, MCMC.Route route) =>
-        await _context.Clients
+    public async Task<MCMA.IdRow> AddAsync(int clientId, int chartId, MCMC.Route route) =>
+        new (await _context.Clients
             .AsNoTracking()
             .Where(c => c.Id == clientId)
             .Select(c => _context.AddRouteJson(c.Id, chartId, DomainRouteJsonConverter.Convert(route)))
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync()
+        );
 
-    public async Task<int> GetIdAsync(string title, int clientId) =>
-        await _context.Ways
+    public async Task<MCMA.IdRow> GetIdAsync(string title, int clientId) =>
+        new (await _context.Ways
             .AsNoTracking()
             .Where(w => w.ClientId == clientId && w.Title == title)
             .Select(w => w.Id)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync()
+        );
 
     public async Task<MCMC.Route?> GetByIdAsync(int id)
     {
@@ -35,33 +38,37 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
         return routeJson != null ? DomainRouteJsonConverter.Convert(routeJson) : null;
     }
 
-    public async Task<List<string>> GetAllTitlesForClientAsync(int clientId) =>
-        await _context.Ways
+    public async Task<MCMA.TitlesRow> GetAllTitlesForClientAsync(int clientId) =>
+        new (await _context.Ways
             .AsNoTracking()
             .Where(w => w.ClientId == clientId)
             .Select(w => w.Title)
-            .ToListAsync();
+            .ToListAsync()
+        );
 
-    public async Task<List<string>> GetAllTitlesForClientOfChartAsync(int clientId, int chartId) =>
-        await _context.Ways
+    public async Task<MCMA.TitlesRow> GetAllTitlesForClientOfChartAsync(int clientId, int chartId) =>
+        new (await _context.Ways
             .AsNoTracking()
             .Where(w => w.ClientId == clientId && w.ChartId == chartId)
             .Select(w => w.Title)
-            .ToListAsync();
+            .ToListAsync()
+        );
 
-    public async Task<List<string>> GetAllForClientIdAsync(int clientId) =>
-        await _context.Ways
+    public async Task<MCMA.TitlesRow> GetAllForClientIdAsync(int clientId) =>
+        new (await _context.Ways
             .AsNoTracking()
             .Where(w => w.ClientId == clientId)
             .Select(w => _context.GetRouteJsonById(w.Id))
-            .ToListAsync();
+            .ToListAsync()
+        );
 
-    public async Task<List<string>> GetAllForClientOfChartIdAsync(int clientId, int chartId) =>
-        await _context.Ways
+    public async Task<MCMA.TitlesRow> GetAllForClientOfChartIdAsync(int clientId, int chartId) =>
+        new (await _context.Ways
             .AsNoTracking()
             .Where(w => w.ChartId == chartId && w.ClientId == clientId)
             .Select(w => w.Title)
-            .ToListAsync();
+            .ToListAsync()
+        );
 
     public async Task<MCMC.Route?> GetChartRouteOfClient(
         int clientId,
@@ -77,15 +84,16 @@ public class EFRouteRepository(MetroDbContext context) : IRouteRepository
         return routeJson != null ? DomainRouteJsonConverter.Convert(routeJson) : null;
     }
 
-    public Task<int> UpdateAsync(int clientId, int chartId, MCMC.Route route)
+    public Task<MCMA.ChangedRowCount> UpdateAsync(int clientId, int chartId, MCMC.Route route)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<int> DeleteAsync(int id) =>
-        await _context.Ways
+    public async Task<MCMA.DeletedRowCount> DeleteAsync(int id) =>
+        new (await _context.Ways
             .Where(w => w.Id == id)
-            .ExecuteDeleteAsync();
+            .ExecuteDeleteAsync()
+        );
 
     public async Task<bool> IsTitleExistsAsync(string title, int clientId) =>
         await _context.Ways

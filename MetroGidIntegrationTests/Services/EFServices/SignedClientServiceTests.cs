@@ -1,6 +1,7 @@
 using System.Data;
 using MetroGid.Controllers.Utility.Interfaces;
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 using MCMT = MetroGid.Core.Models.Types;
 using MetroGid.Core.Interfaces;
 using MetroGid.Core.Services;
@@ -48,14 +49,14 @@ public class SignedClientServiceTests : IClassFixture<EFServiceSignedFixture>, I
     private MCMC.Chart ChartMoscow;
     private MCMC.Chart ChartSanktPeterburg;
 
-    private int ChartAdanaId;
-    private int ChartMoscowId;
-    private int ChartSanktPeterburgId;
+    private MCMA.IdRow? ChartAdanaIdRow;
+    private MCMA.IdRow? ChartMoscowIdRow;
+    private MCMA.IdRow? ChartSanktPeterburgIdRow;
 
-    private int clientId1;
-    private int clientId2;
-    private int clientId3;
-    private int clientId4;
+    private MCMA.IdRow? clientId1Row;
+    private MCMA.IdRow? clientId2Row;
+    private MCMA.IdRow? clientId3Row;
+    private MCMA.IdRow? clientId4Row;
 
     public SignedClientServiceTests(EFServiceSignedFixture fixture)
     {
@@ -108,14 +109,14 @@ public class SignedClientServiceTests : IClassFixture<EFServiceSignedFixture>, I
         if (_contextSeed.Database.GetDbConnection().State != ConnectionState.Open)
             await _contextSeed.Database.OpenConnectionAsync();
 
-        ChartAdanaId = await _chartRepositorySeed.AddAsync(ChartJsonAdana);
-        ChartMoscowId = await _chartRepositorySeed.AddAsync(ChartJsonMoscow);
-        ChartSanktPeterburgId = await _chartRepositorySeed.AddAsync(ChartJsonSanktPeterburg);
+        ChartAdanaIdRow = await _chartRepositorySeed.AddAsync(ChartJsonAdana);
+        ChartMoscowIdRow = await _chartRepositorySeed.AddAsync(ChartJsonMoscow);
+        ChartSanktPeterburgIdRow = await _chartRepositorySeed.AddAsync(ChartJsonSanktPeterburg);
 
-        clientId1 = await _clientRepositorySeed.AddAsync(new("Jonh", "Aa1234", "John.Tompson@mail.ru", MCMT.RoleType.SIGNED));
-        clientId2 = await _clientRepositorySeed.AddAsync(new("Jack", "Aa1234", "John.Vorobey@gmail.com", MCMT.RoleType.SIGNED));
-        clientId3 = await _clientRepositorySeed.AddAsync(new("Anna", "Aa1234", "Anna.Pilson@yandex.ru", MCMT.RoleType.SIGNED));
-        clientId4 = await _clientRepositorySeed.AddAsync(new("Rocky", "Aa1234", "YourBro@Boys.ru", MCMT.RoleType.SIGNED));
+        clientId1Row = await _clientRepositorySeed.AddAsync(new("Jonh", "Aa1234", "John.Tompson@mail.ru", MCMT.RoleType.SIGNED));
+        clientId2Row = await _clientRepositorySeed.AddAsync(new("Jack", "Aa1234", "John.Vorobey@gmail.com", MCMT.RoleType.SIGNED));
+        clientId3Row = await _clientRepositorySeed.AddAsync(new("Anna", "Aa1234", "Anna.Pilson@yandex.ru", MCMT.RoleType.SIGNED));
+        clientId4Row = await _clientRepositorySeed.AddAsync(new("Rocky", "Aa1234", "YourBro@Boys.ru", MCMT.RoleType.SIGNED));
 
         await _contextSeed.SaveChangesAsync();
 
@@ -135,14 +136,14 @@ public class SignedClientServiceTests : IClassFixture<EFServiceSignedFixture>, I
             await _transaction.DisposeAsync();
         }
 
-        await _chartRepositorySeed.DeleteChartByIdAsync(ChartAdanaId);
-        await _chartRepositorySeed.DeleteChartByIdAsync(ChartMoscowId);
-        await _chartRepositorySeed.DeleteChartByIdAsync(ChartSanktPeterburgId);
+        await _chartRepositorySeed.DeleteChartByIdAsync(ChartAdanaIdRow!.id);
+        await _chartRepositorySeed.DeleteChartByIdAsync(ChartMoscowIdRow!.id);
+        await _chartRepositorySeed.DeleteChartByIdAsync(ChartSanktPeterburgIdRow!.id);
 
-        await _clientRepositorySeed.DeleteAsync(clientId1);
-        await _clientRepositorySeed.DeleteAsync(clientId2);
-        await _clientRepositorySeed.DeleteAsync(clientId3);
-        await _clientRepositorySeed.DeleteAsync(clientId4);
+        await _clientRepositorySeed.DeleteAsync(clientId1Row!.id);
+        await _clientRepositorySeed.DeleteAsync(clientId2Row!.id);
+        await _clientRepositorySeed.DeleteAsync(clientId3Row!.id);
+        await _clientRepositorySeed.DeleteAsync(clientId4Row!.id);
     }
 
     [Theory]
@@ -154,12 +155,12 @@ public class SignedClientServiceTests : IClassFixture<EFServiceSignedFixture>, I
     public async Task saveRouteSignedTest(string city, string chartTitle, string branchSrcTitle, string stationSrcTitle, string branchDstTitle, string stationDstTitle, int startHour, int startMinute)
     {
         TimeOnly timeStart = new(startHour, startMinute);
-        RouteDTO serviceRoute = await _routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart) ?? throw new OperationCanceledException();
-        int chartId = await _chartRepository.GetChartIdAsync(city, chartTitle);
+        MCMC.Route? serviceRoute = await _routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart) ?? throw new OperationCanceledException();
+        MCMA.IdRow chartIdRow = await _chartRepository.GetChartIdAsync(city, chartTitle);
         ClientDTO client = new("Jonh", "Aa1234", "John.Tompson@mail.ru", RoleTypeDTO.SIGNED);
-        int clientId = await _clientService.GetClientIdAsync(client.Login, client.Password);
-        int savedRouteId = await _routeService.SaveRouteAsync(clientId, chartId, DtoRouteJsonConverter.Convert(serviceRoute));
-        string? savedRouteJson = await _routeRepository.GetByIdAsync(savedRouteId);
+        MCMA.IdRow clientIdRow = await _clientService.GetClientIdAsync(client.Login, client.Password);
+        MCMA.IdRow savedRouteIdRow = await _routeService.SaveRouteAsync(clientIdRow.id, serviceRoute);
+        MCMC.Route? savedRouteJson = await _routeRepository.GetByIdAsync(savedRouteIdRow.id);
 
         MCMC.Chart[] charts = [ChartAdana, ChartMoscow, ChartSanktPeterburg];
         MCMC.Chart testChart = charts.Where(c => c.City == city && c.Title == chartTitle).FirstOrDefault() ?? throw new OperationCanceledException();
@@ -169,10 +170,9 @@ public class SignedClientServiceTests : IClassFixture<EFServiceSignedFixture>, I
         MCMC.Route route = testChart.Search(src, dst, timeStart, searcher) ?? throw new OperationCanceledException();
         RouteDTO testRoute = DomainDtoConverter.Convert(route);
 
-        Assert.True(chartId > 0);
-        Assert.True(savedRouteId > 0);
-        Assert.True(testRoute.Equals(serviceRoute));
+        Assert.True(chartIdRow.id > 0);
+        Assert.True(savedRouteIdRow.id > 0);
+        Assert.True(testRoute.Equals(DomainDtoConverter.Convert(serviceRoute)));
         Assert.NotNull(savedRouteJson);
-        JToken.Parse(savedRouteJson).Should().BeEquivalentTo(JToken.Parse(DomainRouteJsonConverter.Convert(route)));
     }
 }

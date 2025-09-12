@@ -1,5 +1,6 @@
 using System.Data;
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 using MetroGid.Core.Exceptions.Handlers;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Interfaces;
@@ -32,9 +33,9 @@ public class EFChartRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, 
     private MCMC.Chart ChartMoscow;
     private MCMC.Chart ChartSanktPeterburg;
 
-    private int ChartAdanaId;
-    private int ChartMoscowId;
-    private int ChartSanktPeterburgId;
+    private MCMA.IdRow? ChartAdanaIdRow;
+    private MCMA.IdRow? ChartMoscowIdRow;
+    private MCMA.IdRow? ChartSanktPeterburgIdRow;
 
     public EFChartRepositoryTests(EFDataBasePostgresFixture fixture)
     {
@@ -78,9 +79,9 @@ public class EFChartRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, 
 
         _transaction = await _context.Database.BeginTransactionAsync();
 
-        ChartAdanaId = await _chartRepository.AddAsync(ChartJsonAdana);
-        ChartMoscowId = await _chartRepository.AddAsync(ChartJsonMoscow);
-        ChartSanktPeterburgId = await _chartRepository.AddAsync(ChartJsonSanktPeterburg);
+        ChartAdanaIdRow = await _chartRepository.AddAsync(ChartJsonAdana);
+        ChartMoscowIdRow = await _chartRepository.AddAsync(ChartJsonMoscow);
+        ChartSanktPeterburgIdRow = await _chartRepository.AddAsync(ChartJsonSanktPeterburg);
 
         await _context.SaveChangesAsync();
     }
@@ -99,19 +100,19 @@ public class EFChartRepositoryTests : IClassFixture<EFDataBasePostgresFixture>, 
     {
         var testData = new[]
         {
-            (ChartAdanaId, ChartAdana.City, ChartAdana.Title, ChartJsonAdana),
-            (ChartMoscowId, ChartMoscow.City, ChartMoscow.Title, ChartJsonMoscow),
-            (ChartSanktPeterburgId, ChartSanktPeterburg.City, ChartSanktPeterburg.Title, ChartJsonSanktPeterburg)
+            (ChartAdanaIdRow, ChartAdana.City, ChartAdana.Title, ChartJsonAdana),
+            (ChartMoscowIdRow, ChartMoscow.City, ChartMoscow.Title, ChartJsonMoscow),
+            (ChartSanktPeterburgIdRow, ChartSanktPeterburg.City, ChartSanktPeterburg.Title, ChartJsonSanktPeterburg)
         };
 
         foreach (var (chartId, city, title, expectedChartJson) in testData)
         {
-            int testChartId = await _chartRepository.GetChartIdAsync(city, title);
-            string? chartJson = await _chartRepository.GetChartJsonByIdAsync(testChartId);
+            MCMA.IdRow testChartIdRow = await _chartRepository.GetChartIdAsync(city, title);
+            MCMA.FileRow? chartJsonRow = await _chartRepository.GetChartJsonByIdAsync(testChartIdRow.id);
 
-            Assert.NotNull(chartJson);
-            Assert.Equal(chartId, testChartId);
-            JToken.Parse(chartJson).Should().BeEquivalentTo(JToken.Parse(expectedChartJson));
+            Assert.NotNull(chartJsonRow);
+            Assert.Equal(chartId, testChartIdRow);
+            JToken.Parse(chartJsonRow.content).Should().BeEquivalentTo(JToken.Parse(expectedChartJson));
         }
     }
 }

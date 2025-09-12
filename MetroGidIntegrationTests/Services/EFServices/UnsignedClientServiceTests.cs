@@ -6,6 +6,7 @@ using MetroGidIntegrationTests.Services.EFFixtures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 using MetroGid.Core.Utility;
 using MetroGid.Controllers.Utility.DTO.Concrete;
 using MetroGid.Core.Exceptions.Super;
@@ -40,9 +41,9 @@ public class UnsignedClientServiceTests : IClassFixture<EFServiceUnsignedFixture
     private MCMC.Chart ChartMoscow;
     private MCMC.Chart ChartSanktPeterburg;
 
-    private int ChartAdanaId;
-    private int ChartMoscowId;
-    private int ChartSanktPeterburgId;
+    private MCMA.IdRow? ChartAdanaIdRow;
+    private MCMA.IdRow? ChartMoscowIdRow;
+    private MCMA.IdRow? ChartSanktPeterburgIdRow;
 
     public UnsignedClientServiceTests(EFServiceUnsignedFixture fixture)
     {
@@ -95,9 +96,9 @@ public class UnsignedClientServiceTests : IClassFixture<EFServiceUnsignedFixture
         if (_contextSeed.Database.GetDbConnection().State != ConnectionState.Open)
             await _contextSeed.Database.OpenConnectionAsync();
 
-        ChartAdanaId = await _chartRepositorySeed.AddAsync(ChartJsonAdana);
-        ChartMoscowId = await _chartRepositorySeed.AddAsync(ChartJsonMoscow);
-        ChartSanktPeterburgId = await _chartRepositorySeed.AddAsync(ChartJsonSanktPeterburg);
+        ChartAdanaIdRow = await _chartRepositorySeed.AddAsync(ChartJsonAdana);
+        ChartMoscowIdRow = await _chartRepositorySeed.AddAsync(ChartJsonMoscow);
+        ChartSanktPeterburgIdRow = await _chartRepositorySeed.AddAsync(ChartJsonSanktPeterburg);
 
         await _contextSeed.SaveChangesAsync();
 
@@ -117,9 +118,9 @@ public class UnsignedClientServiceTests : IClassFixture<EFServiceUnsignedFixture
             await _transaction.DisposeAsync();
         }
 
-        await _chartRepositorySeed.DeleteChartByIdAsync(ChartAdanaId);
-        await _chartRepositorySeed.DeleteChartByIdAsync(ChartMoscowId);
-        await _chartRepositorySeed.DeleteChartByIdAsync(ChartSanktPeterburgId);
+        await _chartRepositorySeed.DeleteChartByIdAsync(ChartAdanaIdRow!.id);
+        await _chartRepositorySeed.DeleteChartByIdAsync(ChartMoscowIdRow!.id);
+        await _chartRepositorySeed.DeleteChartByIdAsync(ChartSanktPeterburgIdRow!.id);
     }
 
     [Theory]
@@ -131,7 +132,7 @@ public class UnsignedClientServiceTests : IClassFixture<EFServiceUnsignedFixture
     public async Task searchRouteTest(string city, string chartTitle, string branchSrcTitle, string stationSrcTitle, string branchDstTitle, string stationDstTitle, int startHour, int startMinute)
     {
         TimeOnly timeStart = new(startHour, startMinute);
-        RouteDTO? serviceRoute = await _routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart);
+        MCMC.Route? serviceRoute = await _routeService.SearchRouteAsync(city, chartTitle, branchSrcTitle, stationSrcTitle, branchDstTitle, stationDstTitle, timeStart);
 
         MCMC.Chart[] charts = [ChartAdana, ChartMoscow, ChartSanktPeterburg];
         MCMC.Chart testChart = charts.Where(c => c.City == city && c.Title == chartTitle).FirstOrDefault() ?? throw new OperationCanceledException();
@@ -142,6 +143,6 @@ public class UnsignedClientServiceTests : IClassFixture<EFServiceUnsignedFixture
 
         Assert.NotNull(serviceRoute);
         Assert.NotNull(testRoute);
-        Assert.True(testRoute?.Equals(serviceRoute) ?? false);
+        Assert.True(testRoute?.Equals(DomainDtoConverter.Convert(serviceRoute)) ?? false);
     }
 }

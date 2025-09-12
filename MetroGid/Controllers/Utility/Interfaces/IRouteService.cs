@@ -1,5 +1,5 @@
-using MetroGid.Controllers.Utility.DTO.Concrete;
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 
 namespace MetroGid.Controllers.Utility.Interfaces;
 
@@ -12,12 +12,12 @@ public interface IRouteService
         TimeOnly startTime
     );
 
-    Task<int> SaveRouteAsync(
+    Task<MCMA.IdRow> SaveRouteAsync(
         int clientId,
         MCMC.Route route
     );
 
-    Task<List<string>> GetSavedChartRoutesTitles(
+    Task<MCMA.TitlesRow> GetSavedChartRoutesTitles(
         int clientId,
         string city,
         string chartTitle
@@ -30,7 +30,7 @@ public interface IRouteService
         string title
     );
 
-    Task<int> DeleteAsync(
+    Task<MCMA.DeletedRowCount> DeleteAsync(
         int clientId,
         string title
     );

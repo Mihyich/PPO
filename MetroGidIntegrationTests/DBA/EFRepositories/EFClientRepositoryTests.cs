@@ -1,6 +1,7 @@
 using System.Data;
 using MetroGid.Core.Interfaces;
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 using MetroGid.DBA.EF.Context;
 using MetroGidIntegrationTests.DBA.EFFixtures;
 using Microsoft.EntityFrameworkCore;
@@ -36,9 +37,9 @@ public class EFClientRepositoryTests : IClassFixture<EFDataBasePostgresFixture>,
     {
         MCMC.Client client = new(login, password, mail, role);
 
-        int id = await _repository.AddAsync(client);
+        MCMA.IdRow idRow = await _repository.AddAsync(client);
 
-        MCMC.Client? savedClient = await _repository.GetByIdAsync(id);
+        MCMC.Client? savedClient = await _repository.GetByIdAsync(idRow.id);
 
         Assert.NotNull(savedClient);
         Assert.Equal(login, savedClient.Login);
@@ -91,9 +92,9 @@ public class EFClientRepositoryTests : IClassFixture<EFDataBasePostgresFixture>,
     public async Task GetIdByCredentialsAsyncTest()
     {
         MCMC.Client client = new("Mohn", "Aa1234", "Mohn.Tomson@mail.ru", MCMT.RoleType.SIGNED);
-        int savedId = await _repository.AddAsync(client);
-        int testId = await _repository.GetIdByCredentialsAsync(client.Login, client.Password);
-        Assert.Equal(savedId, testId);
+        MCMA.IdRow savedIdRow = await _repository.AddAsync(client);
+        MCMA.IdRow testIdRow = await _repository.GetIdByCredentialsAsync(client.Login, client.Password);
+        Assert.Equal(savedIdRow, testIdRow);
     }
 
     [Fact]
@@ -102,14 +103,14 @@ public class EFClientRepositoryTests : IClassFixture<EFDataBasePostgresFixture>,
         MCMC.Client client = new("Rohn", "Aa1234", "Rohn.Tomson@mail.ru", MCMT.RoleType.SIGNED);
         MCMC.Client updClient = new("Mark", "Aa1234", "Mark.Tomson@mail.ru", MCMT.RoleType.SIGNED);
 
-        int savedId = await _repository.AddAsync(client);
-        int changes = await _repository.UpdateAsync(savedId, updClient);
-        int testId = await _repository.GetIdByCredentialsAsync(updClient.Login, updClient.Password);
-        MCMC.Client? testClient = await _repository.GetByIdAsync(savedId);
+        MCMA.IdRow savedIdRow = await _repository.AddAsync(client);
+        MCMA.ChangedRowCount changesRow = await _repository.UpdateAsync(savedIdRow.id, updClient);
+        MCMA.IdRow testIdRow = await _repository.GetIdByCredentialsAsync(updClient.Login, updClient.Password);
+        MCMC.Client? testClient = await _repository.GetByIdAsync(savedIdRow.id);
 
         Assert.NotNull(testClient);
-        Assert.Equal(1, changes);
-        Assert.Equal(savedId, testId);
+        Assert.Equal(1, changesRow.count);
+        Assert.Equal(savedIdRow, testIdRow);
         Assert.Equal(updClient.Login, testClient.Login);
         Assert.Equal(updClient.Password, testClient.Password);
         Assert.Equal(updClient.Mail, testClient.Mail);

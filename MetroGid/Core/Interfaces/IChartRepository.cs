@@ -1,52 +1,53 @@
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 
 namespace MetroGid.Core.Interfaces;
 
 public interface IChartRepository
 {
-    Task<int> AddAsync(string chartJson);
+    Task<MCMA.IdRow> AddAsync(string chartJson);
 
-    Task<int> GetChartIdAsync(string city, string title);
-    Task<int> GetBranchIdAsync(string title, int chartId);
-    Task<int> GetStationIdAsync(string title, int branchId);
-    Task<int> GetRailwayIdAsync(int stationId1, int stationId2);
-    Task<int> GetTransitionIdAsync(int stationId1, int stationId2);
+    Task<MCMA.IdRow> GetChartIdAsync(string city, string title);
+    Task<MCMA.IdRow> GetBranchIdAsync(string title, int chartId);
+    Task<MCMA.IdRow> GetStationIdAsync(string title, int branchId);
+    Task<MCMA.IdRow> GetRailwayIdAsync(int stationId1, int stationId2);
+    Task<MCMA.IdRow> GetTransitionIdAsync(int stationId1, int stationId2);
 
-    Task<List<int>> GetAllChartIdAsync();
-    Task<List<int>> GetAllChartBranchIdAsync(int chartId);
-    Task<List<int>> GetAllBranchStationIdAsync(int branchId);
+    Task<MCMA.IdsRow> GetAllChartIdAsync();
+    Task<MCMA.IdsRow> GetAllChartBranchIdAsync(int chartId);
+    Task<MCMA.IdsRow> GetAllBranchStationIdAsync(int branchId);
 
-    Task<string?> GetChartJsonByIdAsync(int chartId);
+    Task<MCMA.FileRow?> GetChartJsonByIdAsync(int chartId);
     Task<MCMC.Chart?> GetChartWeakByIdAsync(int chartId);
-    Task<string?> GetChartSchemeByIdAsync(int chartId);
+    Task<MCMA.FileRow?> GetChartSchemeByIdAsync(int chartId);
     Task<MCMC.Branch?> GetBranchWeakByIdAsync(int branchId);
     Task<MCMC.Station?> GetStationWeakByIdAsync(int stationId);
     Task<MCMC.Railway?> GetRailwayByIdAsync(int railwayId);
     Task<MCMC.Transition?> GetTransitionByIdAsync(int transitionId);
 
-    Task<string?> GetChartJsonByCredentialsAsync(string city, string title);
+    Task<MCMA.FileRow?> GetChartJsonByCredentialsAsync(string city, string title);
 
-    Task<List<ValueTuple<string, string>>> GetAllChartCityTitleAsync(); // <City, Title>
-    Task<List<string>> GetAllChartBranchTitleAsync(int chartId);
-    Task<List<string>> GetAllBranchStationTitleAsync(int branchId);
+    Task<MCMA.ChartIdentifiers> GetAllChartCityTitleAsync();
+    Task<MCMA.TitlesRow> GetAllChartBranchTitleAsync(int chartId);
+    Task<MCMA.TitlesRow> GetAllBranchStationTitleAsync(int branchId);
 
-    Task<(int, int)?> GetNeighborStationRailwayIdAsync(int stationId);
-    Task<List<int>> GetNeighborStationTransitionIdAsync(int stationId);
+    Task<MCMA.IdNexusRow?> GetNeighborStationRailwayIdAsync(int stationId);
+    Task<MCMA.IdsRow> GetNeighborStationTransitionIdAsync(int stationId);
 
-    Task<(int, int)?> GetFromToStationIdByRailwayIdAsync(int railwayId);
-    Task<(int, int)?> GetFromToStationIdByTransitionIdAsync(int transitionId);
+    Task<MCMA.IdNexusRow?> GetFromToStationIdByRailwayIdAsync(int railwayId);
+    Task<MCMA.IdNexusRow?> GetFromToStationIdByTransitionIdAsync(int transitionId);
 
-    Task<int?> GetStationDutyIdAsync(int stationId);
-    Task<int?> GetTransitionDutyIdAsync(int transitionId);
+    Task<MCMA.IdRow?> GetStationDutyIdAsync(int stationId);
+    Task<MCMA.IdRow?> GetTransitionDutyIdAsync(int transitionId);
 
-    Task<int> UpdateChartByIdAsync(int chartId, MCMC.Chart chart);
-    Task<int> UpdateChartSchemeByIdAsync(int chartId, string scheme);
-    Task<int> UpdateBranchByIdAsync(int branchId, MCMC.Branch branch);
-    Task<int> UpdateStationByIdAsync(int stationId, MCMC.Station station);
-    Task<int> UpdateRailwayByIdAsync(int railwayId, MCMC.Railway railway);
-    Task<int> UpdateTransitionByIdAsync(int stationId, MCMC.Transition transition);
+    Task<MCMA.ChangedRowCount> UpdateChartByIdAsync(int chartId, MCMC.Chart chart);
+    Task<MCMA.ChangedRowCount> UpdateChartSchemeByIdAsync(int chartId, string scheme);
+    Task<MCMA.ChangedRowCount> UpdateBranchByIdAsync(int branchId, MCMC.Branch branch);
+    Task<MCMA.ChangedRowCount> UpdateStationByIdAsync(int stationId, MCMC.Station station);
+    Task<MCMA.ChangedRowCount> UpdateRailwayByIdAsync(int railwayId, MCMC.Railway railway);
+    Task<MCMA.ChangedRowCount> UpdateTransitionByIdAsync(int stationId, MCMC.Transition transition);
 
-    Task<int> DeleteChartByIdAsync(int id);
+    Task<MCMA.DeletedRowCount> DeleteChartByIdAsync(int id);
 
     Task<bool> IsCityTitleUniqueAsync(string city, string title);
     Task<bool> IsBranchTitleUniqueInChartAsync(string title, int chartId);

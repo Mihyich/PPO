@@ -4,6 +4,7 @@ using MetroGid.Core.Exceptions.Handlers;
 using MetroGid.Core.Exceptions.Super;
 using MetroGid.Core.Interfaces;
 using MetroGid.Core.Models.Concrete;
+using MetroGid.Core.Models.Advanced;
 using MetroGid.Core.Services;
 using Moq;
 using MetroGid.Core.Utility.Validators.Handlers;
@@ -21,7 +22,7 @@ public class ClientServiceTests
         SuperExceptionHandler handler = new PassThroughHandlerException();
         ThrowableDomainAttribsValidator DomainAttribsValidator = new(handler);
         ClientService clientService = new(mockClientRepo.Object, DomainAttribsValidator, handler);
-        mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ReturnsAsync(1);
+        mockClientRepo.Setup(x => x.AddAsync(It.IsAny<Client>())).ReturnsAsync(new IdRow(1));
 
         var ex = await Assert.ThrowsAsync<DomainValidationException>(async () => { await clientService.RegAsync(login, password, mail); });
 

@@ -1,26 +1,27 @@
 using MCMC = MetroGid.Core.Models.Concrete;
+using MCMA = MetroGid.Core.Models.Advanced;
 
 namespace MetroGid.Core.Interfaces;
 
 public interface IRouteRepository
 {
-    Task<int> AddAsync(int clientId, int chartId, MCMC.Route route);
+    Task<MCMA.IdRow> AddAsync(int clientId, int chartId, MCMC.Route route);
 
-    Task<int> GetIdAsync(string title, int clientId);
+    Task<MCMA.IdRow> GetIdAsync(string title, int clientId);
     
     Task<MCMC.Route?> GetByIdAsync(int id);
 
-    Task<List<string>> GetAllTitlesForClientAsync(int clientId);
-    Task<List<string>> GetAllTitlesForClientOfChartAsync(int clientId, int chartId);
+    Task<MCMA.TitlesRow> GetAllTitlesForClientAsync(int clientId);
+    Task<MCMA.TitlesRow> GetAllTitlesForClientOfChartAsync(int clientId, int chartId);
 
-    Task<List<string>> GetAllForClientIdAsync(int clientId);
-    Task<List<string>> GetAllForClientOfChartIdAsync(int clientId, int chartId);
+    Task<MCMA.TitlesRow> GetAllForClientIdAsync(int clientId);
+    Task<MCMA.TitlesRow> GetAllForClientOfChartIdAsync(int clientId, int chartId);
 
     Task<MCMC.Route?> GetChartRouteOfClient(int clientId, int chartId, string title);
 
-    Task<int> UpdateAsync(int clientId, int chartId, MCMC.Route route);
+    Task<MCMA.ChangedRowCount> UpdateAsync(int clientId, int chartId, MCMC.Route route);
 
-    Task<int> DeleteAsync(int id);
+    Task<MCMA.DeletedRowCount> DeleteAsync(int id);
 
     Task<bool> IsTitleExistsAsync(string title, int clientId);
 }

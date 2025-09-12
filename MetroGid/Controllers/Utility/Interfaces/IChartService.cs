@@ -1,82 +1,55 @@
 using MetroGid.Controllers.Utility.DTO.Concrete;
 using MCMC = MetroGid.Core.Models.Concrete;
 using MCMT = MetroGid.Core.Models.Types;
+using MCMA = MetroGid.Core.Models.Advanced;
 
 namespace MetroGid.Controllers.Utility.Interfaces;
 
 public interface IChartService
 {
-    Task<int> AddChartAsync(string chartJson);
+    Task<MCMA.IdRow> AddChartAsync(string chartJson);
 
-    Task<int> GetChartIdAsync(string cityTitle, string chartTitle);
-    Task<ChartDTO?> GetChartAsync(string cityTitle, string chartTitle);
-    Task<string?> GetChartSchemeAsync(string cityTitle, string chartTitle);
-    Task<List<ValueTuple<string, string>>> GetChartsCitiesTitlesAsync();
+    Task<MCMA.IdRow> GetChartIdAsync(string cityTitle, string chartTitle);
+    Task<MCMA.FileRow> GetChartSchemeAsync(string cityTitle, string chartTitle);
+    Task<MCMA.ChartIdentifiers> GetChartsCitiesTitlesAsync();
 
-    Task<BranchDTO?> GetBranchAsync(
-        string cityTitle, string chartTitle,
-        string branchTitle
-    );
-    Task<List<string>> GetChartBranchTitlesAsync(int chartId);
-
-    Task<StationDTO?> GetStationAsync(
-        string cityTitle, string chartTitle,
-        string branchTitle, string stationTitle
-    );
-    Task<List<string>> GetBranchStationTitlesAsync(
-        string cityTitle, string chartTitle,
-        string branchTitle
-    );
-
-    Task<TransitionDTO?> GetTransitionAsync(
-        string cityTitle, string chartTitle,
-        string fromBranchTitle, string fromStationTitle,
-        string toBranchTitle, string toStationTitle
-    );
-
-    Task<RailwayDTO?> GetRailwayAsync(
-        string cityTitle, string chartTitle,
-        string branchTitle,
-        string fromStationTitle, string toStationTitle
-    );
-
-    Task<int?> GetStationDutyIdAsync(
+    Task<MCMA.IdRow> GetStationDutyIdAsync(
         string cityTitle, string chartTitle,
         string branchTitle, string stationTitle
     );
 
-    Task<int?> GetTransitionDutyIdAsync(
+    Task<MCMA.IdRow> GetTransitionDutyIdAsync(
         string cityTitle, string chartTitle,
         string fromBranchTitle, string fromStationTitle,
         string toBranchTitle, string toStationTitle
     );
 
     // Изменение атрибутов таблиц
-    Task<int> UpdateChartSchemeAsync(
+    Task<MCMA.ChangedRowCount> UpdateChartSchemeAsync(
         MCMT.RoleType role,
         string chartCity, string chartTitle,
         string scheme
     );
-    Task<int> UpdateBranchAsync(
+    Task<MCMA.ChangedRowCount> UpdateBranchAsync(
         MCMT.RoleType role,
         string chartCity, string chartTitle,
         string branchTitle,
         MCMC.Branch branch
     );
-    Task<int> UpdateStationAsync(
+    Task<MCMA.ChangedRowCount> UpdateStationAsync(
         MCMT.RoleType role,
         string chartCity, string chartTitle,
         string branchTitle, string stationTitle,
         MCMC.Station station
     );
-    Task<int> UpdateRailwayAsync(
+    Task<MCMA.ChangedRowCount> UpdateRailwayAsync(
         MCMT.RoleType role,
         string chartCity, string chartTitle,
         string BranchTitle,
         string fromStationTitle, string toStationTitle,
         MCMC.Railway railway
     );
-    Task<int> UpdateTransitionAsync(
+    Task<MCMA.ChangedRowCount> UpdateTransitionAsync(
         MCMT.RoleType role,
         string chartCity, string chartTitle,
         string fromBranchTitle, string fromStationTitle,

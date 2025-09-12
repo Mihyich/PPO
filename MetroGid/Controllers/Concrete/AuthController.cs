@@ -1,10 +1,14 @@
 using System.Security.Claims;
-using MetroGid.Controllers.Utility.DTO.Concrete;
+using MCUD = MetroGid.Controllers.Utility.DTO.Concrete;
 using MetroGid.Controllers.Utility.DTO.Auth;
 using MetroGid.Controllers.Utility.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MetroGid.Controllers.Utility.Converters;
+using MCMC = MetroGid.Core.Models.Concrete;
+using MCMT = MetroGid.Core.Models.Types;
+using MCMA = MetroGid.Core.Models.Advanced;
+using MetroGid.Core.Converters;
 
 namespace MetroGid.Controllers.Concrete;
 
@@ -22,8 +26,8 @@ public class AuthController(
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequestDTO dto)
     {
-        int clientId = await _clientService.RegAsync(dto.Login, dto.Password, dto.Mail);
-        AuthResponseDTO authResponse = new(clientId, "", dto.Login, "");
+        MCMA.IdRow idRow = await _clientService.RegAsync(dto.Login, dto.Password, dto.Mail);
+        AuthResponseDTO authResponse = new(idRow.id, "", dto.Login, "");
         return Ok(authResponse);
     }
 
@@ -31,9 +35,9 @@ public class AuthController(
     [HttpPost("login")]
     public async Task<IActionResult> LogIn([FromBody] LoginRequestDTO dto)
     {
-        ClientDTO? client = await _clientService.LogInAsync(dto.Login, dto.Password);
+        MCMC.Client? mcmcClient = await _clientService.LogInAsync(dto.Login, dto.Password);
 
-        if (client == null)
+        if (mcmcClient == null)
             return StatusCode(
                 StatusCodes.Status401Unauthorized,
                 new
@@ -43,13 +47,14 @@ public class AuthController(
                 }
             );
 
-        int clientId = await _clientService.GetClientIdAsync(dto.Login, dto.Password);
-        RoleTypeDTO role = await _clientService.GetRoleAsync(dto.Login, dto.Password);
+        MCUD.ClientDTO mcudClient = DomainDtoConverter.Convert(mcmcClient);
 
-        TokenClientDTO tokenClient = new(clientId, dto.Login, DTORoleToDBRoleConverter.Convert(role));
+        MCMA.IdRow idRow = await _clientService.GetClientIdAsync(dto.Login, dto.Password);
+
+        TokenClientDTO tokenClient = new(idRow.id, dto.Login, DTORoleToDBRoleConverter.Convert(mcudClient.Role));
         string token = _tokenService.GenerateToken(tokenClient);
 
-        AuthResponseDTO authResponse = new(clientId, token, tokenClient.Login, tokenClient.Role);
+        AuthResponseDTO authResponse = new(idRow.id, token, tokenClient.Login, tokenClient.Role);
         return Ok(authResponse);
     }
 
