@@ -502,6 +502,11 @@ INPUT ./inc/img/ER.pdf
 INPUT ./inc/img/ER.pdf
 INPUT ./inc/img/ER.pdf
 INPUT ./inc/img/ER.pdf
+INPUT ./inc/img/ER90.pdf
+INPUT ./inc/img/ER90.pdf
+INPUT ./inc/img/ER90.pdf
+INPUT ./inc/img/ER90.pdf
+INPUT ./inc/img/ER90.pdf
 INPUT ./05-design.tex
 INPUT ./05-design.tex
 OUTPUT 05-design.aux
