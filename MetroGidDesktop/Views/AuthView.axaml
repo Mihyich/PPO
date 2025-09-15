@@ -1,0 +1,89 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MetroGidDesktop.ViewModels"
+             x:Class="MetroGidDesktop.Views.AuthView"
+             x:DataType="local:AuthViewModel">
+
+    <Border Background="#1E90FF"
+            Padding="5"
+            BorderBrush="#4169E1"
+            BorderThickness="0,0,0,8">
+
+            <Grid ColumnDefinitions="*,Auto">
+                <!-- Левая часть: информация о пользователе -->
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            Spacing="6"
+                            VerticalAlignment="Center">
+
+                    <TextBlock Text="Пользователь:" 
+                            Foreground="White" 
+                            FontSize="14" 
+                            FontWeight="Medium"/>
+
+                    <TextBlock Text="{Binding Login}"
+                            Foreground="LightYellow" 
+                            FontSize="14" 
+                            FontWeight="Bold"/>
+
+                    <TextBlock Text=" | " 
+                            Foreground="White" 
+                            FontSize="14" 
+                            Margin="0,0,0,0"/>
+
+                    <TextBlock Text="Роль:" 
+                            Foreground="White" 
+                            FontSize="14" 
+                            FontWeight="Medium"/>
+
+                    <TextBlock Text="{Binding Role}" 
+                            Foreground="#FFD700" 
+                            FontSize="14" 
+                            FontWeight="Bold"/>
+                </StackPanel>
+
+                <!-- Кнопки справа -->
+                <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                Spacing="6"
+                                VerticalAlignment="Center">
+
+                        <!-- Вход / Выход -->
+                        <Button Content="{Binding IsAuthenticated, Converter={StaticResource AuthStateToButtonTextConverter}}"
+                                Width="80"
+                                Height="35"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="{Binding IsAuthenticated, Converter={StaticResource AuthStateToButtonColorConverter}}"
+                                Foreground="White"
+                                CornerRadius="6"
+                                Command="{Binding LoginLogoutCommand}"/>
+
+                        <!-- Регистрация -->
+                        <Button Content="Регистрация"
+                                Width="110"
+                                Height="35"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="#4B0082"
+                                Foreground="White"
+                                CornerRadius="6"
+                                Command="{Binding RegisterCommand}"/>
+                                <!-- Visibility="{Binding IsAuthenticated, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/> -->
+
+                        <!-- Удалить аккаунт -->
+                        <Button Content="Аннигиляция"
+                                Width="110"
+                                Height="35"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="#DC143C"
+                                Foreground="White"
+                                CornerRadius="6"
+                                Command="{Binding AnnihilationCommand}"/>
+                                <!-- Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}}"/> -->
+                                <!-- Command="{Binding DeleteAccountCommand}" -->
+                </StackPanel>
+            </Grid>
+    </Border>
+</UserControl>

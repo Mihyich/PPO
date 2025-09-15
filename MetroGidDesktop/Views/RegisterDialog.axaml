@@ -1,0 +1,65 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MetroGidDesktop.ViewModels"
+        xmlns:controls="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
+        x:Class="MetroGidDesktop.Views.RegisterDialog"
+        x:DataType="local:RegisterViewModel"
+        Title="Регистрация"
+        MaxWidth="400" MaxHeight="300"
+        MinWidth="400" MinHeight="300"
+        WindowState="Normal"
+        Topmost="True"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen">
+
+    <Border Background="#4682B4" Padding="20">
+        <Grid RowDefinitions="*,*">
+            <Grid Grid.Row="0">
+                <StackPanel Grid.Row="0" Spacing="12">
+                    <!-- Логин -->
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Логин:" Width="80" VerticalAlignment="Center" FontWeight="Medium"/>
+                        <TextBox Text="TEST: {Binding Login}" Width="200" />
+                    </StackPanel>
+
+                    <!-- Пароль -->
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Пароль:" Width="80" VerticalAlignment="Center" FontWeight="Medium"/>
+                        <TextBox Text="TEST: {Binding Password}" Width="200" />
+                    </StackPanel>
+
+                    <!-- Почта -->
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Почта:" Width="80" VerticalAlignment="Center" FontWeight="Medium"/>
+                        <TextBox Text="TEST: {Binding Password}" Width="200" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+            <!-- Кнопки -->
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Spacing="10">
+                    <Button 
+                        Content="Отмена"
+                        Width="80"
+                        Background="Gray"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Click="OnCancelClick"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Spacing="10">
+                    <Button
+                        Content="Зарегистрироваться"
+                        Width="160"
+                        Background="#4B0082"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Command="{Binding RegisterCommand}"/>
+                </StackPanel>
+
+                <!-- Command="TEST: {Binding RegisterCommand}"/> -->
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

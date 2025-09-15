@@ -1,0 +1,312 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MetroGidDesktop.ViewModels"
+             x:Class="MetroGidDesktop.Views.RouteView"
+             x:DataType="local:RouteViewModel">
+
+    <Border Background="#696969">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                <Canvas Grid.Column="1" Background="Black" x:Name="SvgCanvas" />
+
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Border
+                        Grid.Row="0"
+                        Height="40"
+                        Background="#191970"
+                        BorderBrush="#00FFFF"
+                        BorderThickness="0,0,0,4">
+
+                        <TextBlock Text="Название маршрута" 
+                                    TextWrapping="Wrap"
+                                    Foreground="White"
+                                    FontSize="14"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ScrollViewer 
+                        Grid.Row="1"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto"
+                        Background="#008B8B"
+                        BorderBrush="#CCC"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="12">
+
+                        <StackPanel x:Name="RouteInfoPanel" Orientation="Vertical" Spacing="8" MaxWidth="300">
+                            
+                            <TextBlock Text="Маршрут: Остановка 1" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 10:05" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 0 м" Foreground="#666" FontSize="12"/>
+                            <Border Height="1" Background="#EEE" Margin="0,8,0,8"/>
+
+                            <TextBlock Text="Маршрут: Остановка 2" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 10:12" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 450 м" Foreground="#666" FontSize="12"/>
+                            <Border Height="1" Background="#EEE" Margin="0,8,0,8"/>
+
+                            <TextBlock Text="Маршрут: Остановка 3" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 10:20" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 980 м" Foreground="#666" FontSize="12"/>
+                            <Border Height="1" Background="#EEE" Margin="0,8,0,8"/>
+
+                            <TextBlock Text="Маршрут: Остановка 4" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 10:28" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 1.4 км" Foreground="#666" FontSize="12"/>
+                            <Border Height="1" Background="#EEE" Margin="0,8,0,8"/>
+
+                            <TextBlock Text="Маршрут: Остановка 5" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 10:35" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 1.9 км" Foreground="#666" FontSize="12"/>
+                            <Border Height="1" Background="#EEE" Margin="0,8,0,8"/>
+
+                            <TextBlock Text="Маршрут: Остановка 6" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 10:42" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 2.3 км" Foreground="#666" FontSize="12"/>
+                            <Border Height="1" Background="#EEE" Margin="0,8,0,8"/>
+
+                            <TextBlock Text="Маршрут: Остановка 7" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 10:50" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 2.8 км" Foreground="#666" FontSize="12"/>
+                            <Border Height="1" Background="#EEE" Margin="0,8,0,8"/>
+
+                            <TextBlock Text="Маршрут: Остановка 8" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 10:58" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 3.2 км" Foreground="#666" FontSize="12"/>
+                            <Border Height="1" Background="#EEE" Margin="0,8,0,8"/>
+
+                            <TextBlock Text="Маршрут: Остановка 9" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 11:05" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 3.7 км" Foreground="#666" FontSize="12"/>
+                            <Border Height="1" Background="#EEE" Margin="0,8,0,8"/>
+
+                            <TextBlock Text="Маршрут: Конечная остановка" MaxWidth="150" TextWrapping="Wrap" HorizontalAlignment="Left" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 11:15" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 4.1 км" Foreground="#666" FontSize="12"/>
+                            <Border Height="1" Background="#EEE" Margin="0,8,0,8"/>
+
+                            <!-- 🚨 ДОБАВЬТЕ ЕЩЁ 10 СТРОК — ЧТОБЫ БЫЛО ПРОСТО ВИДНО, КАК РАБОТАЕТ ПРОКРУТКА -->
+
+                            <TextBlock Text="Маршрут: Остановка 11" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 11:20" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 4.5 км" Foreground="#666" FontSize="12"/>
+
+                            <TextBlock Text="Маршрут: Остановка 12" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 11:25" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 4.8 км" Foreground="#666" FontSize="12"/>
+
+                            <TextBlock Text="Маршрут: Остановка 13" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 11:30" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 5.1 км" Foreground="#666" FontSize="12"/>
+
+                            <TextBlock Text="Маршрут: Остановка 14" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 11:35" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 5.4 км" Foreground="#666" FontSize="12"/>
+
+                            <TextBlock Text="Маршрут: Остановка 15" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 11:40" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 5.7 км" Foreground="#666" FontSize="12"/>
+
+                            <TextBlock Text="Маршрут: Остановка 16" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 11:45" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 6.0 км" Foreground="#666" FontSize="12"/>
+
+                            <TextBlock Text="Маршрут: Остановка 17" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 11:50" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 6.3 км" Foreground="#666" FontSize="12"/>
+
+                            <TextBlock Text="Маршрут: Остановка 18" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 11:55" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 6.6 км" Foreground="#666" FontSize="12"/>
+
+                            <TextBlock Text="Маршрут: Остановка 19" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 12:00" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 6.9 км" Foreground="#666" FontSize="12"/>
+
+                            <TextBlock Text="Маршрут: Конечная (финал)" Foreground="#333" FontSize="14"/>
+                            <TextBlock Text="Время: 12:10" Foreground="#666" FontSize="12"/>
+                            <TextBlock Text="Расстояние: 7.2 км" Foreground="#666" FontSize="12"/>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <Border
+                        Grid.Row="2"
+                        Height="40"
+                        Background="#191970"
+                        BorderBrush="#00FFFF"
+                        BorderThickness="0,4,0,0">
+
+                            <Button 
+                                Content="Сохранить"
+                                Margin="3,0,3,0"
+                                Width="110"
+                                Height="35"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="#008080"
+                                Foreground="White"
+                                CornerRadius="6"/>
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <Border Grid.Row="2"
+                Background="#1E90FF"
+                BorderBrush="#4169E1"
+                BorderThickness="0,8,0,0">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel
+                        Grid.Column="0"
+                        Orientation="Vertical"
+                        Spacing="6"
+                        Height="60">
+
+                        <TextBlock Text="Ветка"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="White" 
+                            FontSize="14" 
+                            FontWeight="Medium"/>
+
+                        <TextBox Text="Test: {Binding Login}" Margin="3,0,3,0"/>
+                    </StackPanel>
+
+                    <StackPanel
+                            Grid.Column="1"
+                            Orientation="Vertical"
+                            Spacing="6"
+                            Height="60">
+
+                            <TextBlock Text="Станция"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="White" 
+                                FontSize="14" 
+                                FontWeight="Medium"/>
+
+                            <TextBox Text="Test: {Binding Login}" Margin="3,0,3,0"/>
+                    </StackPanel>
+
+                    <Grid
+                        Grid.Column="2"
+                        Height="60">
+
+                        <TextBlock Text="--->"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="White" 
+                            FontSize="14" 
+                            FontWeight="Medium"/>
+                    </Grid>
+
+                    <StackPanel
+                            Grid.Column="3"
+                            Orientation="Vertical"
+                            Spacing="6"
+                            Height="60">
+
+                            <TextBlock Text="Ветка"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="White" 
+                                FontSize="14" 
+                                FontWeight="Medium"/>
+
+                            <TextBox Text="Test: {Binding Login}" Margin="3,0,3,0"/>
+                    </StackPanel>
+
+                    <StackPanel
+                            Grid.Column="4"
+                            Orientation="Vertical"
+                            Spacing="6"
+                            Height="60">
+
+                            <TextBlock Text="Станция"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="White" 
+                                FontSize="14" 
+                                FontWeight="Medium"/>
+
+                            <TextBox Text="Test: {Binding Login}" Margin="3,0,3,0"/>
+                    </StackPanel>
+
+                    <Grid
+                        Grid.Column="5"
+                        Height="60">
+
+                        <Border
+                            Width="2"
+                            Background="#00FFFF">
+                        </Border>
+                    </Grid>
+
+                    <Grid
+                        Grid.Column="6"
+                        Height="60">
+
+                        <Button 
+                            Content="Поиск"
+                            Margin="3,0,3,0"
+                            Width="110"
+                            Height="35"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Background="#008080"
+                            Foreground="White"
+                            CornerRadius="6"/>
+
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>
+
+<!-- <Grid Grid.Row="1" Background="Green">
+                                        <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                <Grid/> -->
+
+                                <!-- <Grid Grid.Row="2" Background="Green">
+                                        <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                <Grid/> -->
