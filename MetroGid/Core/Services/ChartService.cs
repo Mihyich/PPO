@@ -10,6 +10,7 @@ using MetroGid.Core.Exceptions.Classification;
 using MCMT = MetroGid.Core.Models.Types;
 using MCMA = MetroGid.Core.Models.Advanced;
 using MetroGid.Core.Models.Concrete;
+using MetroGid.Core.Exceptions.Truistic;
 
 namespace MetroGid.Core.Services;
 
@@ -26,48 +27,31 @@ public class ChartService(
     public async Task<MCMA.IdRow> AddChartAsync(string chartJson) =>
         await ChartRepo.AddAsync(chartJson);
 
-    public async Task<MCMA.IdRow> GetChartIdAsync(string cityTitle, string chartTitle) =>
-        await Handler.SnapAsync(
-            async () =>
-            {
-                MCMA.IdRow idRow = await ChartRepo.GetChartIdAsync(cityTitle, chartTitle);
+    public async Task<MCMA.IdRow> GetChartIdAsync(string cityTitle, string chartTitle)
+    {
+        MCMA.IdRow idRow = await ChartRepo.GetChartIdAsync(cityTitle, chartTitle);
 
-                if (idRow.id == 0)
-                    throw new DataBaseException(
-                        $"Схема '{chartTitle}' в городе '{cityTitle}' не найдена",
-                        ExceptionType.Warning,
-                        ExceptionReason.NotFound
-                    );
+        if (idRow.id == 0)
+            throw new UnknownChartCredentialsException(chartTitle, cityTitle);
 
-                return idRow;
-            }, Logger
-        );
+        return idRow;
+    }
 
     public async Task<MCMA.FileRow> GetChartSchemeAsync(string cityTitle, string chartTitle)
     {
         MCMA.IdRow chartIdRow = await GetChartIdAsync(cityTitle, chartTitle);
-        return await ChartRepo.GetChartSchemeByIdAsync(chartIdRow.id);
+        return await ChartRepo.GetChartSchemeByIdAsync(chartIdRow.id) ?? throw new NotFoundByIdException("chart", chartIdRow.id);
     }
 
     private async Task<MCMA.IdRow> GetBranchIdAsync(string cityTitle, string chartTitle, string branchTitle)
     {
         MCMA.IdRow chartIdRow = await GetChartIdAsync(cityTitle, chartTitle);
+        MCMA.IdRow branchIdRow = await ChartRepo.GetBranchIdAsync(branchTitle, chartIdRow.id);
 
-        return await Handler.SnapAsync(
-            async () =>
-            {
-                MCMA.IdRow branchIdRow = await ChartRepo.GetBranchIdAsync(branchTitle, chartIdRow.id);
+        if (branchIdRow.id == 0)
+            throw new UnknownBranchCredentialsException(chartTitle, cityTitle, branchTitle);
 
-                if (branchIdRow.id == 0)
-                    throw new DataBaseException(
-                        $"Ветка '{branchTitle}' не найдена",
-                        ExceptionType.Warning,
-                        ExceptionReason.NotFound
-                    );
-
-                return branchIdRow;
-            }, Logger
-        );
+        return branchIdRow;
     }
 
     private async Task<MCMA.IdRow> GetStationIdAsync(
@@ -75,22 +59,12 @@ public class ChartService(
         string branchTitle, string stationTitle)
     {
         MCMA.IdRow branchIdRow = await GetBranchIdAsync(cityTitle, chartTitle, branchTitle);
+        MCMA.IdRow stationIdRow = await ChartRepo.GetStationIdAsync(stationTitle, branchIdRow.id);
 
-        return await Handler.SnapAsync(
-            async () =>
-            {
-                MCMA.IdRow stationIdRow = await ChartRepo.GetStationIdAsync(stationTitle, branchIdRow.id);
+        if (stationIdRow.id == 0)
+            throw new UnknownStationCredentialsException(stationTitle, branchIdRow.id);
 
-                if (stationIdRow.id == 0)
-                    throw new DataBaseException(
-                        $"Станция '{stationTitle}' не найдена",
-                        ExceptionType.Warning,
-                        ExceptionReason.NotFound
-                    );
-
-                return stationIdRow;
-            }, Logger
-        );
+        return stationIdRow;
     }
 
     private async Task<MCMA.IdRow> GetRailwayIdAsync(
@@ -108,21 +82,12 @@ public class ChartService(
             branchTitle, toStationTitle
         );
 
-        return await Handler.SnapAsync(
-            async () =>
-            {
-                MCMA.IdRow railwayIdRow = await ChartRepo.GetRailwayIdAsync(fromStationIdRow.id, toStationIdRow.id);
+        MCMA.IdRow railwayIdRow = await ChartRepo.GetRailwayIdAsync(fromStationIdRow.id, toStationIdRow.id);
 
-                if (railwayIdRow.id == 0)
-                    throw new DataBaseException(
-                        $"Переезд с айди '{railwayIdRow.id}' не найден",
-                        ExceptionType.Warning,
-                        ExceptionReason.NotFound
-                    );
+        if (railwayIdRow.id == 0)
+            throw new NotFoundByIdException("railway", railwayIdRow.id);
 
-                return railwayIdRow;
-            }, Logger
-        );
+        return railwayIdRow;
     }
 
     private async Task<MCMA.IdRow> GetTransitionIdAsync(
@@ -140,21 +105,12 @@ public class ChartService(
             toBranchTitle, toStationTitle
         );
 
-        return await Handler.SnapAsync(
-            async () =>
-            {
-                MCMA.IdRow transitionIdRow = await ChartRepo.GetTransitionIdAsync(fromStationIdRow.id, toStationIdRow.id);
+        MCMA.IdRow transitionIdRow = await ChartRepo.GetTransitionIdAsync(fromStationIdRow.id, toStationIdRow.id);
 
-                if (transitionIdRow.id == 0)
-                    throw new DataBaseException(
-                        $"Переход с айди '{transitionIdRow.id}' не найден",
-                        ExceptionType.Warning,
-                        ExceptionReason.NotFound
-                    );
+        if (transitionIdRow.id == 0)
+            throw new NotFoundByIdException("transition", transitionIdRow.id);
 
-                return transitionIdRow;
-            }, Logger
-        );
+        return transitionIdRow;
     }
 
     public async Task<MCMA.ChartIdentifiers> GetChartsCitiesTitlesAsync() =>
@@ -180,9 +136,7 @@ public class ChartService(
             branchIdRow.id
         );
 
-        MCMA.IdRow? dutyIdRow = await ChartRepo.GetStationDutyIdAsync(stationIdRow.id);
-
-        return dutyIdRow;
+        return await ChartRepo.GetStationDutyIdAsync(stationIdRow.id) ?? new(0);
     }
 
     public async Task<MCMA.IdRow> GetTransitionDutyIdAsync(
@@ -221,9 +175,7 @@ public class ChartService(
             toStationIdRow.id
         );
 
-        MCMA.IdRow? dutyIdRow = await ChartRepo.GetTransitionDutyIdAsync(transitionIdRow.id);
-
-        return dutyIdRow;
+        return await ChartRepo.GetTransitionDutyIdAsync(transitionIdRow.id) ?? new(0);
     }
 
     public async Task<MCMA.ChangedRowCount> UpdateChartSchemeAsync(

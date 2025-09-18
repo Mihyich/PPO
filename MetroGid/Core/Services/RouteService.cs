@@ -1,6 +1,4 @@
 using MetroGid.Controllers.Utility.Interfaces;
-using MetroGid.Core.Exceptions.Classification;
-using MetroGid.Core.Exceptions.Concrete;
 using MetroGid.Core.Exceptions.Interfaces;
 using MetroGid.Core.Exceptions.Super;
 using MCMC = MetroGid.Core.Models.Concrete;
@@ -10,6 +8,7 @@ using MetroGid.Core.Utility.Directors;
 using MetroGid.Core.Utility.Strategies;
 using MetroGid.Core.Utility.Validators.Handlers;
 using MetroGid.Core.Interfaces;
+using MetroGid.Core.Exceptions.Truistic;
 
 namespace MetroGid.Core.Services;
 
@@ -31,106 +30,58 @@ public class RouteService(
     private readonly SuperExceptionHandler Handler = handler;
     private readonly IExceptionVisitor? Logger = logger;
 
-    private async Task<MCMA.IdRow> GetClientIdAsync(string login, string password, string mail) =>
-        await Handler.SnapAsync(
-            async () =>
-            {
-                MCMA.IdRow clientIdRow = await _clientRepo.GetIdByCredentialsAsync(login, password);
-
-                if (clientIdRow.id == 0)
-                    throw new DataBaseException(
-                        $"Пользователь '{login}' с почтой '{mail}' не найден",
-                        ExceptionType.Warning,
-                        ExceptionReason.NotFound
-                    );
-
-                return clientIdRow;
-            }, Logger
-        );
-
-    private async Task<MCMC.Chart?> GetChartAsync(string city, string chartTitle)
+    private async Task<MCMA.IdRow> GetClientIdAsync(string login, string password, string mail)
     {
-        string? jsonContent = await Handler.SnapAsync(
-            async () =>
-            {
-                MCMA.FileRow? jsonRow = await _chartRepo.GetChartJsonByCredentialsAsync(city, chartTitle);
+        MCMA.IdRow clientIdRow = await _clientRepo.GetIdByCredentialsAsync(login, password);
 
-                if (jsonRow == null)
-                    throw new DataBaseException(
-                        $"Json схема \"{chartTitle}\" для города \"{city}\" не найдена",
-                        ExceptionType.Warning,
-                        ExceptionReason.NotFound
-                    );
-                return jsonRow.content;
-            }, Logger
-        );
+        if (clientIdRow.id == 0)
+            throw new UnknownClientCredentialsException(login, password);
 
-        MCMC.Chart? chart = null;
-
-        if (jsonContent != null)
-        {
-            BuilderChart builder = new(DomainAttribsValidator, DomainReferentialityValidator);
-            DirectorChartJson director = new(builder, jsonContent);
-            chart = director.Construct();
-        }
-
-        return chart;
+        return clientIdRow;
     }
 
-    private MCMC.Station? FindStationAsync(MCMC.Chart chart, string branchTitle, string stationTitle)
+    private async Task<MCMC.Chart> GetChartAsync(string city, string chartTitle)
     {
-        MCMC.Station? station = Handler.Snap(
-            () =>
-            {
-                MCMC.Station? s = chart.GetStation(branchTitle, stationTitle);
+        MCMA.FileRow jsonRow = await _chartRepo.GetChartJsonByCredentialsAsync(city, chartTitle) ??
+            throw new UnknownChartCredentialsException(chartTitle, city);
 
-                if (s == null)
-                    throw new ServiceRouteException(
-                        $"В схеме '{chart.Title}' для города '{chart.City}' не найдена станция '{stationTitle}' ветки '{branchTitle}'",
-                        ExceptionType.Error,
-                        ExceptionReason.NotFound
-                    );
-
-                return s;
-            }, Logger
-        );
-
-        return station;
+        BuilderChart builder = new(DomainAttribsValidator, DomainReferentialityValidator);
+        DirectorChartJson director = new(builder, jsonRow.content);
+        return director.Construct();
     }
 
-    private MCMC.Route? SearchRouteProcess(MCMC.Chart chart, MCMC.Station src, MCMC.Station dst, TimeOnly startTime)
+    private MCMC.Station FindStationAsync(MCMC.Chart chart, string branchTitle, string stationTitle) =>
+        chart.GetStation(branchTitle, stationTitle) ??
+            throw new UnknownStationCredentialsException(stationTitle, -1);
+
+    private MCMC.Route SearchRouteProcess(MCMC.Chart chart, MCMC.Station src, MCMC.Station dst, TimeOnly startTime)
     {
         StrategySearchRouteBase searcher = new StrategySearchRouteBFS();
-        MCMC.Route? route = chart.Search(src, dst, startTime, searcher);
 
-        if (route != null)
-        {
-            route.Validate(DomainAttribsValidator);
-            route.Validate(DomainReferentialityValidator);
-        }
+        MCMC.Route route = chart.Search(src, dst, startTime, searcher) ??
+            throw new RouteNotFoundException(
+                chart.Title, chart.City,
+                src.Branch?.Title ?? "?", src.Title,
+                dst.Branch?.Title ?? "?", dst.Title,
+                startTime
+            );
+
+        route.Validate(DomainAttribsValidator);
+        route.Validate(DomainReferentialityValidator);
 
         return route;
     }
 
-    public async Task<MCMC.Route?> SearchRouteAsync(
+    public async Task<MCMC.Route> SearchRouteAsync(
         string city, string chartTitle,
         string branchSrcTitle, string stationSrcTitle,
         string branchDstTitle, string stationDstTitle,
         TimeOnly startTime)
     {
-        MCMC.Chart? chart = await GetChartAsync(city, chartTitle);
-        MCMC.Station? src = null;
-        MCMC.Station? dst = null;
-        MCMC.Route? route = null;
-
-        if (chart != null &&
-            (src = FindStationAsync(chart, branchSrcTitle, stationSrcTitle)) != null &&
-            (dst = FindStationAsync(chart, branchDstTitle, stationDstTitle)) != null
-        )
-        {
-            route = SearchRouteProcess(chart, src, dst, startTime);
-        }
-
+        MCMC.Chart chart = await GetChartAsync(city, chartTitle);
+        MCMC.Station src = FindStationAsync(chart, branchSrcTitle, stationSrcTitle);
+        MCMC.Station dst = FindStationAsync(chart, branchDstTitle, stationDstTitle);
+        MCMC.Route route = SearchRouteProcess(chart, src, dst, startTime);
         return route;
     }
 
@@ -168,7 +119,7 @@ public class RouteService(
         );
     }
 
-    public async Task<MCMC.Route?> GetSavedChart(
+    public async Task<MCMC.Route> GetSavedChart(
         int clientId,
         string city,
         string chartTitle,
@@ -184,7 +135,8 @@ public class RouteService(
             clientId,
             chartIdRow.id,
             title
-        );
+        ) ??
+        throw new SavedRouteNotFoundException(clientId, chartIdRow.id, title);
     }
 
     public async Task<MCMA.DeletedRowCount> DeleteAsync(

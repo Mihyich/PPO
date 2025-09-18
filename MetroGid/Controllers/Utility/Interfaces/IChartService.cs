@@ -1,4 +1,3 @@
-using MetroGid.Controllers.Utility.DTO.Concrete;
 using MCMC = MetroGid.Core.Models.Concrete;
 using MCMT = MetroGid.Core.Models.Types;
 using MCMA = MetroGid.Core.Models.Advanced;

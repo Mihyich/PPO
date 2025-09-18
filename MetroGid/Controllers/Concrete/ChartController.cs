@@ -62,19 +62,10 @@ public class ChartController(
                 }
             );
 
-        MCMA.IdRow? stationDutyIdRow = await _chartService.GetStationDutyIdAsync(
-            dto.CityTitle, dto.ChartTitle, dto.BranchTitle, dto.StationTitle
+        MCMA.IdRow stationDutyIdRow = await _chartService.GetStationDutyIdAsync(
+            dto.CityTitle, dto.ChartTitle,
+            dto.BranchTitle, dto.StationTitle
         );
-
-        if (stationDutyIdRow == null)
-            return StatusCode(
-                StatusCodes.Status403Forbidden,
-                new
-                {
-                    Error = "Forbidden",
-                    Message = "Указанная станция не обслуживается дежурным"
-                }
-            );
 
         if (dutyId != stationDutyIdRow.id)
             return StatusCode(
@@ -110,21 +101,11 @@ public class ChartController(
                 }
             );
 
-        MCMA.IdRow? transitionDutyIdRow = await _chartService.GetTransitionDutyIdAsync(
+        MCMA.IdRow transitionDutyIdRow = await _chartService.GetTransitionDutyIdAsync(
             dto.CityTitle, dto.ChartTitle,
             dto.FromBranchTitle, dto.FromStationTitle,
             dto.ToBranchTitle, dto.ToStationTitle
         );
-
-        if (transitionDutyIdRow == null)
-            return StatusCode(
-                StatusCodes.Status403Forbidden,
-                new
-                {
-                    Error = "Forbidden",
-                    Message = "Указанный переход не обслуживается дежурным"
-                }
-            );
 
         if (dutyId != transitionDutyIdRow.id)
             return StatusCode(
@@ -162,19 +143,10 @@ public class ChartController(
                 }
             );
 
-        MCMA.IdRow? stationDutyIdRow = await _chartService.GetStationDutyIdAsync(
-            dto.CityTitle, dto.ChartTitle, dto.BranchTitle, dto.DutyStationTitle
+        MCMA.IdRow stationDutyIdRow = await _chartService.GetStationDutyIdAsync(
+            dto.CityTitle, dto.ChartTitle,
+            dto.BranchTitle, dto.DutyStationTitle
         );
-
-        if (stationDutyIdRow == null)
-            return StatusCode(
-                StatusCodes.Status403Forbidden,
-                new
-                {
-                    Error = "Forbidden",
-                    Message = "Указанная станция не обслуживается дежурным"
-                }
-            );
 
         if (dutyId != stationDutyIdRow.id)
             return StatusCode(

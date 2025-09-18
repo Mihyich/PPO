@@ -39,20 +39,27 @@ class Program
             )
         );
 
-        // builder.Host.UseSerilog((context, services, configuration) => configuration
-        //     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-        //     .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
-        //     .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Fatal)
-        //     .WriteTo.File(
-        //         path: "logs/log-.txt",
-        //         rollingInterval: RollingInterval.Day,
-        //         fileSizeLimitBytes: 10_000_000,
-        //         rollOnFileSizeLimit: true,
-        //         shared: true,
-        //         flushToDiskInterval: TimeSpan.FromSeconds(1),
-        //         outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
-        //     .Enrich.FromLogContext()
-        // );
+        builder.Host.UseSerilog((context, services, configuration) => configuration
+            .ReadFrom.Configuration(context.Configuration)
+
+            .Enrich.FromLogContext()
+
+            .WriteTo.File(
+                path: "logs/log-.txt",
+                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {CorrelationId} {Message:lj}{NewLine}{Exception}",
+                rollingInterval: RollingInterval.Day,
+                fileSizeLimitBytes: 100_000_000,
+                retainedFileCountLimit: 31,
+                rollOnFileSizeLimit: true,
+                shared: true,
+                flushToDiskInterval: TimeSpan.FromSeconds(0.1))
+
+            .WriteTo.Conditional(
+                evt => context.HostingEnvironment.IsDevelopment(),
+                wt => wt.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}"))
+
+            .MinimumLevel.Override("Serilog.AspNetCore", LogEventLevel.Error)
+        );
 
         builder.Services.AddAuthentication(options =>
             {

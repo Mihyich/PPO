@@ -1,12 +1,12 @@
 {
-  "title": "[\"Минск\":\"Схема метро\"]:[\"Автозаводская линия\":\"Пушкинская\"]:[\"Московская линия\":\"Грушевка\"]",
+  "title": "[\"Минск\":\"Схема метро\"]:[\"Автозаводская линия\":\"Автозаводская\"]:[\"Московская линия\":\"Михалово\"]",
   "city": "Минск",
   "chartTitle": "Схема метро",
   "path": [
     {
       "$type": "station",
       "station": {
-        "title": "Пушкинская",
+        "title": "Автозаводская",
         "branchTitle": "Автозаводская линия",
         "occupancy": 5,
         "type": 0,
@@ -20,8 +20,8 @@
         "$type": "railway",
         "railway": {
           "branchTitle": "Автозаводская линия",
-          "prevStationTitle": "Пушкинская",
-          "nextStationTitle": "Молодёжная",
+          "prevStationTitle": "Партизанская",
+          "nextStationTitle": "Автозаводская",
           "duration": "00:03:00"
         }
       }
@@ -29,7 +29,7 @@
     {
       "$type": "station",
       "station": {
-        "title": "Молодёжная",
+        "title": "Партизанская",
         "branchTitle": "Автозаводская линия",
         "occupancy": 5,
         "type": 0,
@@ -43,8 +43,123 @@
         "$type": "railway",
         "railway": {
           "branchTitle": "Автозаводская линия",
-          "prevStationTitle": "Молодёжная",
-          "nextStationTitle": "Фрунзенская",
+          "prevStationTitle": "Тракторный завод",
+          "nextStationTitle": "Партизанская",
+          "duration": "00:03:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Тракторный завод",
+        "branchTitle": "Автозаводская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Автозаводская линия",
+          "prevStationTitle": "Пролетарская",
+          "nextStationTitle": "Тракторный завод",
+          "duration": "00:03:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Пролетарская",
+        "branchTitle": "Автозаводская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Автозаводская линия",
+          "prevStationTitle": "Первомайская",
+          "nextStationTitle": "Пролетарская",
+          "duration": "00:03:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Первомайская",
+        "branchTitle": "Автозаводская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Автозаводская линия",
+          "prevStationTitle": "Купаловская",
+          "nextStationTitle": "Первомайская",
+          "duration": "00:03:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Купаловская",
+        "branchTitle": "Автозаводская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Автозаводская линия",
+          "prevStationTitle": "Немига",
+          "nextStationTitle": "Купаловская",
+          "duration": "00:03:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Немига",
+        "branchTitle": "Автозаводская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Автозаводская линия",
+          "prevStationTitle": "Фрунзенская",
+          "nextStationTitle": "Немига",
           "duration": "00:03:00"
         }
       }
@@ -144,10 +259,10 @@
           "duration": "00:05:00",
           "openTime": "05:30:00",
           "closeTime": "01:30:00",
-          "fromStationTitle": "Площадь Ленина",
-          "fromBranchTitle": "Московская линия",
-          "toStationTitle": "Вокзальная",
-          "toBranchTitle": "Зеленолужская линия"
+          "fromStationTitle": "Вокзальная",
+          "fromBranchTitle": "Зеленолужская линия",
+          "toStationTitle": "Площадь Ленина",
+          "toBranchTitle": "Московская линия"
         }
       }
     },
@@ -207,7 +322,30 @@
         "openTime": "05:30:00",
         "closeTime": "01:30:00"
       }
+    },
+    {
+      "$type": "connection",
+      "connection": {
+        "$type": "railway",
+        "railway": {
+          "branchTitle": "Московская линия",
+          "prevStationTitle": "Грушевка",
+          "nextStationTitle": "Михалово",
+          "duration": "00:03:00"
+        }
+      }
+    },
+    {
+      "$type": "station",
+      "station": {
+        "title": "Михалово",
+        "branchTitle": "Московская линия",
+        "occupancy": 5,
+        "type": 0,
+        "openTime": "05:30:00",
+        "closeTime": "01:30:00"
+      }
     }
   ],
-  "duration": "00:48:20"
+  "duration": "01:09:20"
 }

@@ -19,12 +19,12 @@ public class RouteController(
 {
     private readonly IRouteService _routeService = routeService;
 
-    private int GetClientAndChartIdAsync()
+    private int GetClientIdAsync()
     {
         string? clientIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         if (!int.TryParse(clientIdClaim, out int clientId))
-            return 0; // Нужно исключение
+            return 0;
 
         return clientId;
     }
@@ -47,7 +47,7 @@ public class RouteController(
     [HttpPost("save")]
     public async Task<int> SaveRoute([FromBody] RouteDTO dto)
     {
-        int clientId = GetClientAndChartIdAsync();
+        int clientId = GetClientIdAsync();
         MCMC.Route route = DtoDomainConverter.Convert(dto);
         MCMA.IdRow routeIdRow = await _routeService.SaveRouteAsync(clientId, route);
         return routeIdRow.id;
@@ -57,7 +57,7 @@ public class RouteController(
     [HttpPost("get/titles")]
     public async Task<IActionResult> GetRouteTitles([FromBody] GetRouteCredentialsRequest dto)
     {
-        int clientId = GetClientAndChartIdAsync();
+        int clientId = GetClientIdAsync();
 
         return Ok(
             await _routeService.GetSavedChartRoutesTitles(
@@ -72,7 +72,7 @@ public class RouteController(
     [HttpPost("get/saved")]
     public async Task<RouteDTO> GetSavedRoute([FromBody] GetSavedRouteRequest dto)
     {
-        int clientId = GetClientAndChartIdAsync();
+        int clientId = GetClientIdAsync();
 
         MCMC.Route? route = await _routeService.GetSavedChart(
             clientId,
@@ -88,7 +88,7 @@ public class RouteController(
     [HttpDelete("delete")]
     public async Task<IActionResult> DeleteRoute([FromBody] DeleteRouteRequest dto)
     {
-        int clientId = GetClientAndChartIdAsync();
+        int clientId = GetClientIdAsync();
 
         return Ok(
             await _routeService.DeleteAsync(

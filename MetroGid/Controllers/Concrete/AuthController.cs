@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MetroGid.Controllers.Utility.Converters;
 using MCMC = MetroGid.Core.Models.Concrete;
-using MCMT = MetroGid.Core.Models.Types;
 using MCMA = MetroGid.Core.Models.Advanced;
 using MetroGid.Core.Converters;
 
@@ -35,21 +34,9 @@ public class AuthController(
     [HttpPost("login")]
     public async Task<IActionResult> LogIn([FromBody] LoginRequestDTO dto)
     {
-        MCMC.Client? mcmcClient = await _clientService.LogInAsync(dto.Login, dto.Password);
-
-        if (mcmcClient == null)
-            return StatusCode(
-                StatusCodes.Status401Unauthorized,
-                new
-                {
-                    Error = "InvalidCredentials",
-                    Message = "Неверный логин или пароль"
-                }
-            );
-
-        MCUD.ClientDTO mcudClient = DomainDtoConverter.Convert(mcmcClient);
-
+        MCMC.Client mcmcClient = await _clientService.LogInAsync(dto.Login, dto.Password);
         MCMA.IdRow idRow = await _clientService.GetClientIdAsync(dto.Login, dto.Password);
+        MCUD.ClientDTO mcudClient = DomainDtoConverter.Convert(mcmcClient);
 
         TokenClientDTO tokenClient = new(idRow.id, dto.Login, DTORoleToDBRoleConverter.Convert(mcudClient.Role));
         string token = _tokenService.GenerateToken(tokenClient);
@@ -85,7 +72,7 @@ public class AuthController(
             return StatusCode(401, new
             {
                 Error = "InvalidCredentials",
-                Message = "Неверный логин или пароль"
+                Message = "Неверный пароль"
             });
 
         await _clientService.UnRegAsync(userId);

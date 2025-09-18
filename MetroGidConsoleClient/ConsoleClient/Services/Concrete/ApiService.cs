@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using ConsoleClient.Services.Interfaces;
+using ConsoleClient.SharedDTO;
 using ConsoleClient.SharedDTO.Auth;
 using ConsoleClient.SharedDTO.Chart;
 using ConsoleClient.SharedDTO.Concrete;
@@ -17,12 +18,23 @@ public class ApiService(
     private readonly HttpClient _httpClient = httpClient;
     private string? _token;
 
+    private async Task PucPucAsync(HttpResponseMessage response)
+    {
+        var errorContent = await response.Content.ReadAsStringAsync();
+        var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(errorContent, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+
+        throw new HttpRequestException($"Ошибка {response.StatusCode}: {errorResponse?.Message ?? "Неизвестная ошибка"}");
+    }
+
     public async Task<AuthResponseDTO?> RegAsync(string login, string password, string mail)
     {
         var response = await _httpClient.PostAsJsonAsync("api/auth/register", new RegisterRequestDTO(login, password, mail));
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
 
         return await response.Content.ReadFromJsonAsync<AuthResponseDTO>();
     }
@@ -32,7 +44,7 @@ public class ApiService(
         var response = await _httpClient.PostAsJsonAsync("api/auth/login", new LoginRequestDTO(login, password));
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
 
         var result = await response.Content.ReadFromJsonAsync<AuthResponseDTO>();
 
@@ -51,7 +63,7 @@ public class ApiService(
         var response = await _httpClient.PostAsync("api/auth/logout", null);
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
 
         if (_token != null)
         {
@@ -70,7 +82,7 @@ public class ApiService(
         var response = await _httpClient.SendAsync(request);
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка {response.StatusCode}");
+            await PucPucAsync(response);
 
         if (_token != null)
         {
@@ -86,7 +98,7 @@ public class ApiService(
         var response = await _httpClient.PostAsJsonAsync("api/chart/add", new AddChartRequest(ChartJson));
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
     }
 
     public async Task PatchChartSceme(
@@ -103,7 +115,7 @@ public class ApiService(
         var response = await _httpClient.SendAsync(request);
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
     }
 
     public async Task PatchBranch(
@@ -132,7 +144,7 @@ public class ApiService(
         var response = await _httpClient.SendAsync(request);
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
     }
 
     public async Task PatchStation(
@@ -167,7 +179,7 @@ public class ApiService(
         var response = await _httpClient.SendAsync(request);
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
     }
 
     public async Task PatchTransition(
@@ -206,7 +218,7 @@ public class ApiService(
         var response = await _httpClient.SendAsync(request);
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
     }
 
     public async Task PatchRailway(
@@ -237,7 +249,7 @@ public class ApiService(
         var response = await _httpClient.SendAsync(request);
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
     }
 
     public async Task<List<ChartDTO>> GetChartsCitiesTitles()
@@ -245,7 +257,7 @@ public class ApiService(
         var response = await _httpClient.PostAsync("api/chart/cities_titles", null);
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
 
         return await response.Content.ReadFromJsonAsync<List<ChartDTO>>() ?? new List<ChartDTO>();
     }
@@ -258,9 +270,10 @@ public class ApiService(
         var response = await _httpClient.PostAsJsonAsync("api/chart/scheme", new GetChartSchemeRequest(CityTitle, ChartTitle));
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
 
-        return await response.Content.ReadAsStringAsync();
+        var dto = await response.Content.ReadFromJsonAsync<GetChartSchemeResponse>();
+        return dto.content;
     }
 
     public async Task<RouteDTO?> SearchRoute(
@@ -284,7 +297,7 @@ public class ApiService(
         );
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
 
         return await response.Content.ReadFromJsonAsync<RouteDTO>();
     }
@@ -298,7 +311,7 @@ public class ApiService(
         var response = await _httpClient.PostAsync("api/routes/save", content);
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
 
         return await response.Content.ReadFromJsonAsync<int>();
     }
@@ -311,7 +324,7 @@ public class ApiService(
         var response = await _httpClient.PostAsJsonAsync("api/routes/get/titles", new GetRouteCredentialsRequest(CityTitle, ChartTitle));
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
 
         return await response.Content.ReadFromJsonAsync<List<string>>() ?? new List<string>();
     }
@@ -325,7 +338,7 @@ public class ApiService(
         var response = await _httpClient.PostAsJsonAsync("api/routes/get/saved", new GetSavedRouteRequest(CityTitle, ChartTitle, RouteTitle));
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
 
         return await response.Content.ReadFromJsonAsync<RouteDTO>();
     }
@@ -344,7 +357,7 @@ public class ApiService(
         var response = await _httpClient.SendAsync(request);
 
         if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Ошибка: {response.StatusCode}");
+            await PucPucAsync(response);
 
         return await response.Content.ReadFromJsonAsync<int>();
     }
